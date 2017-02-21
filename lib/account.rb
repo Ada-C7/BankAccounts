@@ -10,6 +10,9 @@ module Bank
     end
 
 
+    def withdraw(money_to_withdraw)
+      @balance = @balance - money_to_withdraw
+    end
 
   end
 

@@ -6,7 +6,7 @@ module Bank
     def initialize id, balance
       @id = id
 
-      if balance > 0
+      if balance >= 0
         @balance = balance
       else raise ArgumentError.new
       end

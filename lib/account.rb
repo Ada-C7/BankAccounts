@@ -11,6 +11,11 @@ module Bank
       else
         raise ArgumentError.new "You cannot initialize a new account with a negative balance."
       end
+
+      def withdraw
+
+      end
+
     end
 
   end

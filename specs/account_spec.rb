@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require_relative '../lib/owner'
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -57,7 +58,6 @@ describe "Wave 1" do
     end
 
     it "Outputs a warning if the account would go negative" do
-      skip
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -134,6 +134,16 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
+
+  describe "Wave 1 optionals" do
+    it "Creates an owner class" do
+      owner = Bank::Owner.new("John")
+      expect(owner.class).must_equal Bank::Owner
+    end
+    it "Assigns relevant information to the Owner" do
+    end
+  end
+
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests

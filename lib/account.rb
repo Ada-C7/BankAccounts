@@ -8,7 +8,7 @@ module Bank
 
                @id = id
 
-               if balance > 0
+               if balance > -1
                     @balance = balance
 
                else

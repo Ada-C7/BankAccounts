@@ -18,6 +18,7 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
+      skip
       # Note: we haven't talked about procs yet. You can think
       # of them like blocks that sit by themselves.
       # This code checks that, when the proc is executed, it
@@ -28,6 +29,7 @@ describe "Wave 1" do
     end
 
     it "Can be created with a balance of 0" do
+      skip
       # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end
@@ -35,6 +37,7 @@ describe "Wave 1" do
 
   describe "Account#withdraw" do
     it "Reduces the balance" do
+      skip
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -46,6 +49,7 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
+      skip
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -57,6 +61,7 @@ describe "Wave 1" do
     end
 
     it "Outputs a warning if the account would go negative" do
+      skip
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -71,6 +76,7 @@ describe "Wave 1" do
     end
 
     it "Doesn't modify the balance if the account would go negative" do
+      skip
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -84,6 +90,7 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
+      skip
       account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
@@ -91,6 +98,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive withdrawal amount" do
+      skip
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
@@ -103,6 +111,7 @@ describe "Wave 1" do
 
   describe "Account#deposit" do
     it "Increases the balance" do
+    skip
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -114,6 +123,7 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
+    skip
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -125,6 +135,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive deposit amount" do
+    skip
       start_balance = 100.0
       deposit_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
@@ -140,6 +151,7 @@ end
 xdescribe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
+      skip
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
@@ -153,18 +165,22 @@ xdescribe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the first account from the CSV" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the last account from the CSV" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Raises an error for an account that doesn't exist" do
+      skip
       # TODO: Your test code here!
     end
   end

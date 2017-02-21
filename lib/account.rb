@@ -12,8 +12,8 @@ module Bank
         raise ArgumentError.new "You cannot initialize a new account with a negative balance."
       end
 
-      def withdraw
-
+      def withdraw(withdrawal_amount)
+        @balance -= withdrawal_amount
       end
 
     end

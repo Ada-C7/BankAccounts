@@ -22,7 +22,6 @@ describe "Wave 1" do
       # of them like blocks that sit by themselves.
       # This code checks that, when the proc is executed, it
       # raises an ArgumentError.
-      skip
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError

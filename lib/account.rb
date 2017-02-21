@@ -13,7 +13,14 @@ module Bank
     end
 
     def withdraw(new_withdrawal)
-      @balance -= new_withdrawal
+      if new_withdrawal <=0
+        raise ArgumentError.net "You must withdraw a positive amount"
+      elsif new_withdrawal > @balance
+        puts "You do not have enough money to make that withdrawal"
+        @balance
+      else
+        @balance -= new_withdrawal
+      end
     end
 
     def deposit(new_deposit)

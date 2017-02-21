@@ -5,9 +5,8 @@ module Bank
     def initialize(id, balance)
       if balance < 0
         raise ArgumentError.new "Can't be negative starting balance"
-      else
-        @id = id
       end
+      @id = id
       @balance = balance
     end
 
@@ -23,6 +22,9 @@ module Bank
     end
 
     def deposit(deposit_amount)
+      if deposit_amount < 0
+        raise ArgumentError.new "Cannot deposit a negative amount."
+      end
       @balance += deposit_amount
     end
 

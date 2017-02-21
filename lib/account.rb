@@ -15,6 +15,8 @@ module Bank
       if withdrawal_amount > @balance
         puts "You cannot withdraw more than you have in your account!"
         @balance = @balance
+      elsif withdrawal_amount < 0
+        raise ArgumentError.new "You cannot withdraw a negative amount."        
       else
         @balance -= withdrawal_amount
       end

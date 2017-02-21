@@ -2,7 +2,7 @@ module Bank
 
   class Account
 
-    attr_reader :balance
+    attr_reader :id, :balance
 
     def initialize (id, balance)
       @id = id

@@ -24,6 +24,7 @@ module Bank
     end
 
     def deposit(new_deposit)
+      @balance += new_deposit
 
     end
 

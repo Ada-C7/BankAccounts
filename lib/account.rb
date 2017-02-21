@@ -1,12 +1,12 @@
 module Bank
-  attr_reader :balance
 
   class Account
+
+    attr_reader :balance
 
     def initialize (id, balance)
       @id = id
       @balance = balance
-
     end
 
     def withdraw(money_to_withdraw)

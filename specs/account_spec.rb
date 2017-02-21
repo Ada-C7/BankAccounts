@@ -155,6 +155,16 @@ describe "Wave 1" do
       owner.must_respond_to :phone
       owner.phone.must_equal phone
     end
+
+    it "Saves an owner object inside the Account class" do
+      name = "John Smith"
+      address = "1234 6th St Seattle, WA"
+      phone = "834-928-3947"
+      account = Bank::Account.new(1337, 100.0)
+      owner_to_add = Bank::Owner.new(name, address, phone)
+      account.add_owner(owner_to_add)
+      account.owner.must_equal owner_to_add
+    end
   end
 
 end

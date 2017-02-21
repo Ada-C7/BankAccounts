@@ -2,7 +2,7 @@ module Bank
 
   class Account
     attr_reader :id
-    attr_accessor :balance
+    attr_accessor :balance, :owner
 
     def initialize(id, balance)
       @id = id
@@ -34,6 +34,10 @@ module Bank
       else
         @balance = @balance + deposit
       end
+    end
+
+    def add_owner(owner)
+      @owner = owner
     end
 
   end

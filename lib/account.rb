@@ -12,7 +12,12 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      @balance -= withdrawal_amount
+      if withdrawal_amount > @balance
+        puts "You cannot withdraw more than you have in your account!"
+        @balance = @balance
+      else
+        @balance -= withdrawal_amount
+      end
     end
 
 

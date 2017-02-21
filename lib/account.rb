@@ -13,11 +13,15 @@ module Bank
       end
 
       def withdraw(withdrawal_amount)
-        if withdrawal_amount <= @balance
-          @balance -= withdrawal_amount
+        if withdrawal_amount >= 0
+          if withdrawal_amount <= @balance
+            @balance -= withdrawal_amount
+          else
+            puts "You are going negative."
+            @balance = balance
+          end
         else
-          puts "You are going negative."
-          @balance = balance
+          raise ArgumentError.new "Your withdrawal amount must be positive."
         end
       end
 

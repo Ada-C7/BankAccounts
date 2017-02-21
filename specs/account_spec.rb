@@ -4,6 +4,21 @@ require 'minitest/skip_dsl'
 require_relative '../lib/account'
 
 describe "Wave 1" do
+
+  describe "Owner#initialize" do
+    it "Takes a name and an address" do
+      name = "George Franklin"
+      address = "102 4th Ave West, Seattle, WA, 98110"
+      owner = Bank::Owner.new(name, address)
+
+      owner.must_respond_to :name
+      owner.name.must_equal name
+
+      owner.must_respond_to :address
+      owner.address.must_equal address
+    end
+  end
+
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
       id = 1337
@@ -124,7 +139,7 @@ describe "Wave 1" do
       expected_balance = start_balance + deposit_amount
       updated_balance.must_equal expected_balance
     end
-  
+
     it "Requires a positive deposit amount" do
       start_balance = 100.0
       deposit_amount = -25.0

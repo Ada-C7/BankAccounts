@@ -13,8 +13,12 @@ module Bank
       end
 
       def withdraw(withdrawal_amount)
+        if withdrawal_amount > @balance
+          puts "You are going negative."
+        end
         @balance -= withdrawal_amount
       end
+
 
     end
 

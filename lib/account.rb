@@ -13,7 +13,7 @@ module Bank
       end
 
       def withdraw(withdrawal_amount)
-        if withdrawal_amount < @balance
+        if withdrawal_amount <= @balance
           @balance -= withdrawal_amount
         else
           puts "You are going negative."

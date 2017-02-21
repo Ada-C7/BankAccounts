@@ -6,7 +6,11 @@ module Bank
 
     def initialize (id, balance)
       @id = id
-      @balance = balance
+      if balance > 0
+        @balance = balance
+      else
+        raise ArgumentError.new "The initial balance must not be a negative number"
+      end
     end
 
     def withdraw(money_to_withdraw)

@@ -32,5 +32,10 @@ module Bank
   end
 
   class Owner
+    attr_reader :name, :address
+    def initialize(name, address)
+      @name = name
+      @address = address
+    end
   end
 end

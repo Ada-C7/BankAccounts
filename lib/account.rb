@@ -9,11 +9,11 @@ module Bank
       else
         raise ArgumentError.new "Initial balance must be more than zero."
       end
-      
+
     end
 
     def withdraw(new_withdrawal)
-
+      @balance -= new_withdrawal
     end
 
     def deposit(new_deposit)

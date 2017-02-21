@@ -29,7 +29,6 @@ describe "Wave 1" do
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
-      skip
       Bank::Account.new(1337, 0)
     end
   end

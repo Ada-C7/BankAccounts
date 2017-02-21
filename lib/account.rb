@@ -12,13 +12,23 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      if withdrawal_amount <= @balance && withdrawal_amount >= 0
-        @balance -= withdrawal_amount
-      elsif withdrawal_amount < 0
+      if withdrawal_amount < 0
         raise ArgumentError.new "You cannot withdraw a negative amount."
+      elsif withdrawal_amount <= @balance
+        @balance -= withdrawal_amount
       else
-        raise ArgumentError.new "You cannot withdraw more than you have in your account."
+        puts "You cannot withdraw more than you have in your account."
+        @balance
       end
     end
+
+    def deposit(deposit_amount)
+      if deposit_amount > 0
+        @balance += deposit_amount
+      else
+        raise ArgumentError.new "You must deposit a positive amount."
+      end
+    end
+
   end
 end

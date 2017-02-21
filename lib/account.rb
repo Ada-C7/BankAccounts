@@ -8,7 +8,7 @@ module Bank
   class Account
     attr_accessor :id, :balance
 
-    def  initialize(id, balance)
+    def initialize(id, balance)
       @id = id
 
       if balance >= 0
@@ -18,6 +18,10 @@ module Bank
       end
     end
 
+    def withdraw(withdrawal_amount)
+      start_balance = @balance
+      @balance = start_balance - withdrawal_amount
+    end
 
-  end
-end
+  end #end class Account
+end #end module Bank

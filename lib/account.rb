@@ -42,5 +42,4 @@ module Bank
 
   end
 
-
 end

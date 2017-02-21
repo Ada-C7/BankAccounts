@@ -37,4 +37,7 @@ module Bank
 
   end
 
+  class Owner
+  end
+  
 end

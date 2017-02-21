@@ -45,6 +45,7 @@ describe "Wave 1" do
       account.balance.must_equal expected_balance
     end
 
+
     it "Returns the modified balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
@@ -123,7 +124,7 @@ describe "Wave 1" do
       expected_balance = start_balance + deposit_amount
       updated_balance.must_equal expected_balance
     end
-
+  
     it "Requires a positive deposit amount" do
       start_balance = 100.0
       deposit_amount = -25.0

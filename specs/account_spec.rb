@@ -3,7 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
 
-Minitest::Reporters.use!
+# Minitest::Reporters.use!
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -19,7 +19,7 @@ describe "Wave 1" do
       account.balance.must_equal balance
     end
 
-    xit "Raises an ArgumentError when created with a negative balance" do
+    it "Raises an ArgumentError when created with a negative balance" do
       # Note: we haven't talked about procs yet. You can think
       # of them like blocks that sit by themselves.
       # This code checks that, when the proc is executed, it
@@ -29,13 +29,13 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
 
-    xit "Can be created with a balance of 0" do
+    it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end
   end
 
-  xdescribe "Account#withdraw" do
+  describe "Account#withdraw" do
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
@@ -47,7 +47,7 @@ describe "Wave 1" do
       account.balance.must_equal expected_balance
     end
 
-    it "Returns the modified balance" do
+    xit "Returns the modified balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -58,7 +58,7 @@ describe "Wave 1" do
       updated_balance.must_equal expected_balance
     end
 
-    it "Outputs a warning if the account would go negative" do
+    xit "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -72,7 +72,7 @@ describe "Wave 1" do
       }.must_output /.+/
     end
 
-    it "Doesn't modify the balance if the account would go negative" do
+    xit "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -85,14 +85,14 @@ describe "Wave 1" do
       account.balance.must_equal start_balance
     end
 
-    it "Allows the balance to go to 0" do
+    xit "Allows the balance to go to 0" do
       account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
     end
 
-    it "Requires a positive withdrawal amount" do
+    xit "Requires a positive withdrawal amount" do
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new(1337, start_balance)

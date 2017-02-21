@@ -4,8 +4,15 @@ module Bank
 
     def initialize(id, balance)
       @id = id
-      @balance = balance
+
+      if balance >= 0
+        @balance = balance
+      else
+        raise ArgumentError.new "The balance must not be negative."
+      end
     end
+
+  
 
   end
 end

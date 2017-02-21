@@ -19,7 +19,7 @@ describe "Wave 1" do
       account.balance.must_equal balance
     end
 
-    xit "Raises an ArgumentError when created with a negative balance" do
+    it "Raises an ArgumentError when created with a negative balance" do
       # Note: we haven't talked about procs yet. You can think
       # of them like blocks that sit by themselves.
       # This code checks that, when the proc is executed, it
@@ -29,7 +29,7 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
 
-    xit "Can be created with a balance of 0" do
+    it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end

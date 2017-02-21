@@ -8,7 +8,15 @@ module Bank
 
     def initialize(id, balance)
       @id = id
-      @balance = balance
+      if balance >= 0
+        @balance = balance
+      else
+        raise ArgumentError.new "You cannot create a bank account with a negative balance."
+      end
+    end
+
+    def withdraw(withdrawal_amount)
+      @balance -= withdrawal_amount
     end
 
   end

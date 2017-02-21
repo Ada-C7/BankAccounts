@@ -1,6 +1,7 @@
 module Bank
   class Account
-    attr_reader :id, :balance
+    attr_reader :id
+    attr_accessor :balance
 
     def initialize(id, balance)
       @id = id
@@ -12,7 +13,9 @@ module Bank
       end
     end
 
-  
+    def withdraw(withdrawal_amount)
+      @balance = @balance - withdrawal_amount
+    end
 
   end
 end

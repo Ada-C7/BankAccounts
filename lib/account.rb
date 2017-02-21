@@ -17,6 +17,11 @@ module Bank
 
     def withdraw(withdrawal_amount)
       @balance -= withdrawal_amount
+      if @balance < 0
+        print "Uh oh! You've overdrawn your account!"
+      else
+        return @balance
+      end
     end
 
   end

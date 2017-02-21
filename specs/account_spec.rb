@@ -47,7 +47,7 @@ describe "Wave 1" do
       account.balance.must_equal expected_balance
     end
 
-    xit "Returns the modified balance" do
+    it "Returns the modified balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -58,7 +58,7 @@ describe "Wave 1" do
       updated_balance.must_equal expected_balance
     end
 
-    xit "Outputs a warning if the account would go negative" do
+    it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)

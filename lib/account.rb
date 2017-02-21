@@ -14,6 +14,10 @@ module Bank
     end
 
     def withdraw(withdrawal)
+      if withdrawal < 0
+        raise ArgumentError.new "The amount withdrawn must be
+        a positive number"
+      end
       if (@balance - withdrawal < 0)
         print "Warning! Withdrawing this amount will put your
         balance in the negative"

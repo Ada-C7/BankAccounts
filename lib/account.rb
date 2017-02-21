@@ -14,6 +14,10 @@ module Bank
     end
 
     def withdraw(withdrawal)
+      if (@balance - withdrawal < 0)
+        print "Warning! Withdrawing this amount will put your
+        balance in the negative"
+      end
       @balance = @balance - withdrawal
     end
 

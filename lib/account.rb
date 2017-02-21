@@ -14,8 +14,19 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      @balance = @balance - withdrawal_amount
+      if @balance - withdrawal_amount < 0
+        # raise ArgumentError.new "This withdrawal would create a negative balance."
+        @balance
+      else
+        @balance = @balance - withdrawal_amount
+      end
     end
 
   end
 end
+
+# account = Bank::Account.new(004, 100)
+# puts account.balance
+# account.withdraw(30)
+# puts account.balance
+# account.withdraw(100)

@@ -13,7 +13,7 @@ module Bank
       end
 
       def withdraw(withdrawal_amount)
-        if withdrawal_amount >= 0
+        if withdrawal_amount > 0
           if withdrawal_amount <= @balance
             @balance -= withdrawal_amount
           else
@@ -25,6 +25,9 @@ module Bank
         end
       end
 
+      def deposit(deposit_amount)
+
+      end
 
     end
 

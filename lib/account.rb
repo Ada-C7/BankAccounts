@@ -11,7 +11,8 @@ module Bank
       @balance = balance
     end
 
-    def withdraw
+    def withdraw(withdrawal_amount)
+      @balance -= withdrawal_amount
     end
 
 

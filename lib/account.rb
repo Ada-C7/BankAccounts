@@ -1,14 +1,20 @@
 
 module Bank
   class Account
-    attr_reader :balance
+    attr_reader :id, :balance
 
     def initialize(id, balance) # method to initialize and accept two parameters...ID and starting balance
-      @balance = 0
+      @id = id
+
+      if balance >= 0
+        @balance = balance
+      else
+        raise ArgumentError.new "Please enter a positive integer."
+      end
     end
 
     def withdraw(withdrawal_amount) # method needs to subtract withdrawal amt from balance and return the updated balance
-      bal_after_withdrawal = @balance - withdrawal_amount
+      bal_after_withdrawal = balance - withdrawal_amount
       return bal_after_withdrawal
     end
 

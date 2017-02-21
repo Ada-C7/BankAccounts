@@ -1,5 +1,19 @@
 # Create a Bank module which will contain your Account class and any future bank account logic.
 # Create an Account class which should have the following functionality:
+module Bank
+
+  class Account
+    attr_reader :id
+    attr_accessor :balance
+
+    def initialize(id, balance)
+      @id = id
+      @balance = balance
+    end
+
+  end
+
+end
 # A new account should be created with an ID and an initial balance
 # Should have a withdraw method that accepts a single parameter which represents the amount of money that will be withdrawn. This method should return the updated account balance.
 # Should have a deposit method that accepts a single parameter which represents the amount of money that will be deposited. This method should return the updated account balance.

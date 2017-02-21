@@ -115,7 +115,6 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
-      skip
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -127,11 +126,9 @@ describe "Wave 1" do
     end
 
     it "Requires a positive deposit amount" do
-      skip
       start_balance = 100.0
       deposit_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
-
       proc {
         account.deposit(deposit_amount)
       }.must_raise ArgumentError

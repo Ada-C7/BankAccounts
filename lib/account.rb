@@ -28,7 +28,12 @@ module Bank
     end
 
     def deposit(deposit)
-      @balance = @balance + deposit
+      if deposit < 0
+        raise ArgumentError.new "The deposit must be a positive
+        amount"
+      else
+        @balance = @balance + deposit
+      end
     end
 
   end

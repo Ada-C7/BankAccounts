@@ -137,10 +137,23 @@ describe "Wave 1" do
 
   describe "Wave 1 optionals" do
     it "Creates an owner class" do
-      owner = Bank::Owner.new("John")
+      owner = Bank::Owner.new("name", "address", "phone")
       expect(owner.class).must_equal Bank::Owner
     end
     it "Assigns relevant information to the Owner" do
+      name = "John Smith"
+      address = "1234 6th St Seattle, WA"
+      phone = "834-928-3947"
+      owner = Bank::Owner.new(name, address, phone)
+
+      owner.must_respond_to :name
+      owner.name.must_equal name
+
+      owner.must_respond_to :address
+      owner.address.must_equal address
+
+      owner.must_respond_to :phone
+      owner.phone.must_equal phone
     end
   end
 

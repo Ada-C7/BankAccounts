@@ -72,7 +72,6 @@ describe "Wave 1" do
     end
 
     it "Doesn't modify the balance if the account would go negative" do
-      skip
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -86,7 +85,6 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
-      skip
       account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0

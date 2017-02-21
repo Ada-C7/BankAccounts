@@ -104,7 +104,6 @@ describe "Wave 1" do
 
   describe "Account#deposit" do
     it "Increases the balance" do
-      skip
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)

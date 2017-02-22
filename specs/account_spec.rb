@@ -40,7 +40,7 @@ describe "Wave 1" do
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
-      Bank::Account.new(1337, 0)
+      Bank::Account.new(1337, 0, "opendate")
     end
   end
 
@@ -55,7 +55,7 @@ describe "Wave 1" do
     end
 
     it "Raises an Argument when add_owner is called and the owner argument is not class Owner" do
-      #Shoulr raise error
+      #Should raise error
       proc { @account.add_owner("not class Owner") }.must_raise ArgumentError
     end
   end
@@ -64,7 +64,7 @@ describe "Wave 1" do
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance,)
 
       account.withdraw(withdrawal_amount)
 
@@ -163,11 +163,13 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+# todo: change 'xdescribe' to 'describe' to run these tests
+describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
-      # TODO: Your test code here!
+
+      Account.all.class.must_be (Array)
+
       # Useful checks might include:
       #   - Account.all returns an array
       #   - Everything in the array is an Account

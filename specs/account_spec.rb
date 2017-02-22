@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require 'csv'
 require_relative '../lib/account'
 
 Minitest::Reporters.use!
@@ -173,10 +172,10 @@ describe "Wave 2" do
 
       # The ID & balance of the first & last accounts are correct
       @account_array[0].id.must_equal @csv_info[0][0]
-      @account_array[0].balance.must_equal @csv_info[0][1].to_f
+      @account_array[0].balance.must_equal @csv_info[0][1].to_i
 
       @account_array[-1].id.must_equal @csv_info[-1][0]
-      @account_array[-1].balance.must_equal @csv_info[-1][1].to_f
+      @account_array[-1].balance.must_equal @csv_info[-1][1].to_i
 
     end
   end
@@ -189,12 +188,12 @@ describe "Wave 2" do
 
     it "Can find the first account from the CSV" do
       Bank::Account.find(@csv_info[0][0]).must_be_instance_of Bank::Account
-      Bank::Account.find(@csv_info[0][0]).balance.must_equal @csv_info[0][1].to_f
+      Bank::Account.find(@csv_info[0][0]).balance.must_equal @csv_info[0][1].to_i
     end
 
     it "Can find the last account from the CSV" do
       Bank::Account.find(@csv_info[-1][0]).must_be_instance_of Bank::Account
-      Bank::Account.find(@csv_info[-1][0]).balance.must_equal @csv_info[-1][1].to_f
+      Bank::Account.find(@csv_info[-1][0]).balance.must_equal @csv_info[-1][1].to_i
     end
 
     it "Raises an error for an account that doesn't exist" do

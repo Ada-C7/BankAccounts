@@ -12,6 +12,8 @@ module Bank
       else
         raise ArgumentError.new "Your balance must be greater than 0."
       end
+
+
     end
 
     # creates a withdraw method that accepts a single parameter
@@ -49,4 +51,15 @@ module Bank
     def check_balance
     end
   end
+
+  class Owner
+  attr_accessor :first_name, :last_name, :address
+
+    def initialize(first_name, last_name, address)
+      @first_name = first_name
+      @last_name = last_name
+      @address = address
+    end
+  end
+
 end

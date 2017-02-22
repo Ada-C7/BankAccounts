@@ -21,12 +21,18 @@ module Bank
       if owner.class == Bank::Owner
         @owner = owner
       else
-        @owner = Bank::Owner.new({name: "", address: {street: "", city: "", zipcode: ""}, phone: "" })
+        @owner = Bank::Owner.new({})
       end
     end
 
+    # method that overwrites existing empty @owner instance variable
     def update_owner_data(owner_hash)
-      # @owner = Bank::Owner.new(owner_hash)
+      #only overwrite if initially not added to account at the time of initializing account object
+      #note: in the future, consider being able to update names, addess, phone numbers
+      #      individually for existing @owner
+      if @owner.customer_id == "0000"
+        @owner = Bank::Owner.new(owner_hash)
+      end
     end
 
     # method that handles withdraw

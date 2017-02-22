@@ -152,7 +152,18 @@ describe "Wave 1" do
     it "Initializes account with owner property" do
       id = 1337
       balance = 100.0
-      owner_hash = {name: "ginny smith", address: {street: "122 main st.", city: "seattle", zipcode: "98144"}, phone: "2065573099" }
+      owner_hash = {
+                      customer_id: 1024,
+                      first_name: "ginny",
+                      last_name: "smith",
+                      address: {
+                                  street: "123 main street",
+                                  city: "seattle",
+                                  state: "WA",
+                                  zipcode: "12345"
+                               },
+                      phone: "2065573099"
+                    }
       owner = Bank::Owner.new(owner_hash)
       account = Bank::Account.new(id, balance, owner)
 
@@ -160,7 +171,47 @@ describe "Wave 1" do
       account.owner.class.must_equal Bank::Owner
     end
 
-    
+    it "Only accounts without initial owner property can be updated" do
+      owner_hash = {
+                      customer_id: 1024,
+                      first_name: "ginny",
+                      last_name: "smith",
+                      address: {
+                                  street: "123 main street",
+                                  city: "seattle",
+                                  state: "WA",
+                                  zipcode: "12345"
+                               },
+                      phone: "2065573099"
+                    }
+      test_hash = {
+                      customer_id: 8888,
+                      first_name: "sally",
+                      last_name: "smith",
+                      address: {
+                                  street: "456 1st street",
+                                  city: "columbus",
+                                  state: "OH",
+                                  zipcode: "54322"
+                               },
+                      phone: "2234433099"
+                    }
+      account_nil = Bank::Account.new(12345, 12, nil)
+      account = Bank::Account.new(12346, 0, Bank::Owner.new(test_hash))
+
+      account_nil.update_owner_data(owner_hash)
+      account.update_owner_data(owner_hash)
+
+      account_nil.owner.customer_id.must_equal 1024
+      account_nil.owner.name.must_equal "ginny smith"
+      account_nil.owner.phone.must_equal "2065573099"
+      account_nil.owner.address.must_equal "123 main street, seattle, WA 12345"
+
+      account.owner.customer_id.must_equal 8888
+      account.owner.name.must_equal "sally smith"
+      account.owner.phone.must_equal "2234433099"
+      account.owner.address.must_equal "456 1st street, columbus, OH 54322"
+    end
   end
 end
 

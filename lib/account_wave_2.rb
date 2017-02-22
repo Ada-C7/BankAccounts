@@ -4,6 +4,9 @@ require 'csv'
 module Bank
   class Account
 
+    def self.find(id)
+    end
+
     def self.all
       my_file = CSV.open("support/accounts.csv")
       all_accounts = []

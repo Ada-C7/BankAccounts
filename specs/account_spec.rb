@@ -17,6 +17,7 @@ describe "Wave 1" do
       account.balance.must_equal balance
     end
 
+
     it "Raises an ArgumentError when created with a negative balance" do
       # Note: we haven't talked about procs yet. You can think
       # of them like blocks that sit by themselves.
@@ -26,6 +27,7 @@ describe "Wave 1" do
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
     end
+
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
@@ -56,11 +58,12 @@ describe "Wave 1" do
       updated_balance.must_equal expected_balance
     end
 
+
+
     it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
-
       # Another proc! This test expects something to be printed
       # to the terminal, using 'must_output'. /.+/ is a regular
       # expression matching one or more characters - as long as
@@ -101,6 +104,7 @@ describe "Wave 1" do
     end
   end
 
+
   describe "Account#deposit" do
     it "Increases the balance" do
       start_balance = 100.0
@@ -112,6 +116,8 @@ describe "Wave 1" do
       expected_balance = start_balance + deposit_amount
       account.balance.must_equal expected_balance
     end
+
+
 
     it "Returns the modified balance" do
       start_balance = 100.0
@@ -136,36 +142,37 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
-  describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-    end
-  end
 
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
-  end
-end
+# # TODO: change 'xdescribe' to 'describe' to run these tests
+# # xdescribe "Wave 2" do
+# #   describe "Account.all" do
+# #     it "Returns an array of all accounts" do
+# #       # TODO: Your test code here!
+# #       # Useful checks might include:
+# #       #   - Account.all returns an array
+# #       #   - Everything in the array is an Account
+# #       #   - The number of accounts is correct
+# #       #   - The ID and balance of the first and last
+# #       #       accounts match what's in the CSV file
+# #       # Feel free to split this into multiple tests if needed
+# #     end
+# #   end
+# #
+# #   describe "Account.find" do
+# #     it "Returns an account that exists" do
+# #       # TODO: Your test code here!
+# #     end
+# #
+# #     it "Can find the first account from the CSV" do
+# #       # TODO: Your test code here!
+# #     end
+# #
+# #     it "Can find the last account from the CSV" do
+# #       # TODO: Your test code here!
+# #     end
+# #
+# #     it "Raises an error for an account that doesn't exist" do
+# #       # TODO: Your test code here!
+# #     end
+# #   end
+# # end

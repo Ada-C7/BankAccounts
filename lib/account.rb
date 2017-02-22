@@ -4,25 +4,20 @@ module Bank
     attr_accessor :balance
 
     def initialize(id, balance)
+      raise ArgumentError.new("balance must be >=0") if balance < 0
       @id = id
+      @balance = balance
 
-      if balance >= 0
-        @balance = balance
-      else
-        raise ArgumentError.new "The balance must not be negative."
-      end
     end
 
     def withdraw(withdrawal_amount)
-      if withdrawal_amount < 0
-        raise ArgumentError.new "The withdrawal amount must have a positive value."
-      end
+      raise ArgumentError.new "The withdrawal amount must have a positive value." if withdrawal_amount < 0
 
       if @balance - withdrawal_amount < 0
         puts "This withdrawal would create a negative balance."
         @balance
       else
-        @balance = @balance - withdrawal_amount
+        @balance -= withdrawal_amount
       end
     end
 
@@ -30,7 +25,7 @@ module Bank
       if deposit_amount < 0
         raise ArgumentError.new "The deposit amount must have a positive value."
       end
-      @balance = @balance + deposit_amount
+      @balance += deposit_amount
     end
 
   end

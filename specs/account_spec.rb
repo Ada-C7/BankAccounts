@@ -137,17 +137,25 @@ describe "Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
       # Useful checks might include:
+      start_balance = 100.0
+      Bank::Account.new(111, start_balance)
+      Bank::Account.new(222, start_balance)
+      all_accounts_hash = {111 => 100.0,
+      222 => 100.0}
       #   - Account.all returns an array
+      Account.all.must_equal all_accounts_hash
+      Account.all.class.must_be Array
       #   - Everything in the array is an Account
       #   - The number of accounts is correct
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       # Feel free to split this into multiple tests if needed
+      end
     end
   end
 

@@ -5,21 +5,24 @@ require 'date'
 module Bank
   class Account
     attr_reader :id, :balance, :owner, :date_created
-    @@count_accounts = 0 # stores number of created istances
-    @@csv = CSV.read("../support/accounts.csv", 'r') # object of class CSV
-    def initialize()
-      #raise ArgumentError.new("balance must be >= 0") if balance < 0
-      @id = @@csv[@@count_accounts][0].to_i
-      @balance = @@csv[@@count_accounts][1].to_i
-      date_string = @@csv[@@count_accounts][2] #string
-      @date_created = DateTime.parse(date_string)
-      @@count_accounts += 1 # increment each time new object was created
+
+    def initialize(id, balance, date_opened="1991-01-01 11:01:01 -0800")
+      raise ArgumentError.new("balance must be >= 0") if balance < 0
+      @id = id
+      @balance = balance
     end
+
 # Returns array of all instances of class Account
     def self.all
+      csv = CSV.read("../support/accounts.csv", 'r') # object of class CSV
       all_accounts = []
-      @@csv.length.times do
-        all_accounts << Account.new()
+      n = 0 # current line of csv file
+      csv.length.times do |n|
+        id = csv[n][0].to_i
+        balance = csv[n][1].to_i
+        date_created = DateTime.parse(csv[n][2])
+        all_accounts << Account.new(id, balance, date_created)
+        n += 1
       end
       return all_accounts
     end
@@ -43,7 +46,7 @@ module Bank
       # TODO: implement withdraw
       if amount < 0
          raise ArgumentError.new("amount to withdraw cannot be less than 0")
-       end
+      end
       if @balance - amount < 0
         puts "Warning: This ammount cannot be withdrawed; your balance cannot be negative"
       else
@@ -65,9 +68,9 @@ module Bank
 end # end of module Bank
 
 
-#puts Bank::Account.all
+puts Bank::Account.all
 #puts Bank::Account.find(9)
-puts Bank::Account.find(1213)
+#puts Bank::Account.find(1213)
 #
  #account = Bank::Account.new()
 # puts account.withdraw(200)

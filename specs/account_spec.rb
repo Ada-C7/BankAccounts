@@ -99,6 +99,7 @@ describe "Wave 1" do
         account.withdraw(withdrawal_amount)
       }.must_raise ArgumentError
     end
+
   end
 
   describe "Account#deposit" do
@@ -134,38 +135,58 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
-end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
-  describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-    end
-  end
+  describe "Owner#initialze" do
+    it "requires a first name, last name, and address" do
+      first_name = "Kelsey"
+      last_name = "McAlpine"
+      address = "554 Somewhere Street"
+      owner = Bank::Owner.new(first_name, last_name, address)
 
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
+      owner.must_respond_to :first_name
+      owner.first_name.must_equal first_name
+
+      owner.must_respond_to :last_name
+      owner.last_name.must_equal last_name
+
+      owner.must_respond_to :address
+      owner.address.must_equal address
     end
 
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
   end
 end
+
+
+# # TODO: change 'xdescribe' to 'describe' to run these tests
+# xdescribe "Wave 2" do
+#   describe "Account.all" do
+#     it "Returns an array of all accounts" do
+#       # TODO: Your test code here!
+#       # Useful checks might include:
+#       #   - Account.all returns an array
+#       #   - Everything in the array is an Account
+#       #   - The number of accounts is correct
+#       #   - The ID and balance of the first and last
+#       #       accounts match what's in the CSV file
+#       # Feel free to split this into multiple tests if needed
+#     end
+#   end
+
+  # describe "Account.find" do
+  #   it "Returns an account that exists" do
+  #     # TODO: Your test code here!
+  #   end
+  #
+  #   it "Can find the first account from the CSV" do
+  #     # TODO: Your test code here!
+  #   end
+  #
+  #   it "Can find the last account from the CSV" do
+  #     # TODO: Your test code here!
+  #   end
+  #
+  #   it "Raises an error for an account that doesn't exist" do
+  #     # TODO: Your test code here!
+  #   end
+  # end
+# end

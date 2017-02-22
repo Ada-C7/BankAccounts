@@ -16,14 +16,10 @@ module Bank
 
       if withdrawal_amount < 0
         raise ArgumentError.new
-      end
-
-      new_balance = @balance - withdrawal_amount
-
-      if new_balance < 0
+      elsif withdrawal_amount > @balance
         print "You are withdrawing too much!"
       else
-        @balance = new_balance
+        @balance -= withdrawal_amount
       end
 
       @balance

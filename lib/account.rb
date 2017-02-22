@@ -25,6 +25,10 @@ module Bank
       return accounts
     end
 
+    def self.find()
+    
+    end
+
     def add_owner(owner)
       if owner.class == Owner
         @owner = owner

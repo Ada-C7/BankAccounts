@@ -15,6 +15,7 @@ describe "Wave 1" do
       new_owner.must_respond_to :phone
       end
   end
+
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
       id = 1337
@@ -213,7 +214,8 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      first_account = Bank::Account.find(1212)
+      first_account.class.must_equal(Account)
     end
 
     it "Can find the first account from the CSV" do

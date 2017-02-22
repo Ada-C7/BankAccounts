@@ -48,9 +48,14 @@ describe "Wave 1" do
     it "Adds an Owner instance and saves it as an instance variable" do
        account = Bank::Account.new(1337, 10)
 
-       name = "Lynn"
-       account.add_owner(name)
-       account.owner.must_equal name
+       lynn = Bank::Owner.new("Lynn Trickey", "555-555-5555")
+
+       account.add_owner(lynn)
+       account.owner.must_equal lynn
+    end
+
+    it "Owner must be class Owner" do
+
     end
   end
 

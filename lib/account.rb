@@ -18,6 +18,7 @@ module Bank
       return @balance
     end
     def deposit(amount)
+      raise ArgumentError.new("amount must be >= 0") if amount < 0
       @balance = @balance + amount
       return @balance
     end

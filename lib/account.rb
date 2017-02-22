@@ -1,3 +1,5 @@
+require 'owner'
+
 module Bank
   class Account
     attr_reader :id, :balance
@@ -29,7 +31,7 @@ module Bank
     end
 
     def deposit(deposit_amount)
-      
+
       if deposit_amount > 0
         @balance += deposit_amount
       else #throws error if deposit is negative

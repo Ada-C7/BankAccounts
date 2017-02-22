@@ -1,31 +1,30 @@
 module Bank
 
   class Account
-    attr_accessor :balance, :id
+    attr_reader :balance, :id
 
 
-    def initialize(account_id, initial_balance)
+    def initialize(account_id, initial_balance, owner_info = {})
       if initial_balance >= 0
         @balance = initial_balance
       else
         raise ArgumentError.new "initial balance must be greater or equal to 0"
       end
       @id = account_id
+      @owner = owner_info
     end
 
     def withdraw(withdrawl_amount)
-      if withdrawl_amount > 0
-        if @balance - withdrawl_amount >= 0
-          @balance -= withdrawl_amount
-        else
-          print "your balance will be negative"
-          return @balance
-        end
+      raise ArgumentError.new("withdrawl must be greater than 0") if withdrawl_amount < 0
+
+      if @balance - withdrawl_amount >= 0
+        @balance -= withdrawl_amount
       else
-        raise ArgumentError.new "withdrawl must be greater than 0"
+        print "your balance will be negative"
         return @balance
       end
     end
+
 
     def deposit(deposit_amount)
       if deposit_amount > 0
@@ -41,5 +40,20 @@ module Bank
       return @balance
     end
 
+
   end
+
+  class Owner
+    attr_accessor :name, :address, :email
+
+    def initialize(user_info_hash)
+
+      @name = user_info_hash[:name]
+      @address = user_info_hash[:address]
+      @email = user_info_hash[:email]
+
+    end
+
+  end
+
 end

@@ -14,16 +14,17 @@ module Bank
     end
 
     def withdraw(withdrawal_amount) # method subtracts withdrawal amt from bal and return the updated bal
-      bal_after_withdrawal = balance - withdrawal_amount
 
       if withdrawal_amount < 0
         raise ArgumentError.new "Please enter a positive integer."
       end
 
       if withdrawal_amount > balance
-        raise ArgumentError.new "You cannot withdraw that amount right now, please enter a smaller withdrawal amount."
+        print "Tried to withdraw #{ withdrawal_amount } when you only have #{ balance }." # needed to output something instead of raising an error
+        return balance
       else
-        @balance = bal_after_withdrawal # is this right??
+        bal_after_withdrawal = balance - withdrawal_amount
+        @balance = bal_after_withdrawal
         return balance
       end
     end

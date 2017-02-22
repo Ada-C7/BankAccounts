@@ -135,6 +135,14 @@ describe "Wave 1" do
     }.must_raise ArgumentError
   end
 end
+describe "Account#add_owner" do
+  it "takes an owner and updates it" do
+    account = Bank::Account.new(1337, 100)
+    owner = Bank::Owner.new("Rahul", "Renton,WA")
+    account.add_owner(owner)
+    account.owner.must_equal owner
+  end
+end
 describe "Owner#initialize" do
   it "Takes a name and an address" do
     name = "Rahul"

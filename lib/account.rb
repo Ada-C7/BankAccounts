@@ -23,6 +23,7 @@ module Bank
     def withdraw(amount_to_withdraw)
       if amount_to_withdraw > @balance
         puts "Insufficient funds. Your balance is #{@balance}"
+        raise ArgumentError.new("amount must be >= 0") if amount < 0
         # start_balance = @balance
         # @balance = start_balance
       else
@@ -36,7 +37,7 @@ module Bank
       if amount_to_deposit < 0
         raise ArgumentError.new "You must deposit real money."
       else
-        @balance = @balance + amount_to_deposit
+        @balance += amount_to_deposit
       end
     end
   end

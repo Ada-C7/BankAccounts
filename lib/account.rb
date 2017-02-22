@@ -26,7 +26,19 @@ module Bank
       end
     end
 
-    # def deposit
-    # end
+    def deposit(deposit_amount)
+      if deposit_amount > 0
+        @balance += deposit_amount
+        return @balance
+      else
+        raise ArgumentError.new "Warning: You cannot deposite a negative amount of money"
+      end
+    end
   end
+
+  class Owner
+    
+
+  end
+
 end

@@ -13,6 +13,14 @@ module Bank
       return accounts
     end
 
+    def self.find(id)
+      accounts = Bank::Account.all
+      accounts.each do |account|
+        return account if id == account.id
+      end
+      raise ArgumentError.new("Account does not exist")
+    end
+
     def initialize(id, balance)
       @id = id
 
@@ -51,3 +59,7 @@ module Bank
 
   end
 end
+
+#accounts = Bank::Account.all
+
+puts Bank::Account.find("1212").id

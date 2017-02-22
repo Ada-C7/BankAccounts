@@ -152,47 +152,53 @@ describe "Wave 1" do
 end
 
 describe "Wave 2" do
+  before do
+    @account_array = Bank::Account.all
+    @csv_info = CSV.read('support/accounts.csv')
+  end
+
   describe "Account.all" do
     it "Returns an array of all accounts" do
-      account_array = Bank::Account.all
-      csv_info = CSV.read('support/accounts.csv')
 
       # Account.all returns an array
-      account_array.must_be_instance_of Array
+      @account_array.must_be_instance_of Array
 
       # Everything in the array is an Account
-      account_array.each do |account|
+      @account_array.each do |account|
         account.must_be_instance_of Bank::Account
       end
 
       # The number of accounts is correct
-      account_array.length.must_equal csv_info.count
+      @account_array.length.must_equal @csv_info.count
 
       # The ID & balance of the first & last accounts are correct
-      account_array[0].id.must_equal csv_info[0][0]
-      account_array[0].balance.must_equal csv_info[0][1].to_f
+      @account_array[0].id.must_equal @csv_info[0][0]
+      @account_array[0].balance.must_equal @csv_info[0][1].to_f
 
-      account_array[-1].id.must_equal csv_info[-1][0]
-      account_array[-1].balance.must_equal csv_info[-1][1].to_f
+      @account_array[-1].id.must_equal @csv_info[-1][0]
+      @account_array[-1].balance.must_equal @csv_info[-1][1].to_f
 
     end
   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      Bank::Account.find("15151").must_be_instance_of Bank::Account
+      Bank::Account.find("15151").balance.must_equal 9844567
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find(@csv_info[0][0]).must_be_instance_of Bank::Account
+      Bank::Account.find(@csv_info[0][0]).balance.must_equal @csv_info[0][1].to_f
     end
 
     it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find(@csv_info[-1][0]).must_be_instance_of Bank::Account
+      Bank::Account.find(@csv_info[-1][0]).balance.must_equal @csv_info[-1][1].to_f
     end
 
     it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+      proc { Bank::Account.find("FAKEID") }.must_raise ArgumentError
     end
   end
 end

@@ -4,6 +4,9 @@ module Bank
   class Account
     attr_reader :id, :owner, :balance
 
+    def self.all
+    end
+
     def initialize(id, owner, balance)
       @id = id
       @owner = owner
@@ -15,24 +18,25 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      if withdrawal_amount > 0
+      raise ArgumentError.new("amount must >= 0") if withdrawal_amount < 0
+      # if withdrawal_amount > 0
         if withdrawal_amount > @balance
-          print "Uh oh! You have overdrawn your account, you doof!"
+          print "Uh oh! You can't overdraw your account, you doof!"
         else
           return @balance -= withdrawal_amount
         end
         return @balance
-      else
-        raise ArgumentError.new "You cannot withdraw a negative amount of money, you silly pants."
-      end
+      # else
+      #   raise ArgumentError.new "You cannot withdraw a negative amount of money, you silly pants."
+      # end
     end
 
     def deposit(deposit_amount)
-      if deposit_amount > 0
+      raise ArgumentError.new("You cannot deposit a negative amount of money, you goofball.") if deposit_amount < 0
+      # if deposit_amount > 0
         @balance += deposit_amount
-      else
-        raise ArgumentError.new "You cannot deposit a negative amount of money, you goofball."
-      end
+      # else
+        # raise ArgumentError.new "You cannot deposit a negative amount of money, you goofball."
     end
 
   end

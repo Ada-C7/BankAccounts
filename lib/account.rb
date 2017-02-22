@@ -1,13 +1,14 @@
 module Bank
   class Account
 
-    attr_reader :id, :balance
-    def initialize(id, balance)
+    attr_reader :id, :balance, :owner
+    def initialize(id, balance, owner)
       if balance < 0
         raise ArgumentError.new "Can't be negative starting balance"
       end
       @id = id
       @balance = balance
+      @owner = owner
     end
 
     def withdraw(withdrawal_amount)

@@ -1,7 +1,7 @@
 module Bank
 
   class Account
-    attr_reader :id, :balance
+    attr_accessor :id, :balance
 
     def initialize(id, balance)
       @id = id
@@ -13,10 +13,20 @@ module Bank
       end
     end
 
-    # def withdraw(amount_withdrawn)
-    #
+    def withdraw(withdrawal_amount)
+
+      if withdrawal_amount > @balance
+        puts "Warning! You are about to withdraw more money than you have in your account."
+        #withdrawal_amount = 0
+        @balance
+      elsif withdrawal_amount > 0
+        @balance -= withdrawal_amount
+      else
+        raise ArgumentError.new "Warning: You cannot withdraw a negative amount of money."
+      end
+    end
+
+    # def deposit
     # end
-
   end
-
 end

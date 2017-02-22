@@ -17,7 +17,7 @@ describe "Wave 1" do
       account.balance.must_equal balance
     end
 
-    xit "Raises an ArgumentError when created with a negative balance" do
+    it "Raises an ArgumentError when created with a negative balance" do
       # Note: we haven't talked about procs yet. You can think
       # of them like blocks that sit by themselves.
       # This code checks that, when the proc is executed, it
@@ -27,13 +27,13 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
 
-    xit "Can be created with a balance of 0" do
+    it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end
   end
 
-  xdescribe "Account#withdraw" do
+  describe "Account#withdraw" do
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
@@ -101,7 +101,7 @@ describe "Wave 1" do
     end
   end
 
-  xdescribe "Account#deposit" do
+  describe "Account#deposit" do
     it "Increases the balance" do
       start_balance = 100.0
       deposit_amount = 25.0
@@ -134,7 +134,44 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
+
+  # describe "Account#owner" do
+  #   it "requires name and dob" do
+  #     name = "Kelly Souza"
+  #     dob = "02/05/1978"
+  #     address = {
+  #       street1: "1221 N. Fife",
+  #       street2: "#4",
+  #       city: "Tacoma",
+  #       state: "WA",
+  #       zip: "98406"
+  #     }
+  #     owner = Bank::Owner.new(name, dob, address)
+  #     owner.name.must_equal name
+  #     owner.dob.must_equal dob
+  #     owner.address.must_equal address
+  #   end #end require name and dob
+  #
+  #   # it "requires owner address" do
+  #     # street1 = "1221 N. Fife",
+  #     # street2 = "#4",
+  #     # city = "Tacoma",
+  #     # state = "WA",
+  #     # zip = "98406"
+  #     # owner.address.must_equal address
+  #
+  #
+  # # end
+
+  #end
+
+  #end "Account#owner"
+
+
 end
+
+
+
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Wave 2" do

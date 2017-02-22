@@ -21,6 +21,7 @@ module Bank
       raise ArgumentError.new("amount must be >= 0") if amount < 0
       @balance = @balance + amount
       return @balance
+      # @balance += amount
     end
     def add_owner (owner)
       @owner = owner

@@ -157,8 +157,9 @@ describe "Owner#initialize" do
   end
 end
 
-# # TODO: change 'xdescribe' to 'describe' to run these tests
-# xdescribe "Wave 2" do
+# TODO: change 'xdescribe' to 'describe' to run these tests
+describe "Wave 2" do
+end
 #   describe "Account.all" do
 #     it "Returns an array of all accounts" do
 #       # TODO: Your test code here!

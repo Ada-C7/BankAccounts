@@ -242,6 +242,7 @@ describe "Wave 2" do
       my_file.each do |line|
         lines << line
       end
+      all_accounts[0].balance.must_equal lines[0][1].to_f
       all_accounts[0].id.must_equal lines[0][0]
     end
 
@@ -252,10 +253,9 @@ describe "Wave 2" do
       my_file.each do |line|
         lines << line
       end
+      all_accounts[-1].balance.must_equal lines[-1][1].to_f
       all_accounts[-1].id.must_equal lines[-1][0]
     end
-
-
       # TODO: Your test code here!
       # Useful checks might include:
 

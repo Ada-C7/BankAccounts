@@ -1,3 +1,4 @@
+require_relative 'owner'
 module Bank
   class Account
     attr_reader :id, :balance, :owner
@@ -8,7 +9,7 @@ module Bank
     end
 
     def add_owner(name, address, phone)
-      @owner = Owner.new(name, address, phone)
+      @owner = Bank::Owner.new(name, address, phone)
     end
 
     def withdraw(amount)
@@ -34,16 +35,6 @@ module Bank
       return @balance
     end
   end # end of class Account
-
-  class Owner
-    attr_reader :name, :address, :phone
-    def initialize (name, address, phone)
-      @name = name
-      @address = address
-      @phone = phone
-    end
-  end
-
 end # end of module Bank
 
 

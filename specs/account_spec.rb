@@ -134,38 +134,48 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
+# Added a block to test add_owner method:
+  describe "Account#add_owner" do
+    it "Must be created" do
+      account = Bank::Account.new(2323, 300)
+      account.add_owner("Natalia", "2343443 Main St NE", "34344343")
+      account.owner.must_be_kind_of Bank::Owner
+      account.owner.wont_be_nil
+    end
+  end
+
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
-  describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-    end
-  end
-
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
-  end
-end
+# describe "Wave 2" do
+#   describe "Account.all" do
+#     it "Returns an array of all accounts" do
+#       # TODO: Your test code here!
+#       # Useful checks might include:
+#       #   - Account.all returns an array
+#       #   - Everything in the array is an Account
+#       #   - The number of accounts is correct
+#       #   - The ID and balance of the first and last
+#       #       accounts match what's in the CSV file
+#       # Feel free to split this into multiple tests if needed
+#     end
+#   end
+#
+#   describe "Account.find" do
+#     it "Returns an account that exists" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Can find the first account from the CSV" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Can find the last account from the CSV" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Raises an error for an account that doesn't exist" do
+#       # TODO: Your test code here!
+#     end
+#   end
+ #end

@@ -14,8 +14,8 @@ module Bank
     end
 
     def withdraw(money_to_withdraw)
-      if money_to_withdraw > 0
-        if money_to_withdraw > @balance
+      if money_to_withdraw > 0 #requires positive withdrawal amount
+        if money_to_withdraw > @balance #requires withdrawal amount less than balance
           puts "Amount to withdraw must be greater than balance"
           start_balance = @balance
           updated_balance = start_balance

@@ -8,13 +8,24 @@ module Bank
     def self.all
       account_array = []
       CSV.open("support/accounts.csv", 'r').each do |account|
-        id = account[1]
-        balance = Integer(account[0])
-        open_date = String(account[3])
+        id = account[0]
+        balance = Integer(account[1])
+        open_date = account[2]
         new_account = Account.new(id, balance, open_date)
         account_array << new_account
       end
       return account_array
+    end
+
+    def self.find(id)
+      CSV.open("support/accounts.csv", 'r').each do |account|
+        if account[0] == id
+          balance = Integer(account[1])
+          open_date = account[2]
+          existing_account = Account.new(id, balance, open_date)
+          return existing_account
+        end
+      end
     end
 
 

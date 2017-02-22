@@ -1,16 +1,27 @@
+require 'csv'
+# require_relative '../support/accounts.csv'
+
 module Bank
   class Account
 
     def self.all
+      my_file = CSV.open("support/accounts.csv")
+      all_accounts = []
+      my_file.each do |line|
+        account = Account.new(line[0], (sprintf("%.01f",line[1])).to_f / 100, line[2])
+        all_accounts << account
+      end
+      # puts all_accounts
     end
 
-    attr_reader :id, :balance, :owner
-    def initialize(id, balance, owner)
+    attr_reader :id, :balance, :owner, :open_date
+    def initialize(id, balance, open_date=nil, owner=nil)
       if balance < 0
         raise ArgumentError.new "Can't be negative starting balance"
       end
       @id = id
       @balance = balance
+      @open_date = open_date
       @owner = owner
     end
 
@@ -33,13 +44,15 @@ module Bank
     end
 
 
-  end
+  end # end of Account class
 
   class Owner
     attr_reader :name, :address
-    def initialize(name, address)
+    def initialize(name=nil, address=nil)
       @name = name
       @address = address
     end
   end
 end
+
+Bank::Account.all

@@ -7,16 +7,18 @@ module Bank
     def initialize(id, balance)
       @id = id
 
-      if balance > 0
+      if balance >= 0
         @balance = balance
       else
         raise ArgumentError.new "Account balance should not start with a negative number"
-
       end
 
+    end #end of initialize
 
-    end
 
-  end
 
-end
+
+
+  end #end of class
+
+end #end of module

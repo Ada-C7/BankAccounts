@@ -3,7 +3,7 @@ module Bank
   class Account
 
     attr_reader :id
-    attr_accessor :withdrawal_amount, :balance
+    attr_accessor :balance
 
     def initialize(id, balance)
       @id = id
@@ -17,14 +17,27 @@ module Bank
     end #end of initialize
 
     def withdraw(withdrawal_amount)
-
-      if @balance > withdrawal_amount
-        return @balance -= withdrawal_amount
+      if withdrawal_amount < 0
+        raise ArgumentError.new "Withdrawal amount cannot be negative number"
       else
-        raise ArgumentError.new "Your account is overdrawn"
+        if @balance < withdrawal_amount
+          print "Your account is going to be overdrawn"
+          @balance = @balance
+        elsif @balance >= withdrawal_amount
+          return @balance -= withdrawal_amount
+        end
       end
 
     end #end of withdraw method
+
+    def deposit(deposit_amount)
+      if deposit_amount < 0
+        raise ArgumentError.new "Deposit amount cannot be negative number"
+      else
+        @balance += deposit_amount
+      end
+
+    end #end of deposit method
 
   end #end of class
 

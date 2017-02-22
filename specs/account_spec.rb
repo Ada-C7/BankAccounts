@@ -70,16 +70,14 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output(/.+/)
 
     end
 
     it "Doesn't modify the balance if the account would go negative" do
-      skip
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
-
       updated_balance = account.withdraw(withdrawal_amount)
 
       # Both the value returned and the balance in the account
@@ -89,7 +87,6 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
-      skip
       account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
@@ -97,7 +94,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive withdrawal amount" do
-      skip
+
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
@@ -110,7 +107,7 @@ describe "Wave 1" do
 
   describe "Account#deposit" do
     it "Increases the balance" do
-    skip
+
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -122,7 +119,7 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
-    skip
+
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -134,7 +131,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive deposit amount" do
-    skip
+    
       start_balance = 100.0
       deposit_amount = -25.0
       account = Bank::Account.new(1337, start_balance)

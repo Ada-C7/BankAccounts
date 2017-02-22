@@ -68,7 +68,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -173,8 +173,10 @@ end
 describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
+      accounts = Bank::Account.all
+      expect(accounts.class).must_equal Array
+
+
       #   - Account.all returns an array
       #   - Everything in the array is an Account
       #   - The number of accounts is correct

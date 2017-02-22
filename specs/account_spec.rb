@@ -9,7 +9,7 @@ describe "Wave 1" do
       id = 1337
       balance = 100.0
       account = Bank::Account.new(id, balance)
-
+#Bank = Module Account = Class; name needs to match exactly -m
       account.must_respond_to :id
       account.id.must_equal id
 
@@ -67,7 +67,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -139,7 +139,7 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do
+    it "Returns an array of all accounts" do skip
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
@@ -152,19 +152,19 @@ xdescribe "Wave 2" do
   end
 
   describe "Account.find" do
-    it "Returns an account that exists" do
+    it "Returns an account that exists" do skip
       # TODO: Your test code here!
     end
 
-    it "Can find the first account from the CSV" do
+    it "Can find the first account from the CSV" do skip
       # TODO: Your test code here!
     end
 
-    it "Can find the last account from the CSV" do
+    it "Can find the last account from the CSV" do skip
       # TODO: Your test code here!
     end
 
-    it "Raises an error for an account that doesn't exist" do
+    it "Raises an error for an account that doesn't exist" do skip
       # TODO: Your test code here!
     end
   end

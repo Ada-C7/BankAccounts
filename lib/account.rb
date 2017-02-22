@@ -1,17 +1,25 @@
-require_relative 'owner'
+require 'csv'
+#require_relative 'owner'
 
 module Bank
   class Account
-    attr_reader :id, :owner, :balance
+    attr_reader :id, :balance
 
-    def initialize(id, owner, balance)
+    def self.all
+      accounts = []
+      CSV.read("support/accounts.csv").each do |line|
+        accounts << Bank::Account.new(line[0], line[1].to_f)
+      end
+      return accounts
+    end
+
+    def initialize(id, balance)
       @id = id
-      @owner = owner
 
-      if balance >= 0
-        @balance = balance
-      else #throws error if negative balance is given
+      if balance < 0 #throws error if negative balance is given
         raise ArgumentError.new "Balance cannot be negative"
+      else
+        @balance = balance
       end
 
     end
@@ -33,10 +41,10 @@ module Bank
 
     def deposit(deposit_amount)
 
-      if deposit_amount > 0
-        @balance += deposit_amount
-      else #throws error if deposit is negative
+      if deposit_amount <= 0 #throws error if deposit is negative
         raise ArgumentError.new "You must deposit a positive amount."
+      else
+        @balance += deposit_amount
       end
 
     end

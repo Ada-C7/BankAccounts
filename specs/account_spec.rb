@@ -1,31 +1,32 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 require_relative '../lib/account'
 
 Minitest::Reporters.use!
 
 describe "Wave 1" do
-  before do
-    owner_hash = {
-      name: "Ada",
-      address: "123 Fake Street",
-      email: "ada@example.com"
-    }
-    @owner = Bank::Owner.new(owner_hash)
-  end
+  # before do
+  #   owner_hash = {
+  #     name: "Ada",
+  #     address: "123 Fake Street",
+  #     email: "ada@example.com"
+  #   }
+  #   @owner = Bank::Owner.new(owner_hash)
+  # end
 
   describe "Account#initialize" do
-    it "Takes an ID, owner, and an initial balance" do
+    it "Takes an ID and an initial balance" do
       id = 1337
       balance = 100.0
-      account = Bank::Account.new(id, @owner, balance)
+      account = Bank::Account.new(id, balance)
 
       account.must_respond_to :id
       account.id.must_equal id
 
-      account.must_respond_to :owner
-      account.owner.must_equal @owner
+      # account.must_respond_to :owner
+      # account.owner.must_equal @owner
 
       account.must_respond_to :balance
       account.balance.must_equal balance
@@ -37,13 +38,13 @@ describe "Wave 1" do
       # This code checks that, when the proc is executed, it
       # raises an ArgumentError.
       proc {
-        Bank::Account.new(1337, @owner, -100.0)
+        Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
-      Bank::Account.new(1337, @owner, 0)
+      Bank::Account.new(1337, 0)
     end
   end
 
@@ -51,7 +52,7 @@ describe "Wave 1" do
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, @owner, start_balance)
+      account = Bank::Account.new(1337, start_balance)
 
       account.withdraw(withdrawal_amount)
 
@@ -62,7 +63,7 @@ describe "Wave 1" do
     it "Returns the modified balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, @owner, start_balance)
+      account = Bank::Account.new(1337, start_balance)
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -73,7 +74,7 @@ describe "Wave 1" do
     it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, @owner, start_balance)
+      account = Bank::Account.new(1337, start_balance)
 
       # Another proc! This test expects something to be printed
       # to the terminal, using 'must_output'. /.+/ is a regular
@@ -81,13 +82,13 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, @owner, start_balance)
+      account = Bank::Account.new(1337, start_balance)
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -98,7 +99,7 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
-      account = Bank::Account.new(1337, @owner, 100.0)
+      account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
@@ -107,7 +108,7 @@ describe "Wave 1" do
     it "Requires a positive withdrawal amount" do
       start_balance = 100.0
       withdrawal_amount = -25.0
-      account = Bank::Account.new(1337, @owner, start_balance)
+      account = Bank::Account.new(1337, start_balance)
 
       proc {
         account.withdraw(withdrawal_amount)
@@ -119,7 +120,7 @@ describe "Wave 1" do
     it "Increases the balance" do
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, @owner, start_balance)
+      account = Bank::Account.new(1337, start_balance)
 
       account.deposit(deposit_amount)
 
@@ -130,7 +131,7 @@ describe "Wave 1" do
     it "Returns the modified balance" do
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, @owner, start_balance)
+      account = Bank::Account.new(1337, start_balance)
 
       updated_balance = account.deposit(deposit_amount)
 
@@ -141,7 +142,7 @@ describe "Wave 1" do
     it "Requires a positive deposit amount" do
       start_balance = 100.0
       deposit_amount = -25.0
-      account = Bank::Account.new(1337, @owner, start_balance)
+      account = Bank::Account.new(1337, start_balance)
 
       proc {
         account.deposit(deposit_amount)
@@ -150,18 +151,30 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+      account_array = Bank::Account.all
+      csv_info = CSV.read('support/accounts.csv')
+
+      # Account.all returns an array
+      account_array.must_be_instance_of Array
+
+      # Everything in the array is an Account
+      account_array.each do |account|
+        account.must_be_instance_of Bank::Account
+      end
+
+      # The number of accounts is correct
+      account_array.length.must_equal csv_info.count
+
+      # The ID & balance of the first & last accounts are correct
+      account_array[0].id.must_equal csv_info[0][0]
+      account_array[0].balance.must_equal csv_info[0][1].to_f
+
+      account_array[-1].id.must_equal csv_info[-1][0]
+      account_array[-1].balance.must_equal csv_info[-1][1].to_f
+
     end
   end
 

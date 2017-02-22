@@ -67,7 +67,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -140,6 +140,7 @@ end
 xdescribe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
+      skip
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
@@ -153,18 +154,22 @@ xdescribe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the first account from the CSV" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the last account from the CSV" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Raises an error for an account that doesn't exist" do
+      skip
       # TODO: Your test code here!
     end
   end

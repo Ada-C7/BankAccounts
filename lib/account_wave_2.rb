@@ -1,6 +1,9 @@
 module Bank
   class Account
 
+    def self.all
+    end
+
     attr_reader :id, :balance, :owner
     def initialize(id, balance, owner)
       if balance < 0

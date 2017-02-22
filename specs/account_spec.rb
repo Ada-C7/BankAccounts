@@ -30,6 +30,9 @@ describe "Wave 1" do
 
       account.must_respond_to :owner
       account.owner.must_equal owner
+
+      # Appropriately handles open_date as date object
+      account.open_date.year.must_equal 1994
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
@@ -176,9 +179,6 @@ describe "Wave 2" do
     end
 
     it "Returns an array of all accounts" do
-
-      @accounts = Bank::Account.all
-
       # Account.all returns an array
       @accounts.must_be_instance_of Array
     end

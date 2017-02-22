@@ -1,16 +1,17 @@
 require 'csv'
+require 'date'
 
 module Bank
   class Account
 
-    attr_reader :id, :balance, :owner
+    attr_reader :id, :balance, :owner, :open_date
 
     def initialize(account_info)
       raise ArgumentError.new("Balance cannot be negative.") if account_info[:balance] < 0
 
       @id = account_info[:id]
       @balance = account_info[:balance]
-      @open_date = account_info[:open_date]
+      @open_date = Date.parse(account_info[:open_date]) unless account_info[:open_date].nil?
       @owner = account_info[:owner]
     end
 

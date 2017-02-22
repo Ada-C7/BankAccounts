@@ -9,23 +9,25 @@ module Bank
     end
 
     def withdraw(amount)
-      @balance = @balance - amount
-      if @balance < 0
+      if @balance < amount
         it "Raises ArgumentError if account has a negative balance" do
           expect{ Bank.validate_arguments(nil) }.to raise_error(ArgumentError)
-          proc {
-            account.withdraw(withdrawal_amount)
-          }.must_output "Something"
         end
+      elsif @balance >= amount
+        @balance = @balance - amount
       end
       return @balance
     end
 
     def deposit(amount)
-      # TODO: implement deposit
+      # if amount < 0
+      #   .must_raise
+      # end
+      @balance = @balance + amount
+      return @balance
     end
   end
 end
 
-test_1 = Bank::Account.new(200, 50)
-test_1.withdraw(50)
+# test_1 = Bank::Account.new(200, 50)
+# test_1.withdraw(50)

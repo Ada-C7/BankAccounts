@@ -14,10 +14,20 @@ module Bank
       # TODO: implement withdraw
       start_balance = @balance
       withdrawal_amount = amount
-      updated_balance = start_balance - withdrawal_amount
+      if withdrawal_amount < 0
+        raise ArgumentError.new 'You cannot withdraw a negative number'
+      end
+
+      if start_balance < withdrawal_amount
+        raise ArgumentError.new 'Warning, account would go negative. Cannot withdraw.'
+        withdrawal_amount = 0
+      end
+
+      @balance = start_balance - withdrawal_amount
+
       # if updated_balance < 0 then
-      #   raise ArgumentError.new("You cannot withdraw #{withdrawal_amount}. Your balance is #{start_balance}.")
-      #   @balance = start_balance
+      #   raise ArgumentError.new("Warning, your account would go negative.")
+      #   updated_balance = start_balance
       # end
     end
 

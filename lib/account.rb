@@ -19,6 +19,7 @@ module Bank
           puts "Amount to withdraw must be greater than balance"
           start_balance = @balance
           updated_balance = start_balance
+          @balance = updated_balance
         else
           start_balance = @balance
           updated_balance = @balance - money_to_withdraw
@@ -30,7 +31,13 @@ module Bank
     end
 
     def deposit(money_to_deposit)
-      @balance = @balance + money_to_deposit
+      if money_to_deposit > 0
+        start_balance = @balance
+        updated_balance = start_balance + money_to_deposit
+        @balance = updated_balance
+      else
+        raise ArgumentError.new "The deposit amount must be greater than zero"
+      end
     end
 
   end

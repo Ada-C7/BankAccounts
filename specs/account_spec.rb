@@ -103,7 +103,7 @@ describe "Wave 1" do
     end
   end
 
-  xdescribe "Account#deposit" do
+  describe "Account#deposit" do
     it "Increases the balance" do
       start_balance = 100.0
       deposit_amount = 25.0

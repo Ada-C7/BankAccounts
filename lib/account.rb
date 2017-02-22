@@ -43,6 +43,22 @@ module Bank
 
           end
 
+          def deposit(deposit_amount)
+
+               if deposit_amount >= 0
+
+                    start_balance = @balance
+
+                    @balance = start_balance + deposit_amount
+
+               else
+                    raise ArgumentError.new "Withdrawal amounts must be positive."
+
+               end
+
+
+          end
+
 
      end
 

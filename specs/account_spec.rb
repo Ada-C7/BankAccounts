@@ -93,7 +93,6 @@ describe "Wave 1" do
     end
 
     it "Requires a positive withdrawal amount" do
-      # skip
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
@@ -106,7 +105,6 @@ describe "Wave 1" do
 
   describe "Account#deposit" do
     it "Increases the balance" do
-      # skip
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -118,7 +116,6 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
-      # skip
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -130,7 +127,6 @@ describe "Wave 1" do
     end
 
     it "Requires a positive deposit amount" do
-      skip
       start_balance = 100.0
       deposit_amount = -25.0
       account = Bank::Account.new(1337, start_balance)

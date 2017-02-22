@@ -69,7 +69,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
 
     end
 

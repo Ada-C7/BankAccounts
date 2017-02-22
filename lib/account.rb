@@ -11,7 +11,7 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      raise ArgumentError.new "The withdrawal amount must have a positive value." if withdrawal_amount < 0
+      raise ArgumentError.new ("Withdrawal must be >=0") if withdrawal_amount < 0
 
       if @balance - withdrawal_amount < 0
         puts "This withdrawal would create a negative balance."
@@ -22,9 +22,8 @@ module Bank
     end
 
     def deposit(deposit_amount)
-      if deposit_amount < 0
-        raise ArgumentError.new "The deposit amount must have a positive value."
-      end
+      raise ArgumentError.new ("Deposit must be >= 0.") if deposit_amount < 0
+      
       @balance += deposit_amount
     end
 

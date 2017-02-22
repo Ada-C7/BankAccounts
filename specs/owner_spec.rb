@@ -16,15 +16,15 @@ describe "Owner#initialize" do
     owner.first_name.must_equal first_name
   end
 
-  it "Takes an address" do
-    address = {
-      address1: "787 Somewhere St.",
-      address2: "Unit X",
-      city: "Albuquerque",
-      st: "NM",
-      zip: 87101
-    }
-  end
+  # it "Takes an address" do
+  #   address = {
+  #     address1: "787 Somewhere St.",
+  #     address2: "Unit X",
+  #     city: "Albuquerque",
+  #     st: "NM",
+  #     zip: 87101
+  #   }
+  # end
 
 end
 

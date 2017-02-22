@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require_relative '../lib/owner'
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -33,8 +34,11 @@ describe "Wave 1" do
     end
   end
 
+
   describe "Account#withdraw" do
+
     it "Reduces the balance" do
+
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -46,6 +50,7 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
+
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -57,6 +62,7 @@ describe "Wave 1" do
     end
 
     it "Outputs a warning if the account would go negative" do
+
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -71,6 +77,7 @@ describe "Wave 1" do
     end
 
     it "Doesn't modify the balance if the account would go negative" do
+
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -84,6 +91,7 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
+
       account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
@@ -91,6 +99,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive withdrawal amount" do
+
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
@@ -102,7 +111,9 @@ describe "Wave 1" do
   end
 
   describe "Account#deposit" do
+
     it "Increases the balance" do
+
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -114,6 +125,7 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
+
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -125,6 +137,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive deposit amount" do
+
       start_balance = 100.0
       deposit_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
@@ -136,10 +149,37 @@ describe "Wave 1" do
   end
 end
 
+
+describe "Wave 1 - optional" do
+
+  describe "Owner#initialize" do
+    it "takes owner info as hash" do
+      owner1_test = { :name => "Sally Mae", :address => "1234 Some Street, Seattle, WA 98144", :account_type => :checking }
+      new_owner = Bank::Owner.new(owner1_test)
+
+      new_owner.must_respond_to :name
+      new_owner.name.must_equal owner1_test[:name]
+
+      new_owner.must_respond_to :address
+      new_owner.address.must_equal owner1_test[:address]
+
+      new_owner.must_respond_to :account_type
+      new_owner.account_type.must_equal owner1_test[:account_type]
+    end
+  end
+
+
+
+end
+
+
+
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Wave 2" do
+
   describe "Account.all" do
     it "Returns an array of all accounts" do
+      skip
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
@@ -151,20 +191,26 @@ xdescribe "Wave 2" do
     end
   end
 
+
   describe "Account.find" do
+
     it "Returns an account that exists" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the first account from the CSV" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the last account from the CSV" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Raises an error for an account that doesn't exist" do
+      skip
       # TODO: Your test code here!
     end
   end

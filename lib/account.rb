@@ -1,24 +1,20 @@
+
 module Bank
     class Account
-        attr_reader :id, :balance
+        attr_accessor :id, :balance
+
         def initialize (id, balance)
-            @id
-            @balance
+            @id = id
+            @balance = balance
         end
 
         def show_balance
-            return @balance
-            puts "its working"
-
+            puts "Your balance is: $#{@balance}"
         end
-
-
-
-
 
     end
 
 end
 
 my_account = Bank::Account.new(16, 1000)
-puts my_account.show_balance
+my_account.show_balance

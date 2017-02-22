@@ -1,10 +1,23 @@
 module Bank
 
+     class Owner
+
+          attr_accessor :name, :phone
+
+          def initialize(hash)
+
+               @name = hash[:name]
+               @phone = hash[:phone]
+
+          end
+
+     end
+
      class Account
 
-          attr_accessor :id, :balance, :start_balance
+          attr_accessor :id, :balance, :owner
 
-          def initialize(id, balance)
+          def initialize(id, balance, hash)
 
                @id = id
 
@@ -16,7 +29,7 @@ module Bank
 
                end
 
-               @start_balance
+               @owner = Bank::Owner.new(hash)
 
           end
 
@@ -64,10 +77,21 @@ module Bank
 
 end
 
-
-# new_account = Bank::Account.new(133, 100)
+# hash = {name: "Janice", phone: "303-349-1433"}
+#
+# owner_1 = Bank::Owner.new(hash)
+#
+# puts owner_1.name
+#
+# puts owner_1.phone
+#
+# new_account = Bank::Account.new(133, 100, hash)
 #
 # puts new_account.balance
+#
+# puts new_account.owner.name
+#
+# puts new_account.owner.phone
 #
 # expected_balance = new_account.withdraw(25)
 #

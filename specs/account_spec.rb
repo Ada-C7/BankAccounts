@@ -6,17 +6,25 @@ require_relative '../lib/account'
 Minitest::Reporters.use!
 
 describe "Wave 1" do
+     before do
+          @hash = {name: "Janice", phone: "303-349-1433"}
+          @id = 1337
+          @balance = 100.0
+          @account = Bank::Account.new(@id, @balance, @hash)
+     end
   describe "Account#initialize" do
-    it "Takes an ID and an initial balance" do
-      id = 1337
-      balance = 100.0
-      account = Bank::Account.new(id, balance)
+    it "Takes an ID, an initial balance and account owner" do
 
-      account.must_respond_to :id
-      account.id.must_equal id
+      @account.must_respond_to :id
+      @account.id.must_equal @id
 
-      account.must_respond_to :balance
-      account.balance.must_equal balance
+      @account.must_respond_to :balance
+      @account.balance.must_equal @balance
+
+      @account.must_respond_to :owner
+      @account.owner.name.must_equal @hash[:name]
+      @account.owner.phone.must_equal @hash[:phone]
+
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
@@ -25,21 +33,26 @@ describe "Wave 1" do
       # This code checks that, when the proc is executed, it
       # raises an ArgumentError.
       proc {
-        Bank::Account.new(1337, -100.0)
+           @hash
+           Bank::Account.new(@id, -100.0, @hash)
       }.must_raise ArgumentError
+
+
     end
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
-      Bank::Account.new(1337, 0)
+      @hash
+      Bank::Account.new(@id, 0, @hash)
     end
   end
 
   describe "Account#withdraw" do
     it "Reduces the balance" do
+      hash = {name: "Janice", phone: "303-349-1433"}
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, hash)
 
       account.withdraw(withdrawal_amount)
 
@@ -48,9 +61,10 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
+      hash = {name: "Janice", phone: "303-349-1433"}
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, hash)
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -59,9 +73,10 @@ describe "Wave 1" do
     end
 
     it "Outputs a warning if the account would go negative" do
+      hash = {name: "Janice", phone: "303-349-1433"}
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, hash)
 
       # Another proc! This test expects something to be printed
       # to the terminal, using 'must_output'. /.+/ is a regular
@@ -73,9 +88,10 @@ describe "Wave 1" do
     end
 
     it "Doesn't modify the balance if the account would go negative" do
+      hash = {name: "Janice", phone: "303-349-1433"}
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, hash)
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -86,16 +102,18 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
-      account = Bank::Account.new(1337, 100.0)
+      hash = {name: "Janice", phone: "303-349-1433"}
+      account = Bank::Account.new(1337, 100.0, hash)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
     end
 
     it "Requires a positive withdrawal amount" do
+      hash = {name: "Janice", phone: "303-349-1433"}
       start_balance = 100.0
       withdrawal_amount = -25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, hash)
 
       proc {
         account.withdraw(withdrawal_amount)
@@ -105,9 +123,10 @@ describe "Wave 1" do
 
   describe "Account#deposit" do
     it "Increases the balance" do
+      hash = {name: "Janice", phone: "303-349-1433"}
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, hash)
 
       account.deposit(deposit_amount)
 
@@ -116,9 +135,10 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
+      hash = {name: "Janice", phone: "303-349-1433"}
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, hash)
 
       updated_balance = account.deposit(deposit_amount)
 
@@ -127,9 +147,10 @@ describe "Wave 1" do
     end
 
     it "Requires a positive deposit amount" do
+      hash = {name: "Janice", phone: "303-349-1433"}
       start_balance = 100.0
       deposit_amount = -25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, hash)
 
       proc {
         account.deposit(deposit_amount)

@@ -38,7 +38,8 @@ module Bank
   end
 
   class Owner
-    
+    attr_reader :name, :phone
+
     def initialize(name, phone)
       name = name
       phone = phone

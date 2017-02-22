@@ -10,6 +10,10 @@ describe "Wave 1" do
       name = "Lynn Trickey"
       phone = "206-240-1029"
       new_owner = Bank::Owner.new(name, phone)
+
+      new_owner.must_respond_to :name
+      new_owner.must_respond_to :phone
+
     end
   end
   describe "Account#initialize" do

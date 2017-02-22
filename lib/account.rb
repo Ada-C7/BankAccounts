@@ -23,7 +23,10 @@ module Bank
       end
 
       @balance
+    end
 
+    def deposit(deposit_amount)
+      @balance += deposit_amount
     end
 
   end

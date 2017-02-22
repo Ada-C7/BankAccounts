@@ -3,12 +3,17 @@ module Bank
 
     attr_reader :id, :balance, :owner
 
-    def initialize(id, balance, owner=nil)
-      raise ArgumentError.new("Balance cannot be negative.") if balance < 0
+    def initialize(account_info)
+      raise ArgumentError.new("Balance cannot be negative.") if account_info[:balance] < 0
 
-      @id = id
-      @balance = balance
-      @owner = owner
+      @id = account_info[:id]
+      @balance = account_info[:balance]
+      @open_date = account_info[:open_date]
+      @owner = account_info[:owner]
+    end
+
+    def self.all
+
     end
 
     def add_owner owner

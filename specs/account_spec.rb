@@ -3,6 +3,8 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
 
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 describe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
@@ -57,7 +59,6 @@ describe "Wave 1" do
     end
 
     it "Outputs a warning if the account would go negative" do
-      skip # TABLED!!!
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -72,7 +73,6 @@ describe "Wave 1" do
     end
 
     it "Doesn't modify the balance if the account would go negative" do
-      skip
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -93,7 +93,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive withdrawal amount" do
-      skip
+      # skip
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new(1337, start_balance)

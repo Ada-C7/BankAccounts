@@ -3,18 +3,16 @@ module Bank
     attr_reader :id, :balance
     def initialize(id, balance)
       raise ArgumentError.new("balance must be >= 0") if balance < 0
-
+      # raise ArgumentError.new("") #I AM HERE!!!
       @id = id
       @balance = balance
     end
 
     def withdraw(amount)
-      if @balance < amount
-        # Account.new.must_output "hi"
-        it "Raises ArgumentError if account has a negative balance" do
-          expect{ Bank.validate_arguments(nil) }.to raise_error(ArgumentError)
-        end
-      elsif @balance >= amount
+      if amount > @balance
+        raise ArgumentError.new("withdrawal amount must be > 0") if @balance < 0 #@balance < amount
+        puts "Account would go negative."
+      elsif amount < @balance
         @balance = @balance - amount
       end
       return @balance

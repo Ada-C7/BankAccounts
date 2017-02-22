@@ -38,6 +38,12 @@ module Bank
   end
 
   class Owner
+    
+    def initialize(name, phone)
+      name = name
+      phone = phone
+    end
+
   end
-  
+
 end

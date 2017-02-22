@@ -13,7 +13,7 @@ module Bank
       end
     end
 
-    def withdraw(withdrawal_amount) # method needs to subtract withdrawal amt from bal and return the updated bal
+    def withdraw(withdrawal_amount) # method subtracts withdrawal amt from bal and return the updated bal
       bal_after_withdrawal = balance - withdrawal_amount
 
       if withdrawal_amount > balance
@@ -24,13 +24,19 @@ module Bank
       end
     end
 
-    def deposit(deposit_amount) # method needs to add deposit amt to bal and return the updated bal
-      bal_after_deposit = @balance + deposit_amount
-      return bal_after_deposit
+    def deposit(deposit_amount) # method adds deposit amt to bal and return the updated bal
+      bal_after_deposit = balance + deposit_amount
+
+      if deposit_amount < 0
+        raise ArgumentError.new "Please enter a positive integer."
+      else
+        @balance = bal_after_deposit
+      end
+      return balance
     end
 
     def balance_inquiry # method needs to let user access balance at any time
       puts @balance
     end
   end
-  end
+end

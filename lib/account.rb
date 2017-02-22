@@ -1,10 +1,12 @@
+require_relative 'owner'
 module Bank
-
 
   class Account
     # you are not using writer methods when you change @balance so can get away with an attr_reader
     attr_reader :id, :balance
 
+    #the owner is going to be the owner object
+    # def initialize(id, balance, owner)
     def initialize(id, balance)
       @id = id
       unless balance >= 0

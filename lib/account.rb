@@ -1,25 +1,35 @@
+require 'csv'
 
 module Bank
 
   class Account
-    attr_reader :id, :owner, :balance
+    attr_reader :id, :balance, :date, :owner
 
     def self.all
-      [Bank::Account.new(1212, "first customer", 1235667), Bank::Account.new(15156, "last customer", 4356772)]
+      all_accounts = []
+      CSV.open("accounts.csv").each do | line |
+        acct_data = {}
+        acct_data[:id] = line[0].to_i
+        acct_data[:balance] = line[1].to_f
+        acct_data[:date] = line[2]
+        all_accounts << Bank::Account.new(acct_data)
+      end
+      return all_accounts
     end
 
-    def initialize(id, owner, balance)
-      @id = id
+    def self.find(id)
+    end
+
+    def initialize(acct_data, owner = "Customer Name")
+      raise ArgumentError.new("You cannot create a bank account with a negative balance, you goober.") if acct_data[:balance] >= 0
+      @idea = acct_data[:id]
+      @date = acct_data[:date]
+      @balance = acct_data[:balance]
       @owner = owner
-      if balance >= 0
-        @balance = balance
-      else
-        raise ArgumentError.new "You cannot create a bank account with a negative balance, you goober."
-      end
     end
 
     def withdraw(withdrawal_amount)
-      raise ArgumentError.new("amount must >= 0") if withdrawal_amount < 0
+      raise ArgumentError.new("You cannot withdraw a negative amount of money, you silly pants.") if withdrawal_amount < 0
       # if withdrawal_amount > 0
         if withdrawal_amount > @balance
           print "Uh oh! You can't overdraw your account, you doof!"

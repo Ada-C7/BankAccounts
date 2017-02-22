@@ -16,6 +16,10 @@ module Bank
     def withdraw(withdrawal_amount) # method subtracts withdrawal amt from bal and return the updated bal
       bal_after_withdrawal = balance - withdrawal_amount
 
+      if withdrawal_amount < 0
+        raise ArgumentError.new "Please enter a positive integer."
+      end
+
       if withdrawal_amount > balance
         raise ArgumentError.new "You cannot withdraw that amount right now, please enter a smaller withdrawal amount."
       else

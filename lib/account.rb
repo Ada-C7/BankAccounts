@@ -1,15 +1,12 @@
+require 'csv'
+
 module Bank
 
   class Account
     attr_accessor :balance, :owner
     attr_reader :id
 
-    def self.all
-
-    end
-
-    def initialize(id, balance, opendate)
-
+    def initialize(id, balance, opendate = "nodate")
       @id = id
       @opendate = opendate
 
@@ -18,19 +15,25 @@ module Bank
       else
         @balance = balance
       end
+    end
 
-      def add_owner(owner)
-
-        if owner.class == Owner
-          @owner = owner
-        else
-          raise ArgumentError.new "You must add a class type of Owner."
-        end
-
+    def self.all
+      accounts = []
+      CSV.open("support/accounts.csv").each do |account|
+        accounts << Bank::Account.new(account[0].to_i, account[1].to_i, account[2].to_s)
       end
+      accounts
+    end
 
-      def withdraw(withdrawal_amount)
+    def add_owner(owner)
+      if owner.class == Owner
+        @owner = owner
+      else
+        raise ArgumentError.new "You must add a class type of Owner."
+      end
+    end
 
+    def withdraw(withdrawal_amount)
       raise ArgumentError.new("Withdrawal must be >=0") if withdrawal_amount < 0
 
       if @balance - withdrawal_amount < 0
@@ -39,19 +42,14 @@ module Bank
       else
         @balance -= withdrawal_amount
       end
+    end
 
-      end
-
-      def deposit(deposit_amount)
-
+    def deposit(deposit_amount)
       if deposit_amount > 0
         @balance += deposit_amount
       else
         raise ArgumentError.new "Your deposit must be greater than zero."
       end
-
-      end
-
     end
 
   end
@@ -68,6 +66,8 @@ module Bank
 
 end
 
-my_account = Bank::Account.new(1212,1235667,"1999-03-27 11:30:09 -0800")
+# my_account = Bank::Account.new(1212,1235667,"1999-03-27 11:30:09 -0800")
+#
+# puts my_account.balance
 
-puts my_account.balance
+puts Bank::Account.all

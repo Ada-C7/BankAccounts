@@ -5,10 +5,27 @@ require_relative '../lib/account'
 require_relative '../lib/owner'
 
 describe "Wave 1" do
+
+  # before do
+  #   owner1_test = { :name => "Sally Mae", :address => "1234 Some Street, Seattle, WA 98144", :account_type => :checking }
+  #
+  #   new_owner = Bank::Owner.new(owner1_test)
+  # end
+
   describe "Account#initialize" do
+
+    # before do
+    #   owner1_test = { :name => "Sally Mae", :address => "1234 Some Street, Seattle, WA 98144", :account_type => :checking }
+    #
+    #   new_owner = Bank::Owner.new(owner1_test)
+    # end
+
     it "Takes an ID and an initial balance" do
       id = 1337
       balance = 100.0
+      # owner1_test = { :name => "Sally Mae", :address => "1234 Some Street, Seattle, WA 98144", :account_type => :checking }
+      #
+      # new_owner = Bank::Owner.new(owner1_test)
       account = Bank::Account.new(id, balance)
 
       account.must_respond_to :id
@@ -16,9 +33,15 @@ describe "Wave 1" do
 
       account.must_respond_to :balance
       account.balance.must_equal balance
+
+      # account.must_respond_to :owner
+      # account.owner.must_equal new_owner
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
+
+
+
       # Note: we haven't talked about procs yet. You can think
       # of them like blocks that sit by themselves.
       # This code checks that, when the proc is executed, it
@@ -29,6 +52,8 @@ describe "Wave 1" do
     end
 
     it "Can be created with a balance of 0" do
+
+
       # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end
@@ -37,7 +62,14 @@ describe "Wave 1" do
 
   describe "Account#withdraw" do
 
+    # before do
+    #   owner1_test = { :name => "Sally Mae", :address => "1234 Some Street, Seattle, WA 98144", :account_type => :checking }
+    #
+    #   new_owner = Bank::Owner.new(owner1_test)
+    # end
+
     it "Reduces the balance" do
+
 
       start_balance = 100.0
       withdrawal_amount = 25.0
@@ -51,6 +83,7 @@ describe "Wave 1" do
 
     it "Returns the modified balance" do
 
+
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -62,6 +95,7 @@ describe "Wave 1" do
     end
 
     it "Outputs a warning if the account would go negative" do
+
 
       start_balance = 100.0
       withdrawal_amount = 200.0
@@ -77,6 +111,7 @@ describe "Wave 1" do
     end
 
     it "Doesn't modify the balance if the account would go negative" do
+
 
       start_balance = 100.0
       withdrawal_amount = 200.0
@@ -111,6 +146,13 @@ describe "Wave 1" do
   end
 
   describe "Account#deposit" do
+
+    # before do
+    #   owner1_test = { :name => "Sally Mae", :address => "1234 Some Street, Seattle, WA 98144", :account_type => :checking }
+    #
+    #   new_owner = Bank::Owner.new(owner1_test)
+    # end
+
 
     it "Increases the balance" do
 
@@ -149,40 +191,65 @@ describe "Wave 1" do
   end
 end
 
-
-describe "Wave 1 - optional" do
-
-  describe "Owner#initialize" do
-    it "takes owner info as hash" do
-      owner1_test = { :name => "Sally Mae", :address => "1234 Some Street, Seattle, WA 98144", :account_type => :checking }
-      new_owner = Bank::Owner.new(owner1_test)
-
-      new_owner.must_respond_to :name
-      new_owner.name.must_equal owner1_test[:name]
-
-      new_owner.must_respond_to :address
-      new_owner.address.must_equal owner1_test[:address]
-
-      new_owner.must_respond_to :account_type
-      new_owner.account_type.must_equal owner1_test[:account_type]
-    end
-  end
-
-
-
-end
+#
+# describe "Wave 1 - optional" do
+#
+#   describe "Owner#initialize" do
+#     it "takes owner info as hash" do
+#       owner1_test = { :name => "Sally Mae", :address => "1234 Some Street, Seattle, WA 98144", :account_type => :checking }
+#       new_owner = Bank::Owner.new(owner1_test)
+#
+#       new_owner.must_respond_to :name
+#       new_owner.name.must_equal owner1_test[:name]
+#
+#       new_owner.must_respond_to :address
+#       new_owner.address.must_equal owner1_test[:address]
+#
+#       new_owner.must_respond_to :account_type
+#       new_owner.account_type.must_equal owner1_test[:account_type]
+#     end
+#   end
+#
+#   describe "Account#initialize" do
+#     it "Takes an ID, initial balance, and owner_info" do
+#       id = 1337
+#       balance = 100.0
+#       owner2_test = { :name => "Jim Bob", :address => "5678 Some Street, Seattle, WA 98109", :account_type => :savings }
+#       account = Bank::Account.new(id, balance)
+#
+#       account.must_respond_to :id
+#       account.id.must_equal id
+#
+#       account.must_respond_to :balance
+#       account.balance.must_equal balance
+#
+#       account.owner_name.must_respond_to :name
+#       acount.owner_name.must_equal Bank::Owner.name
+#     end
+#   end
+#
+#
+# end
 
 
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
 
   describe "Account.all" do
     it "Returns an array of all accounts" do
-      skip
+
+
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
+
+
+
+      account_array = Bank::Account.all
+
+      account_array.class.must_equal Array
+
       #   - Everything in the array is an Account
       #   - The number of accounts is correct
       #   - The ID and balance of the first and last

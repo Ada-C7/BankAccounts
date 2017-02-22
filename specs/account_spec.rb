@@ -183,9 +183,17 @@ describe "Wave 2" do
       accounts.each do |account|
         expect(account.class).must_equal Bank::Account
       end
-
     end
       #   - The number of accounts is correct
+      it "Has the correct amounts of account" do
+        count = 0
+        accounts = Bank::Account.all
+        CSV.open("support/accounts.csv", 'r').each do |account|
+          count += 1
+        end
+        expect(accounts.length).must_equal count
+
+      end
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       # Feel free to split this into multiple tests if needed

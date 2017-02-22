@@ -17,9 +17,11 @@ module Bank
 
       if new_balance < 0
         print "You are withdrawing too much!"
+      else
+        @balance = new_balance
       end
 
-      @balance = new_balance
+      @balance
 
     end
 

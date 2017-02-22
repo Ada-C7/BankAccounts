@@ -16,11 +16,15 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      @balance -= withdrawal_amount
-      if @balance < 0
-        print "Uh oh! You've overdrawn your account!"
-      else
+      if withdrawal_amount > 0
+        if withdrawal_amount > @balance
+          print "Uh oh! You've overdrawn your account!"
+        else
+          return @balance -= withdrawal_amount
+        end
         return @balance
+      else
+        raise ArgumentError.new "You cannot withdraw a negative number."
       end
     end
 

@@ -18,6 +18,9 @@ module Bank
 
     def deposit(amount)
       # TODO: implement deposit
+      start_balance = @balance
+      deposit_amount = amount
+      @balance = start_balance + deposit_amount
     end
   end
 end

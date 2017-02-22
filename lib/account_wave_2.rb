@@ -8,7 +8,9 @@ module Bank
       my_file = CSV.open("support/accounts.csv")
       all_accounts = []
       my_file.each do |line|
-        account = Account.new(line[0], (sprintf("%.01f",line[1])).to_f / 100, line[2])
+        account = Account.new(line[0], line[1].to_f, line[2])
+
+        # account = Account.new(line[0], (sprintf("%.01f",line[1])).to_f / 100, line[2])
         all_accounts << account
       end
       return all_accounts

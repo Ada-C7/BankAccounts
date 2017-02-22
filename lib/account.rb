@@ -1,3 +1,5 @@
+require 'csv'
+
 module Bank
   class Account
 
@@ -13,7 +15,9 @@ module Bank
     end
 
     def self.all
-
+      CSV.read("support/accounts.csv").collect do |account|
+        Account.new(id: account[0], balance: account[1].to_f, open_date: account[2])
+      end
     end
 
     def add_owner owner

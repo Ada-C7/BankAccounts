@@ -21,11 +21,12 @@ describe "Wave 1" do
       account.owner.must_be_nil
     end
 
-    it "Takes an ID, initial balance, and owner" do
+    it "Takes an ID, initial balance, owner, and open date" do
       id = 1337
       balance = 100.0
       owner = Bank::Owner.new(name: "Alix")
-      account = Bank::Account.new(id: id, balance: balance, owner: owner)
+      open_date = "1994-11-17 14:04:56 -0800"
+      account = Bank::Account.new(id: id, balance: balance, owner: owner, open_date: open_date)
 
       account.must_respond_to :owner
       account.owner.must_equal owner
@@ -172,14 +173,28 @@ end
 describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+
+      accounts = Bank::Account.all
+
+      # Account.all returns an array
+      accounts.must_be_instance_of Array
+
+      # Everything in the array is an Account
+      accounts.each { |account| account.must_be_instance_of Bank::Account }
+
+      # The number of accounts is correct
+      number_of_accounts = CSV.read("support/accounts.csv").count
+      accounts.length.must_equal number_of_accounts
+
+      # The ID and balance of the first and last
+      # accounts match what's in the CSV file
+      first_account = CSV.read("support/accounts.csv").first
+      accounts[0].id.must_equal first_account[0]
+      accounts[0].balance.must_equal first_account[1].to_f
+
+      last_account = CSV.read("support/accounts.csv").last
+      accounts[-1].id.must_equal last_account[0]
+      accounts[-1].balance.must_equal last_account[1].to_f
     end
   end
 

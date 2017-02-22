@@ -45,17 +45,18 @@ describe "Wave 1" do
   end
 
   describe "Account#add_owner" do
+    before do
+      @account = Bank::Account.new(1337, 10)
+      @lynn = Bank::Owner.new("Lynn Trickey", "555-555-5555")
+    end
     it "Adds an Owner instance and saves it as an instance variable" do
-       account = Bank::Account.new(1337, 10)
-
-       lynn = Bank::Owner.new("Lynn Trickey", "555-555-5555")
-
-       account.add_owner(lynn)
-       account.owner.must_equal lynn
+       @account.add_owner(@lynn)
+       @account.owner.must_equal @lynn
     end
 
-    it "Owner must be class Owner" do
-
+    it "Raises an Argument when add_owner is called and the owner argument is not class Owner" do
+      #Shoulr raise error
+      proc { @account.add_owner("not class Owner") }.must_raise ArgumentError
     end
   end
 

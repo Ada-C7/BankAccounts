@@ -177,34 +177,42 @@ describe "Wave 2" do
           all_accounts[0].balance.must_equal expected_balance_first
           all_accounts[11].id.must_equal expected_id_last
           all_accounts[11].balance.must_equal expected_balance_last
-
     end
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-
   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
       # TODO: Your test code here!
+      result = Bank::Account.find(1213)
+      result.must_be_kind_of Bank::Account
+      # Can't figure out why next line does not work:
+      # I think, it's because objects addresses are not the same
+      #Bank::Account.all.must_include result
     end
 
     it "Can find the first account from the CSV" do
       # TODO: Your test code here!
+      csv = CSV.read("../support/accounts.csv", 'r')
+      result = Bank::Account.find(csv[0][0].to_i)
+      result.id.must_be :==, Bank::Account.all[0].id
+      result.balance.must_be :==, Bank::Account.all[0].balance
+      result.date_created.must_be :==, Bank::Account.all[0].date_created
     end
 
     it "Can find the last account from the CSV" do
       # TODO: Your test code here!
+      csv = CSV.read("../support/accounts.csv", 'r')
+      result = Bank::Account.find(csv[11][0].to_i)
+      result.id.must_be :==, Bank::Account.all[11].id
+      result.balance.must_be :==, Bank::Account.all[11].balance
+      result.date_created.must_be :==, Bank::Account.all[11].date_created
     end
 
     it "Raises an error for an account that doesn't exist" do
       # TODO: Your test code here!
+            proc {
+              Bank::Account.find(100000)
+            }.must_raise ArgumentError
     end
   end
  end

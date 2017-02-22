@@ -1,7 +1,8 @@
 module Bank
 
   class Account
-    attr_accessor :id, :balance, :owner
+    attr_accessor :balance, :owner
+    attr_reader :id
 
     def initialize(id, balance)
       @id = id
@@ -13,7 +14,11 @@ module Bank
       end
 
       def add_owner(owner)
-        @owner = owner
+        if owner.class == Owner
+          @owner = owner
+        else
+          raise ArgumentError.new "You must add a class type of Owner."
+        end
       end
 
       def withdraw(withdrawal_amount)

@@ -170,7 +170,7 @@ describe "Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
@@ -186,18 +186,22 @@ xdescribe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the first account from the CSV" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the last account from the CSV" do
+      skip
       # TODO: Your test code here!
     end
 
     it "Raises an error for an account that doesn't exist" do
+      skip
       # TODO: Your test code here!
     end
   end

@@ -1,11 +1,18 @@
+require 'csv'
+
 #Making class Account inside module Bank
 module Bank
   #The account class takes an id and balance
   class Account
+
+    def self.all
+    end
+
+
     attr_reader :id
     attr_accessor :balance, :owner
 
-    def initialize(id, balance)
+    def initialize(id, balance, open_date=nil)
       @id = id
       #if the balance is negative, throw an error
       if balance >= 0
@@ -18,10 +25,7 @@ module Bank
     #Method to withdraw money from the account
     def withdraw(withdrawal)
       #Make sure the withdrawal is a positive number
-      if withdrawal < 0
-        raise ArgumentError.new "The amount withdrawn must be
-        a positive number"
-      end
+      raise ArgumentError.new "The amount withdrawn must be  a positive number" if withdrawal < 0
       #Warn if the withdrawal will put the balance in the negative, and cancel
       #withdrawal if so
       if (@balance - withdrawal < 0)
@@ -29,19 +33,17 @@ module Bank
         balance in the negative"
         return @balance
       else
-        return @balance = @balance - withdrawal
+        return @balance -= withdrawal
       end
     end
 
     #Method to deposit money into account
     def deposit(deposit)
       #Make sure the amount is a positive number
-      if deposit < 0
-        raise ArgumentError.new "The deposit must be a positive
-        amount"
-      else
-        @balance = @balance + deposit
-      end
+        raise ArgumentError.new "The deposit must be a positive amount" if deposit < 0
+
+        @balance += deposit
+
     end
 
     #Add an owner object to the account. The owner has a name, address and

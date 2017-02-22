@@ -13,6 +13,11 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
+
+      if withdrawal_amount < 0
+        raise ArgumentError.new
+      end
+
       new_balance = @balance - withdrawal_amount
 
       if new_balance < 0

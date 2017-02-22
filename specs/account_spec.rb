@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require_relative '../lib/account'
+require_relative '../lib/account_wave_2'
 
 describe "Wave 1" do
 
@@ -29,8 +29,9 @@ describe "Wave 1" do
     it "Takes an ID and an initial balance, and an owner" do
       id = 1337
       balance = 100.0
-      owner = Bank::Owner.new("George", "101 South 1st")
-      account = Bank::Account.new(id, balance, owner)
+      open_date = "Jan 2"
+      new_owner = Bank::Owner.new("George", "101 South 1st")
+      account = Bank::Account.new(id, balance, open_date, new_owner)
 
       account.must_respond_to :id
       account.id.must_equal id
@@ -38,8 +39,11 @@ describe "Wave 1" do
       account.must_respond_to :balance
       account.balance.must_equal balance
 
+      account.must_respond_to :open_date
+      account.open_date.must_equal open_date
+
       account.must_respond_to :owner
-      account.owner.must_equal owner
+      account.owner.must_equal new_owner
     end
 
     # potentially unnecessary/redundant test
@@ -47,7 +51,9 @@ describe "Wave 1" do
       owner = Bank::Owner.new("George", "101 South 1st")
       id = 1337
       balance = 100.0
-      account = Bank::Account.new(id, balance, owner)
+      open_date = "Jan 2"
+
+      account = Bank::Account.new(id, balance, open_date, owner)
 
       account.owner.name.must_equal account.owner.name
     end
@@ -197,18 +203,36 @@ describe "Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
+    #   - Account.all returns an array -done
     it "Returns an array of all accounts" do
+      all_accounts = Bank::Account.all
+      all_accounts.must_be_kind_of Array
+    end
+
+    #   - Everything in the array is an Account -done
+    it "Each item in all_accounts is an Account" do
+      all_accounts = Bank::Account.all
+      all_accounts.each do |account|
+        account.must_be_instance_of Bank::Account
+      end
+    end
+
+    #   - The number of accounts is correct
+    it "Number of accounts in all_accounts should be same as number of lines in my_file" do
+      all_accounts = Bank::Account.all
+      num_of_accounts = all_accounts.length
+      
+
+    end
+
       # TODO: Your test code here!
       # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       # Feel free to split this into multiple tests if needed
-    end
+    # end
   end
 
   describe "Account.find" do

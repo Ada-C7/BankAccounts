@@ -5,7 +5,7 @@ require_relative '../lib/account'
 
 describe "Wave 1" do
   #writing my own test
-  describe "Owner initialize" do
+  describe "Owner#initialize" do
     it "Takes Name and Phone # to initialize Owner" do
       name = "Lynn Trickey"
       phone = "206-240-1029"
@@ -13,8 +13,7 @@ describe "Wave 1" do
 
       new_owner.must_respond_to :name
       new_owner.must_respond_to :phone
-
-    end
+      end
   end
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
@@ -42,6 +41,16 @@ describe "Wave 1" do
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
+    end
+  end
+
+  describe "Account#add_owner" do
+    it "Adds an Owner instance and saves it as an instance variable" do
+       account = Bank::Account.new(1337, 10)
+
+       name = "Lynn"
+       account.add_owner(name)
+       account.owner.must_equal name
     end
   end
 

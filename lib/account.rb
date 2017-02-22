@@ -1,7 +1,7 @@
 module Bank
 
   class Account
-    attr_accessor :id, :balance
+    attr_accessor :id, :balance, :owner
 
     def initialize(id, balance)
       @id = id
@@ -10,6 +10,10 @@ module Bank
         @balance = balance
       else
         raise ArgumentError.new "You cannot initialize a new account with a negative balance."
+      end
+
+      def add_owner(owner)
+        @owner = owner
       end
 
       def withdraw(withdrawal_amount)

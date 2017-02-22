@@ -2,6 +2,9 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require_relative '../lib/owner'
+
+
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -134,12 +137,37 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
+
+  describe "Owner#added property to Account" do
+    it "Initializes account without owner property" do
+      id = 1337
+      balance = 100.0
+      owner = nil
+      account = Bank::Account.new(id, balance, owner)
+
+      account.must_respond_to :owner
+      account.owner.class.must_equal Bank::Owner
+    end
+
+    it "Initializes account with owner property" do
+      id = 1337
+      balance = 100.0
+      owner_hash = {name: "ginny smith", address: {street: "122 main st.", city: "seattle", zipcode: "98144"}, phone: "2065573099" }
+      owner = Bank::Owner.new(owner_hash)
+      account = Bank::Account.new(id, balance, owner)
+
+      account.must_respond_to :owner
+      account.owner.class.must_equal Bank::Owner
+    end
+
+    
+  end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do
+    it "Returns an array of all accounts" do skip
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
@@ -152,19 +180,19 @@ xdescribe "Wave 2" do
   end
 
   describe "Account.find" do
-    it "Returns an account that exists" do
+    it "Returns an account that exists" do skip
       # TODO: Your test code here!
     end
 
-    it "Can find the first account from the CSV" do
+    it "Can find the first account from the CSV" do skip
       # TODO: Your test code here!
     end
 
-    it "Can find the last account from the CSV" do
+    it "Can find the last account from the CSV" do skip
       # TODO: Your test code here!
     end
 
-    it "Raises an error for an account that doesn't exist" do
+    it "Raises an error for an account that doesn't exist" do skip
       # TODO: Your test code here!
     end
   end

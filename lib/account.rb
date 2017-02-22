@@ -2,38 +2,54 @@
 module Bank
   class Account
     # allows access to the current balance of an account at any time.
-    attr_accessor :account_balance
+    attr_accessor :balance, :owner
     # only allow reader on unique account id
     attr_reader :id
 
     # constructs a new Account object
-    def initialize(id, initial_balance)
+    # give a default value, in case the Owner class object is not passed
+    def initialize id, initial_balance, owner = nil
       # error handling for initial negative balance
       if initial_balance >= 0
-        @account_balance = initial_balance
+        @balance = initial_balance
       else
         raise ArgumentError.new "Inital balance cannot be a negetive value"
       end
       @id = id
 
+      #note: in the future, consider account holder with multiple accounts
+      if owner.class == Bank::Owner
+        @owner = owner
+      else
+        @owner = Bank::Owner.new({name: "", address: {street: "", city: "", zipcode: ""}, phone: "" })
+      end
+    end
+
+    def update_owner_data(owner_hash)
+      # @owner = Bank::Owner.new(owner_hash)
     end
 
     # method that handles withdraw
     def withdraw(money_amount)
       # error handling for insufficient funds for a withdraw
-      if @account_balance >= money_amount
-        @account_balance -= money_amount
+      if @balance < money_amount
+        puts "You do not have sufficient funds to withdraw the entered amount"
+      elsif money_amount < 0
+        raise ArgumentError.new "Withdraw amount cannot be a negetive value"
       else
-        raise ArgumentError.new "You do not have sufficient funds to withdraw the entered amount"
+        @balance -= money_amount
       end
-      return @account_balance
+      return @balance
     end
 
     # method that handles deposits
     def deposit(money_amount)
-      @account_balance += money_amount
-      return @account_balance
+      if money_amount < 0
+        raise ArgumentError.new "Deposit amount cannot be a negetive value"
+      else
+        @balance += money_amount
+        return @balance
+      end
     end
-
   end
 end

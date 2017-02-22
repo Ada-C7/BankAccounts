@@ -15,8 +15,10 @@ module Bank
 
     end #end of initialize
 
-
-
+    def withdraw(withdrawal_amount)
+      @withdrawal_amount = withdrawal_amount
+      @balance -= @withdrawal_amount
+    end
 
 
   end #end of class

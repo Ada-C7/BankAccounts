@@ -10,6 +10,9 @@ module Bank
 
     def withdraw(amount)
       # TODO: implement withdraw
+      start_balance = @balance
+      withdrawal_amount = amount
+      @balance = start_balance - withdrawal_amount
     end
 
     def deposit(amount)

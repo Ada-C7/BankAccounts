@@ -4,6 +4,14 @@ require 'minitest/skip_dsl'
 require_relative '../lib/account'
 
 describe "Wave 1" do
+  #writing my own test
+  describe "Owner initialize" do
+    it "Takes Name and Phone # to initialize Owner" do
+      name = "Lynn Trickey"
+      phone = "206-240-1029"
+      new_owner = Bank::Owner.new(name, phone)
+    end
+  end
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
       id = 1337

@@ -193,7 +193,6 @@ describe "Wave 2" do
     end
 
     it "ID and balance of first & last account matches ID and balance in CSV" do
-
       ids = []
       balances = []
       CSV.open("support/accounts.csv").each do |line|
@@ -201,14 +200,14 @@ describe "Wave 2" do
         balances << line[1].to_i
       end
 
+      #checks first and last ids
       @new_bank[0].id.must_equal(ids[0])
       @new_bank[-1].id.must_equal(ids[-1])
 
+      #checks first and last balances
+      @new_bank[0].balance.must_equal(balances[0])
+      @new_bank[-1].balance.must_equal(balances[-1])
     end
-      # Useful checks might include:
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
 
   end
 

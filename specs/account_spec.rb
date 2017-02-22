@@ -233,10 +233,32 @@ describe "Wave 2" do
       num_of_accounts.must_equal num_of_lines
     end
 
+    #   - The ID and balance of the first and last
+    #       accounts match what's in the CSV file
+    it "id and balance of first account matches CSV file" do
+      all_accounts = Bank::Account.all
+      my_file = CSV.open("support/accounts.csv")
+      lines = []
+      my_file.each do |line|
+        lines << line
+      end
+      all_accounts[0].id.must_equal lines[0][0]
+    end
+
+    it "id and balance of last account matches CSV file" do
+      all_accounts = Bank::Account.all
+      my_file = CSV.open("support/accounts.csv")
+      lines = []
+      my_file.each do |line|
+        lines << line
+      end
+      all_accounts[-1].id.must_equal lines[-1][0]
+    end
+
+
       # TODO: Your test code here!
       # Useful checks might include:
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
+
       # Feel free to split this into multiple tests if needed
     # end
   end

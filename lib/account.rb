@@ -7,10 +7,10 @@ module Bank
     #Class method that returns an array of Account objects
     def self.all
       account_array = []
-      CSV.open("/Users/acgillette/Documents/dev_folder/ada_folder/ada_exercises/week_three/BankAccounts/support/accounts.csv", 'r').each do |account|
+      CSV.open("support/accounts.csv", 'r').each do |account|
         id = account[1]
         balance = Integer(account[0])
-        open_date = "#{account[3]}"
+        open_date = String(account[3])
         new_account = Account.new(id, balance, open_date)
         account_array << new_account
       end

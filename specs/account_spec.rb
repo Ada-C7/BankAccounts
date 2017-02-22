@@ -172,18 +172,24 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do
+
+    it "Returns an array" do
       accounts = Bank::Account.all
       expect(accounts.class).must_equal Array
+    end
 
+    it "Everything is an array is an Account" do
+      accounts = Bank::Account.all
+      accounts.each do |account|
+        expect(account.class).must_equal Bank::Account
+      end
 
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
+    end
       #   - The number of accounts is correct
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       # Feel free to split this into multiple tests if needed
-    end
+
   end
 
   describe "Account.find" do

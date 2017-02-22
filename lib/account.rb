@@ -2,6 +2,7 @@ module Bank
   class Account
     attr_reader :id, :balance
     def initialize(id, balance)
+      #error message not appearing in def withdraw
       raise ArgumentError.new("balance must be >= 0") if balance < 0
 
       @id = id

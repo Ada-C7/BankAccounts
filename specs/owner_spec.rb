@@ -31,34 +31,4 @@ describe "Optional - Owner Class" do
       account_owner.phone_number.must_equal person_info[:phone_number]
     end
   end
-
-  # describe "Get#Street" do
-  #
-  #   it "prompts and saves owners address" do
-  #     street = Bank::Owner.new("Cobb", "Cynthia")
-  #
-  #     street.get_street
-  #
-  #
-  #
-  #     # regex for address: /^[0-9]* (.*), (.*) [a-zA-Z]{2} [0-9]{5}(-[0-9]{4})?$/
-  #   end
-  # end
-  #
-  # describe "Get#City"do
-  #
-  # end
-  #
-  # describe "Get#Zipcode" do
-  #
-  # end
-  #
-  # describe "Get#State" do
-  #
-  # end
-  #
-  # describe "Get#Country" do
-  #
-  # end
-
 end

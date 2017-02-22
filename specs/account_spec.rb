@@ -149,6 +149,7 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
+
 end
 
 

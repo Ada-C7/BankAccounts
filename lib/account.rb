@@ -17,7 +17,18 @@ module Bank
     # creates a withdraw method that accepts a single parameter
     # which represents the amount of money that will be withdrawn.
     # and returns the updated account balance.
-    def withdraw()
+    def withdraw(withdrawal_amount)
+      if withdrawal_amount >= 0
+        if withdrawal_amount <= @balance
+          @balance -= withdrawal_amount
+        else
+          print "Insufficent funds."
+        end
+      else
+        raise ArgumentError.new "Your withdrawal amount must be greater than 0"
+      end
+
+      return @balance
     end
 
     # creates a deposit method that accepts a single parameter

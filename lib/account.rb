@@ -26,11 +26,12 @@ module Bank
       end
     end
 
+    def deposit(deposit_amount)
+      if deposit_amount < 0
+        raise ArgumentError.new "The deposit amount must have a positive value."
+      end
+      @balance = @balance + deposit_amount
+    end
+
   end
 end
-
-# account = Bank::Account.new(004, 100)
-# puts account.balance
-# account.withdraw(30)
-# puts account.balance
-# account.withdraw(100)

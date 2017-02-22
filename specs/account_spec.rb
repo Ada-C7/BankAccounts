@@ -179,19 +179,23 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      Bank::Account.find(1216).must_equal Bank::Account.new(1216, 100022, "2000-07-07 15:07:55 -0800")
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find.all[0].must_equal Bank::Account.new(1212, 1235667, "1999-03-27 11:30:09 -0800")
     end
 
     it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find.all[-1].must_equal Bank::Account.new(15156, 4356772, "1994-11-17 14:04:56 -0800")
     end
 
     it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+      Bank::Account.find(12345)
+      proc {
+        account.deposit(deposit_amount)
+        }.must_raise ArgumentError
     end
+
   end
 end

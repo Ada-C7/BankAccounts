@@ -2,10 +2,11 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require_relative '../lib/owner'
 
 describe "Wave 1" do
   describe "Account#initialize" do
-    it "Takes an ID and an initial balance" do
+    it "Takes an ID and an initial balance without owner parameter" do
       id = 1337
       balance = 100.0
       account = Bank::Account.new(id, balance)
@@ -15,6 +16,19 @@ describe "Wave 1" do
 
       account.must_respond_to :balance
       account.balance.must_equal balance
+
+      account.must_respond_to :owner
+      account.owner.must_be_nil
+    end
+
+    it "Takes an ID, initial balance, and owner" do
+      id = 1337
+      balance = 100.0
+      owner = Bank::Owner.new(name: "Alix")
+      account = Bank::Account.new(id, balance, owner)
+
+      account.must_respond_to :owner
+      account.owner.must_equal owner
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
@@ -132,6 +146,31 @@ describe "Wave 1" do
       proc {
         account.deposit(deposit_amount)
       }.must_raise ArgumentError
+    end
+  end
+
+  describe "Account#add_owner" do
+    it "Adds a new owner when the current owner is nil" do
+      id = 1337
+      balance = 100.0
+      owner = Bank::Owner.new(name: "Alix")
+
+      account = Bank::Account.new(id, balance)
+      account.add_owner(owner)
+
+      account.owner.name.must_equal owner.name
+    end
+
+    it "Does not add a new owner when it is already set" do
+      id = 1337
+      balance = 100.0
+      owner = Bank::Owner.new(name: "Alix")
+      account = Bank::Account.new(id, balance, owner)
+
+      another_owner = Bank::Owner.new(name: "Hamlet")
+      account.add_owner(another_owner)
+
+      account.owner.name.must_equal owner.name
     end
   end
 end

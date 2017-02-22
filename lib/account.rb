@@ -1,13 +1,22 @@
 module Bank
   class Account
 
-    attr_reader :id, :balance
+    attr_reader :id, :balance, :owner
 
-    def initialize(id, balance)
+    def initialize(id, balance, owner=nil)
       raise ArgumentError if balance < 0
 
       @id = id
       @balance = balance
+      @owner = owner
+    end
+
+    def add_owner owner
+      if @owner.nil?
+        @owner = owner
+      else
+        puts "This account is already owned by #{@owner.name}!"
+      end
     end
 
     def withdraw(amount)

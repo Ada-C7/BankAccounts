@@ -18,7 +18,7 @@ module Bank
             @balance -= withdrawal_amount
           else
             puts "You are going negative."
-            @balance = balance
+            @balance
           end
         else
           raise ArgumentError.new "Your withdrawal amount must be positive."

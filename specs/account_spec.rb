@@ -169,17 +169,17 @@ describe "Wave 2" do
         account_array.length.must_equal lines_in_data_file
     end
 
-    # it "Creates accounts that match the ID and balance of the first/last lines in data file" do
-    #   account_array = Bank::Account.all
-    #   # ID of first account
-    #   # account_array[0][0]
-    #   # # balance of first account
-    #   # account_array[0][1]
-    #   # # ID and balance of last account
-    #   # account_array[-1][0]
-    #   # account_array[-1][1]
-    #   end
-    # end
+    it "Creates accounts that match the ID and balance of the first/last lines in data file" do
+      account_array = Bank::Account.all
+      # ID of first account
+      account_array[0].id.must_equal 1212
+      # balance of first account
+      account_array[0].balance.must_equal 1235667
+      # ID and balance of last account
+      account_array[-1].id.must_equal 15156
+      account_array[-1].balance.must_equal 4356772
+
+    end
 
 
   end
@@ -207,14 +207,11 @@ describe "Wave 2" do
     end
 
     it "Raises an error for an account that doesn't exist" do
-    # Note: we haven't talked about procs yet. You can think
-        # of them like blocks that sit by themselves.
-        # This code checks that, when the proc is executed, it
-        # raises an ArgumentError.
+
         proc {
           Bank::Account.find(99999)
         }.must_raise ArgumentError
       end
-    
+
   end
 end

@@ -20,6 +20,17 @@ module Bank
       end
     end
 
+    def self.find(id)
+      target_account = nil
+      CSV.read("support/accounts.csv").each do |account|
+        if account[0] == id
+          target_account = Account.new(id: account[0], balance: account[1].to_f, open_date: account[2])
+        end
+      end
+      raise ArgumentError.new("Invalid account ID.") if target_account.nil?
+      target_account
+    end
+
     def add_owner owner
       if @owner.nil?
         @owner = owner

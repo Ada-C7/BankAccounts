@@ -169,50 +169,74 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
+    before do
+      @accounts = Bank::Account.all
+    end
+
     it "Returns an array of all accounts" do
 
-      accounts = Bank::Account.all
+      @accounts = Bank::Account.all
 
       # Account.all returns an array
-      accounts.must_be_instance_of Array
+      @accounts.must_be_instance_of Array
+    end
 
-      # Everything in the array is an Account
-      accounts.each { |account| account.must_be_instance_of Bank::Account }
+    it "All items in returned array are Account instances" do
+      @accounts.each { |account| account.must_be_instance_of Bank::Account }
+    end
 
-      # The number of accounts is correct
+    it "Returns the correct number of accounts" do
       number_of_accounts = CSV.read("support/accounts.csv").count
-      accounts.length.must_equal number_of_accounts
+      @accounts.length.must_equal number_of_accounts
+    end
 
+    it "Returns a complete array of accounts from the csv file" do
       # The ID and balance of the first and last
       # accounts match what's in the CSV file
       first_account = CSV.read("support/accounts.csv").first
-      accounts[0].id.must_equal first_account[0]
-      accounts[0].balance.must_equal first_account[1].to_f
+      @accounts[0].id.must_equal first_account[0]
+      @accounts[0].balance.must_equal first_account[1].to_f
 
       last_account = CSV.read("support/accounts.csv").last
-      accounts[-1].id.must_equal last_account[0]
-      accounts[-1].balance.must_equal last_account[1].to_f
+      @accounts[-1].id.must_equal last_account[0]
+      @accounts[-1].balance.must_equal last_account[1].to_f
     end
   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      found_account = Bank::Account.find("1214")
+
+      found_account.must_be_instance_of Bank::Account
+      found_account.balance.must_equal 9876890.0
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      first_account = CSV.read("support/accounts.csv").first
+      first_account_id = first_account[0]
+      first_account_balance = first_account[1].to_f
+      found_account = Bank::Account.find(first_account_id)
+
+      found_account.id.must_equal first_account_id
+      found_account.balance.must_equal first_account_balance
     end
 
     it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
+      last_account = CSV.read("support/accounts.csv").last
+      last_account_id = last_account[0]
+      last_account_balance = last_account[1].to_f
+      found_account = Bank::Account.find(last_account_id)
+
+      found_account.id.must_equal last_account_id
+      found_account.balance.must_equal last_account_balance
     end
 
     it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+      proc {
+        Bank::Account.find("HAMBURGLER")
+      }.must_raise ArgumentError
     end
   end
 end

@@ -92,7 +92,7 @@ describe "Wave 1" do
       account.balance.must_equal 0
     end
 
-    xit "Requires a positive withdrawal amount" do
+    it "Requires a positive withdrawal amount" do
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new(1337, start_balance)

@@ -22,18 +22,27 @@ module Bank
 
           def withdraw(withdrawal_amount)
 
-               start_balance = @balance
+               if withdrawal_amount >= 0
 
-               if start_balance >= withdrawal_amount
-                    @balance = start_balance - withdrawal_amount
+                    start_balance = @balance
+
+                    if start_balance >= withdrawal_amount
+                         @balance = start_balance - withdrawal_amount
+
+                    else
+                         puts "Your balance is now negative."
+                         @balance
+
+                    end
 
                else
-                    puts "Your balance is now negative."
-                    @balance
+                    raise ArgumentError.new "Withdrawal amounts must be positive."
 
                end
 
+
           end
+
 
      end
 

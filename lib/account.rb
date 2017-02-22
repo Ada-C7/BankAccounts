@@ -22,7 +22,7 @@ module Bank
       CSV.open("support/accounts.csv").each do |account|
         accounts << Bank::Account.new(account[0].to_i, account[1].to_i, account[2].to_s)
       end
-      accounts
+      return accounts
     end
 
     def add_owner(owner)
@@ -70,4 +70,4 @@ end
 #
 # puts my_account.balance
 
-puts Bank::Account.all
+puts " #{ Bank::Account.all.class } "

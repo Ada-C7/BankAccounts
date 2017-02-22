@@ -168,8 +168,10 @@ describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
 
-      Account.all.class.must_be (Array)
+      new_bank = Bank::Account.all
+      new_bank.class.must_equal(Array)
 
+    end
       # Useful checks might include:
       #   - Account.all returns an array
       #   - Everything in the array is an Account
@@ -177,7 +179,7 @@ describe "Wave 2" do
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       # Feel free to split this into multiple tests if needed
-    end
+
   end
 
   describe "Account.find" do

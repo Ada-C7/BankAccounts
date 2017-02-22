@@ -1,6 +1,6 @@
 module Bank
   class Account
-    attr_reader :id, :balance
+    attr_reader :id, :balance, :owner
 
     def initialize(id, balance = 0)
       raise ArgumentError.new("balance must be >= 0") if balance < 0
@@ -21,6 +21,17 @@ module Bank
       raise ArgumentError.new("amount must be >= 0") if amount < 0
       @balance = @balance + amount
       return @balance
+    end
+    def add_owner (owner)
+      @owner = owner
+    end
+  end
+
+  class Owner
+    attr_reader :name, :address
+    def initialize(name, address)
+      @name = name
+      @address = address
     end
   end
 end

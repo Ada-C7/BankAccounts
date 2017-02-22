@@ -32,7 +32,6 @@ describe "Wave 1" do
       Bank::Account.new(1337, 0)
     end
   end
-
   describe "Account#withdraw" do
     it "Reduces the balance" do
       start_balance = 100.0
@@ -44,6 +43,7 @@ describe "Wave 1" do
       expected_balance = start_balance - withdrawal_amount
       account.balance.must_equal expected_balance
     end
+
 
     it "Returns the modified balance" do
       start_balance = 100.0
@@ -69,7 +69,6 @@ describe "Wave 1" do
         account.withdraw(withdrawal_amount)
       }.must_output /.+/
     end
-
     it "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
@@ -112,60 +111,73 @@ describe "Wave 1" do
       expected_balance = start_balance + deposit_amount
       account.balance.must_equal expected_balance
     end
+  end
 
-    it "Returns the modified balance" do
-      start_balance = 100.0
-      deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+  it "Returns the modified balance" do
+    start_balance = 100.0
+    deposit_amount = 25.0
+    account = Bank::Account.new(1337, start_balance)
 
-      updated_balance = account.deposit(deposit_amount)
+    updated_balance = account.deposit(deposit_amount)
 
-      expected_balance = start_balance + deposit_amount
-      updated_balance.must_equal expected_balance
-    end
+    expected_balance = start_balance + deposit_amount
+    updated_balance.must_equal expected_balance
+  end
 
-    it "Requires a positive deposit amount" do
-      start_balance = 100.0
-      deposit_amount = -25.0
-      account = Bank::Account.new(1337, start_balance)
 
-      proc {
-        account.deposit(deposit_amount)
-      }.must_raise ArgumentError
-    end
+  it "Requires a positive deposit amount" do
+    start_balance = 100.0
+    deposit_amount = -25.0
+    account = Bank::Account.new(1337, start_balance)
+
+    proc {
+      account.deposit(deposit_amount)
+    }.must_raise ArgumentError
+  end
+end
+describe "Owner#initialize" do
+  it "Takes a name and an address" do
+    name = "Rahul"
+    address = "Renton, WA"
+    owner = Bank::Owner.new(name, address)
+
+    owner.must_respond_to :name
+    owner.name.must_equal name
+
+    owner.must_respond_to :address
+    owner.address.must_equal address
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
-  describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-    end
-  end
-
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
-  end
-end
+# # TODO: change 'xdescribe' to 'describe' to run these tests
+# xdescribe "Wave 2" do
+#   describe "Account.all" do
+#     it "Returns an array of all accounts" do
+#       # TODO: Your test code here!
+#       # Useful checks might include:
+#       #   - Account.all returns an array
+#       #   - Everything in the array is an Account
+#       #   - The number of accounts is correct
+#       #   - The ID and balance of the first and last
+#       #       accounts match what's in the CSV file
+#       # Feel free to split this into multiple tests if needed
+#     end
+#   end
+#
+#   describe "Account.find" do
+#     it "Returns an account that exists" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Can find the first account from the CSV" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Can find the last account from the CSV" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Raises an error for an account that doesn't exist" do
+#       # TODO: Your test code here!
+#     end
+#   end

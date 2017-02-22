@@ -1,11 +1,12 @@
-require 'owner'
+require_relative 'owner'
 
 module Bank
   class Account
-    attr_reader :id, :balance
+    attr_reader :id, :owner, :balance
 
-    def initialize(id, balance)
+    def initialize(id, owner, balance)
       @id = id
+      @owner = owner
 
       if balance >= 0
         @balance = balance

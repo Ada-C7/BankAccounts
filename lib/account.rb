@@ -4,23 +4,32 @@ module Bank
   class Account
     attr_reader :id, :balance, :owner
 
-    def initialize id, balance
+    def initialize id, balance, opendate
       @id = id
       if balance >= 0
         @balance = balance
       else
         raise ArgumentError.new "Initial balance must be more than zero."
       end
+      @opendate = opendate
       @owner
 
     end
 
+    def self.all  #reads in csv file and returns collection of Account instances
+
+    end
+
+    def self.find(id) #returns an instance of Account that matches the passed id parameter
+    end
+
     def withdraw(new_withdrawal)
+      # raise ArgumentError.new("You must withdraw a positive amount") if new_withdrawal < 0 #alternate if statement for one-line conditional
       if new_withdrawal <=0
-        raise ArgumentError.new "You must withdraw a positive amount"
+        raise ArgumentError.new "withdrawal must be greater than 0"
       elsif new_withdrawal > @balance
-        puts "You do not have enough money to make that withdrawal"
-        @balance
+        puts "Insufficient funds"  #puts statement returns nil
+        @balance #this is what is returned by this elsif
       else
         @balance -= new_withdrawal
       end
@@ -28,7 +37,7 @@ module Bank
 
     def deposit(new_deposit)
       if new_deposit <= 0
-        raise ArgumentError.new "Your deposit amount must have a positive value"
+        raise ArgumentError.new "deposit amount must be greater than 0"
 
       else
         @balance += new_deposit
@@ -38,7 +47,7 @@ module Bank
 
     def get_owner_info(owner_hash)
       @owner = Bank::Owner.new(owner_hash)
-    
+
     end
 
 

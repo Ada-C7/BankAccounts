@@ -15,32 +15,24 @@ module Bank
       @id = id
     end
 
-    def positive_amount(amount)
-      if amount > 0
-        true
-      else
-        raise ArgumentError.new "Invalid negative amount"
-      end
-
-    end
-
     def withdraw(amount)
-      while positive_amount(amount)
-        if amount <= @balance
+      if amount < 0
+        raise ArgumentError.new "Invalid negative amount"
+      elsif amount <= @balance
           @balance -= amount
-        else
-          raise ArgumentError.new "You don't have sufficient funds. Max withdrawel amount is #{@balance}."
-          @balance -= amount
-        end
-        return @balance
+      else
+        puts "You don't have sufficient funds. Max withdrawel amount is #{@balance}."
       end
+      return @balance
     end
 
     def deposit(amount)
-        if positive_amount(amount)
-          @balance += amount
+      if amount < 0
+        raise ArgumentError.new "Invalid negative amount"
+      else
+        @balance += amount
       end
-
+      return @balance
     end
 
 

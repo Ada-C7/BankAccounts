@@ -1,5 +1,4 @@
 module Bank
-
   class Account
     attr_reader :id, :balance
 
@@ -8,8 +7,10 @@ module Bank
 
       @id = id
       @balance = balance
-
-
+    end
+    def withdraw(amount)
+      @balance = @balance - amount
+      return @balance
     end
   end
 end

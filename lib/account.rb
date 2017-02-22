@@ -26,14 +26,15 @@ module Bank
             end
         end
 
-        # def deposit(deposit_amount)
-        #     @deposit = deposit_amount
-        #     if deposit_amount > 0
-        #         @balance += @deposit
-        #         return @balance
-        #     end
-        #     #adjust balance
-        # end
+        def deposit(deposit_amount)
+            @deposit = deposit_amount
+            if deposit_amount > 0
+                @balance += @deposit
+                return @balance
+            else
+                raise ArgumentError.new("You need to enter a positive amount to deposit")
+            end
+        end
 
         # def new_account_check
         #     #make sure that new accounts are not started with negative balance
@@ -49,4 +50,5 @@ module Bank
 end
 
 my_account = Bank::Account.new(16, 1000)
-puts my_account.withdraw(200)
+# puts my_account.withdraw(200)
+puts my_account.deposit(200)

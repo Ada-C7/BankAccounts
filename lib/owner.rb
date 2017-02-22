@@ -1,8 +1,9 @@
 
+# COPIED OVER FROM ALL
 module Bank
-  class Account
-    attr_accessor :withdraw, :deposit
-    attr_reader :id, :balance
+  class Owner
+    # attr_accessor
+    # attr_reader
     def initialize(id, balance)
       unless balance >= 0
         raise ArgumentError.new "Starting balance is not valid."
@@ -33,9 +34,5 @@ module Bank
       @balance += amount
       return @balance
     end
-
-    # def add_owner(id)
-    #   @id = id
-    # end
   end
 end

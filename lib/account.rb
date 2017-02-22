@@ -11,28 +11,19 @@ module Bank
     end
 
     def withdraw(amount)
-      # TODO: implement withdraw
       start_balance = @balance
       withdrawal_amount = amount
       if withdrawal_amount < 0
         raise ArgumentError.new 'You cannot withdraw a negative number'
       end
-
       if withdrawal_amount > start_balance
         puts 'Warning, account would go negative. Cannot withdraw.'
         withdrawal_amount = 0
       end
-
       @balance = start_balance - withdrawal_amount
-
-      # if updated_balance < 0 then
-      #   raise ArgumentError.new("Warning, your account would go negative.")
-      #   updated_balance = start_balance
-      # end
     end
 
     def deposit(amount)
-      # TODO: implement deposit
       start_balance = @balance
       deposit_amount = amount
       if deposit_amount < 0

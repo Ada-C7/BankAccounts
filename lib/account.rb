@@ -18,8 +18,8 @@ module Bank
         raise ArgumentError.new 'You cannot withdraw a negative number'
       end
 
-      if start_balance < withdrawal_amount
-        raise ArgumentError.new 'Warning, account would go negative. Cannot withdraw.'
+      if withdrawal_amount > start_balance
+        puts 'Warning, account would go negative. Cannot withdraw.'
         withdrawal_amount = 0
       end
 

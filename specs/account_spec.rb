@@ -1,7 +1,9 @@
+
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -135,6 +137,28 @@ describe "Wave 1" do
     end
   end
 end
+
+# describe "Wave 1 - Optional" do
+#   describe "Owner#initialize" do
+#     it "can be instantiated" do
+#       owner = Bank::Owner.new
+#       owner.must_be_kind_of Bank::Owner, "Must be an owner"
+#     end
+#
+#     it "can have a name and address" do
+#       owner = Bank::Owner.new
+#       if owner.name.nil? = false
+#         if owner.name.is_a? String
+#           true
+#         end
+#       end
+#       # owner.addresss
+#     end
+#
+#     it
+#
+#   end
+# end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Wave 2" do

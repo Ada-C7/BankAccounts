@@ -10,5 +10,5 @@ module Bank
   end
 end
 
-owner = Bank::Owner.new("Natalia", "123 Main st ", "432332322")
-puts owner.address
+# owner = Bank::Owner.new("Natalia", "123 Main st ", "432332322")
+# puts owner.address

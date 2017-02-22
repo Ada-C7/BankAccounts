@@ -45,9 +45,19 @@ module Bank
       # each line: [ID(int), Balance(int), OpenDate(datetime)]
     end
 
-    def self.find(id)
+    def self.find(required_id)
       # returns an instance of Account where value matches ID
       # error if called with ID that doesn't exist
+      account_array = Account.all
+
+      account_array.each do |account|
+         if account.id == required_id
+           return account
+         end
+      end
+
+      raise ArgumentError.new ("No account exists with that ID.")
+
     end
 
   end

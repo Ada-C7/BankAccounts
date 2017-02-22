@@ -14,14 +14,18 @@ module Bank
     end
 
     def withdraw(money_to_withdraw)
-      if money_to_withdraw > @balance
-        puts "Amount to withdraw must be greater than balance"
-        start_balance = @balance
-        updated_balance = start_balance
+      if money_to_withdraw > 0
+        if money_to_withdraw > @balance
+          puts "Amount to withdraw must be greater than balance"
+          start_balance = @balance
+          updated_balance = start_balance
+        else
+          start_balance = @balance
+          updated_balance = @balance - money_to_withdraw
+          @balance = updated_balance
+        end
       else
-        start_balance = @balance
-        updated_balance = @balance - money_to_withdraw
-        @balance = updated_balance
+        raise ArgumentError.new "The amount to withdraw must be greater than zero"
       end
     end
 

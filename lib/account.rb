@@ -1,7 +1,8 @@
 module Bank
 
   class Account
-    attr_accessor :id, :balance
+    attr_accessor :balance
+    attr_reader :id
 
     def initialize(id, balance)
       @id = id
@@ -12,6 +13,10 @@ module Bank
         raise ArgumentError.new "The value must be between greater than or equal to 0"
       end
     end
+
+    # def owner
+    #
+    # end
 
     def withdraw(withdrawal_amount)
 
@@ -37,8 +42,23 @@ module Bank
   end
 
   class Owner
-    
+    attr_reader :name, :address, :phone_number
 
+    def initialize(name, address, phone_number)
+      @name = name
+      @address = address
+      @phone_number = phone_number
+    end
   end
 
 end
+
+# user_info = [
+#   {
+#     :name => "Elmo"
+#     :address => ""
+#     :phone_number =>
+#   },
+
+
+]

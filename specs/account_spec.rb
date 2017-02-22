@@ -33,6 +33,7 @@ describe "Wave 1" do
     end
   end
 
+
   describe "Account#withdraw" do
     it "Reduces the balance" do
       start_balance = 100.0

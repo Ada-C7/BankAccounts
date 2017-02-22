@@ -3,13 +3,17 @@ module Bank
     attr_reader :id
     attr_accessor :balance
 
-    def initialize id, balance
+    def initialize id, start_balance
       @id = id
 
-      if balance >= 0
-        @balance = balance
+      if start_balance >= 0
+        @balance = start_balance
       else raise ArgumentError.new
       end
+
+    def withdraw(withdrawal_amount)
+      @balance = @balance - withdrawal_amount
+    end
 
     end
   end

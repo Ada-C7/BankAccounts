@@ -20,7 +20,7 @@ module Bank
     def self.all
       accounts = []
       CSV.open("support/accounts.csv").each do |account|
-        accounts << Bank::Account.new(account[0].to_i, account[1].to_i, account[2].to_s)
+        accounts << Bank::Account.new(account[0].to_i, account[1].to_i, account[2])
       end
       return accounts
     end

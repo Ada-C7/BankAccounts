@@ -94,7 +94,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -166,16 +166,19 @@ end
 # todo: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
+
     before do
-      new_bank = Bank::Account.all
+      @new_bank = Bank::Account.all
     end
 
     it "Returns an array of all accounts" do
-      new_bank.class.must_equal(Array)
+      @new_bank.class.must_equal(Array)
     end
 
-    it "Verifies everything in array is an Account"
-
+    it "Verifies every item in array is an Account" do
+      @new_bank.each do |item|
+        item.class.must_equal(Bank::Account)
+      end
     end
       # Useful checks might include:
       #   - Account.all returns an array
@@ -204,4 +207,5 @@ describe "Wave 2" do
       # TODO: Your test code here!
     end
   end
+
 end

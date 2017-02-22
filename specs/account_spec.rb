@@ -70,7 +70,7 @@ describe "Wave 1" do
       updated_balance.must_equal expected_balance
     end
 
-    it "Outputs a warning if the account would go negative" do
+    it "Outputs a warning if the account would go negative and doesn't modify balance" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -82,18 +82,8 @@ describe "Wave 1" do
       proc {
         account.withdraw(withdrawal_amount)
       }.must_output(/.+/)
-    end
 
-    it "Doesn't modify the balance if the account would go negative" do
-      start_balance = 100.0
-      withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance)
-
-      updated_balance = account.withdraw(withdrawal_amount)
-
-      # Both the value returned and the balance in the account
-      # must be un-modified.
-      updated_balance.must_equal start_balance
+      # Must not update balance
       account.balance.must_equal start_balance
     end
 
@@ -168,7 +158,10 @@ describe "Wave 1" do
       account = Bank::Account.new(id, balance, owner)
 
       another_owner = Bank::Owner.new(name: "Hamlet")
-      account.add_owner(another_owner)
+
+      proc {
+        account.add_owner(another_owner)
+      }.must_raise ArgumentError
 
       account.owner.name.must_equal owner.name
     end

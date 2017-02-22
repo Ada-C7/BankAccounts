@@ -4,7 +4,7 @@ module Bank
     attr_reader :id, :balance, :owner
 
     def initialize(id, balance, owner=nil)
-      raise ArgumentError if balance < 0
+      raise ArgumentError.new("Balance cannot be negative.") if balance < 0
 
       @id = id
       @balance = balance
@@ -15,12 +15,12 @@ module Bank
       if @owner.nil?
         @owner = owner
       else
-        puts "This account is already owned by #{@owner.name}!"
+        raise ArgumentError.new("The account already has an owner.")
       end
     end
 
     def withdraw(amount)
-      raise ArgumentError if amount < 0
+      raise ArgumentError.new("The withdrawal amount must be positive.") if amount < 0
 
       if amount > @balance
         puts "Insufficient Funds"
@@ -31,7 +31,7 @@ module Bank
     end
 
     def deposit(amount)
-      raise ArgumentError if amount < 0
+      raise ArgumentError.new("The deposit amount must be positive.") if amount < 0
 
       @balance += amount
     end

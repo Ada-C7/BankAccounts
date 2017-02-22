@@ -136,36 +136,36 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
-  describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-    end
-  end
-
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
-  end
-end
+# # TODO: change 'xdescribe' to 'describe' to run these tests
+# xdescribe "Wave 2" do
+#   describe "Account.all" do
+#     it "Returns an array of all accounts" do
+#       # TODO: Your test code here!
+#       # Useful checks might include:
+#       #   - Account.all returns an array
+#       #   - Everything in the array is an Account
+#       #   - The number of accounts is correct
+#       #   - The ID and balance of the first and last
+#       #       accounts match what's in the CSV file
+#       # Feel free to split this into multiple tests if needed
+#     end
+#   end
+#
+#   describe "Account.find" do
+#     it "Returns an account that exists" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Can find the first account from the CSV" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Can find the last account from the CSV" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Raises an error for an account that doesn't exist" do
+#       # TODO: Your test code here!
+#     end
+#   end
+# end

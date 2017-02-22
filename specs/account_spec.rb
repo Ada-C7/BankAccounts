@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 require_relative '../lib/account_wave_2'
 
 describe "Wave 1" do
@@ -223,8 +224,13 @@ describe "Wave 2" do
     it "Number of accounts in all_accounts should be same as number of lines in my_file" do
       all_accounts = Bank::Account.all
       num_of_accounts = all_accounts.length
-      
+      my_file = CSV.open("support/accounts.csv")
+      num_of_lines = 0
+      my_file.each do |line|
+        num_of_lines += 1
+      end
 
+      num_of_accounts.must_equal num_of_lines
     end
 
       # TODO: Your test code here!

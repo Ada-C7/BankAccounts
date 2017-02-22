@@ -9,7 +9,11 @@ module Bank
       @balance = balance
     end
     def withdraw(amount)
-      @balance = @balance - amount
+      if amount > @balance
+        puts "Warning: insufficient fund."
+      else
+        @balance = @balance - amount
+      end
       return @balance
     end
   end

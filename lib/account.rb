@@ -2,7 +2,8 @@ module Bank
 
   class Account
 
-    attr_reader :id, :balance
+    attr_reader :id
+    attr_accessor :withdrawal_amount, :balance
 
     def initialize(id, balance)
       @id = id
@@ -16,10 +17,14 @@ module Bank
     end #end of initialize
 
     def withdraw(withdrawal_amount)
-      @withdrawal_amount = withdrawal_amount
-      @balance -= @withdrawal_amount
-    end
 
+      if @balance > withdrawal_amount
+        return @balance -= withdrawal_amount
+      else
+        raise ArgumentError.new "Your account is overdrawn"
+      end
+
+    end #end of withdraw method
 
   end #end of class
 

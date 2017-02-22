@@ -49,7 +49,6 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
-      skip
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -61,7 +60,6 @@ describe "Wave 1" do
     end
 
     it "Outputs a warning if the account would go negative" do
-      skip
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -73,6 +71,7 @@ describe "Wave 1" do
       proc {
         account.withdraw(withdrawal_amount)
       }.must_output /.+/
+
     end
 
     it "Doesn't modify the balance if the account would go negative" do

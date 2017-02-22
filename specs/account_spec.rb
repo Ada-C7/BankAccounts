@@ -166,10 +166,15 @@ end
 # todo: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do
-
+    before do
       new_bank = Bank::Account.all
+    end
+
+    it "Returns an array of all accounts" do
       new_bank.class.must_equal(Array)
+    end
+
+    it "Verifies everything in array is an Account"
 
     end
       # Useful checks might include:

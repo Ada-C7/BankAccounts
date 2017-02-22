@@ -31,6 +31,39 @@ describe "Wave 1" do
       # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end
+
+    #Optional
+    it "Uses default owner id of -1 when not given" do
+      id = 1337
+      balance = 100.0
+      account = Bank::Account.new(id, balance)
+
+      account.must_respond_to :owner_id
+      account.owner_id.must_equal -1
+    end
+
+    #Optional
+    it "Update owner_id (to be used when owner_id is not given at account initialization" do
+      id = 1337
+      balance = 100.0
+      owner_id = 101
+      account = Bank::Account.new(id, balance)
+
+      account.must_respond_to :owner_id
+      account.owner_id = owner_id
+      account.owner_id.must_equal owner_id
+    end
+
+    #Optional
+    it "Creates an account with owner_id" do
+      id = 1337
+      balance = 100.0
+      owner_id = 101
+      account = Bank::Account.new(id, balance, owner_id)
+
+      account.must_respond_to :owner_id
+      account.owner_id.must_equal owner_id
+    end
   end
 
   describe "Account#withdraw" do
@@ -132,6 +165,24 @@ describe "Wave 1" do
       proc {
         account.deposit(deposit_amount)
       }.must_raise ArgumentError
+    end
+  end
+  #Optional
+  describe "Owner#initialize" do
+    it "Takes an ID, name, and address" do
+      id = 101
+      name = "Owner Name"
+      address = "101 Wave Street"
+      owner = Bank::Owner.new(id, name, address)
+
+      owner.must_respond_to :id
+      owner.id.must_equal id
+
+      owner.must_respond_to :name
+      owner.name.must_equal name
+
+      owner.must_respond_to :address
+      owner.address.must_equal address
     end
   end
 end

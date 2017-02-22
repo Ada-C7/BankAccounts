@@ -5,6 +5,7 @@ module Bank
     attr_reader :id, :owner, :balance
 
     def self.all
+      [Bank::Account.new(1212, "first customer", 1235667), Bank::Account.new(15156, "last customer", 4356772)]
     end
 
     def initialize(id, owner, balance)

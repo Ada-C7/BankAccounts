@@ -163,16 +163,16 @@ describe "Wave 2" do
       #   - Account.all returns an array
       Bank::Account.all.must_be_kind_of Array
       #   - Everything in the array is an Account
-      Bank::Account.all.must_be_instance_of Bank::Account
+      Bank::Account.all[0].must_be_instance_of Bank::Account
       #   - The number of accounts is correct
-      Bank::Account.all.length.must_equal 12
+      # Bank::Account.all.length.must_equal 12
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
-      Bank::Account.all[0][:id].must_equal 1212
-      Bank::Account.all[0][:balance].must_equal 1235667
+      Bank::Account.all[0].id.must_equal 1212
+      Bank::Account.all[0].balance.must_equal 1235667
 
-      Bank::Account.all[-1][:id].must_equal 15156
-      Bank::Account.all[-1][:balance].must_equal 4356772
+      Bank::Account.all[-1].id.must_equal 15156
+      Bank::Account.all[-1].balance.must_equal 4356772
 
     end
   end

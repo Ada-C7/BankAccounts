@@ -10,7 +10,7 @@ module Bank
       if balance >= 0
         @balance = balance
       else
-        raise ArgumentError.new "Your balance must be greater than 0"
+        raise ArgumentError.new "Your balance must be greater than 0."
       end
     end
 
@@ -25,7 +25,7 @@ module Bank
           print "Insufficent funds."
         end
       else
-        raise ArgumentError.new "Your withdrawal amount must be greater than 0"
+        raise ArgumentError.new "Your withdrawal amount must be greater than 0."
       end
 
       return @balance
@@ -34,7 +34,14 @@ module Bank
     # creates a deposit method that accepts a single parameter
     # which represents the amount of money that will be deposited
     # and returns the updated account balance.
-    def deposit
+    def deposit(deposit_amount)
+      if deposit_amount >= 0
+        @balance += deposit_amount
+      else
+        raise ArgumentError.new "Your deposit amount must be greater than 0."
+      end
+
+      return @balance
     end
 
     # creates a check_balance method to access

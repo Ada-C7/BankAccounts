@@ -10,11 +10,14 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      @balance -= withdrawal_amount
-      if @balance < 0
+      if withdrawal_amount > @balance
         puts "Warning, the balance cannot be negative"
+        @balance = @balance
+      elsif withdrawal_amount < 0
+        raise ArgumentError.new "You cannot withdraw a negative amount"
+      else
+        @balance -= withdrawal_amount
       end
-      return @balance
     end
 
     def deposit

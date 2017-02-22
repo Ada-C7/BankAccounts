@@ -72,7 +72,7 @@ describe "Wave 1" do
       }.must_output /.+/
     end
 
-    xit "Doesn't modify the balance if the account would go negative" do
+    it "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -85,7 +85,7 @@ describe "Wave 1" do
       account.balance.must_equal start_balance
     end
 
-    xit "Allows the balance to go to 0" do
+    it "Allows the balance to go to 0" do
       account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0

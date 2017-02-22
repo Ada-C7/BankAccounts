@@ -8,7 +8,7 @@ module Bank
 
                @id = id
 
-               if balance >= -
+               if balance >= 0
                     @balance = balance
 
                else
@@ -23,12 +23,13 @@ module Bank
           def withdraw(withdrawal_amount)
 
                start_balance = @balance
-               @balance = start_balance - withdrawal_amount
 
-               if @balance >= 0 
-                    @balance
+               if start_balance >= withdrawal_amount
+                    @balance = start_balance - withdrawal_amount
+
                else
                     puts "Your balance is now negative."
+                    @balance
 
                end
 

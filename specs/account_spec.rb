@@ -180,10 +180,32 @@ describe "Wave 2" do
         item.class.must_equal(Bank::Account)
       end
     end
+
+    it "The number of accounts matches lines in CSV file, so number of accounts is correct" do
+
+      csv_lines = 0
+      #iterating through CSV & counting the number of lines
+      CSV.open("support/accounts.csv").each do |line|
+        csv_lines += 1
+      end
+
+      @new_bank.length.must_equal(csv_lines)
+    end
+
+    it "ID and balance of first & last account matches ID and balance in CSV" do
+
+      ids = []
+      balances = []
+      CSV.open("support/accounts.csv").each do |line|
+        ids << line[0].to_i
+        balances << line[1].to_i
+      end
+
+      @new_bank[0].id.must_equal(ids[0])
+      @new_bank[-1].id.must_equal(ids[-1])
+
+    end
       # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       # Feel free to split this into multiple tests if needed

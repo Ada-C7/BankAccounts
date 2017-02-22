@@ -14,7 +14,15 @@ module Bank
     end
 
     def withdraw(money_to_withdraw)
-      @balance = @balance - money_to_withdraw
+      if money_to_withdraw > @balance
+        puts "Amount to withdraw must be greater than balance"
+        start_balance = @balance
+        updated_balance = start_balance
+      else
+        start_balance = @balance
+        updated_balance = @balance - money_to_withdraw
+        @balance = updated_balance
+      end
     end
 
     def deposit(money_to_deposit)

@@ -1,44 +1,52 @@
 
 module Bank
     class Account
-        attr_accessor :id, :balance, :withdraw
+        attr_accessor :id, :balance, :withdraw, :deposit
 
         def initialize (id, balance)
             #need to call a method here that checks if balance is > 0; argument error
             @id = id
             @balance = balance
             @withdraw
+            @deposit
         end
 
         def withdraw (withdraw_amount)
             @withdraw = withdraw_amount
-            if @balance - @withdraw > 0
-                puts "Here's your cash"
-                @balance = @balance - @withdraw
-                puts "Your new balance is: $#{@balance}"
+            if @withdraw > 0
+                if @balance - @withdraw >= 0
+                    return @balance -= @withdraw
+                    # return @balance
+                else
+                    puts "You don't have enough in your account for this"
+                    return @balance
+                end
             else
-                puts "you do not have enough money in your account for this"
+                raise ArgumentError.new("You must enter a positive withdraw amount")
             end
         end
 
-        def deposit
-            #make sure positive
-            #adjust balance
-        end
+        # def deposit(deposit_amount)
+        #     @deposit = deposit_amount
+        #     if deposit_amount > 0
+        #         @balance += @deposit
+        #         return @balance
+        #     end
+        #     #adjust balance
+        # end
 
-        def new_account_check
-            #make sure that new accounts are not started with negative balance
-        end
+        # def new_account_check
+        #     #make sure that new accounts are not started with negative balance
+        # end
 
 
-        def show_balance
-            puts "Your balance is: $#{@balance}"
-        end
+        # def show_balance
+        #     puts "Your balance is: $#{@balance}"
+        # end
 
     end
 
 end
 
 my_account = Bank::Account.new(16, 1000)
-# my_account.show_balance
-my_account.withdraw(200)
+puts my_account.withdraw(200)

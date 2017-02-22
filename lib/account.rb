@@ -20,7 +20,12 @@ module Bank
       end
     end
 
-    def deposit
+    def deposit(deposit_amount)
+      if deposit_amount < 0
+        raise ArgumentError.new "The deposit must be greater than 0"
+      else
+        @balance += deposit_amount
+      end
     end
   end
 end

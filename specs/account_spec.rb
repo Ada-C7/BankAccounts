@@ -136,6 +136,27 @@ describe "Wave 1" do
   end
 end
 
+describe "Optionals" do
+    describe "0wner#initialize" do
+      it "takes the name of Account owner and their address" do
+        name = "Anna Elisabeth"
+        address = "house on the left, pumpkin lane, seattle, WA"
+
+        owner = Bank::Owner.new(name, address)
+
+        owner.must_respond_to :name
+        owner.name.must_equal name
+
+        owner.must_respond_to :address
+        owner.address.must_equal address
+      end
+      it "throw an error if intialized without name + address" do
+
+      end
+      end
+    end
+
+end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Wave 2" do
   describe "Account.all" do

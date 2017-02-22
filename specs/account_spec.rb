@@ -21,7 +21,7 @@ describe "Wave 1" do
       # Note: we haven't talked about procs yet. You can think
       # of them like blocks that sit by themselves.
       # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
+      # raises an ArgumentError.ㄴㄴ
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError

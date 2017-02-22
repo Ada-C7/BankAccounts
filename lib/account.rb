@@ -2,11 +2,24 @@
 # Create methods inside the class to perform actions
 # Learn how Ruby does error handling
 # Verify code correctness by testing
+require 'csv'
+require 'awesome_print'
 
 
 module Bank
   class Account
     attr_accessor :id, :balance
+
+    def self.all
+      data_array = CSV.read("../support/accounts.csv")
+      account_array = []
+      data_array.each do |account|
+        account_array << (Account.new(account[0], account[1].to_i))
+      end
+      return account_array
+    end
+
+
 
     def initialize(id, balance)
       @id = id
@@ -37,17 +50,13 @@ module Bank
   end #end class Account
 
 
-
 #   class Owner
 #     attr_accessor :name, :address, :dob
 #
 #      def initialize(name, dob, address)
 #        @name = name
 #        @dob = dob
-#        @address = enter_address
-#
-#
-#       #  {
+#        @address = address
 #       #    street1: "1221 N. Fife",
 #       #    street2: "#4",
 #       #    city: "Tacoma",
@@ -56,9 +65,9 @@ module Bank
 #       #  }
 #
 #      end
-#
+# #
 #        def enter_address(street1, street2, city, state, zip)
-#          @address = {
+#          address = {
 #            street1: "1221 N. Fife",
 #            street2: "#4",
 #            city: "Tacoma",
@@ -66,8 +75,9 @@ module Bank
 #            zip: "98406"
 #          }
 #        end
-#
+# #
 #   end #end owner class
 end #end module Bank
-# # owner = Bank::Owner.new("Kelly", "234", "123 somestreet", "#4", "Tacoma", "WA", "98406")
-# #  puts owner.address
+
+# accounts = Account.all
+# puts accounts

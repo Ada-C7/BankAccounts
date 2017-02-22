@@ -135,30 +135,33 @@ describe "Wave 1" do
     end
   end
 
-  # describe "Account#owner" do
-  #   it "requires name and dob" do
-  #     name = "Kelly Souza"
-  #     dob = "02/05/1978"
-  #     address = {
-  #       street1: "1221 N. Fife",
-  #       street2: "#4",
-  #       city: "Tacoma",
-  #       state: "WA",
-  #       zip: "98406"
-  #     }
-  #     owner = Bank::Owner.new(name, dob, address)
-  #     owner.name.must_equal name
-  #     owner.dob.must_equal dob
-  #     owner.address.must_equal address
-  #   end #end require name and dob
-  #
-  #   # it "requires owner address" do
-  #     # street1 = "1221 N. Fife",
-  #     # street2 = "#4",
-  #     # city = "Tacoma",
-  #     # state = "WA",
-  #     # zip = "98406"
-  #     # owner.address.must_equal address
+
+
+
+#   describe "Account#owner" do
+#     it "requires name and dob" do
+#       name = "Kelly Souza"
+#       dob = "02/05/1978"
+#       address = {
+#         street1: "1221 N. Fife",
+#         street2: "#4",
+#         city: "Tacoma",
+#         state: "WA",
+#         zip: "98406"
+#       }
+#       owner = Bank::Owner.new(name, dob, address)
+#       owner.name.must_equal name
+#       owner.dob.must_equal dob
+#       owner.address.must_equal address
+#     end #end require name and dob
+# end
+    # it "requires owner address" do
+      # street1 = "1221 N. Fife",
+      # street2 = "#4",
+      # city = "Tacoma",
+      # state = "WA",
+      # zip = "98406"
+      # owner.address.must_equal address
   #
   #
   # # end
@@ -174,16 +177,22 @@ end
 
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
       # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
+      account_array = Bank::Account.all
+      account_array.class.must_equal Array
+      # #   - The number of accounts is correct
+      # account_array.class.must_equal Array
+      account_array.length.must_equal 12
+      # #   - Everything in the array is an Account
+      account_array.each {|account| account.class.must_equal Bank::Account}
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
+
+      # account_array[0]
       # Feel free to split this into multiple tests if needed
     end
   end

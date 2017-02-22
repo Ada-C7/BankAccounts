@@ -5,12 +5,13 @@ module Bank
     attr_reader :id
 
     def self.all
-      
+
     end
 
-    def initialize(id, balance)
+    def initialize(id, balance, opendate)
 
       @id = id
+      @opendate = opendate
 
       if balance < 0
         raise ArgumentError.new "You cannot initialize a new account with a negative balance."
@@ -66,3 +67,7 @@ module Bank
   end
 
 end
+
+my_account = Bank::Account.new(1212,1235667,"1999-03-27 11:30:09 -0800")
+
+puts my_account.balance

@@ -47,7 +47,7 @@ describe "Wave 1" do
       account.balance.must_equal expected_balance
     end
 
-    xit "Returns the modified balance" do
+    it "Returns the modified balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
@@ -58,7 +58,7 @@ describe "Wave 1" do
       updated_balance.must_equal expected_balance
     end
 
-    xit "Outputs a warning if the account would go negative" do
+    it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -70,9 +70,10 @@ describe "Wave 1" do
       proc {
         account.withdraw(withdrawal_amount)
       }.must_output /.+/
+
     end
 
-    xit "Doesn't modify the balance if the account would go negative" do
+    it "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
@@ -85,14 +86,14 @@ describe "Wave 1" do
       account.balance.must_equal start_balance
     end
 
-    xit "Allows the balance to go to 0" do
+    it "Allows the balance to go to 0" do
       account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
     end
 
-    xit "Requires a positive withdrawal amount" do
+    it "Requires a positive withdrawal amount" do
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
@@ -103,7 +104,7 @@ describe "Wave 1" do
     end
   end
 
-  xdescribe "Account#deposit" do
+  describe "Account#deposit" do
     it "Increases the balance" do
       start_balance = 100.0
       deposit_amount = 25.0

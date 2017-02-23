@@ -2,7 +2,7 @@ require 'csv'
 
 module Bank
   class Account
-    attr_reader :id, :balance, :date_created
+    attr_reader :id, :balance, :date_created, :Accounts
     @@Accounts = []
     def initialize(id, balance, date_created)
       @id = id
@@ -28,16 +28,21 @@ module Bank
     end
 
     def self.all
-      return @@Accounts
+      @@Accounts
     end
 
     def self.find(id)
+      return_account = []
       @@Accounts.each do |account|
+        # this logic was so wrong but then i FIXED IIIIIIT
         if account[0] == id
-          return account
-        else
-          raise ArgumentError.new("that account cannot be found")
+          return_account = account
         end
+      end
+      if return_account == []
+       raise ArgumentError.new("that account cannot be found")
+      else
+       return return_account
       end
     end
 
@@ -46,6 +51,7 @@ module Bank
       CSV.open("./support/accounts.csv").each do |line|
           many_accounts << self.new(line[0].to_i, line[1].to_i, line[2])
       end
+      return many_accounts
     end
 
   end

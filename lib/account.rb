@@ -6,7 +6,7 @@ module Bank
 
     attr_reader :id, :balance, :open_date
 
-    def initialize (id, balance, open_date = nil)
+    def initialize(id, balance, open_date = nil)
       @id = id
       raise ArgumentError.new "The initial balance must not be a negative number" if balance < 0
 

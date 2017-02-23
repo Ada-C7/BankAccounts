@@ -4,13 +4,13 @@ require 'date'
 
 module Bank
   class Account
-    attr_reader :id, :balance, :owner, :date_created
+    attr_accessor :id, :balance, :owner, :date_created
 
-    def initialize(id, balance, date_created="1991-01-01 11:01:01 -0800")
+    def initialize(id, balance, date_created="1991-01-01 11:01:01 -0800", owner=nil)
       raise ArgumentError.new("balance must be >= 0") if balance < 0
       @id = id
       @balance = balance
-      @owner = nil
+      @owner = owner
     end
 
 # Returns array of all instances of class Account
@@ -37,12 +37,16 @@ module Bank
       else
         return result[0]
       end
-      # Account.all.each do |acc|
-      #   if acc.id == id
-      #     return acc
-      #   end
-      #   raise ArgumentError.new("Cannot find this ID in accounts")
-      # end
+    end
+
+    def self.accounts_with_owners
+      accounts_with_owners = []
+      csv = CSV.read("../support/account_owners.csv", 'r')
+      csv.each do |line|
+        account = Bank::Account.find(line[0].to_i)
+        account.owner = Bank::Owner.find(line[1].to_i)
+        accounts_with_owners << account
+      end
     end
 
     def add_owner(id, last_name)
@@ -74,9 +78,4 @@ module Bank
   end # end of class Account
 end # end of module Bank
 
-
- #puts Bank::Account.all
- a = Bank::Account.find(1212)
- puts a.class
- puts Bank::Account.all[0].class
- puts a == Bank::Account.all[0]
+Bank::Account.accounts_with_owners

@@ -32,7 +32,6 @@ module Bank
 
     def self.find(id)
       result = Owner.all.select {|owner| owner.id == id}
-      puts result
       # select method returns Array, which in our case
       # store only one element
       if result[0].nil?
@@ -43,9 +42,9 @@ module Bank
     end
   end # end of class Owner
 end # end of module Bank
-
-a = Bank::Owner.all
-puts a
-
- b = Bank::Owner.find(24)
- puts b.city
+# 
+# a = Bank::Owner.all
+# puts a
+#
+#  b = Bank::Owner.find(24)
+#  puts b.city

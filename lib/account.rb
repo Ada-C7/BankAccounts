@@ -19,6 +19,16 @@ module Bank
         new_accounts << Account.new(line[0].to_i, line[1].to_i)
       end
       return new_accounts
+
+    end
+
+    def self.find(id)
+      Account.all.each do |account|
+        if account.id == id
+          return account
+        end
+
+      end
     end
 
     def initialize id, start_balance
@@ -59,4 +69,5 @@ module Bank
   end
 end
 
-puts Bank::Account.all
+#puts Bank::Account.all
+puts Bank::Account.find(1212)

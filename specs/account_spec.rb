@@ -178,6 +178,14 @@ describe "Wave 2" do
     end
 
     it "Verifies every item in array is an Owner" do
+
+    end
+
+    it "Number of Owners match lines in CSV file" do
+
+    end
+
+    it "Name and address of first and last match CSV file" do
       
     end
 

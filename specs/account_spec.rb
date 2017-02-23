@@ -256,15 +256,16 @@ describe "Wave 2" do
       all_accounts[-1].balance.must_equal lines[-1][1].to_f
       all_accounts[-1].id.must_equal lines[-1][0]
     end
-      # TODO: Your test code here!
-      # Useful checks might include:
 
-      # Feel free to split this into multiple tests if needed
-    # end
   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
+      all_accounts = Bank::Account.all
+      test_id = 1212
+      found_account = Bank::Account.find(test_id)
+      found_account.id.to_i.must_equal test_id.to_i
+
       # TODO: Your test code here!
     end
 

@@ -225,9 +225,12 @@ describe "Wave 2" do
     it "Can find the last account from the CSV" do
       Bank::Account.find(15156)
     end
-    # not yet working
-    # it "Raises an error for an account that doesn't exist" do
-    #   Bank::Account.find(0000000)
+
+    it "Raises an error for an account that doesn't exist" do
+    #should raise an error when I try to find this
+    proc {
+      Bank::Account.find(0000000)
+    }.must_raise ArgumentError
     end
   end
 

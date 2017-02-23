@@ -33,7 +33,12 @@ module Bank
           @account = Bank::Account.new(line[0].to_i, line[1].to_i, line[2])
         end
       end
-      return @account
+
+      if @account == nil
+        raise ArgumentError.new "This account doee not exist!"
+      else
+        return @account
+      end
     end
 
     def add_owner(owner)

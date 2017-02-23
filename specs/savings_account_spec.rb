@@ -11,15 +11,16 @@ require_relative '../lib/savings_account'
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "SavingsAccount" do
   describe "#initialize" do
+
     it "Is a kind of Account" do
-      # Check that a SavingsAccount is in fact a kind of account
       account = Bank::SavingsAccount.new(12345, 100.0)
       account.must_be_kind_of Bank::Account
     end
 
     it "Requires an initial balance of at least $10" do
-      skip
-      # TODO: Your test code here!
+      proc {
+        Bank::SavingsAccount.new(1337, 9)
+      }.must_raise ArgumentError
     end
   end
 

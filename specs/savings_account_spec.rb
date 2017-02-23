@@ -76,19 +76,21 @@ describe "SavingsAccount" do
     it "Returns the interest calculated" do
       account = Bank::SavingsAccount.new(1,100)
       account.balance.must_equal 100
-      account.add_interest.must_equal 0.25
+      account.add_interest(0.25).must_equal 0.25
     end
 
     it "Updates the balance with calculated interest" do
       account = Bank::SavingsAccount.new(1,100)
       first_balance = account.balance
-      interest_earned = account.add_interest
+      interest_earned = account.add_interest(0.25)
       second_balance = account.balance
       second_balance.must_equal (first_balance + interest_earned)
     end
 
     it "Requires a positive rate" do
-      # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(1,100)
+      test_rate = -0.25
+      proc {account.add_interest(test_rate)}.must_output(/.+/)
     end
   end
 end

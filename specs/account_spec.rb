@@ -226,13 +226,16 @@ describe "Wave 2" do
       id_check = test_array[0][0]
       account = Bank::Account.find(id_check)
       expect(account.id).must_equal id_check
-
-      # TODO: Your test code here!
     end
 
     it "Can find the last account from the CSV" do
-      skip
-      # TODO: Your test code here!
+      test_array = []
+      CSV.open("support/accounts.csv", 'r').each do |account|
+        test_array << account
+      end
+      id_check = test_array[-1][0]
+      account = Bank::Account.find(id_check)
+      expect(account.id).must_equal id_check
     end
 
     it "Raises an error for an account that doesn't exist" do

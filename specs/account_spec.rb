@@ -258,8 +258,10 @@ describe "Wave 2" do
     # end
 
     it "Everything in array is an Account" do
-      @account_array[0].must_be_instance_of Bank::Account
+      @account_array.each do |element|
+        element.must_be_instance_of Bank::Account
     end
+  end
 
     it "The number of accounts matches number of lines in csv file" do  #   - The number of accounts is correct
       @account_array.length.must_equal 12
@@ -290,8 +292,17 @@ describe "Wave 2" do
 
   describe "Account.find" do
 
+
     it "Returns an account that exists" do
-      skip
+
+
+
+        # account_id = @account_array[3].id
+        #
+
+        Bank::Account.find("1215").must_equal "1215"
+
+
       # TODO: Your test code here!
     end
 

@@ -48,6 +48,22 @@ module Bank
     end
 
 
+    def self.find(search_id)
+      # new_search = Account.all
+      match = nil
+
+      Bank::Account.all.each do |account|
+        if account.id == search_id
+          match = search_id
+          break
+        else
+          match = nil
+        end
+      end
+      return match
+
+    end
+
     def withdraw(money_to_withdraw)
       if money_to_withdraw > 0 #requires positive withdrawal amount
         if money_to_withdraw > @balance #requires withdrawal amount less than balance

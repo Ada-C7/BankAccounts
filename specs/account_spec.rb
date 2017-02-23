@@ -142,8 +142,9 @@ describe "Wave 2" do
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
       # Useful checks might include:
+      #account_array = Bank::Account.all
       #   - Account.all returns an array
-      Account.all.class must_equal Array
+      Bank::Account.all.class.must_equal Array
       #   - Everything in the array is an Account
 
       #   - The number of accounts is correct

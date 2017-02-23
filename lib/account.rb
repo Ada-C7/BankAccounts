@@ -1,14 +1,31 @@
 #this is the new, second try at this
+require "csv"
 
 module Bank
-    
+
     class Account
-        attr_accessor :id, :balance
-        def initialize (id, balance)
+        attr_accessor :id, :balance, :opendate
+        def initialize (id, balance, opendate = nil)
             raise ArgumentError.new("You need some positive cash flow to open an account") if balance < 0
             @id = id
             @balance = balance
+            @opendate
         end
+
+
+        def self.all
+            accounts = []
+
+            CSV.read("support/accounts.csv").each do |line|
+                id = line[0].to_i
+                balance = line[1].to_i
+                opendate = line[2]
+                account = Bank::Account.new(id, balance, opendate)
+                accounts << account
+            end
+            return accounts
+        end
+
 
         def withdraw (amount)
             if amount > 0

@@ -25,7 +25,6 @@ describe "SavingsAccount" do
 
     it "Requires an initial balance of at least $10" do
       @savings.initial_balance.to_i.must_be :>, 9
-      # proc {@savings.initial_balance < 10}.must_raise ArgumentError
     end
 
     it "Raises error if initial balance < 10" do
@@ -36,7 +35,9 @@ describe "SavingsAccount" do
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(1,10)
+      account.withdraw(1)
+      account.balance.must_equal 7
     end
 
     it "Outputs a warning if the balance would go below $10" do

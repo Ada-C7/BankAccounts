@@ -15,7 +15,9 @@ module Bank
 
     def withdraw(amount)
       super
-
+      fee = 2
+      @balance -= fee
+      # @balance -= amount
     end
 
     def add_interest

@@ -235,6 +235,10 @@ end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
+  before do
+
+      @account_array = Bank::Account.all
+  end
 
   describe "Account.all" do
     it "Returns an array of all accounts" do
@@ -244,39 +248,43 @@ describe "Wave 2" do
       # Useful checks might include:
       #   - Account.all returns an array
 
-      account_array = Bank::Account.all
 
-      account_array.class.must_equal Array
+      @account_array.class.must_equal Array
+    end
+    #   - Everything in the array is an Account
 
-      #   - Everything in the array is an Account
+    # account_array.each do |element|
+    #   element.class
+    # end
 
-      # account_array.each do |element|
-      #   element.class
-      # end
+    it "Everything in array is an Account" do
+      @account_array[0].must_be_instance_of Bank::Account
+    end
 
-      account_array[0].must_be_instance_of Bank::Account
+    it "The number of accounts matches number of lines in csv file" do  #   - The number of accounts is correct
+      @account_array.length.must_equal 12
+    end
 
 
-      #   - The number of accounts is correct
-      account_array.length.must_equal 12
-
+    it "ID/balance of first and last accounts match csv file" do
       #   - The ID and balance of the first and last
+      #       accounts match what's in the CSV file
 
-      first_account_id = account_array[0].id
-      first_account_balance = account_array[0].balance
+      first_account_id = @account_array[0].id
+      first_account_balance = @account_array[0].balance
 
       first_account_id.must_equal "1212"
       first_account_balance.must_equal 1235667
 
-      last_account_id = account_array[-1].id
-      last_account_balance = account_array[-1].balance
+      last_account_id = @account_array[-1].id
+      last_account_balance = @account_array[-1].balance
 
       last_account_id.must_equal "15156"
       last_account_balance.must_equal 4356772
-
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
     end
+
+      # Feel free to split this into multiple tests if needed
+
   end
 
 

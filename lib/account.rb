@@ -6,14 +6,16 @@ module Bank
 
     def self.all
       account = []
-      CSV.open("support/accounts.csv", "r").each do |account|
-        id = Integer(account[0])
-        balance = Integer(account[1])
-        open_date = account[2]
+      CSV.open("/Users/habsr/ada/projects/BankAccounts/support/accounts.csv", "r").each do |file|
+        id = Integer(file[0])
+        balance = Integer(file[1])
+        open_date = file[2]
         new_account = Account.new(id, balance, open_date)
         account << new_account
+        puts account
       end
       return account
+      # puts account
 
     end
 
@@ -61,6 +63,8 @@ module Bank
     end
   end
 end
+
+puts Bank::Account.all
 # def withdraw(amount)
 #   raise ArgumentError.new("amount must be >= 0") if amount < 0
 #

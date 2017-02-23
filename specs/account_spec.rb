@@ -152,30 +152,30 @@ describe "Wave 2" do
       account.each do |element|
         element.must_be_instance_of Bank::Account
       end
-        #   - The number of accounts is correct account.length = 12
+      #   - The number of accounts is correct account.length = 12
+      account.length.must_equal 12
+      #   - The ID and balance of the first and last ...pull out indexes, id must be equal to
+      #       accounts match what's in the CSV file
+      # Feel free to split this into multiple tests if needed
+      # end
 
-        #   - The ID and balance of the first and last ...pull out indexes, id must be equal to
-        #       accounts match what's in the CSV file
-        # Feel free to split this into multiple tests if needed
-    # end
-
-    #   describe "Account.find" do
-    #     it "Returns an account that exists" do
-    #       # TODO: Your test code here!
-    #     end
-    #
-    #     it "Can find the first account from the CSV" do
-    #       # TODO: Your test code here!
-    #     end
-    #
-    #     it "Can find the last account from the CSV" do
-    #       # TODO: Your test code here!
-    #     end
-    #
-    #     it "Raises an error for an account that doesn't exist" do
-    #       # TODO: Your test code here!
-    #   end
-    # end
+      #   describe "Account.find" do
+      #     it "Returns an account that exists" do
+      #       # TODO: Your test code here!
+      #     end
+      #
+      #     it "Can find the first account from the CSV" do
+      #       # TODO: Your test code here!
+      #     end
+      #
+      #     it "Can find the last account from the CSV" do
+      #       # TODO: Your test code here!
+      #     end
+      #
+      #     it "Raises an error for an account that doesn't exist" do
+      #       # TODO: Your test code here!
+      #   end
+      # end
+    end
   end
 end
-end 

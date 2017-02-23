@@ -1,19 +1,21 @@
-require_relative 'account'
+require_relative '../lib/account_wave_2'
 
 module Bank
 
   class SavingsAccount < Account
 
-    def initialize(id, initial_deposit)
-      raise ArgumentError if initial_deposit < 10
-      @initial_deposit = initial_deposit
-      @balance = @initial_deposit
+    attr_reader :initial_balance, :balance, :id
+
+    def initialize(id, initial_balance)
+      raise ArgumentError.new "initial balance must be at least 10" if initial_balance < 10
+      @initial_balance = initial_balance
+      @balance = @initial_balance
       @id = id
     end
 
     def withdraw(amount)
       super
-      
+
     end
 
     def add_interest
@@ -23,3 +25,4 @@ module Bank
   end
 
 end
+#

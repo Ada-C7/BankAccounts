@@ -5,8 +5,8 @@ require 'date'
 module Bank
   class Account
     attr_accessor :id, :balance, :owner, :date_created
-
-    def initialize(id, balance, date_created="1991-01-01 11:01:01 -0800", owner=nil)
+# To make all given tests pass, default values was given for some paramethers
+    def initialize(id, balance, date_created = "1991-01-01 11:01:01 -0800", owner=nil)
       raise ArgumentError.new("balance must be >= 0") if balance < 0
       @id = id
       @balance = balance
@@ -30,15 +30,16 @@ module Bank
 
     def self.find(id)
       result = Account.all.select {|account| account.id == id}
-      # select method returns Array, which in our case
-      # store only one element
+      # select method returns array, which in our case will
+      # store only one element (cannot be two account with same id)
       if result[0].nil?
         raise ArgumentError.new("Cannot find this ID in accounts")
       else
         return result[0]
       end
     end
-
+# Method returns array of all accounts, that have @owner instance var, that
+# stores corresponding owner of account (from account_owners.csv file)
     def self.accounts_with_owners
       accounts_with_owners = []
       csv = CSV.read("../support/account_owners.csv", 'r')
@@ -48,13 +49,12 @@ module Bank
         accounts_with_owners << account
       end
     end
-
+    # Add owner to account instance
     def add_owner(id, last_name)
       @owner = Bank::Owner.new(id, last_name)
     end
 
     def withdraw(amount)
-      # TODO: implement withdraw
       if amount < 0
          raise ArgumentError.new("amount to withdraw cannot be less than 0")
       end
@@ -68,7 +68,6 @@ module Bank
     end
 
     def deposit(amount)
-      # TODO: implement deposit
       if amount < 0
          raise ArgumentError.new("amount to withdraw cannot be less than 0")
        end
@@ -77,5 +76,3 @@ module Bank
     end
   end # end of class Account
 end # end of module Bank
-
-Bank::Account.accounts_with_owners

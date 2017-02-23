@@ -28,8 +28,13 @@ module Bank
           print "Warning! This will cause your balance to go below $-10"
           return @balance
         end
-        if @checks > 0
+        if @checks >= 1
           @balance -= amount
+          @checks -= 1
+          return @balance
+        else
+          @balance -= amount
+          @balance -= 2
           @checks -= 1
           return @balance
         end

@@ -160,6 +160,7 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
+
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
       # Useful checks might include:
@@ -176,10 +177,10 @@ describe "Wave 2" do
 
       Bank::Account.all.length.must_be number_of_accounts
 
-      Account.all[0][0].must_equal 
-      Account.all[0][1]
-      Account.all[-1][0]
-      Account.all[-1][1]
+      Account.all[0][0].must_equal 1212
+      Account.all[0][1].must_equal 1235667
+      Account.all[-1][0].must_equal 15154
+      Account.all[-1][1].must_equal 3567726
 
 
       # Feel free to split this into multiple tests if needed
@@ -188,20 +189,44 @@ describe "Wave 2" do
 
 
   describe "Account.find" do
+
+    before do
+      @id =[]
+      @balance =[]
+      @open_date =[]
+
+      CSV.open("../support/accounts.csv").each do |line|
+        @id << line[0]
+        @balance << line[1]
+        @open_date << line[2]
+      end
+
+    end
+
+
     it "Returns an account that exists" do
       # TODO: Your test code here!
+      Bank::Account.find(@id[5]).must_be_instance_of Bank::Account
     end
+
 
     it "Can find the first account from the CSV" do
       # TODO: Your test code here!
+      Bank::Account.find(@id[0]).must_be_instance_of Bank::Account
     end
 
     it "Can find the last account from the CSV" do
       # TODO: Your test code here!
+      Bank::Account.find(@id[-1]).must_be_instance_of Bank::Account
+
     end
 
     it "Raises an error for an account that doesn't exist" do
       # TODO: Your test code here!
+
+            proc {
+              Bank::Account.find(00000000)
+            }.must_raise ArgumentError
     end
   end
 end

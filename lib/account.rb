@@ -39,21 +39,22 @@ module Bank
     end
 
     # will read in info from CSV file return an array of account objects
-    def self.all
-      @accounts = CSV.read('../support/accounts.csv')
+    def self.all(csv_file)
+      @accounts = CSV.read(csv_file)
       # change the id to an integer and the balance to a dollar floats
       @accounts.each do |info_array|
         info_array[0] = info_array[0].to_i
         info_array[1] = info_array[1].to_f / 100
       end
+
       #initiate the accounts using self.new
       @accounts.map! do |account_info|
+        # Account.new(id, balance, date)
         self.new(account_info[0], account_info[1], account_info[2])
       end
-      # here is the array of account objects
       return @accounts
     end
-    #
+    
     def self.find(id)
       @accounts.each do |account_info|
         return account_info if account_info.id == id

@@ -20,8 +20,14 @@ module Bank
       return accounts
     end
 
-    def self.find
-      @id = Account.new([:id])
+    def self.find(id)
+      CSV.read("support/accounts.csv").each do |line|
+        if line[0] == id
+          return Account.new(line[0], line[1].to_i)
+        end
+      end
+      raise ArgumentError.new("account id doesn't exist")
+
     end
 
 

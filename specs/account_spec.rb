@@ -190,19 +190,19 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      skip
+      Bank::Account.find(1216).wont_be_nil
     end
 
     it "Can find the first account from the CSV" do
-      skip
+      Bank::Account.find(1212).wont_be_nil
     end
 
     it "Can find the last account from the CSV" do
-      skip
+      Bank::Account.find(15156).wont_be_nil
     end
 
     it "Raises an error for an account that doesn't exist" do
-      skip
+      proc { Bank::Account.find(000) }.must_raise ArgumentError
     end
   end
 end

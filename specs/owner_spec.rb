@@ -27,3 +27,31 @@ describe "Owner#initialize" do
     }.must_raise ArgumentError
   end
 end
+
+describe "Owner.all" do
+  before do
+    @owners = Bank::Owner.all
+  end
+
+  it "Returns a collection of Owner instances" do
+    @owners.must_be_instance_of Array
+    @owners.each { |owner| owner.must_be_instance_of Bank::Owner }
+  end
+
+  it "Returns the correct number of owners" do
+    number_of_owners = CSV.read("support/owners.csv").count
+    @owners.length.must_equal number_of_owners
+  end
+
+  it "Returns a complete array of owners from the csv file" do
+    # The ID and balance of the first and last
+    # accounts match what's in the CSV file
+    first_owner = CSV.read("support/owners.csv").first
+    @owners[0].id.must_equal first_owner[0]
+    @owners[0].street_address.must_equal first_owner[3]
+
+    last_owner = CSV.read("support/owners.csv").last
+    @owners[-1].id.must_equal last_owner[0]
+    @owners[-1].street_address.must_equal last_owner[3]
+  end
+end

@@ -2,28 +2,15 @@ require 'csv'
 
 module Bank
 
-     class Owner
-
-          attr_accessor :name, :phone
-
-          def initialize(hash)
-
-               @name = hash[:name]
-               @phone = hash[:phone]
-
-          end
-
-     end
-
      class Account
 
-          def self.all(file, hash)
+          def self.all(file)
 
                all_accounts = []
 
                CSV.open(file).each do | line |
 
-                    account = Account.new(line[0].to_i, line[1].to_i, hash)
+                    account = Account.new(line[0].to_i, line[1].to_i)
 
                     all_accounts << account
                end
@@ -31,31 +18,35 @@ module Bank
                all_accounts
           end
 
-          def self.find_account(file, id)
+          def self.find_account(file, inquiry)
 
-               CSV.open(file).each do | account |
+               all_accounts = Bank::Account.all(file)
 
-                   account.id.include?(id)
+               all_accounts.each do | account |
 
-              end
+                    if account.id == inquiry
+
+                         puts account
+
+                    end
+
+               end
 
           end
 
-          attr_accessor :id, :balance, :owner
+          attr_accessor :id, :balance
 
-          def initialize(id, balance, hash)
+          def initialize(id,balance)
 
                @id = id
 
-               # if balance >= 0
+               if balance >= 0
                     @balance = balance
 
-               # else
-               #      raise ArgumentError.new "Can't create an account with a negative balance."
-               #
-               # end
+               else
+                    raise ArgumentError.new "Can't create an account with a negative balance."
 
-               @owner = Bank::Owner.new(hash)
+               end
 
           end
 
@@ -99,10 +90,11 @@ module Bank
           end
 
 
-
      end
 
 end
+
+
 
 hash = {name: "Janice", phone: "303-349-1433"}
 
@@ -123,9 +115,5 @@ hash = {name: "Janice", phone: "303-349-1433"}
 # expected_balance = new_account.withdraw(25)
 
 # puts expected_balance
-
+#
 # all_accounts = Bank::Account.all("../support/accounts.csv", hash)
-#
-# find_accounts = Bank::Account.find_account("../support/accounts.csv", 1213)
-#
-# puts find_accounts

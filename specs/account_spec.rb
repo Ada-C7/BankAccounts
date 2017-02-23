@@ -3,6 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
 require_relative '../lib/owner'
+require 'csv'
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -189,11 +190,7 @@ describe "Wave 2" do
     end
 
       it "Has the correct amounts of account" do
-        count = 0
-        CSV.open("support/accounts.csv", 'r').each do |account|
-          count += 1
-        end
-        expect(@accounts.length).must_equal count
+        expect(@accounts.length).must_equal CSV.read("support/accounts.csv").length
       end
 
       it "The ID + Balance of first and last account match CSV file" do

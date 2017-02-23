@@ -60,10 +60,23 @@ module Bank
   end # end of Account class
 
   class Owner
-    attr_reader :name, :address
-    def initialize(name=nil, address=nil)
-      @name = name
-      @address = address
+
+    def self.all
+      # returns a collection of owner instances
+    end
+
+    def self.find(search_for_id)
+      # returns an instance of owner where the id matches
+    end
+
+    attr_reader :id, :last_name, :first_name, :street_address, :city, :state
+    def initialize(id, last_name, first_name, street_address, city, state)
+      @id = id
+      @last_name = last_name
+      @first_name = first_name
+      @street_address = street_address
+      @city = city
+      @state = state
     end
   end
 end

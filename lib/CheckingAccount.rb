@@ -1,9 +1,13 @@
 require_relative 'account'
 
-class CheckingAccount < Account
+module Bank
 
-  def initialize
+  class CheckingAccount < Account
+
+    def initialize
+    end
+
+
   end
-
-
+  
 end

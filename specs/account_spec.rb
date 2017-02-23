@@ -390,8 +390,23 @@ describe "Wave 2" do
         association[:owner_id] = line[1]
         owners_and_accounts << association
       end
+      Bank::Account.get_owner_id(1216).must_equal 18
+      Bank::Account.get_owner_id(15153).must_equal 21
+    end
 
-      
+    it "the Bank::Account.owner should be the owner id associated with that bank account number" do
+      all_accounts = Bank::Account.all
+      my_file = CSV.open("support/account_owners.csv")
+      owners_and_accounts = []
+      my_file.each do |line|
+        association = {}
+        association[:account_id] = line[0]
+        association[:owner_id] = line[1]
+        owners_and_accounts << association
+      end
+      all_accounts[0].owner.id.to_i.must_equal 25
+      all_accounts[6].owner.id.to_i.must_equal 17
+
     end
 
   end

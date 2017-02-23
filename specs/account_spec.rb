@@ -293,7 +293,6 @@ describe "Wave 2" do
       proc {
         Bank::Account.find(test_id)
       }.must_raise ArgumentError
-      # TODO: Your test code here!
     end
   end
 end

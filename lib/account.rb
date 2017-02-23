@@ -18,17 +18,12 @@ module Bank
     end
 
     def self.find(id)
-      CSV.open("support/accounts.csv", 'r').each do |account|
-        if account[0] == id
-          balance = Integer(account[1])
-          open_date = account[2]
-          existing_account = Account.new(id, balance, open_date)
-          return existing_account
+        Account.all.each do |account|
+        if account.id == id
+          return account
         end
       end
       raise ArgumentError.new "The ID is not associated with an account"
-
-
     end
 
 

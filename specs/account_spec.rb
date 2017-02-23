@@ -192,7 +192,11 @@ describe "Wave 2" do
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
 
-      # account_array[0]
+      account_array.first.id.must_equal "1212"
+      account_array.first.balance.must_equal 1235667
+      account_array.last.id.must_equal "15156"
+      account_array.last.balance.must_equal 4356772
+      # end
       # Feel free to split this into multiple tests if needed
     end
   end

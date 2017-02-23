@@ -160,7 +160,7 @@ describe "Wave 2" do
     end
 
     it "Creates a first account with the csv's first listed ID and balance" do
-      first_id = CSV.read("support/accounts.csv").first[0].to_i
+      first_id = CSV.read("support/accounts.csv").first[0].to_i # need to read in from the file?
       first_balance = CSV.read("support/accounts.csv").first[1].to_i
       accounts = Bank::Account.all
 
@@ -179,24 +179,38 @@ describe "Wave 2" do
   end
 
   describe "Account.find" do
-    it "Returns an account that exists" do # of Account class? or one of accounts in CSV file?
-      skip
-      # TODO: Your test code here!
+    it "Returns an account that exists" do
+      # #Bank::Account.new(15151,9844567, "1993-01-17 13:30:56 -0800")
+      # accounts = Bank::Account.all # bad to use another method to test this one?
+      # account = Bank::Account.find(15151)
+      # accounts.must_include account # different instances of the same object?
+      account = Bank::Account.find(15151)
+      account.balance.must_equal 9844567
+      account.open_date.must_equal "1993-01-17 13:30:56 -0800"
     end
 
     it "Can find the first account from the CSV" do
-      skip
-      # TODO: Your test code here!
+      #info = CSV.read("support/accounts.csv").first
+      #first_account = Bank::Account.new(info[0].to_i, info[1].to_i, info[2])
+      #Bank::Account.find(1212).must_be_same_as first_account
+
+      first_account = Bank::Account.find(1212)
+      first_account.balance.must_equal 1235667
+      first_account.open_date.must_equal "1999-03-27 11:30:09 -0800"
     end
 
     it "Can find the last account from the CSV" do
-      skip
-      # TODO: Your test code here!
+      last_account = Bank::Account.find(15156)
+      last_account.balance.must_equal 4356772
+      last_account.open_date.must_equal "1994-11-17 14:04:56 -0800"
     end
 
     it "Raises an error for an account that doesn't exist" do
-      skip
-      # TODO: Your test code here!
+      fake_id = 80
+
+      proc {
+        Bank::Account.find(fake_id)
+      }.must_raise ArgumentError
     end
   end
 end

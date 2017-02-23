@@ -151,27 +151,35 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
+
+before do
+  @accounts = Bank::Account.all
+end
+
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
-      Bank::Account.all.class.must_equal Array
+      #Bank::Account.all.class.must_equal Array
+      @accounts.class.must_equal Array
       #   - Everything in the array is an Account
-      #Bank::Account.new.must_be_instance_of Account.class
+      @accounts.must_be_instance_of Account
+      #@accounts.new.must_be_instance_of Account.class
       #   - The number of accounts is correct
-      Bank::Account.all.length.must_equal 12
+      #Bank::Account.all.length.must_equal 12
+      @accounts.length.must_equal CSV.read("support/accounts.csv").count
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
-      Bank::Account.all[0][0].must_equal "1212"
-      Bank::Account.all[0][1].must_equal "1235667"
-      Bank::Account.all[11][0].must_equal "15156"
-      Bank::Account.all[11][1].must_equal "4356772"
+      #Bank::Account.all[0][0].must_equal "1212"
+      #Bank::Account.all[0][1].must_equal "1235667"
+      #Bank::Account.all[11][0].must_equal "15156"
+      #Bank::Account.all[11][1].must_equal "4356772"
 
       # Feel free to split this into multiple tests if needed
     end
   end
 
-  describe "Account.find" do
+  xdescribe "Account.find" do
     it "Returns an account that exists" do
 
       # TODO: Your test code here!

@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 require_relative '../lib/account'
 
 describe "Wave 1" do
@@ -154,58 +155,107 @@ describe "Wave 1" do
   end
 end
 
+
+# This is the first time you are writing your own tests, the comments that were
+# created was guidance to how you could structure or give frame work / outline
+#
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
+    before do
+      @accounts_array = Bank::Account.all
+    end
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
 
       # Useful checks might include:
       #   - Account.all returns an array
-      accounts_array = Bank::Account.all
-      accounts_array.class.must_equal Array
-      #   - Everything in the array is an Account
-      first_account = accounts_array[0]
+      #accounts_array = Bank::Account.all
+      @accounts_array.class.must_equal Array
+    end
+    #   - Everything in the array is an Account
+    it "Everything in the array is an Account" do
+      first_account = @accounts_array[0]
       first_account.class.must_equal Bank::Account
-      #   - The number of accounts is correct
-      number_of_accounts = accounts_array.length
+    end
+    #   - The number of accounts is correct
+    it "The number of accounts is correct" do
+      number_of_accounts = @accounts_array.length
       number_of_accounts.must_equal 12
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      id_of_first = accounts_array[0].id
+    end
+
+    #   - The ID and balance of the first and last
+    it "The ID and balance of the first and last" do
+      id_of_first = @accounts_array[0].id
       id_of_first.must_equal 1212
-      balance_for_first = accounts_array[0].balance
+      balance_for_first = @accounts_array[0].balance
       balance_for_first.must_equal 1235667
 
-      id_of_last = accounts_array[11].id
+      id_of_last = @accounts_array[11].id
       id_of_last.must_equal 15156
-      balance_for_last = accounts_array[11].balance
+      balance_for_last = @accounts_array[11].balance
       balance_for_last.must_equal 4356772
-
-      # Feel free to split this into multiple tests if needed
     end
+
+    #       accounts match what's in the CSV file
+    it "accounts match what's in the CSV file" do
+      index = 0
+      CSV.read("../support/accounts.csv") do
+          accounts[index].id.must_equal line[0].to_i
+          accounts[index].balance.must_equal line[1].to_i
+          accounts[index].datetime.must_equal line[2]
+
+          index += 1
+      end
+    end
+    # Feel free to split this into multiple tests if needed
   end
 
   describe "Account.find" do
+    # describe "Account.all" do
+    # This is a more DRY way to write this code, it was an example
+    # before do
+    #   @accounts = Bank::Account.all
+    # end
     it "Returns an account that exists" do
+
       # TODO: Your test code here!
-      account_exists = Bank::Account.find
-      account_exists.must_equal 1216
+      account_exists = Bank::Account.find(1216)
+      account_exists.must_be_instance_of Bank::Account
+      #checking its the right account
+      account_exists.id.must_equal 1216
+      account_exists.balance.must_equal 100022
+      account_exists.datetime.must_equal "2000-07-07 15:07:55 -0800"
     end
 
     it "Can find the first account from the CSV" do
-      skip
       # TODO: Your test code here!
+      account_exists = Bank::Account.find(1212)
+      account_exists.must_be_instance_of Bank::Account
+
+      account_exists.id.must_equal 1212
+      account_exists.balance.must_equal 1235667
+      account_exists.datetime.must_equal "1999-03-27 11:30:09 -0800"
+
     end
 
     it "Can find the last account from the CSV" do
-      skip
       # TODO: Your test code here!
+
+      account_exists = Bank::Account.find(15156)
+      account_exists.must_be_instance_of Bank::Account
+
+      account_exists.id.must_equal 15156
+      account_exists.balance.must_equal 4356772
+      account_exists.datetime.must_equal "1994-11-17 14:04:56 -0800"
+
     end
 
     it "Raises an error for an account that doesn't exist" do
-      skip
       # TODO: Your test code here!
+      proc {
+        Bank::Account.find(11111)
+      }.must_raise ArgumentError
     end
   end
 end

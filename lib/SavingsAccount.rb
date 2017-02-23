@@ -14,8 +14,9 @@ module Bank
     end
 
     def withdraw(amount)
-      super
       fee = 2
+      raise ArgumentError.new "balance can't go < 10" if @balance - (amount + fee) < 10
+      super
       @balance -= fee
       # @balance -= amount
     end

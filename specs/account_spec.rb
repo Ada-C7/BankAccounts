@@ -178,15 +178,37 @@ describe "Wave 2" do
     end
 
     it "Verifies every item in array is an Owner" do
-
+      @all_owners.each do |item|
+        item.class.must_equal(Bank::Owner)
+      end
     end
 
     it "Number of Owners match lines in CSV file" do
+      csv_lines = 0
+      #iterating through CSV & counting the number of lines
+      CSV.open("support/owners.csv").each do |line|
+        csv_lines += 1
+      end
 
+      @all_owners.length.must_equal(csv_lines)
     end
 
     it "Name and address of first and last match CSV file" do
-      
+      first_names = []
+      street_addresses = []
+      CSV.open("support/owners.csv").each do |line|
+        first_names << line[2]
+        street_addresses << line[3]
+      end
+
+      #checks first and last first_names
+      @all_owners[0].first_name.must_equal(first_names[0])
+      @all_owners[-1].first_name.must_equal(first_names[-1])
+
+      # #checks first and last balances
+      # @new_bank[0].balance.must_equal(balances[0])
+      # @new_bank[-1].balance.must_equal(balances[-1])
+
     end
 
   end

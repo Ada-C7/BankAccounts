@@ -71,13 +71,13 @@ module Bank
   end
 
   class Owner
-    attr_reader :last_name, :first_name
+    attr_reader :last_name, :first_name, :street_address
 
     def initialize(id = nil, last_name = nil, first_name = nil, street_address = nil, city = nil, state = nil)
       id = id
       @last_name = last_name
       @first_name = first_name
-      street_address = street_address
+      @street_address = street_address
       city = city
       state = state
     end

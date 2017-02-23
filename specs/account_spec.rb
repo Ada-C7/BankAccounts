@@ -215,7 +215,7 @@ describe "Wave 2" do
       accounts = Bank::Account.all
       id_check = accounts[0].id
       account = Bank::Account.find(id_check)
-      expect(account.class).must_equal Bank::Account
+      expect(account.id).must_equal id_check
     end
 
     it "Can find the first account from the CSV" do
@@ -260,13 +260,12 @@ describe "Wave 2" do
     end
 
     it "Has the correct amounts of account" do
-      skip
       count = 0
-      accounts = Bank::Account.all
-      CSV.open("support/accounts.csv", 'r').each do |account|
+      owners = Bank::Owner.all
+      CSV.open("support/owners.csv", 'r').each do |account|
         count += 1
       end
-      expect(accounts.length).must_equal count
+      expect(owners.length).must_equal count
     end
   end
 end

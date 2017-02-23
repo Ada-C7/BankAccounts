@@ -6,10 +6,11 @@ module Bank
   class Account
     attr_reader :id, :balance, :owner, :date_created
 
-    def initialize(id, balance, date_opened="1991-01-01 11:01:01 -0800")
+    def initialize(id, balance, date_created="1991-01-01 11:01:01 -0800")
       raise ArgumentError.new("balance must be >= 0") if balance < 0
       @id = id
       @balance = balance
+      @owner = nil
     end
 
 # Returns array of all instances of class Account
@@ -17,7 +18,7 @@ module Bank
       csv = CSV.read("../support/accounts.csv", 'r') # object of class CSV
       all_accounts = []
       n = 0 # current line of csv file
-      csv.length.times do |n|
+      csv.length.times do
         id = csv[n][0].to_i
         balance = csv[n][1].to_i
         date_created = DateTime.parse(csv[n][2])
@@ -29,17 +30,23 @@ module Bank
 
     def self.find(id)
       result = Account.all.select {|account| account.id == id}
-      # select method returns Array,which in our case
+      # select method returns Array, which in our case
       # store only one element
       if result[0].nil?
         raise ArgumentError.new("Cannot find this ID in accounts")
       else
         return result[0]
       end
+      # Account.all.each do |acc|
+      #   if acc.id == id
+      #     return acc
+      #   end
+      #   raise ArgumentError.new("Cannot find this ID in accounts")
+      # end
     end
 
-    def add_owner(name, address, phone)
-      @owner = Bank::Owner.new(name, address, phone)
+    def add_owner(id, last_name)
+      @owner = Bank::Owner.new(id, last_name)
     end
 
     def withdraw(amount)
@@ -68,14 +75,8 @@ module Bank
 end # end of module Bank
 
 
-puts Bank::Account.all
-#puts Bank::Account.find(9)
-#puts Bank::Account.find(1213)
-#
- #account = Bank::Account.new()
-# puts account.withdraw(200)
-# puts account.deposit(500)
-# puts account.balance
-# account.add_owner("Natalia", "000 Main Street", "4252959102")
-# puts account.owner
-# puts account.owner.name
+ #puts Bank::Account.all
+ a = Bank::Account.find(1212)
+ puts a.class
+ puts Bank::Account.all[0].class
+ puts a == Bank::Account.all[0]

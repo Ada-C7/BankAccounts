@@ -1,3 +1,6 @@
+require 'csv'
+#require_relative '../support'
+
 module Bank
   class Account
     attr_reader :id, :balance, :owner
@@ -8,6 +11,16 @@ module Bank
       @id = id
       @balance = balance
     end
+
+    def self.all
+      accounts = []
+      CSV.read("support/accounts.csv").each do |line|
+        accounts << Account.new(line[0].to_i, line[1].to_i)
+      end
+      return accounts
+    end
+
+
     def withdraw(amount)
       raise ArgumentError.new("amount must be >= 0") if amount < 0
       if amount > @balance

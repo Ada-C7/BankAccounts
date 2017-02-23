@@ -160,18 +160,28 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
 end
-#   describe "Account.all" do
-#     it "Returns an array of all accounts" do
-#       # TODO: Your test code here!
-#       # Useful checks might include:
-#       #   - Account.all returns an array
-#       #   - Everything in the array is an Account
-#       #   - The number of accounts is correct
-#       #   - The ID and balance of the first and last
-#       #       accounts match what's in the CSV file
-#       # Feel free to split this into multiple tests if needed
-#     end
-#   end
+   describe "Account.all" do
+    it "Returns an array of all accounts" do
+      # TODO: Your test code here!
+      # Useful checks might include:
+      #   - Account.all returns an array
+      Bank::Account.all.must_be_instance_of Array
+      #   - Everything in the array is an Account
+      Bank::Account.all.each do |x|
+        x.must_be_instance_of Bank::Account
+      end
+      #   - The number of accounts is correct
+      Bank::Account.all.length.must_equal 12
+      #   - The ID and balance of the first and last
+      #       accounts match what's in the CSV file
+      Bank::Account.all[0].id.must_equal 1212
+      Bank::Account.all[0].balance.must_equal 1235667
+      Bank::Account.all[11].id.must_equal 15156
+      Bank::Account.all[11].balance.must_equal 4356772
+
+      # Feel free to split this into multiple tests if needed
+    end
+   end
 #
 #   describe "Account.find" do
 #     it "Returns an account that exists" do

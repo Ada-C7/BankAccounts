@@ -19,6 +19,15 @@ module Bank
       return account_array
     end
 
+  # self.find(id) - returns an instance of Account
+  # where the value of the id field in the CSV matches
+  # the passed parameter.
+
+    def self.find(id)
+      
+
+      return
+    end
 
 
     def initialize(id, balance)
@@ -46,6 +55,7 @@ module Bank
         raise ArgumentError.new "You must deposit an amount" if deposit_amount < 0
         @balance += deposit_amount
     end
+
 
   end #end class Account
 

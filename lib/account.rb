@@ -7,7 +7,7 @@ module Bank
     def self.all
       account = []
       CSV.open("support/accounts.csv", "r").each do |account|
-        id = account[0]
+        id = Integer(account[0])
         balance = Integer(account[1])
         open_date = account[2]
         new_account = Account.new(id, balance, open_date)
@@ -17,10 +17,21 @@ module Bank
 
     end
 
+    def self.find(id)
+      Account.all.each do |account|
+        if account.id == id
+          return account
+        else
+          puts "That acct DNE"
+        end
+      end
+    end
+
     attr_reader :id, :balance
     def initialize(id, balance, open_date = nil)
       @id = id
       @balance = balance
+      @open_date = open_date
       if @balance < 0
         raise ArgumentError.new "The starting balance cannot be negative"
       end

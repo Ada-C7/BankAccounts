@@ -12,13 +12,20 @@ describe "Wave 1" do
   end # remember, end is garbage collector!
 
   describe "Account#initialize" do
-    it "Takes an ID, an instance of Owner, and an initial balance" do
+    it "Takes an ID, an initial balance, an open date, and an instance of Owner" do
       id = 1337
       balance = 100.0
-      account = Bank::Account.new(id, @brenna, balance)
+      date = "Jan 1, 2001"
+      account = Bank::Account.new(id, balance, date, @brenna)
 
       account.must_respond_to :id
       account.id.must_equal id
+
+      account.must_respond_to :balance
+      account.balance.must_equal balance
+
+      account.must_respond_to :date
+      account.date.must_equal date
 
       account.must_respond_to :owner
       account.owner.must_equal @brenna
@@ -27,22 +34,19 @@ describe "Wave 1" do
       account.owner.address.must_equal "3426 Cotton Top Ct"
       account.owner.birthday.must_equal "May 22, 1993"
       account.owner.favefood.must_equal "chocolate"
-
-      account.must_respond_to :balance
-      account.balance.must_equal balance
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
       # Note: we haven't talked about procs yet. You can think of them like blocks that sit by themselves.
       # This code checks that, when the proc is executed, it raises an ArgumentError.
       proc {
-        Bank::Account.new(1337, @brenna, -100.0)
+        Bank::Account.new(1337, -100, "Jan 1, 2001", @brenna)
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
-      Bank::Account.new(1337, @brenna, 0)
+      Bank::Account.new(1337, 0, "Jan 1, 2001", @brenna)
     end
   end
 
@@ -50,7 +54,7 @@ describe "Wave 1" do
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, @brenna, start_balance)
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
 
       account.withdraw(withdrawal_amount)
 
@@ -61,7 +65,7 @@ describe "Wave 1" do
     it "Returns the modified balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, @brenna, start_balance)
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -72,7 +76,7 @@ describe "Wave 1" do
     it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, @brenna, start_balance)
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
       # Another proc! This test expects something to be printed to the terminal, using 'must_output'. /.+/ is a regular expression matching one or more characters - as long as anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
@@ -82,7 +86,7 @@ describe "Wave 1" do
     it "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, @brenna, start_balance)
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -93,7 +97,8 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
-      account = Bank::Account.new(1337, @brenna, 100.0)
+      start_balance = 100
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
@@ -102,7 +107,7 @@ describe "Wave 1" do
     it "Requires a positive withdrawal amount" do
       start_balance = 100.0
       withdrawal_amount = -25.0
-      account = Bank::Account.new(1337, @brenna, start_balance)
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
 
       proc {
         account.withdraw(withdrawal_amount)
@@ -114,7 +119,7 @@ describe "Wave 1" do
     it "Increases the balance" do
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, @brenna, start_balance)
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
 
       account.deposit(deposit_amount)
 
@@ -125,7 +130,7 @@ describe "Wave 1" do
     it "Returns the modified balance" do
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, @brenna,  start_balance)
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
 
       updated_balance = account.deposit(deposit_amount)
 
@@ -136,7 +141,7 @@ describe "Wave 1" do
     it "Requires a positive deposit amount" do
       start_balance = 100.0
       deposit_amount = -25.0
-      account = Bank::Account.new(1337, @brenna,  start_balance)
+      account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
 
       proc {
         account.deposit(deposit_amount)
@@ -179,15 +184,15 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      Bank::Account.find(1216).must_equal Bank::Account.new(1216, 100022, "2000-07-07 15:07:55 -0800")
+      Bank::Account.find(1216).must_equal Bank::Account.new(1216, 100022, "2000-07-07 15:07:55 -0800", "Customer Name")
     end
 
     it "Can find the first account from the CSV" do
-      Bank::Account.find.all[0].must_equal Bank::Account.new(1212, 1235667, "1999-03-27 11:30:09 -0800")
+      Bank::Account.find.all[0].must_equal Bank::Account.new(1212, 1235667, "1999-03-27 11:30:09 -0800", "Customer Name")
     end
 
     it "Can find the last account from the CSV" do
-      Bank::Account.find.all[-1].must_equal Bank::Account.new(15156, 4356772, "1994-11-17 14:04:56 -0800")
+      Bank::Account.find.all[-1].must_equal Bank::Account.new(15156, 4356772, "1994-11-17 14:04:56 -0800", "Customer Name")
     end
 
     it "Raises an error for an account that doesn't exist" do

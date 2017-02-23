@@ -3,28 +3,25 @@ require 'csv'
 module Bank
 
   class Account
-    attr_reader :id, :balance, :date, :owner
+    attr_reader :id, :balance, :date
+    attr_accessor :owner
 
     def self.all
       all_accounts = []
-      CSV.open("accounts.csv").each do | line |
-        acct_data = {}
-        acct_data[:id] = line[0].to_i
-        acct_data[:balance] = line[1].to_f
-        acct_data[:date] = line[2]
-        all_accounts << Bank::Account.new(acct_data)
+      CSV.open("/Users/brenna/ada/week3/BankAccounts/support/accounts.csv").each do | line |
+        all_accounts << Bank::Account.new(line[0].to_i, line[1].to_f, line[2])
       end
-      return all_accounts
+      all_accounts
     end
 
     def self.find(id)
     end
 
-    def initialize(acct_data, owner = "Customer Name")
-      raise ArgumentError.new("You cannot create a bank account with a negative balance, you goober.") if acct_data[:balance] >= 0
-      @idea = acct_data[:id]
-      @date = acct_data[:date]
-      @balance = acct_data[:balance]
+    def initialize(id, balance, date, owner = "Customer Name")
+      raise ArgumentError.new("You cannot create a bank account with a 0 or negative balance, you goober.") if balance < 0
+      @id = id
+      @balance = balance
+      @date = date
       @owner = owner
     end
 

@@ -74,6 +74,9 @@ describe "SavingsAccount" do
 
   describe "#add_interest" do
     it "Returns the interest calculated" do
+      account = Bank::SavingsAccount.new(1,100)
+      account.balance.must_equal 100
+      account.add_interest.must_equal 0.25
       # TODO: Your test code here!
     end
 

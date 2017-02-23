@@ -3,6 +3,7 @@ require_relative '../lib/account_wave_2'
 module Bank
 
   class SavingsAccount < Account
+    INTEREST_RATE = 0.25
 
     attr_reader :initial_balance, :balance, :id
 
@@ -17,6 +18,7 @@ module Bank
       fee = 2
       if @balance - (amount) < 10 || @balance - (amount + fee) < 10
         puts "balance can't go < 10"
+        return @balance
       else
         super
         @balance -= fee
@@ -29,8 +31,9 @@ module Bank
     end
 
     def add_interest
-
-      
+      interest_amount = (@balance * (INTEREST_RATE / 100)).to_f
+      @balance += interest_amount
+      return interest_amount
     end
 
 

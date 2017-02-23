@@ -8,7 +8,6 @@ module Bank
     attr_reader :id, :balance , :open_date
     attr_accessor :owner
 
-
     @@all_accounts = []
 
     def initialize(id, balance, open_date='2010-12-21 12:21:12 -0800')
@@ -18,6 +17,12 @@ module Bank
       @open_date = open_date
       @@all_accounts << self
     end
+
+
+    def self.reset_all_accounts_for_test
+      @@all_accounts = []
+    end
+
 
     def self.read_csv
       @@all_accounts = []
@@ -60,7 +65,8 @@ module Bank
   end
 end
 
-
+# Bank::Account.read_csv
+# puts Bank::Account.reset_all_accounts_for_test
 # puts Bank::Account.all
 # acct = Bank::Account.new(1212,1235667,'1999-03-27 11:30:09 -0800')
 # puts acct.id

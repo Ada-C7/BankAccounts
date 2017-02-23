@@ -43,7 +43,7 @@ describe "Wave 1" do
 
       account.withdraw(withdrawal_amount)
 
-      expected_balance = start_balance - withdrawal_amount
+      expected_balance = start_balance  - withdrawal_amount
       account.balance.must_equal expected_balance
     end
 
@@ -143,11 +143,14 @@ describe "Wave 2" do
 
   describe "Account.all" do
     it "Returns an array" do
+      Bank::Account.reset_all_accounts_for_test
+      Bank::Account.reset_all_accounts_for_test
       Bank::Account.read_csv
       expect(Bank::Account.all).must_be_instance_of Array, "Not an array."
     end
 
     it "Returns an array consisting only of accounts" do
+      Bank::Account.reset_all_accounts_for_test
       Bank::Account.read_csv
       Bank::Account.all.each do |account|
         account.must_be_instance_of Bank::Account, "Not an instance of Account class."
@@ -155,6 +158,7 @@ describe "Wave 2" do
     end
 
     it "Returns an array with the correct number of accounts" do
+      Bank::Account.reset_all_accounts_for_test
       Bank::Account.read_csv
       expect(Bank::Account.all.length).must_equal 12, "Wrong number of accounts"
     end
@@ -162,9 +166,17 @@ describe "Wave 2" do
 
     it "gives correct values for the ID and balance of the first and last
     accounts match what's in the CSV file" do
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
     expect(Bank::Account.all.first.id).must_equal 1212, "ID of first account is incorrect."
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
     expect(Bank::Account.all.first.balance).must_equal 1235667, "ID of first account is incorrect."
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
     expect(Bank::Account.all.last.id).must_equal 15156, "ID of first account is incorrect."
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
     expect(Bank::Account.all.last.balance).must_equal 4356772, "ID of first account is incorrect."
   end
 end
@@ -172,21 +184,25 @@ end
 
 describe "Account.find" do
   it "Returns an Account that exists" do
+    Bank::Account.reset_all_accounts_for_test
     Bank::Account.read_csv
     expect(Bank::Account.find(15151)).must_be_instance_of Bank::Account, "Does not return account"
   end
 
   it "Can find the first account from the CSV" do
+    Bank::Account.reset_all_accounts_for_test
     Bank::Account.read_csv
     expect(Bank::Account.find(1212)).must_equal Bank::Account.all.first, "Cannot find first account"
   end
 
   it "Can find the last account from the CSV" do
+    Bank::Account.reset_all_accounts_for_test
     Bank::Account.read_csv
     expect(Bank::Account.find(15156)).must_equal Bank::Account.all.last, "Cannot find last account"
   end
 
   it "Raises an error for an account that doesn't exist" do
+    Bank::Account.reset_all_accounts_for_test
     Bank::Account.read_csv
     proc {
       Bank::Account.find(9999999)

@@ -31,3 +31,11 @@ describe "Owner#initialize" do
     owner.phone.must_be_kind_of String
   end
 end
+
+describe "Owner#all" do
+
+  
+end
+
+describe "Owner#find(id)" do
+end

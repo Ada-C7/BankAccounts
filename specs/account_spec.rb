@@ -299,7 +299,6 @@ describe "Wave 2" do
 
         # account_id = @account_array[3].id
         #
-
         Bank::Account.find("1215").must_equal "1215"
 
 
@@ -307,12 +306,17 @@ describe "Wave 2" do
     end
 
     it "Can find the first account from the CSV" do
-      skip
+
+      Bank::Account.find(Bank::Account.all[0].id).must_equal "1212"
+
+
       # TODO: Your test code here!
     end
 
     it "Can find the last account from the CSV" do
-      skip
+
+      Bank::Account.find(Bank::Account.all[-1].id).must_equal "15156"
+
       # TODO: Your test code here!
     end
 

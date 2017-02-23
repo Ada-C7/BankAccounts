@@ -25,8 +25,9 @@ describe "CheckingAccount" do
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(1337, 100.0)
+      account.withdraw(100)
+      account.balance.must_equal 100.0
     end
   end
 

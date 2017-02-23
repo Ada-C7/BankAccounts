@@ -12,7 +12,7 @@ module Bank
         open_date = file[2]
         new_account = Account.new(id, balance, open_date)
         account << new_account
-        puts account
+        # puts account
       end
       return account
       # puts account
@@ -24,7 +24,7 @@ module Bank
         if account.id == id
           return account
         else
-          puts "That acct DNE"
+          puts "That account Does Not Exist"
         end
       end
     end

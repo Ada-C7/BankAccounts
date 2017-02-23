@@ -163,23 +163,28 @@ describe "Wave 2" do
       # Feel free to split this into multiple tests if needed
       # end
 
-      #   describe "Account.find" do
-      #     it "Returns an account that exists" do
-      #       # TODO: Your test code here!
-      #     end
-      #
-      #     it "Can find the first account from the CSV" do
-      #       # TODO: Your test code here!
-      #     end
-      #
-      #     it "Can find the last account from the CSV" do
-      #       # TODO: Your test code here!
-      #     end
-      #
-      #     it "Raises an error for an account that doesn't exist" do
-      #       # TODO: Your test code here!
-      #   end
-      # end
+      describe "Account.find" do
+        it "Returns an account that exists" do
+          # TODO: Your test code here!
+          accounts = Bank::Account.all
+          account = Bank::Account.find(1212)
+          account.id.must_equal accounts[0].id
+        end
+
+            it "Can find the first account from the CSV" do
+              # TODO: Your test code here!
+
+            end
+
+        #     it "Can find the last account from the CSV" do
+        #       # TODO: Your test code here!
+        #     end
+        #
+        #     it "Raises an error for an account that doesn't exist" do
+        #       # TODO: Your test code here!
+        #   end
+        # end
+      end
     end
   end
 end

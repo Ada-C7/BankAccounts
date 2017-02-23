@@ -3,6 +3,8 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
 
+#Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 describe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
@@ -137,36 +139,58 @@ describe "Wave 1" do
 end
 
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
+
   describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+    it "Returns an array" do
+      Bank::Account.read_csv
+      expect(Bank::Account.all).must_be_instance_of Array, "Not an array."
     end
+
+    it "Returns an array consisting only of accounts" do
+      Bank::Account.read_csv
+      Bank::Account.all.each do |account|
+        account.must_be_instance_of Bank::Account, "Not an instance of Account class."
+      end
+    end
+
+    it "Returns an array with the correct number of accounts" do
+      Bank::Account.read_csv
+      expect(Bank::Account.all.length).must_equal 12, "Wrong number of accounts"
+    end
+
+
+    it "gives correct values for the ID and balance of the first and last
+    accounts match what's in the CSV file" do
+    expect(Bank::Account.all.first.id).must_equal 1212, "ID of first account is incorrect."
+    expect(Bank::Account.all.first.balance).must_equal 1235667, "ID of first account is incorrect."
+    expect(Bank::Account.all.last.id).must_equal 15156, "ID of first account is incorrect."
+    expect(Bank::Account.all.last.balance).must_equal 4356772, "ID of first account is incorrect."
+  end
+end
+
+
+describe "Account.find" do
+  it "Returns an Account that exists" do
+    Bank::Account.read_csv
+    expect(Bank::Account.find(15151)).must_be_instance_of Bank::Account, "Does not return account"
   end
 
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
+  it "Can find the first account from the CSV" do
+    Bank::Account.read_csv
+    expect(Bank::Account.find(1212)).must_equal Bank::Account.all.first, "Cannot find first account"
   end
+
+  it "Can find the last account from the CSV" do
+    Bank::Account.read_csv
+    expect(Bank::Account.find(15156)).must_equal Bank::Account.all.last, "Cannot find last account"
+  end
+
+  it "Raises an error for an account that doesn't exist" do
+    Bank::Account.read_csv
+    proc {
+      Bank::Account.find(9999999)
+    }.must_raise ArgumentError
+  end
+end
 end

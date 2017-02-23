@@ -24,11 +24,6 @@ module Bank
       return @@csv
     end
 
-    def self.find_csv_account(num)
-      return @@csv[num]
-    end
-
-
     @@csv.each do |account|
       @@account_all << self.new(account[:id].to_i, account[:balance].to_i, account[:open_date])
     end

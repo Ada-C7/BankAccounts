@@ -2,12 +2,12 @@ require 'csv'
 
 module Bank
   class Owner
-    attr_reader :id, :first_name, :last_name, :street_address
+    attr_reader :id, :first_name, :last_name, :street_address, :city, :state
 
     def initialize(personal_info)
       raise ArgumentError.new("Error: Each user must have an ID.") if personal_info[:id].nil?
 
-      @id = personal_info[:id]
+      @id = personal_info[:id].to_i
       @last_name = personal_info[:last_name]
       @first_name = personal_info[:first_name]
       @street_address = personal_info[:street_address]
@@ -18,7 +18,7 @@ module Bank
     def self.all
       CSV.read("support/owners.csv").collect do |line|
         Owner.new(
-          id: line[0],
+          id: line[0].to_i,
           last_name: line[1],
           first_name: line[2],
           street_address: line[3],

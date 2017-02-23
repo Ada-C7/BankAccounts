@@ -31,7 +31,12 @@ describe "Wave 1" do
       account.must_respond_to :owner
       account.owner.must_equal owner
 
-      # Appropriately handles open_date as date object
+      # Account attribute classes match schema data types
+      account.id.must_be_instance_of Integer
+      account.balance.must_be_instance_of Integer
+      account.open_date.must_be_instance_of DateTime
+
+      # Appropriately handles open_date as DateTime object
       account.open_date.year.must_equal 1994
     end
 
@@ -196,18 +201,18 @@ describe "Wave 2" do
       # The ID and balance of the first and last
       # accounts match what's in the CSV file
       first_account = CSV.read("support/accounts.csv").first
-      @accounts[0].id.must_equal first_account[0]
+      @accounts[0].id.must_equal first_account[0].to_i
       @accounts[0].balance.must_equal first_account[1].to_i
 
       last_account = CSV.read("support/accounts.csv").last
-      @accounts[-1].id.must_equal last_account[0]
+      @accounts[-1].id.must_equal last_account[0].to_i
       @accounts[-1].balance.must_equal last_account[1].to_i
     end
   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      found_account = Bank::Account.find("1214")
+      found_account = Bank::Account.find(1214)
 
       found_account.must_be_instance_of Bank::Account
       found_account.balance.must_equal 9876890.0
@@ -215,7 +220,7 @@ describe "Wave 2" do
 
     it "Can find the first account from the CSV" do
       first_account = CSV.read("support/accounts.csv").first
-      first_account_id = first_account[0]
+      first_account_id = first_account[0].to_i
       first_account_balance = first_account[1].to_i
       found_account = Bank::Account.find(first_account_id)
 
@@ -225,7 +230,7 @@ describe "Wave 2" do
 
     it "Can find the last account from the CSV" do
       last_account = CSV.read("support/accounts.csv").last
-      last_account_id = last_account[0]
+      last_account_id = last_account[0].to_i
       last_account_balance = last_account[1].to_i
       found_account = Bank::Account.find(last_account_id)
 

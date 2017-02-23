@@ -9,24 +9,24 @@ module Bank
     def initialize(account_info)
       raise ArgumentError.new("Balance cannot be negative.") if account_info[:balance] < 0
 
-      @id = account_info[:id]
-      @balance = account_info[:balance]
-      @open_date = Date.parse(account_info[:open_date]) unless account_info[:open_date].nil?
+      @id = account_info[:id].to_i
+      @balance = account_info[:balance].to_i
+      @open_date = DateTime.parse(account_info[:open_date]) unless account_info[:open_date].nil?
       @owner = account_info[:owner]
     end
 
     def self.all
       accounts_to_owners = {}
       CSV.read("support/account_owners.csv").each do |line|
-        accounts_to_owners[ line[0] ] = line[1]
+        accounts_to_owners[ line[0].to_i ] = line[1].to_i
       end
 
       CSV.read("support/accounts.csv").collect do |account|
         Account.new(
-          id: account[0],
+          id: account[0].to_i,
           balance: account[1].to_i,
           open_date: account[2],
-          owner: Owner.find(accounts_to_owners[account[0]])
+          owner: Owner.find(accounts_to_owners[account[0].to_i])
         )
       end
     end

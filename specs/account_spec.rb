@@ -141,10 +141,10 @@ describe "Wave 1" do
       expect(owner.class).must_equal Bank::Owner
     end
     it "Assigns relevant information to the Owner" do
+      id = 01
       name = "John Smith"
       address = "1234 6th St Seattle, WA"
-      phone = "834-928-3947"
-      owner = Bank::Owner.new(name, address, phone)
+      owner = Bank::Owner.new(id, name, address)
 
       owner.must_respond_to :name
       owner.name.must_equal name
@@ -152,16 +152,16 @@ describe "Wave 1" do
       owner.must_respond_to :address
       owner.address.must_equal address
 
-      owner.must_respond_to :phone
-      owner.phone.must_equal phone
+      owner.must_respond_to :id
+      owner.id.must_equal id
     end
 
     it "Saves an owner object inside the Account class" do
+      id = 01
       name = "John Smith"
       address = "1234 6th St Seattle, WA"
-      phone = "834-928-3947"
       account = Bank::Account.new(1337, 100.0)
-      owner_to_add = Bank::Owner.new(name, address, phone)
+      owner_to_add = Bank::Owner.new(id, name, address)
       account.add_owner(owner_to_add)
       account.owner.must_equal owner_to_add
     end
@@ -242,6 +242,31 @@ describe "Wave 2" do
       proc {
         Bank::Account.find(21345)
       }.must_raise ArgumentError
+    end
+  end
+
+  describe "Owner.all" do
+
+    it "Returns an array" do
+      owners = Bank::Owner.all
+      expect(owners.class).must_equal Array
+    end
+
+    it "Everything is an array is an Owner" do
+      owners = Bank::Owner.all
+      owners.each do |owner|
+        expect(owner.class).must_equal Bank::Owner
+      end
+    end
+
+    it "Has the correct amounts of account" do
+      skip
+      count = 0
+      accounts = Bank::Account.all
+      CSV.open("support/accounts.csv", 'r').each do |account|
+        count += 1
+      end
+      expect(accounts.length).must_equal count
     end
   end
 end

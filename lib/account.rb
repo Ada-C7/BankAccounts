@@ -1,19 +1,20 @@
 module Bank
   class Account
-    attr_reader :id, :balance, :open_date, @accounts
+    attr_reader :id, :balance, :open_date, :all_accounts
     # def initialize(id, balance)
     #   #error message not appearing in def withdraw
     #   #WOW, that balance can't be @balance. WHY?
     #   raise ArgumentError.new("balance must be >= 0") if balance < 0
-    #
-    #   @id = id
-    #   @balance = balance
+
     # end
 
-    def initialize
-      @accounts = []
+    def initialize(id, balance)
+      @id = id  #still need this
+      @balance = balance #still need this
+
+      @all_accounts = []
       CSV.read("accounts.csv").each do |line|
-        @accounts[line.first] = line[1..-1]
+        @all_accounts[line.first] = line[1..-1]
       end
 
       #make these seperate methods instead? - OH! That's why
@@ -32,17 +33,43 @@ module Bank
     end
 
     def self.all
-      return @accounts
+      return @all_accounts
     end
 
-    def self.find(id)
-      #https://ruby-doc.org/core-2.2.3/Enumerable.html#method-i-find
-      @accounts.each do |outside_array|
-        outside_array.each_index do |i|
+    def self.id
+      @all_accounts.each do |accounts|
+        accounts.each_index do |i|
           return i if i == 0
         end
       end
     end
+
+    def self.balance
+      @all_accounts.each do |accounts|
+        accounts.each_index do |i|
+          return i if i == 1
+        end
+      end
+    end
+
+    def self.open_date
+      @all_accounts.each do |accounts|
+        accounts.each_index do |i|
+          return i if i == 2
+        end
+      end
+    end
+
+    def self.find(id)
+      #https://ruby-doc.org/core-2.2.3/Enumerable.html#method-i-find
+      @all_accounts.each do |account|
+        if account.id == id
+          return account
+        end
+      end
+    end
+
+##############WAVE 1##################
 
     def withdraw(amount)
       start_balance = @balance

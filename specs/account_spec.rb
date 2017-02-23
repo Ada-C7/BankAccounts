@@ -380,7 +380,7 @@ describe "Wave 2" do
       }.must_raise ArgumentError
     end
   end
-  describe "testing self.associate_owner_with_account" do
+  describe "testing self.get_owner_id" do
     it "given an account id will return the owner ID that matches on the account_owners.csv file" do
       my_file = CSV.open("support/account_owners.csv")
       owners_and_accounts = []
@@ -390,8 +390,7 @@ describe "Wave 2" do
         association[:owner_id] = line[1]
         owners_and_accounts << association
       end
-      Bank::Account.get_owner_id(1216).must_equal 18
-      Bank::Account.get_owner_id(15153).must_equal 21
+      Bank::Account.get_owner_id(owners_and_accounts[0][:account_id]).must_equal owners_and_accounts[0][:owner_id].to_i
     end
 
     it "the Bank::Account.owner should be the owner id associated with that bank account number" do

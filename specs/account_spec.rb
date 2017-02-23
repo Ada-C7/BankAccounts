@@ -8,7 +8,8 @@ describe "Wave 1" do
     it "Takes an ID and an initial balance" do
       id = 1337
       balance = 100.0
-      account = Bank::Account.new(id, balance)
+      date = "date"
+      account = Bank::Account.new(id, balance, date)
 
       account.must_respond_to :id
       account.id.must_equal id
@@ -23,13 +24,13 @@ describe "Wave 1" do
       # This code checks that, when the proc is executed, it
       # raises an ArgumentError.
       proc {
-        Bank::Account.new(1337, -100.0)
+        Bank::Account.new(1337, -100.0, "date")
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
-      Bank::Account.new(1337, 0)
+      Bank::Account.new(1337, 0, "date")
     end
   end
 
@@ -37,7 +38,7 @@ describe "Wave 1" do
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "date")
 
       account.withdraw(withdrawal_amount)
 
@@ -48,7 +49,7 @@ describe "Wave 1" do
     it "Returns the modified balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "date")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -59,7 +60,7 @@ describe "Wave 1" do
     it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "date")
 
       # Another proc! This test expects something to be printed
       # to the terminal, using 'must_output'. /.+/ is a regular
@@ -73,7 +74,7 @@ describe "Wave 1" do
     it "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "date")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -84,7 +85,7 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
-      account = Bank::Account.new(1337, 100.0)
+      account = Bank::Account.new(1337, 100.0, "date")
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
@@ -93,7 +94,7 @@ describe "Wave 1" do
     it "Requires a positive withdrawal amount" do
       start_balance = 100.0
       withdrawal_amount = -25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "date")
 
       proc {
         account.withdraw(withdrawal_amount)
@@ -105,7 +106,7 @@ describe "Wave 1" do
     it "Increases the balance" do
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "date")
 
       account.deposit(deposit_amount)
 
@@ -116,7 +117,7 @@ describe "Wave 1" do
     it "Returns the modified balance" do
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "date")
 
       updated_balance = account.deposit(deposit_amount)
 
@@ -127,7 +128,7 @@ describe "Wave 1" do
     it "Requires a positive deposit amount" do
       start_balance = 100.0
       deposit_amount = -25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "date")
 
       proc {
         account.deposit(deposit_amount)

@@ -99,7 +99,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive withdrawal amount" do
-      skip
+
       start_balance = 100.0
       withdrawal_amount = -25.0
       account = Bank::Account.new({id: 1337, balance: start_balance})
@@ -110,44 +110,44 @@ describe "Wave 1" do
     end
   end
 
-#   describe "Account#deposit" do
-#     it "Increases the balance" do
-#
-#       start_balance = 100.0
-#       deposit_amount = 25.0
-#       account = Bank::Account.new(1337, start_balance)
-#
-#       account.deposit(deposit_amount)
-#
-#       expected_balance = start_balance + deposit_amount
-#       account.balance.must_equal expected_balance
-#     end
-#
-#     it "Returns the modified balance" do
-#
-#       start_balance = 100.0
-#       deposit_amount = 25.0
-#       account = Bank::Account.new(1337, start_balance)
-#
-#       updated_balance = account.deposit(deposit_amount)
-#
-#       expected_balance = start_balance + deposit_amount
-#       updated_balance.must_equal expected_balance
-#     end
-#
-#     it "Requires a positive deposit amount" do
-#
-#       start_balance = 100.0
-#       deposit_amount = -25.0
-#       account = Bank::Account.new(1337, start_balance)
-#
-#       proc {
-#         account.deposit(deposit_amount)
-#       }.must_raise ArgumentError
-#     end
-#   end
-# end
-#
+  describe "Account#deposit" do
+    it "Increases the balance" do
+
+      start_balance = 100.0
+      deposit_amount = 25.0
+      account = Bank::Account.new({id: 1337, balance: start_balance})
+
+      account.deposit(deposit_amount)
+
+      expected_balance = start_balance + deposit_amount
+      account.balance.must_equal expected_balance
+    end
+
+    it "Returns the modified balance" do
+
+      start_balance = 100.0
+      deposit_amount = 25.0
+      account = Bank::Account.new({id: 1337, balance: start_balance})
+
+      updated_balance = account.deposit(deposit_amount)
+
+      expected_balance = start_balance + deposit_amount
+      updated_balance.must_equal expected_balance
+    end
+
+    it "Requires a positive deposit amount" do
+      
+      start_balance = 100.0
+      deposit_amount = -25.0
+      account = Bank::Account.new({id: 1337, balance: start_balance})
+
+      proc {
+        account.deposit(deposit_amount)
+      }.must_raise ArgumentError
+    end
+  end
+end
+
 # # TODO: change 'xdescribe' to 'describe' to run these tests
 # xdescribe "Wave 2" do
 #   describe "Account.all" do
@@ -187,4 +187,4 @@ describe "Wave 1" do
 #       # TODO: Your test code here!
 #     end
 #   end
- end
+# end

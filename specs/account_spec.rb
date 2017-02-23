@@ -156,6 +156,10 @@ describe "Wave 2" do
       account.length.must_equal 12
       #   - The ID and balance of the first and last ...pull out indexes, id must be equal to
       #       accounts match what's in the CSV file
+      account[0].id.must_equal 1212
+      account[-1].id.must_equal 15156
+      account[0].balance.must_equal 1235667
+      account[-1].balance.must_equal 4356772
       # Feel free to split this into multiple tests if needed
       # end
 

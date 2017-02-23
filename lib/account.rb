@@ -64,7 +64,7 @@ module Bank
   end
 end
 
-puts Bank::Account.all
+# puts Bank::Account.all
 # def withdraw(amount)
 #   raise ArgumentError.new("amount must be >= 0") if amount < 0
 #

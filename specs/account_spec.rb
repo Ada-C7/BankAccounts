@@ -235,10 +235,10 @@ end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
-  # before do
-  #
-  #   @account_array = Bank::Account.all
-  # end
+  before do
+
+    @account_array = Bank::Account.all
+  end
 
   describe "Account.all" do
     it "Returns an array of all accounts" do
@@ -249,7 +249,7 @@ describe "Wave 2" do
       #   - Account.all returns an array
 
 
-      Bank::Account.all.class.must_equal Array
+      @account_array.class.must_equal Array
     end
     #   - Everything in the array is an Account
 
@@ -258,13 +258,15 @@ describe "Wave 2" do
     # end
 
     it "Everything in array is an Account" do
-      Bank::Account.all.each do |element|
+      @account_array.each do |element|
         element.must_be_instance_of Bank::Account
       end
     end
 
     it "The number of accounts matches number of lines in csv file" do  #   - The number of accounts is correct
-      Bank::Account.all.length.must_equal 12
+      @account_array.length.must_equal 12
+
+      # @accounts.length.must_equal CSV.read("support/accounts.csv").length
     end
 
 
@@ -272,26 +274,30 @@ describe "Wave 2" do
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
 
-      first_account_id = Bank::Account.all[0].id
-      first_account_balance = Bank::Account.all[0].balance
+      first_account_id = @account_array[0].id
+      first_account_balance = @account_array[0].balance
 
       first_account_id.must_equal "1212"
       first_account_balance.must_equal 1235667
 
-      last_account_id = Bank::Account.all[-1].id
-      last_account_balance = Bank::Account.all[-1].balance
+      last_account_id = @account_array[-1].id
+      last_account_balance = @account_array[-1].balance
 
       last_account_id.must_equal "15156"
       last_account_balance.must_equal 4356772
     end
 
     # Feel free to split this into multiple tests if needed
-    
+
   end
 
 
   describe "Account.find" do
 
+    before do
+
+      @account_array = Bank::Account.all
+    end
 
     it "Returns an account that exists" do
 
@@ -305,7 +311,7 @@ describe "Wave 2" do
 
     it "Can find the first account from the CSV" do
 
-      Bank::Account.find(Bank::Account.all[0].id).must_equal "1212"
+      Bank::Account.find(@account_array[0].id).must_equal "1212"
 
 
       # TODO: Your test code here!
@@ -313,7 +319,7 @@ describe "Wave 2" do
 
     it "Can find the last account from the CSV" do
 
-      Bank::Account.find(Bank::Account.all[-1].id).must_equal "15156"
+      Bank::Account.find(@account_array[-1].id).must_equal "15156"
 
       # TODO: Your test code here!
     end

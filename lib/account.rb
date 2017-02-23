@@ -25,8 +25,14 @@ module Bank
       return accounts
     end
 
-    def self.find()
-    
+    def self.find(id)
+      @account = nil
+      CSV.open("support/accounts.csv").each do |line|
+        if line[0].to_i == id
+          @account = Bank::Account.new(line[0].to_i, line[1].to_i, line[2])
+        end
+      end
+      return @account
     end
 
     def add_owner(owner)

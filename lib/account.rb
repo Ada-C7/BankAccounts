@@ -38,18 +38,21 @@ module Bank
         return result[0]
       end
     end
-# Method returns array of all accounts, that have @owner instance var, that
+# Method returns array of all accounts, with  @owner instance variable, that
 # stores corresponding owner of account (from account_owners.csv file)
     def self.accounts_with_owners
       accounts_with_owners = []
       csv = CSV.read("../support/account_owners.csv", 'r')
       csv.each do |line|
+        # Match account instance with id in csv file
         account = Bank::Account.find(line[0].to_i)
+        # Match account.owner with id in csv file
         account.owner = Bank::Owner.find(line[1].to_i)
+        # Add new account to array
         accounts_with_owners << account
       end
     end
-    # Add owner to account instance
+    # Add owner attribute to account 
     def add_owner(id, last_name)
       @owner = Bank::Owner.new(id, last_name)
     end

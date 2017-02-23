@@ -48,13 +48,11 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
-      start_balance = 100.0
-      withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, 100.0)
 
-      updated_balance = account.withdraw(withdrawal_amount)
+      updated_balance = account.withdraw(25.0)
 
-      expected_balance = start_balance - withdrawal_amount
+      expected_balance = 75.0
       updated_balance.must_equal expected_balance
     end
 

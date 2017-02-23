@@ -24,6 +24,7 @@ module Bank
 
       def withdraw_using_check(amount)
         @balance -= amount
+        return @balance
       end
 
       def reset_checks

@@ -39,13 +39,18 @@ describe "CheckingAccount" do
     end
 
     it "Returns the modified balance" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+
+      updated_balance = account.withdraw_using_check(25.0)
+
+      expected_balance = 75.0
+      updated_balance.must_equal expected_balance
     end
 
     it "Allows the balance to go down to -$10" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+      account.withdraw_using_check(110)
+      account.balance.must_equal -10.0
     end
 
     it "Outputs a warning if the account would go below -$10" do

@@ -5,7 +5,6 @@ module Bank
     attr_reader :id
     attr_accessor :balance
 
-
     # should get info from csv
     # create new instances of Account based on the csv info
     # create an array of Account instances
@@ -27,8 +26,8 @@ module Bank
         if account.id == id
           return account
         end
-
       end
+      raise ArgumentError.new
     end
 
     def initialize id, start_balance

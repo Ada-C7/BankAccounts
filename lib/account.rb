@@ -1,6 +1,8 @@
 # bank account that allows new accounts, deposit and withdrawals
 # jou-jou sun
 # last edit 2/21/17
+require 'csv'
+
 module Bank
   class Account
     attr_reader :id, :balance
@@ -34,6 +36,22 @@ module Bank
       return @balance
     end
 
+
+    def self.all
+      accounts_array = []
+
+      each_account = CSV.open("/Users/jou-jousun/ada/projects/BankAccounts/support/accounts.csv")
+
+      each_account.each do |account|
+        accounts_array << Account.new(account[0].to_i, account[1].to_i)
+
+      return accounts_array
+      end
+      #get info from CSV
+      #create new instances of Accounts
+      #push each new Account instances into an accounts_array
+      #return the array
+    end
   end #end of class
 
 end #end of module

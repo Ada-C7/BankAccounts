@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/owner'
-require 'csv'
+# require 'csv'
 
 describe "Optional - Owner Class" do
 

@@ -2,7 +2,6 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
-require 'csv'
 
 describe "Wave 1" do
 
@@ -182,27 +181,25 @@ end
 # # # TODO: change 'xdescribe' to 'describe' to run these tests
 
 describe "Wave 2" do
-  # skip
-  describe "Account#All" do
+
+  describe "Account#all" do
     # skip
     it "Returns an array of all accounts" do
       # Account.all returns an array
       Bank::Account.all('./support/accounts.csv').must_be_instance_of Array
 
-      # Everything in the array is an Account
+      # Everything in the array is an account instance
       Bank::Account.all('./support/accounts.csv').each do |account_object|
         account_object.must_be_instance_of Bank::Account
       end
 
-      # The number of accounts is correct
+      # The number of accounts instances matches the number in the csv file
       Bank::Account.all('./support/accounts.csv').length.must_equal 12
     end
   end
 
-  describe "Account.find" do
+  describe "Account#find" do
 
-    # kind of want to raise error here if account does not exist
-    # but have the test down below
     it "Returns an account that exists" do
       Bank::Account.all('./support/accounts.csv').each do |account|
         Bank::Account.find(account.id).must_be_instance_of Bank::Account
@@ -210,10 +207,12 @@ describe "Wave 2" do
     end
 
     it "Can find the first account from the CSV" do
+      # do I need to call .all (to create the accounts array that I will be searching through to find the certain account)
+      # in each test?
       Bank::Account.all('./support/accounts.csv')
       Bank::Account.find(1212).must_be_instance_of Bank::Account
-      # the tests above check that accounts have to respond to id, balance
-      # so you don't need them here
+      # the tests above(frome wave 1) check that accounts have to respond to id, balance
+      # so you don't need them again  here
       Bank::Account.find(1212).id.must_equal 1212
       Bank::Account.find(1212).balance.must_equal 12356.67
     end

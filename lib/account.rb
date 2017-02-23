@@ -21,7 +21,6 @@ module Bank
       if @balance - withdrawal_amount >= 0
         @balance = @balance - withdrawal_amount
       else
-        # figure out how to send this to a printer class...
         puts "Insufficient funds"
       end
       @balance
@@ -38,7 +37,7 @@ module Bank
       end
     end
 
-    # will read in info from CSV file return an array of account objects
+    # will read in info from CSV file return an array of account instances
     def self.all(csv_file)
       @accounts = CSV.read(csv_file)
       # change the id to an integer and the balance to a dollar floats

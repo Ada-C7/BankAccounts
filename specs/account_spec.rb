@@ -162,6 +162,9 @@ describe "Wave 2" do
   describe "Account.find" do
     it "Returns an account that exists" do
       # TODO: Your test code here!
+      accounts = Bank::Account.all
+      account = Bank::Account.find(accounts[0].id)
+      account.id.must_equal accounts[0].id
     end
 
     it "Can find the first account from the CSV" do

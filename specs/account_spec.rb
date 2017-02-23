@@ -5,7 +5,7 @@ require_relative '../lib/account'
 
 
 
-describe "Wave 1" do
+xdescribe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do #this is one test case with 4 assertions
 
@@ -37,7 +37,7 @@ describe "Wave 1" do
     end
   end
 
-  describe "Account#withdraw" do
+  xdescribe "Account#withdraw" do
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
@@ -110,7 +110,7 @@ describe "Wave 1" do
     end
   end
 
-  describe "Account#deposit" do
+  xdescribe "Account#deposit" do
     it "Increases the balance" do
 
       start_balance = 100.0
@@ -136,7 +136,7 @@ describe "Wave 1" do
     end
 
     it "Requires a positive deposit amount" do
-      
+
       start_balance = 100.0
       deposit_amount = -25.0
       account = Bank::Account.new({id: 1337, balance: start_balance})
@@ -148,43 +148,48 @@ describe "Wave 1" do
   end
 end
 
-# # TODO: change 'xdescribe' to 'describe' to run these tests
-# xdescribe "Wave 2" do
-#   describe "Account.all" do
-#     it "Returns an array of all accounts" do
-#       # TODO: Your test code here!
-#       # Useful checks might include:
-#       #   - Account.all returns an array
-#       Bank::Account.all.class.must_equal Array
-#       #   - Everything in the array is an Account
-#       Bank::Account.all.must_be_instance_of Account.class
-#       #   - The number of accounts is correct
-#       #Bank::Account.all.length.must_equal 12
-#       #   - The ID and balance of the first and last
-#       #       accounts match what's in the CSV file
-#       # Feel free to split this into multiple tests if needed
-#     end
-#   end
-#
-#   xdescribe "Account.find" do
-#     it "Returns an account that exists" do
-#
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the first account from the CSV" do
-#
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the last account from the CSV" do
-#
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Raises an error for an account that doesn't exist" do
-#
-#       # TODO: Your test code here!
-#     end
-#   end
-# end
+# TODO: change 'xdescribe' to 'describe' to run these tests
+describe "Wave 2" do
+  describe "Account.all" do
+    it "Returns an array of all accounts" do
+      # TODO: Your test code here!
+      # Useful checks might include:
+      #   - Account.all returns an array
+      Bank::Account.all.class.must_equal Array
+      #   - Everything in the array is an Account
+      #Bank::Account.new.must_be_instance_of Account.class
+      #   - The number of accounts is correct
+      Bank::Account.all.length.must_equal 12
+      #   - The ID and balance of the first and last
+      #       accounts match what's in the CSV file
+      Bank::Account.all[0][0].must_equal "1212"
+      Bank::Account.all[0][1].must_equal 1235667
+      Bank::Account.all[11][0].must_equal "15156"
+      Bank::Account.all[11][1].must_equal 4356772
+
+      # Feel free to split this into multiple tests if needed
+    end
+  end
+
+  xdescribe "Account.find" do
+    it "Returns an account that exists" do
+
+      # TODO: Your test code here!
+    end
+
+    it "Can find the first account from the CSV" do
+
+      # TODO: Your test code here!
+    end
+
+    it "Can find the last account from the CSV" do
+
+      # TODO: Your test code here!
+    end
+
+    it "Raises an error for an account that doesn't exist" do
+
+      # TODO: Your test code here!
+    end
+  end
+end

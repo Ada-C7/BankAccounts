@@ -73,19 +73,50 @@ describe "CheckingAccount" do
       account = Bank::CheckingAccount.new(1,30)
       account.withdraw_using_check(41)
       account.balance.must_equal 30
-
     end
 
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1,30)
+      proc {account.withdraw_using_check(-1)}.must_output(/.+/)
     end
 
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1,30)
+      account.withdraw_using_check(5)
+      account.withdraw_using_check(4)
+      account.withdraw_using_check(4)
+      account.check_fee.must_equal 0
     end
 
     it "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1,30)
+      account.checks_used.must_equal 0
+      account.check_fee.must_equal 0
+
+      account.withdraw_using_check(5)
+      account.balance.must_equal 25
+      account.checks_used.must_equal 1
+      account.check_fee.must_equal 0
+
+      account.withdraw_using_check(4)
+      account.balance.must_equal 21
+      account.checks_used.must_equal 2
+      account.check_fee.must_equal 0
+
+      account.withdraw_using_check(4)
+      account.balance.must_equal 17
+      account.checks_used.must_equal 3
+      account.check_fee.must_equal 0
+
+      account.withdraw_using_check(4)
+      account.check_fee.must_equal 2
+      account.balance.must_equal 11
+      account.checks_used.must_equal 4
+
+      account.withdraw_using_check(2)
+      account.balance.must_equal 7
+      account.checks_used.must_equal 5
+      account.check_fee.must_equal 2
     end
   end
 

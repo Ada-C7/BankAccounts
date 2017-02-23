@@ -138,22 +138,21 @@ end
 describe "Account#add_owner" do
   it "takes an owner and updates it" do
     account = Bank::Account.new(1337, 100)
-    owner = Bank::Owner.new("Rahul", "Renton,WA")
+    owner = Bank::Owner.new("26", "Berrie", "Kevin", "8113 Sutherland Center", "Seattle", "WA")
     account.add_owner(owner)
     account.owner.must_equal owner
   end
 end
 describe "Owner#initialize" do
   it "Takes a name and an address" do
-    name = "Rahul"
-    address = "Renton, WA"
-    owner = Bank::Owner.new(name, address)
+    first_name = "Kevin"
+    street_address = "8113 Sutherland Center"
+    owner = Bank::Owner.new("26", "Berrie", "Kevin", "8113 Sutherland Center", "Seattle", "WA")
+    owner.must_respond_to :first_name
+    owner.first_name.must_equal first_name
 
-    owner.must_respond_to :name
-    owner.name.must_equal name
-
-    owner.must_respond_to :address
-    owner.address.must_equal address
+    owner.must_respond_to :street_address
+    owner.street_address.must_equal street_address
   end
 end
 
@@ -201,4 +200,19 @@ end
         Bank::Account.find("abcd").must_raise ArgumentError
       }
     end
+  end
+
+  describe "Owner.all" do
+   it "Returns an array of all accounts" do
+     Bank::Owner.all.must_be_instance_of Array
+     Bank::Owner.all.each do |x|
+       x.must_be_instance_of Bank::Owner
+     end
+     Bank::Owner.all.length.must_equal 12
+     Bank::Owner.all[0].id.must_equal "14"
+     Bank::Owner.all[0].last_name.must_equal "Morales"
+     Bank::Owner.all[11].id.must_equal "25"
+     Bank::Owner.all[11].last_name.must_equal "Clark"
+
+   end
   end

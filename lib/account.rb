@@ -52,10 +52,22 @@ module Bank
   end
 
   class Owner
-    attr_reader :name, :address
-    def initialize(name, address)
-      @name = name
-      @address = address
+    attr_reader :id, :last_name, :first_name, :street_address, :city, :state
+    def initialize(id, last_name, first_name, street_address, city, state)
+      @id = id
+      @last_name = last_name
+      @first_name = first_name
+      @street_address = street_address
+      @city = city
+      @state = state
     end
+    def self.all
+      owners = []
+      CSV.read("support/owners.csv").each do |line|
+        owners << Owner.new(line[0], line[1], line[2], line[3], line[4], line[5])
+      end
+      return owners
+    end
+
   end
 end

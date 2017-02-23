@@ -68,30 +68,16 @@ module Bank
 
 
     class Owner
-      attr_accessor :name, :address, :dob
+      attr_accessor :lastname, :firstname,
 
        def initialize(lastname, firstname, street, city, state)
-         @name = name
-         @dob = dob
-        # @address = address
-        #    street1: "1221 N. Fife",
-        #    street2: "#4",
-        #    city: "Tacoma",
-        #    state: "WA",
-        #    zip: "98406"
-        #  }
+         @lastname = lastname
+         @firstname = firstname
+         @street = street
+         @city = city
+         @state = state
+
 
        end
-         #
-        #  def enter_address
-        #    address = {
-        #      street1: "1221 N. Fife",
-        #      street2: "#4",
-        #      city: "Tacoma",
-        #      state: "WA",
-        #      zip: "98406"
-        #    }
-        #  end
-
     end #end owner class
 end #end module Bank

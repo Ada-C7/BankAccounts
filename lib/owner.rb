@@ -1,12 +1,32 @@
+require 'csv'
+
 module Bank
   class Owner
-    attr_reader :name, :address, :email
+    attr_reader :id, :last_name, :first_name, :address, :city, :state
+
+    def self.all
+      owners = []
+      CSV.read("support/owners.csv").each do |line|
+        owners << Bank::Owner.new( {
+          id: line[0],
+          last_name: line[1],
+          first_name: line[2],
+          address: line[3],
+          city: line[4],
+          state: line[5]
+        } )
+      end
+      return owners
+    end
 
     def initialize(owner_hash)
       @owner_hash = owner_hash
-      @name = validate_owner_info(:name)
+      @id = validate_owner_info(:id)
+      @last_name = validate_owner_info(:last_name)
+      @first_name = validate_owner_info(:first_name)
       @address = validate_owner_info(:address)
-      @email = validate_owner_info(:email)
+      @city = validate_owner_info(:city)
+      @state = validate_owner_info(:state)
     end
 
     # makes sure required fields are not nil or empty strings
@@ -20,3 +40,10 @@ module Bank
 
   end
 end
+
+# owners = Bank::Owner.all
+#
+# owners.each do |owner|
+#   puts owner.state
+#
+# end

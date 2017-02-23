@@ -108,9 +108,3 @@ module Bank
   end
 
 end
-
-# my_account = Bank::Account.new(1212,1235667,"1999-03-27 11:30:09 -0800")
-#
-# puts my_account.balance
-
-puts " #{ Bank::Account.all.class } "

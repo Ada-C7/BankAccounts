@@ -27,7 +27,6 @@ module Bank
         end
       end
       raise ArgumentError.new("account id doesn't exist")
-
     end
 
 
@@ -61,6 +60,7 @@ module Bank
       @city = city
       @state = state
     end
+
     def self.all
       owners = []
       CSV.read("support/owners.csv").each do |line|
@@ -69,5 +69,13 @@ module Bank
       return owners
     end
 
+    def self.find(id)
+      CSV.read("support/owners.csv").each do |line|
+        if line[0] == id
+          return Owner.new(line[0], line[1], line[2], line[3], line[4], line[5])
+        end
+      end
+      raise ArgumentError.new("owner id doesn't exist")
+    end
   end
 end

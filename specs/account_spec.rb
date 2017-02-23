@@ -216,3 +216,25 @@ end
 
    end
   end
+
+  describe "Owner.find" do
+    it "Returns an owners that exists" do
+      Bank::Owner.find("20").must_be_instance_of Bank::Owner
+    end
+
+    it "Can find the first owner from the CSV" do
+      Bank::Owner.find("14").must_be_instance_of Bank::Owner
+
+    end
+
+    it "Can find the last owner from the CSV" do
+      Bank::Owner.find("25").must_be_instance_of Bank::Owner
+
+    end
+
+    it "Raises an error for an owner that doesn't exist" do
+      proc {
+        Bank::Owner.find("ab").must_raise ArgumentError
+      }
+    end
+  end

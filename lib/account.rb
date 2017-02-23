@@ -3,7 +3,7 @@ require 'ap'
 module Bank
   class Account
 
-    attr_reader :id, :balance, :open_date, :num_of_accounts
+    attr_reader :id, :balance, :open_date
     def initialize(id, balance, open_date ="")
       raise ArgumentError.new("balance must be >= 0") if balance < 0
       @id = id
@@ -15,31 +15,42 @@ module Bank
     @@account_all = []
 
     @@csv = []
+    CSV.read("./support/accounts.csv").each do |account|
+      @@csv << {id: account[0].to_i, balance: account[1].to_i, open_date: account[2]}
+    end
 
-    def self.read_csv
-        @@csv = []
-      CSV.read("./support/accounts.csv").each do |account|
-        @@csv << {id: account[0].to_i, balance: account[1].to_i, open_date: account[2]}
-      end
+
+    def self.csv
       return @@csv
     end
 
-    # @@csv = CSV.read("./support/accounts.csv")
-    #
-    # def self.read_csv
-    #   return @@csv
-    # end
-    #
+    def self.find_csv_account(num)
+      return @@csv[num]
+    end
 
 
+    @@csv.each do |account|
+      @@account_all << self.new(account[:id].to_i, account[:balance].to_i, account[:open_date])
+    end
 
     def self.all
-      @@account_all = []
-      self.read_csv.each do |account|
-        @@account_all << self.new(account[:id].to_i, account[:balance].to_i, account[:open_date])
-      end
       return @@account_all
     end
+
+
+    def self.find(entered_id)
+      id_exist = false
+      @@account_all.each do |account|
+        if account.id == entered_id
+          return account
+          id_exist = true
+        end
+      end
+      if id_exist == false
+        raise ArgumentError.new "Entered ID doesn't exist"
+      end
+    end
+
 
     def withdraw(amount)
       if amount < 0
@@ -67,6 +78,3 @@ module Bank
 
   end
 end
-# puts Bank::Account.all[0].id
-# puts Bank::Account.read_csv[0][:id]
-# puts Bank::Account.read_csv

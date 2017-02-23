@@ -140,37 +140,42 @@ end
 describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-       account = Bank::Account.all
+
+      account = Bank::Account.all
       #  account.class.must_equal Array
-       account.must_be_instance_of Array
-#loop through array to retrieve instance of bank account put assertion that account is instance
+      #  Account.all returns an array
+      account.must_be_instance_of Array
 
-      # Useful checks might include:
-      #   - Account.all returns an array
+      #loop through array to retrieve instance of bank account put assertion that account is instance
+
       #   - Everything in the array is an Account
-      #   - The number of accounts is correct account.length = 12
-      #   - The ID and balance of the first and last ...pull out indexes, id must be equal to
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-    end
-  end
+      account.each do |element|
+        element.must_be_instance_of Bank::Account
+      end
+        #   - The number of accounts is correct account.length = 12
 
-#   describe "Account.find" do
-#     it "Returns an account that exists" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the first account from the CSV" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the last account from the CSV" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Raises an error for an account that doesn't exist" do
-#       # TODO: Your test code here!
-  #   end
-  # end
+        #   - The ID and balance of the first and last ...pull out indexes, id must be equal to
+        #       accounts match what's in the CSV file
+        # Feel free to split this into multiple tests if needed
+    # end
+
+    #   describe "Account.find" do
+    #     it "Returns an account that exists" do
+    #       # TODO: Your test code here!
+    #     end
+    #
+    #     it "Can find the first account from the CSV" do
+    #       # TODO: Your test code here!
+    #     end
+    #
+    #     it "Can find the last account from the CSV" do
+    #       # TODO: Your test code here!
+    #     end
+    #
+    #     it "Raises an error for an account that doesn't exist" do
+    #       # TODO: Your test code here!
+    #   end
+    # end
+  end
 end
+end 

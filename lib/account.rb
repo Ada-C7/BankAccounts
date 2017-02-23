@@ -71,11 +71,17 @@ module Bank
   end
 
   class Owner
-    attr_reader :name, :phone
-    def initialize(name, phone)
-      name = name
-      phone = phone
+    attr_reader :last_name, :first_name
+
+    def initialize(id, last_name, first_name, street_address, city, state)
+      id = id
+      @last_name = last_name
+      @first_name = first_name
+      street_address = street_address
+      city = city
+      state = state
     end
+
   end
 
 end

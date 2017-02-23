@@ -15,9 +15,13 @@ module Bank
     def self.all
       accounts = []
       CSV.read("support/accounts.csv").each do |line|
-        accounts << Account.new(line[0].to_i, line[1].to_i)
+        accounts << Account.new(line[0], line[1].to_i)
       end
       return accounts
+    end
+
+    def self.find
+      @id = Account.new([:id])
     end
 
 

@@ -16,7 +16,6 @@ module Bank
 
             @account_info.each do |line|
                 @@all_accounts[line.first] = line.drop(1)
-                @@valid_ids << line[0]
                 next unless line.first == @id
                 @balance = line[1].to_i
                 @opendate = DateTime.parse(line[2].to_s)
@@ -27,7 +26,7 @@ module Bank
             @account_info = CSV.open('support/accounts.csv')
             @accounts_array = []
             @account_info.each do |line|
-                @account_instance = Bank::Account.new(line[0], line[1])
+                @account_instance = new(line[0], line[1])
                 @accounts_array << @account_instance
             end
             @accounts_array
@@ -43,9 +42,6 @@ module Bank
                 @found_account = line
             end
 
-            # print @@valid_ids
-            # puts @found_account
-
             raise ArgumentError, 'Please enter valid ID' unless @@valid_ids.include?(_id)
 
             @found_account
@@ -53,7 +49,7 @@ module Bank
 
         def withdraw(amt)
             raise ArgumentError, 'Cannot withdraw negative number' if amt < 0
-            if @balance - amt < 0
+            if amt > @balance
                 puts 'You cannot withdraw more than your account balance'
             else
                 @balance -= amt

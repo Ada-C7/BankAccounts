@@ -10,15 +10,18 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      super
+      original_balance = @balance
+      super(withdrawal_amount)
 
-      if @balance - (withdrawal_amount - 2) < 10
-        puts "You cannot go below $10."
+      if @balance == original_balance
         @balance
+      elsif @balance - 2 <= 10
+        puts "This withdrawal and fee will take your balance below $10."
+        return @balance = original_balance
       else
         @balance -= 2
       end
-      
+
     end
 
   end

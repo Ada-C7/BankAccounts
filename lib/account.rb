@@ -15,6 +15,12 @@ module Bank
     end
 
     def self.find(id)
+      raise ArgumentError.new("That's not a valid ID number, you nincompoop.") if !Bank::Account.all.include?(id)
+      Bank::Account.all.each_with_index do |acct, index|
+        return Bank::Account.all[index]
+
+
+      end
     end
 
     def initialize(id, balance, date, owner = "Customer Name")

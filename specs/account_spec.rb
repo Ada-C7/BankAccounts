@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 require_relative '../lib/account'
 require_relative '../lib/owner'
 
@@ -151,26 +152,18 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
-
-  # before do
-  #   brenna_hash = {name: "Brenna Darroch", address: "3426 Cotton Top Ct", birthday: "May 22, 1993", favefood: "chocolate" }
-  #   ben_hash = {name: "Ben Hewer", address: "1000 1st Ave W", birthday: "May 2, 1993", favefood: "pie" }
-  #   liam_hash = {name: "Liam Darroch", address: "Dorm in UBC", birthday: "February 11, 1998", favefood: "flan"}
-  #   @brenna = Bank::Owner.new(brenna_hash)
-  #   @ben = Bank::Owner.new(ben_hash)
-  #   @liam = Bank::Owner.new(liam_hash)
-  # end
 
   describe "Account.all" do
     it "Returns an array of all accounts" do
       #   - Account.all returns an array
       Bank::Account.all.must_be_kind_of Array
       #   - Everything in the array is an Account
-      Bank::Account.all[0].must_be_instance_of Bank::Account
+      Bank::Account.all.each do |inst|
+        inst.must_be_instance_of Bank::Account
+      end
       #   - The number of accounts is correct
-      # Bank::Account.all.length.must_equal 12
+      Bank::Account.all.length.must_equal 12
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       Bank::Account.all[0].id.must_equal 1212
@@ -184,15 +177,15 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      Bank::Account.find(1216).must_equal Bank::Account.new(1216, 100022, "2000-07-07 15:07:55 -0800", "Customer Name")
+      Bank::Account.find(1216).must_equal Bank::Account.all[4]
     end
 
     it "Can find the first account from the CSV" do
-      Bank::Account.find.all[0].must_equal Bank::Account.new(1212, 1235667, "1999-03-27 11:30:09 -0800", "Customer Name")
+      Bank::Account.find(1212).must_equal Bank::Account.all[0]
     end
 
     it "Can find the last account from the CSV" do
-      Bank::Account.find.all[-1].must_equal Bank::Account.new(15156, 4356772, "1994-11-17 14:04:56 -0800", "Customer Name")
+      Bank::Account.find(15156).must_equal Bank::Account.all[-1]
     end
 
     it "Raises an error for an account that doesn't exist" do

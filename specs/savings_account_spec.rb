@@ -27,6 +27,11 @@ describe "SavingsAccount" do
       @savings.initial_balance.to_i.must_be :>, 9
       # proc {@savings.initial_balance < 10}.must_raise ArgumentError
     end
+
+    it "Raises error if initial balance < 10" do
+      proc {Bank::SavingsAccount.new(1,9)}.must_raise ArgumentError
+    end
+
   end
 
   describe "#withdraw" do

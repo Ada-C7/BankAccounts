@@ -214,10 +214,25 @@ describe "Wave 2" do
   end
 
   describe "Testing Owner.find" do
+
     it "Returns an account that exists" do
-      account = Bank::Owner.find(14)
-      account.must_be_instance_of(Bank::Owner)
+      owner = Bank::Owner.find(14)
+      owner.must_be_instance_of(Bank::Owner)
     end
+
+    it "Can find the first account from the CSV" do
+      Bank::Owner.find(14)
+    end
+
+    it "Can find the last account from the CSV" do
+      Bank::Owner.find(25)
+    end
+
+    it "Raises an error for an Owner that doesn't exist" do
+    #should raise an error when I try to find this
+      proc { Bank::Owner.find(0000000) }.must_raise ArgumentError
+    end
+
   end
 
   describe "Account.all" do

@@ -12,9 +12,12 @@ module Bank
       end
 
       def withdraw(amount)
-        raise ArgumentError.new "This will cause the balance to go below 0" if (@balance - amount) < 10
-        super(amount)
-        @balance -= 2
+        if (@balance - amount) < 10
+          print "Warning! This will cause your balance to go below $10"
+          return @balance
+        end
+        @balance = super(amount) - 2
+        return @balance
       end
   end
 

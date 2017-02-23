@@ -60,7 +60,6 @@ describe "Wave 1" do
 
     it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
-      withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
 
       # Another proc! This test expects something to be printed
@@ -68,7 +67,7 @@ describe "Wave 1" do
       # expression matching one or more characters - as long as
       # anything at all is printed out the test will pass.
       proc {
-        account.withdraw(withdrawal_amount)
+        account.withdraw(200)
       }.must_output(/.+/)
     end
 

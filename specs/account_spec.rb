@@ -219,7 +219,14 @@ describe "Wave 2" do
     end
 
     it "Can find the first account from the CSV" do
-      skip
+      test_array = []
+      CSV.open("support/accounts.csv", 'r').each do |account|
+        test_array << account
+      end
+      id_check = test_array[0][0]
+      account = Bank::Account.find(id_check)
+      expect(account.id).must_equal id_check
+
       # TODO: Your test code here!
     end
 

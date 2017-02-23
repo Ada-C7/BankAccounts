@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require 'csv'
 # require_relative '../support/accounts'
 
 describe "Wave 1" do
@@ -166,8 +167,8 @@ describe "Wave 2" do
     @open_date =[]
 
     CSV.open("../support/accounts.csv").each do |line|
-      @id << line[0]
-      @balance << line[1]
+      @id << line[0].to_i
+      @balance << line[1].to_i
       @open_date << line[2]
     end
 
@@ -222,7 +223,7 @@ describe "Wave 2" do
     it "Raises an error for an account that doesn't exist" do
       # TODO: Your test code here!
         proc {
-          Bank::Account.find(00000000)
+          Bank::Account.find(000)
         }.must_raise ArgumentError
     end
   end

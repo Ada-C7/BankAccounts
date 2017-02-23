@@ -45,26 +45,31 @@ module Bank
     end
 
     def self.all
-      accounts_array = []
+      accounts = []
 
       CSV.open("/Users/adai/Documents/ada/projects/BankAccounts/support/accounts.csv").each do |line|
-        accounts_array << Account.new(line[0].to_i, line[1].to_i, line[2])
+        account = Bank::Account.new(line[0].to_i, line[1].to_i, line[2])
+        accounts << account
       end
-      return accounts_array
+      return accounts
     end
 
     def self.find(id)
+      id = id.to_i
 
-      CSV.open("/Users/adai/Documents/ada/projects/BankAccounts/support/accounts.csv").each do |line|
-        if id = line[0]
-          found_account = Account.new(line[0].to_i, line[1].to_i, line[2])
-          return found_account
-        else
-          raise ArgumentError.new "not a valid ID number"
+      Account.all.each do |account|
+        if account.id == id
+          return account
         end
       end
+
+      # CSV.open("/Users/adai/Documents/ada/projects/BankAccounts/support/accounts.csv").each do |line|
+      #   if id == line[0]
+      #     found_account = Account.new(line[0].to_i, line[1].to_i, line[2])
+      #     return found_account
+      #   end
+      raise ArgumentError.new("not a valid ID")
+
     end
-
   end
-
 end

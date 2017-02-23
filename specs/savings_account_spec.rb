@@ -30,7 +30,11 @@ describe "SavingsAccount" do
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
+      my_savings = Bank::SavingsAccount.new(1234, 500.00)
+      my_savings.withdraw(10)
+      my_savings.balance.must_equal(488.00)
+      my_savings.withdraw(10)
+      my_savings.balance.must_equal(476.00)
     end
 
     it "Outputs a warning if the balance would go below $10" do

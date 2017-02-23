@@ -9,6 +9,11 @@ module Bank
       end
     end
 
+    def withdraw(withdrawal_amount)
+      super
+      @balance -= 2
+    end
+
   end
 
 end

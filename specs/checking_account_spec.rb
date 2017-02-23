@@ -54,18 +54,23 @@ describe "CheckingAccount" do
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+      proc {
+        account.withdraw_using_check(111)
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+      account.withdraw_using_check(111)
+      account.balance.must_equal 100.0
     end
 
     it "Requires a positive withdrawal amount" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+      proc {
+        account.withdraw_using_check(-25)
+      }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do

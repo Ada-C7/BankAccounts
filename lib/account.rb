@@ -43,7 +43,7 @@ module Bank
     #Method to withdraw money from the account
     def withdraw(withdrawal)
       #Make sure the withdrawal is a positive number
-      raise ArgumentError.new "The amount withdrawn must be  a positive number" if withdrawal < 0
+      raise ArgumentError.new "The amount withdrawn must be a positive number" if withdrawal < 0
       #Warn if the withdrawal will put the balance in the negative, and cancel
       #withdrawal if so
       if (@balance - withdrawal < 0)

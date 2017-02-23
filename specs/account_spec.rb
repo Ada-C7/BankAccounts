@@ -134,7 +134,7 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
-end
+end #end of Wave 1
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
@@ -164,19 +164,28 @@ describe "Wave 2" do
       # TODO: Your test code here!
       accounts = Bank::Account.all
       account = Bank::Account.find(accounts[0].id)
-      account.id.must_equal accounts[0].id
+      account.must_be_instance_of Bank::Account
     end
 
     it "Can find the first account from the CSV" do
       # TODO: Your test code here!
+      accounts = Bank::Account.all
+      account = Bank::Account.find(1212)
+      account.id.must_equal accounts[0].id
     end
 
     it "Can find the last account from the CSV" do
       # TODO: Your test code here!
+      accounts = Bank::Account.all
+      account = Bank::Account.find(15156)
+      account.id.must_equal accounts[-1].id
     end
 
     it "Raises an error for an account that doesn't exist" do
       # TODO: Your test code here!
+        proc {
+          Bank::Account.find(111111)
+        }.must_raise ArgumentError
+      end
     end
   end
-end

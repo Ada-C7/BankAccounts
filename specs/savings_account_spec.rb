@@ -26,12 +26,17 @@ describe "SavingsAccount" do
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(12345, 100.0)
+      account.withdraw(50)
+      account.balance.must_equal 48.0
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      skip
+      account = Bank::SavingsAccount.new(1337, 100.0)
+
+      proc {
+        account.withdraw(95)
+      }.must_raise ArgumentError
       # TODO: Your test code here!
     end
 

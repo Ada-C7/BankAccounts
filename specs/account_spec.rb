@@ -147,6 +147,7 @@ describe "Wave 2" do
       Bank::Account.all.class.must_equal Array
       #   - Everything in the array is an Account
 
+      Bank::Account.all.each.must_be_instance_of Bank::Account
       #   - The number of accounts is correct
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file

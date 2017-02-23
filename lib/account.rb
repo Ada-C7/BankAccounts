@@ -30,22 +30,23 @@ module Bank
   # where the value of the id field in the CSV matches
   # the passed parameter.
 
-   def self.find(id)
-     @account_array.each do |account|
-       if id == account.id
-         @this_account = account
-       end
-     end
-    return @this_account
-   end
+  def self.find(id)
+    found = false
+    @account_array.each do |account|
+      if id == account.id
+        @this_account = account
+        # found = true
+        return @this_account
+      end
+    end
+    if !found
+      puts "Error!"
+    end
+  end
 
 
 
-    #  else
-      #  print this_account
-      #  return this_account
-    #  account_array.each do |account|
-    #  print "HERE #{account}"
+
 
 
 

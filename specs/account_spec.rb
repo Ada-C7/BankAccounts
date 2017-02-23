@@ -211,31 +211,26 @@ describe "Wave 2" do
       test_variable = Bank::Account.find("1212")
       test_variable.class.must_equal Bank::Account
       test_variable.id.must_equal "1212"
-
-      # account_array.each {|account| account.find("1212").must_equal Bank::Account}
-      # this_account.class.must_equal Array
-      #  <Bank::Account:0x007fe2388c8800>
     end
-    #
+
     it "Can find the first account from the CSV" do
       test_array = Bank::Account.all
       Bank::Account.find(test_array[0].id).id.must_equal "1212"
-      # #   account_array = Bank::Account.all
-      # #   account_array = Bank::Account.find[0]
-      #  first.id.must_equal "1212"
     end
-    # #
+
     it "Can find the last account from the CSV" do
-      # #   # TODO:
       test_array = Bank::Account.all
-      # puts account_array[-1].id
-
       Bank::Account.find(test_array[-1].id).id.must_equal "15156"
-
     end
-    #
+
      it "Raises an error for an account that doesn't exist" do
-       # TODO: Your test code here!
+       test_array = Bank::Account.all
+
+
+       proc {
+        Bank::Account.find("0000")
+       }.must_output /.+/
+
     end
   end
  end

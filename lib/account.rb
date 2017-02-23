@@ -1,22 +1,25 @@
+require 'csv'
+require 'date'
+
 # Bank module contains Account class and any future bank account logic.
 module Bank
   class Account
     # allows access to the current balance of an account at any time.
     attr_accessor :balance, :owner
     # only allow reader on unique account id
-    attr_reader :id
+    attr_reader :id, :open_date
 
     # constructs a new Account object
     # give a default value, in case the Owner class object is not passed
-    def initialize id, initial_balance, owner = nil
+    def initialize id, balance, open_date, owner = nil
       # error handling for initial negative balance
-      if initial_balance >= 0
-        @balance = initial_balance
+      if balance >= 0
+        @balance = balance
       else
         raise ArgumentError.new "Inital balance cannot be a negetive value"
       end
       @id = id
-
+      @open_date = DateTime.parse(open_date)
       #note: in the future, consider account holder with multiple accounts
       if owner.class == Bank::Owner
         @owner = owner
@@ -24,6 +27,32 @@ module Bank
         @owner = Bank::Owner.new({})
       end
     end
+
+    # method that returns a collection of Account instances, from data read in CSV
+    def self.all
+      all_accounts_array= []
+
+      CSV.read("../support/accounts.csv").each do |line|
+        all_accounts_array << Bank::Account.new( line[0].to_i, line[1].to_i, line[2] )
+      end
+
+      return all_accounts_array
+    end
+
+    # method that returns an instance of an Account where the value of the id field
+    # in the CSV matches the passed parameter
+    def self.find(id)
+      raise ArgumentError.new ("Account id must be an positive integer value") if ( id.class != Integer || id < 1 )
+
+      CSV.read("./support/accounts.csv").each do |line|
+        if line[0].to_i == id
+          account = Bank::Account.new( line[0], line[1], line[2], nil )
+          return account
+        end
+      end
+      raise ArgumentError.new "Account id does not exist in the database"
+    end
+
 
     # method that overwrites existing empty @owner instance variable
     def update_owner_data(owner_hash)

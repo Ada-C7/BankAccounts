@@ -46,8 +46,9 @@ describe "SavingsAccount" do
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(1337, 100.0)
+      account.withdraw(89)
+      account.balance.must_equal 100.0
     end
   end
 

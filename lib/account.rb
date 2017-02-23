@@ -51,7 +51,8 @@ module Bank
         balance in the negative"
         return @balance
       else
-        return @balance -= withdrawal
+        @balance -= withdrawal
+        return @balance
       end
     end
 

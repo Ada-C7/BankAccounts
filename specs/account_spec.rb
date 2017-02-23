@@ -147,10 +147,15 @@ describe "Wave 2" do
       #   - Everything in the array is an Account
 
       accounts = Bank::Account.all
+      #(accounts.each { |i| return i }).must_be_instance_of Bank::Account
       accounts[0].must_be_instance_of Bank::Account
       #   - The number of accounts is correct
+      accounts.length.must_equal 12
       #   - The ID and balance of the first and last
+      accounts[0].id.must_equal 1212
       #       accounts match what's in the CSV file
+
+
       # Feel free to split this into multiple tests if needed
     end
   end

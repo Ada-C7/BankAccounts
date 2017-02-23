@@ -16,8 +16,18 @@ module Bank
     end
 
     def self.all
+      accounts_to_owners = {}
+      CSV.read("support/account_owners.csv").each do |line|
+        accounts_to_owners[ line[0] ] = line[1]
+      end
+
       CSV.read("support/accounts.csv").collect do |account|
-        Account.new(id: account[0], balance: account[1].to_i, open_date: account[2])
+        Account.new(
+          id: account[0],
+          balance: account[1].to_i,
+          open_date: account[2],
+          owner: Owner.find(accounts_to_owners[account[0]])
+        )
       end
     end
 

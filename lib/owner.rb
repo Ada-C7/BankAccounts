@@ -1,20 +1,23 @@
-require_relative 'account'
+#require_relative 'account'
 require 'csv'
 require 'date'
 module Bank
   class Owner
-    attr_reader :name, :address, :phone
-    def initialize (name, phone="1234456", last_name="Fakelastname" , first_name="Fakefirstname", address="123 Main st", city="Bellevue", state="WA")
-      @name = name
-      #@address = address
-      #@phone = phone
+    attr_reader  :id, :last_name, :first_name, :address, :city, :state
+    def initialize (id,last_name, first_name="Fakefirstname", address="123 Main st", city="Bellevue", state="WA")
+      @id = id
+      @last_name = last_name
+      @first_name = first_name
+      @address = address
+      @city = city
+      @state = state
     end
 
     def self.all
       csv = CSV.read("../support/owners.csv", 'r') # object of class CSV
       all_owners = []
       n = 0 # current line of csv file
-      csv.length.times do |n|
+      csv.length.times do
         id = csv[n][0].to_i
         last_name = csv[n][1]
         first_name = csv[n][2]
@@ -27,10 +30,22 @@ module Bank
       return all_owners
     end
 
+    def self.find(id)
+      result = Owner.all.select {|owner| owner.id == id}
+      puts result
+      # select method returns Array, which in our case
+      # store only one element
+      if result[0].nil?
+        raise ArgumentError.new("Cannot find this ID in owners")
+      else
+        return result[0]
+      end
+    end
+  end # end of class Owner
+end # end of module Bank
 
-  end
-end
+a = Bank::Owner.all
+puts a
 
- owner = Bank::Owner.new("Natalia")
- puts Bank::Owner.all
-# puts owner.address
+ b = Bank::Owner.find(24)
+ puts b.city

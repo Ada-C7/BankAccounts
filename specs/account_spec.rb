@@ -143,30 +143,30 @@ describe "Wave 1" do
 
 
 
-#   describe "Account#owner" do
-#     it "requires name and dob" do
-#       name = "Kelly Souza"
-#       dob = "02/05/1978"
-#       address = {
-#         street1: "1221 N. Fife",
-#         street2: "#4",
-#         city: "Tacoma",
-#         state: "WA",
-#         zip: "98406"
-#       }
-#       owner = Bank::Owner.new(name, dob, address)
-#       owner.name.must_equal name
-#       owner.dob.must_equal dob
-#       owner.address.must_equal address
-#     end #end require name and dob
-# end
-    # it "requires owner address" do
-      # street1 = "1221 N. Fife",
-      # street2 = "#4",
-      # city = "Tacoma",
-      # state = "WA",
-      # zip = "98406"
-      # owner.address.must_equal address
+  #   describe "Account#owner" do
+  #     it "requires name and dob" do
+  #       name = "Kelly Souza"
+  #       dob = "02/05/1978"
+  #       address = {
+  #         street1: "1221 N. Fife",
+  #         street2: "#4",
+  #         city: "Tacoma",
+  #         state: "WA",
+  #         zip: "98406"
+  #       }
+  #       owner = Bank::Owner.new(name, dob, address)
+  #       owner.name.must_equal name
+  #       owner.dob.must_equal dob
+  #       owner.address.must_equal address
+  #     end #end require name and dob
+  # end
+  # it "requires owner address" do
+  # street1 = "1221 N. Fife",
+  # street2 = "#4",
+  # city = "Tacoma",
+  # state = "WA",
+  # zip = "98406"
+  # owner.address.must_equal address
   #
   #
   # # end
@@ -181,61 +181,76 @@ end
 
 
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      account_array = Bank::Account.all
-      # Useful checks might include:
 
-
-      #   - The number of accounts is correct
-      account_array.length.must_equal 12
-      #   - account is an Array
-      account_array.class.must_equal Array
-      #    - Everything in the array is an Account
-      account_array.each {|account| account.class.must_equal Bank::Account}
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      account_array.first.id.must_equal "1212"
-      account_array.first.balance.must_equal 1235667
-      account_array.last.id.must_equal "15156"
-      account_array.last.balance.must_equal 4356772
-      # end
-      # Feel free to split this into multiple tests if needed
+    before do
+      @account_array = Bank::Account.all
     end
+
+
+    it "Returns an array of all accounts" do
+
+
+    end
+    # Useful checks might include:
+
+    #   - The number of accounts is correct
+    it "The number of accounts is correct" do
+      @account_array.length.must_equal CSV.read("support/accounts.csv").length
+    end
+    #   - account is an Array
+    it "account is an Array" do
+      @account_array.class.must_equal Array
+    end
+
+    #    - Everything in the array is an Account
+    it "Everything in the array is an Account" do
+      @account_array.each {|account| account.class.must_equal Bank::Account}
+    end
+
+    #   - The ID and balance of the first and last
+    #       accounts match what's in the CSV file
+    it "The ID and balance of the first and last accounts match what's in the CSV file" do
+      @account_array.first.id.must_equal "1212"
+      @account_array.first.balance.must_equal 1235667
+      @account_array.last.id.must_equal "15156"
+      @account_array.last.balance.must_equal 4356772
+    end
+
   end
 
+
+
+
+
   describe "Account.find" do
+    before do
+      @test_array = Bank::Account.all
+    end
+    # self.find(id) - returns an instance of Account
+    # where the value of the id field in the CSV matches
+    # the passed parameter.
+    # Bank::Account.all
     it "Returns an account that exists" do
-      # self.find(id) - returns an instance of Account
-      # where the value of the id field in the CSV matches
-      # the passed parameter.
-      Bank::Account.all
       test_variable = Bank::Account.find("1212")
-      test_variable.class.must_equal Bank::Account
+      test_variable.must_be_instance_of Bank::Account
       test_variable.id.must_equal "1212"
     end
 
     it "Can find the first account from the CSV" do
-      test_array = Bank::Account.all
-      Bank::Account.find(test_array[0].id).id.must_equal "1212"
+      Bank::Account.find(@test_array[0].id).id.must_equal "1212"
     end
 
     it "Can find the last account from the CSV" do
-      test_array = Bank::Account.all
-      Bank::Account.find(test_array[-1].id).id.must_equal "15156"
+      Bank::Account.find(@test_array[-1].id).id.must_equal "15156"
     end
 
-     it "Raises an error for an account that doesn't exist" do
-       test_array = Bank::Account.all
-
-
-       proc {
+    it "Raises an error for an account that doesn't exist" do
+      proc {
         Bank::Account.find("0000")
-       }.must_output /.+/
+      }.must_raise ArgumentError
 
     end
   end
- end
+end

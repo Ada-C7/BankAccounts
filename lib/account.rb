@@ -28,17 +28,19 @@ module Bank
       @account_array.each do |account|
         if id == account.id
           @this_account = account
-          # found = true
+          found = true
           return @this_account
         end
       end
       if !found
+        raise ArgumentError.new "Account #{id} does not exist"
+
         puts "Error!"
       end
     end
 
 
-    def initialize(id, balance, timedate)
+    def initialize(id, balance, timedate = nil)
       @id = id
       @timedate = timedate
       raise ArgumentError.new("balance must be greater than zero") if balance < 0
@@ -65,31 +67,31 @@ module Bank
   end #end class Account
 
 
-  #   class Owner
-  #     attr_accessor :name, :address, :dob
-  #
-  #      def initialize(name, dob, address)
-  #        @name = name
-  #        @dob = dob
-  #        @address = address
-  #       #    street1: "1221 N. Fife",
-  #       #    street2: "#4",
-  #       #    city: "Tacoma",
-  #       #    state: "WA",
-  #       #    zip: "98406"
-  #       #  }
-  #
-  #      end
-  # 
-  #        def enter_address(street1, street2, city, state, zip)
-  #          address = {
-  #            street1: "1221 N. Fife",
-  #            street2: "#4",
-  #            city: "Tacoma",
-  #            state: "WA",
-  #            zip: "98406"
-  #          }
-  #        end
-  #
-  #   end #end owner class
+    class Owner
+      attr_accessor :name, :address, :dob
+
+       def initialize(lastname, firstname, street, city, state)
+         @name = name
+         @dob = dob
+         @address = address
+        #    street1: "1221 N. Fife",
+        #    street2: "#4",
+        #    city: "Tacoma",
+        #    state: "WA",
+        #    zip: "98406"
+        #  }
+
+       end
+         #
+        #  def enter_address
+        #    address = {
+        #      street1: "1221 N. Fife",
+        #      street2: "#4",
+        #      city: "Tacoma",
+        #      state: "WA",
+        #      zip: "98406"
+        #    }
+        #  end
+
+    end #end owner class
 end #end module Bank

@@ -22,8 +22,14 @@ module Bank
         else
         @balance -= 2
         end
-
         return @balance
+      end
+
+      def interest(rate)
+        raise ArgumentError.new "The rate must be a positive number" if rate < 0
+        interest = @balance * rate/100
+        @balance += interest
+        return interest
       end
   end
 

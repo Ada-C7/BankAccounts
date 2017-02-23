@@ -1,5 +1,7 @@
 # require_relative 'owner'
 require 'csv'
+require 'date'
+
 module Bank
 
   class Account
@@ -37,6 +39,7 @@ module Bank
       end
     end
 
+    # below are the class methods...
     # will read in info from CSV file return an array of account instances
     def self.all(csv_file)
       @accounts = CSV.read(csv_file)
@@ -44,6 +47,7 @@ module Bank
       @accounts.each do |info_array|
         info_array[0] = info_array[0].to_i
         info_array[1] = info_array[1].to_f / 100
+        info_array[2] = DateTime.parse(info_array[2])
       end
 
       #initiate the accounts using self.new

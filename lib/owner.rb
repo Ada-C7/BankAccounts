@@ -1,7 +1,6 @@
 require 'csv'
 module Bank
 
-
   class Owner
     attr_reader :last_name, :first_name, :street_address, :city, :state, :id
 

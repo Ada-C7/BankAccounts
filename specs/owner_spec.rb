@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/owner'
+require 'csv'
 
 describe "Optional - Owner Class" do
 
@@ -51,18 +52,24 @@ describe "Optional - Owner Class" do
 
     it "returns array that has length greater than 0 " do
       # must be an array
-      Bank::Owner.all('../support/owners.csv').must_be_instance_of Array
-      Bank::Owner.all('../support/owners.csv').length.must_be :>, 0
+      # Bank::Owner.all('../support/owners.csv').must_be_instance_of Array
+      # Bank::Owner.all('../support/owners.csv').length.must_be :>, 0
+      Bank::Owner.all('./support/owners.csv').must_be_instance_of Array
+      Bank::Owner.all('./support/owners.csv').length.must_be :>, 0
     end
 
     it "returns an array of length 12 when given file with 12 users" do
-      Bank::Owner.all('../support/owners.csv').length.must_equal 12
+      # Bank::Owner.all('../support/owners.csv').length.must_equal 12
+      Bank::Owner.all('./support/owners.csv').length.must_equal 12
     end
 
     it "returns an array full of owner objects" do
       # this test is not being run untill there is an array that is greater than 0
       # was not running if the array is empty - not failing
-      Bank::Owner.all('../support/owners.csv').each do |account|
+      # Bank::Owner.all('../support/owners.csv').each do |account|
+      #   account.must_be_instance_of Bank::Owner
+      # end
+      Bank::Owner.all('./support/owners.csv').each do |account|
         account.must_be_instance_of Bank::Owner
       end
     end
@@ -78,17 +85,20 @@ describe "Optional - Owner Class" do
     end
 
     it "returns an owner object" do
-      Bank::Owner.all('../support/owners.csv')
+      # Bank::Owner.all('../support/owners.csv')
+      Bank::Owner.all('./support/owners.csv')
       Bank::Owner.find(24).must_be_instance_of Bank::Owner
     end
 
     it "find the first owner" do
-      Bank::Owner.all('../support/owners.csv')
+      # Bank::Owner.all('../support/owners.csv')
+      Bank::Owner.all('./support/owners.csv')
       Bank::Owner.find(14).last_name.must_equal "Morales"
     end
 
     it "finds the last owner" do
-      Bank::Owner.all('../support/owners.csv')
+      # Bank::Owner.all('../support/owners.csv')
+      Bank::Owner.all('./support/owners.csv')
       Bank::Owner.find(25).last_name.must_equal "Clark"
     end
   end

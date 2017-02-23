@@ -2,14 +2,15 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require 'csv'
 
 describe "Wave 1" do
 
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
       # skip
-      id = 1337
-      balance = 100.0
+      id = 1212
+      balance = 1235667 / 100.0
       date = "2013-19-07 09:04:56 -0700"
       account = Bank::Account.new(id, balance, date)
 
@@ -186,19 +187,15 @@ describe "Wave 2" do
     # skip
     it "Returns an array of all accounts" do
       # Account.all returns an array
-      Bank::Account.all('../support/accounts.csv').must_be_instance_of Array
+      Bank::Account.all('./support/accounts.csv').must_be_instance_of Array
 
       # Everything in the array is an Account
-      Bank::Account.all('../support/accounts.csv').each do |account_object|
+      Bank::Account.all('./support/accounts.csv').each do |account_object|
         account_object.must_be_instance_of Bank::Account
       end
 
       # The number of accounts is correct
-      Bank::Account.all('../support/accounts.csv').length.must_equal 12
-
-      # each item responds to the id and balance methods
-      # Bank::Account.all('../support/accounts.csv').each { |acount_object| acount_object.must_respond_to :id }
-      # Bank::Account.all.('../support/accounts.csv')each { |acount_object| acount_object.must_respond_to :balance }
+      Bank::Account.all('./support/accounts.csv').length.must_equal 12
     end
   end
 
@@ -207,29 +204,29 @@ describe "Wave 2" do
     # kind of want to raise error here if account does not exist
     # but have the test down below
     it "Returns an account that exists" do
-      Bank::Account.all('../support/accounts.csv').each do |account|
+      Bank::Account.all('./support/accounts.csv').each do |account|
         Bank::Account.find(account.id).must_be_instance_of Bank::Account
       end
     end
 
     it "Can find the first account from the CSV" do
-      Bank::Account.all('../support/accounts.csv')
+      Bank::Account.all('./support/accounts.csv')
       Bank::Account.find(1212).must_be_instance_of Bank::Account
-      # tests above check that accounts have to respond to id, balance, and date
+      # the tests above check that accounts have to respond to id, balance
+      # so you don't need them here
       Bank::Account.find(1212).id.must_equal 1212
       Bank::Account.find(1212).balance.must_equal 12356.67
     end
 
     it "Can find the last account from the CSV" do
-      # do I need this? I feel like I do have to create the account before I can run a test on it
-      Bank::Account.all('../support/accounts.csv')
+      Bank::Account.all('./support/accounts.csv')
       Bank::Account.find(15156).must_be_instance_of Bank::Account
       Bank::Account.find(15156).id.must_equal 15156
       Bank::Account.find(15156).balance.must_equal 43567.72
     end
 
     it "Raises an error for an account that doesn't exist" do
-      Bank::Account.all('../support/accounts.csv')
+      Bank::Account.all('./support/accounts.csv')
       proc { Bank::Account.find() }.must_raise ArgumentError
     end
   end

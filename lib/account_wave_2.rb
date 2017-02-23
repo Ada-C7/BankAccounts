@@ -20,11 +20,26 @@ module Bank
       all_accounts = []
       my_file.each do |line|
         account = Account.new(line[0], line[1].to_f, line[2])
-
-        # account = Account.new(line[0], (sprintf("%.01f",line[1])).to_f / 100, line[2])
         all_accounts << account
       end
       return all_accounts
+    end
+
+    def self.associate_owner_with_account(account_id)
+      #should return the owner id
+      my_file = CSV.open("support/account_owners.csv")
+      owners_and_accounts = []
+      my_file.each do |line|
+        association = {}
+        association[:account_id] = line[0]
+        association[:owner_id] = line[1]
+        owners_and_accounts << association
+      end
+      answer = nil
+      owners_and_accounts.each do |association|
+        answer = association[:owner_id] if association[:account_id].to_i == account_id.to_i
+      end
+      return answer
     end
 
     attr_reader :id, :balance, :owner, :open_date

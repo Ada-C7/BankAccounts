@@ -26,6 +26,9 @@ module Bank
           return existing_account
         end
       end
+      raise ArgumentError.new "The ID is not associated with an account"
+
+
     end
 
 

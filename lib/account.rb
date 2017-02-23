@@ -1,128 +1,120 @@
+
+# require "awesome_print"
+require 'csv'
+
 # Baseline
 module Bank
 
   class Owner
     attr_reader :id, :name, :address
+    @@all_owners = []
 
-    def initialize(owner_id, name, address)
+    def initialize(owner_id, name_first, name_last, address_street, address_city, address_state)
       @id = owner_id
-      #@first_name = first_name
-      #@last_name = last_nameß
-      #@name = @first_name + " " + @last_name
+      @name_first = name_first
+      @name_last = name_last
       @name = name
-      @address = address
+      @address_street = address_street
+      @address_city = address_city
+      @address_state = address_state
+
+      @@all_owners << self
+
     end
 
-  end
+    def self.all
+      return @@all_owners
+    end
 
+    def self.find(id)
+      @@all_owners.each do |owner|
+        return owner if owner.id = id
+      end
+
+      raise ArgumentError.new "owner #{id} does not exist!!"
+    end
+
+    def self.import_owners_csv(filename)
+      require 'csv'
+      CSV.open(filename, 'r').each do |line|
+        id = line[0].to_i
+        last = line[1]
+        first = line[2]
+        street = line[3]
+        city = line[4]
+        state = line[5]
+
+        Owner.new(id, first, last, street, city, state)
+      end
+    end
+
+
+    def name
+      @name_first + " " + @name_last
+    end
+
+    def address
+      @address_street + ", " + @address_city + ", " + @address_state
+    end
+   end
 
   class Account
 
-    attr_reader :balance, :id
+    attr_reader :balance, :id, :open_date
     attr_accessor :owner_id
+    # @@all_accounts = []
 
-    def initialize (id, initial_balnce, owner_id = -1)
+    def initialize (id, initial_balance, open_date, owner_id = -1)
 
-      if initial_balnce >= 0
-        @balance = initial_balnce
-      else
-        raise ArgumentError.new "An account can't be created with negative balance"
-      end
+      raise ArgumentError.new "An account can't be created with negative balance" if initial_balance < 0
+
       @id = id
+      @balance = initial_balance
+      @open_date = open_date
       @owner_id = owner_id
+
+      #@@all_accounts << self #instance
+    end
+
+    def self.all
+        all_accounts = []
+        CSV.open("support/accounts.csv", 'r').each do |line|
+          id = line[0].to_i
+          balance = line[1].to_i
+          open_date = line[2]
+          account = Bank::Account.new(id, balance, open_date)
+          all_accounts << account
+        end
+          return all_accounts
     end
 
     def withdraw(amount)
-      if amount < 0
-        raise ArgumentError.new "Invalid negative amount"
-      elsif amount <= @balance
-          @balance -= amount
-      else
+      raise ArgumentError.new "Invalid negative amount" if amount < 0
+
+      if amount > @balance
         puts "You don't have sufficient funds. Max withdrawel amount is #{@balance}."
+      else
+        @balance -= amount
       end
+
       return @balance
     end
 
     def deposit(amount)
-      if amount < 0
-        raise ArgumentError.new "Invalid negative amount"
-      else
-        @balance += amount
-      end
+      raise ArgumentError.new "Invalid negative amount" if amount < 0
+      @balance += amount
       return @balance
     end
   end
 
-  class BulkReader
-    #attr_reader :number_of_accounts
-    #attr_reader :number_of_owners
-
-    def initialize
-      @owners_array = []
-      @accounts_array = []
-      @number_of_accounts = 0
-      @number_of_owners = 0
-    end
-
-    def bulk_import_accounts(filename)
-      CSV.open(filename, 'r').each do |line|
-        id = line[0].to_i
-        balance = line[1].to_f
-        #date = line[2]
-        #puts "Acccount ID: #{id}, Balance: #{balance}, Open Date: #{date}"
-        @accounts_array << Account.new(id, balance)
-        #@number_of_accounts += 1
-      end
-    end
-
-    def bulk_import_owners(filename)
-      CSV.open(filename, 'r').each do |line|
-        id = line[0].to_i
-
-        first = line[1]
-        last = line[2]
-        name = first + " " + last
-
-        address_street = line[3]
-        address_city = line[4]
-        address_state = line[5]
-        address = address_street + ", " + address_city + ", " + address_state
-
-        @owners_array << Owner.new(id, name, address)
-        #@number_of_owners += 1
-      end
-    end
-
-    def number_of_accounts
-      return @accounts_array.length
-    end
-
-    def number_of_owners
-      return @owners_array.length
-    end
-
-    def all_accounts
-      return @accounts_array
-    end
-
-    def all_owners
-      return @accounts_array
-    end
-
-    def find_account(account_id)
-      @accounts_array.each do |account|
-        if account.id = account_id
-          return account
-        end
-      end
-    end
-
-    def find_owner(owner_id)
-      @owner_array.each do |owner|
-        if owner.id = owner_id
-          return owner
-        end
-      end
-    end
 
 end
+# puts Bank::Account.all.inspect
+# puts Bank::Account.all.length
+
+# Bank::Owner.import_owners_csv("../support/owners.csv")
+# puts Bank::Owner.all.inspect
+# puts Bank::Owner.all.length
+
+
+#newaccount2 = Bank::Account.new(3333, 22222, "2222-03-27")

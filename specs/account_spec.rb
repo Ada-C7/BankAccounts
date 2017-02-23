@@ -3,8 +3,12 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
 
+# wave 1 tests
 describe "Wave 1" do
+
+  # tests for the Account initialize method
   describe "Account#initialize" do
+
     it "Takes an ID and an initial balance" do
       id = 1337
       balance = 100.0
@@ -22,22 +26,19 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100.0, "2010-12-21 12:21:12 -0800")
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
-      # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0, "2010-12-21 12:21:12 -0800")
     end
   end
 
+  # tests for the Account withdrawal method
   describe "Account#withdraw" do
+
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
@@ -65,13 +66,7 @@ describe "Wave 1" do
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance, "2010-12-21 12:21:12 -0800")
 
-      # Another proc! This test expects something to be printed
-      # to the terminal, using 'must_output'. /.+/ is a regular
-      # expression matching one or more characters - as long as
-      # anything at all is printed out the test will pass.
-      proc {
-        account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      proc { account.withdraw(withdrawal_amount) }.must_output /.+/
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -81,8 +76,6 @@ describe "Wave 1" do
 
       updated_balance = account.withdraw(withdrawal_amount)
 
-      # Both the value returned and the balance in the account
-      # must be un-modified.
       updated_balance.must_equal start_balance
       account.balance.must_equal start_balance
     end
@@ -103,10 +96,11 @@ describe "Wave 1" do
         account.withdraw(withdrawal_amount)
       }.must_raise ArgumentError
     end
-
   end
 
+  # tests for the Account deposit method
   describe "Account#deposit" do
+
     it "Increases the balance" do
       start_balance = 100.0
       deposit_amount = 25.0
@@ -159,9 +153,12 @@ describe "Wave 1" do
   # end
 end
 
-
+# wave 2 tests
 describe "Wave 2" do
+
+  # tests for the the Account.all method
   describe "Account.all" do
+
     it "Returns an array of all accounts" do
       all_accounts = Bank::Account.all
       all_accounts.must_be_kind_of Array
@@ -188,7 +185,9 @@ describe "Wave 2" do
     end
   end
 
+  # tests for the Account.find method
   describe "Account.find" do
+
     it "Returns an account that exists" do
       Bank::Account.find(1216).wont_be_nil
     end
@@ -205,4 +204,5 @@ describe "Wave 2" do
       proc { Bank::Account.find(000) }.must_raise ArgumentError
     end
   end
+
 end

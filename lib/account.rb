@@ -12,22 +12,52 @@ module Bank
 
     def self.all
       data_array = CSV.read("../support/accounts.csv")
-      account_array = []
+      @account_array = []
       data_array.each do |account|
-        account_array << (Account.new(account[0], account[1].to_i))
+        @account_array << (Account.new(account[0], account[1].to_i))
       end
-      return account_array
+      # @account_array.each do |account|
+      #   if account.id = "1212"
+      #     print "HERE #{account}"
+      #   else
+      #     print "something"
+      #   end
+      # end
+      return @account_array
     end
 
   # self.find(id) - returns an instance of Account
   # where the value of the id field in the CSV matches
   # the passed parameter.
 
-    def self.find(id)
-      
+   def self.find(id)
+     @account_array.each do |account|
+       if id == account.id
+         @this_account = account
+       end
+     end
+    return @this_account
+   end
 
-      return
-    end
+
+
+    #  else
+      #  print this_account
+      #  return this_account
+    #  account_array.each do |account|
+    #  print "HERE #{account}"
+
+
+
+  #   if account.id == id
+  #     this_account = Account.new
+  #     return this_account
+  #   end
+  #  end
+  #   #   # print account_array[0][0]
+  #   #   # return account_array[0][0]
+  #   #
+  #  end
 
 
     def initialize(id, balance)

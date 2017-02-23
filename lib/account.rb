@@ -1,11 +1,14 @@
+require 'csv'
+
 module Bank
 
   class Account
     attr_accessor :balance
-    attr_reader :id
+    attr_reader :id , :datetime
 
-    def initialize(id, balance)
+    def initialize(id, balance, datetime = "")
       @id = id
+      @datetime = datetime
 
       if balance >= 0
         @balance = balance
@@ -14,9 +17,25 @@ module Bank
       end
     end
 
-    # def owner
-    #
-    # end
+    def self.all
+
+      accounts_array = []
+      CSV.read("/Users/theresamanney/ada/week_three/Tuesday/BankAccounts/support/accounts.csv").each do |account_info|
+        create_new_accounts = Account.new(account_info[0].to_f, account_info[1].to_f, account_info[2])
+        accounts_array.push(create_new_accounts)
+      end
+
+      accounts_array
+    end
+
+    def self.find(id)
+      find_accounts = Bank::Account.all
+
+      find_accounts.each do |id|
+        
+      end
+
+    end
 
     def withdraw(withdrawal_amount)
 
@@ -34,7 +53,7 @@ module Bank
     def deposit(deposit_amount)
       if deposit_amount > 0
         @balance += deposit_amount
-        return @balance
+        @balance
       else
         raise ArgumentError.new "Warning: You cannot deposite a negative amount of money"
       end
@@ -52,13 +71,3 @@ module Bank
   end
 
 end
-
-# user_info = [
-#   {
-#     :name => "Elmo"
-#     :address => ""
-#     :phone_number =>
-#   },
-
-
-]

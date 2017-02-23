@@ -148,6 +148,26 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
+
+  describe "Account#add_owner" do
+    it "Adds owner to Account" do
+      owner_hash = {
+        id: 4,
+        last_name: "Lovelace",
+        first_name: "Ada",
+        address: "123 Fake Street",
+        city: "Fake City",
+        state: "Fake State"
+      }
+      owner = Bank::Owner.new(owner_hash)
+      account = Bank::Account.new(1337, 100)
+      account.add_owner(owner)
+
+      account.must_respond_to :owner
+      account.owner.id.must_equal owner.id
+
+    end
+  end
 end
 
 describe "Wave 2" do

@@ -1,9 +1,9 @@
 require 'csv'
-#require_relative 'owner'
+require_relative 'owner'
 
 module Bank
   class Account
-    attr_reader :id, :balance
+    attr_reader :id, :balance, :owner
 
     def self.all
       accounts = []
@@ -30,6 +30,10 @@ module Bank
         @balance = balance
       end
 
+    end
+
+    def add_owner(owner)
+      @owner = owner
     end
 
     def withdraw(withdrawal_amount)
@@ -62,4 +66,4 @@ end
 
 #accounts = Bank::Account.all
 
-puts Bank::Account.find("1212").id
+# puts Bank::Account.find("1212").id

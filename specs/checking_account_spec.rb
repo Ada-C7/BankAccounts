@@ -38,24 +38,35 @@ describe "CheckingAccount" do
       initial_balance = account.balance
       account.withdraw(withdrawal_amount)
       final_balance = account.balance
-      (initial_balance - final_balance).must_equal 0    end
+      (initial_balance - final_balance).must_equal 0
+    end
   end
 
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1,30)
+      account.withdraw_using_check(20)
+      account.checks_used.must_equal 1
+      account.balance.must_be :<, 30
     end
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1,30)
+      account.withdraw_using_check(20)
+      account.checks_used.must_equal 1
+      account.balance.must_equal 10
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1,30)
+      account.withdraw_using_check(40)
+      account.checks_used.must_equal 1
+      account.balance.must_equal(-10)
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1,30)
+      proc {account.withdraw_using_check(41)}.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do

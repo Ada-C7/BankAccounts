@@ -7,7 +7,17 @@ module Bank
     def initialize
     end
 
+    def withdraw(amount)
+      super
+      
+    end
+
+    def withdraw_using_check(amount)
+    end
+
+    def reset_checks
+    end
 
   end
-  
+
 end

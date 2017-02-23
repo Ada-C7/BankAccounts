@@ -12,15 +12,12 @@ module Bank
     end
 
     def withdraw(amount)
+      super
+      
     end
 
-    def withdraw_using_check(amount)
+    def add_interest
     end
-
-    def reset_checks
-    end
-
-    
 
 
   end

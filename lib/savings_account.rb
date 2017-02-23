@@ -4,9 +4,10 @@ module Bank
 
 
   class SavingsAccount < Account
+    
 
-      def initialize
-
+      def initialize(id, balance, open_date=nil)
+        super(id, balance)
       end
   end
 

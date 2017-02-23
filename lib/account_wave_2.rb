@@ -70,7 +70,7 @@ module Bank
     end
 
     attr_reader :id, :last_name, :first_name, :street_address, :city, :state
-    def initialize(id, last_name, first_name, street_address, city, state)
+    def initialize(id=nil, last_name=nil, first_name=nil, street_address=nil, city=nil, state=nil)
       @id = id
       @last_name = last_name
       @first_name = first_name

@@ -52,6 +52,13 @@ module Bank
       #return the array
     end
 
+    #.find(id) when you input id, it will return the Account (instance) with that id
+    def self.find(id)
+      Account.all.each { |account| return account if account.id == id }
+    end
+
   end #end of class
 
 end #end of module
+
+#puts Bank::Account.find(1212)

@@ -303,81 +303,81 @@ describe "Wave 2" do
     end
 
     #   - Everything in the array is an Owner
-  #   it "Each item in all_owners is an Owner" do
-  #     all_owners = Bank::Owner.all
-  #     all_owners.each do |owner|
-  #       owner.must_be_instance_of Bank::Owner
-  #     end
-  #   end
+    it "Each item in all_owners is an Owner" do
+      all_owners = Bank::Owner.all
+      all_owners.each do |owner|
+        owner.must_be_instance_of Bank::Owner
+      end
+    end
   #
   #   #   - The number of Owners is correct
-  #   it "Number of owners in all_owners should be same as number of lines in my_file" do
-  #     all_owners = Bank::Owner.all
-  #     num_of_owners = all_owners.length
-  #     my_file = CSV.open("support/owners.csv")
-  #     num_of_lines = 0
-  #     my_file.each do |line|
-  #       num_of_lines += 1
-  #     end
-  #
-  #     num_of_owners.must_equal num_of_lines
-  #   end
+    it "Number of owners in all_owners should be same as number of lines in my_file" do
+      all_owners = Bank::Owner.all
+      num_of_owners = all_owners.length
+      my_file = CSV.open("support/owners.csv")
+      num_of_lines = 0
+      my_file.each do |line|
+        num_of_lines += 1
+      end
+
+      num_of_owners.must_equal num_of_lines
+    end
   #
   #   #   - The ID and last_name of the first and last
   #   #       owners match what's in the CSV file
-  #   it "id and last_name of first owner matches CSV file" do
-  #     all_owners = Bank::Owner.all
-  #     my_file = CSV.open("support/owners.csv")
-  #     lines = []
-  #     my_file.each do |line|
-  #       lines << line
-  #     end
-  #     all_owners[0].last_name.must_equal lines[0][1]
-  #     all_owners[0].id.must_equal lines[0][0]
-  #   end
+    it "id and last_name of first owner matches CSV file" do
+      all_owners = Bank::Owner.all
+      my_file = CSV.open("support/owners.csv")
+      lines = []
+      my_file.each do |line|
+        lines << line
+      end
+      all_owners[0].last_name.must_equal lines[0][1]
+      all_owners[0].id.must_equal lines[0][0]
+    end
   #
-  #   it "id and last_name of last owner matches CSV file" do
-  #     all_owners = Bank::Owner.all
-  #     my_file = CSV.open("support/owners.csv")
-  #     lines = []
-  #     my_file.each do |line|
-  #       lines << line
-  #     end
-  #     all_owners[-1].last_name.must_equal lines[-1][1]
-  #     all_owners[-1].id.must_equal lines[-1][0]
-  #   end
+    it "id and last_name of last owner matches CSV file" do
+      all_owners = Bank::Owner.all
+      my_file = CSV.open("support/owners.csv")
+      lines = []
+      my_file.each do |line|
+        lines << line
+      end
+      all_owners[-1].last_name.must_equal lines[-1][1]
+      all_owners[-1].id.must_equal lines[-1][0]
+    end
+
+  end
   #
-  # end
+  describe "Owner.find" do
+    it "Returns an owner that exists" do
+      test_id = 17
+      found_owner = Bank::Owner.find(test_id)
+      found_owner.id.to_i.must_equal test_id.to_i
+    end
+
+    it "Can find the first owner from the CSV" do
+      test_id = 14
+      test_last_name = "Morales"
+      found_owner = Bank::Owner.find(test_id)
+      found_owner.id.to_i.must_equal test_id.to_i
+      found_owner.last_name.must_equal test_last_name
+    end
+
+    it "Can find the last owner from the CSV" do
+      test_id = 25
+      test_last_name = "Clark"
+      found_account = Bank::Owner.find(test_id)
+      found_account.id.to_i.must_equal test_id.to_i
+      found_account.last_name.to_i.must_equal test_last_name.to_i
+    end
   #
-  # describe "Owner.find" do
-  #   it "Returns an owner that exists" do
-  #     test_id = xxxx
-  #     found_owner = Bank::Owner.find(test_id)
-  #     found_owner.id.to_i.must_equal test_id.to_i
-  #   end
-  #
-  #   it "Can find the first owner from the CSV" do
-  #     test_id = xxx
-  #     test_last_name = xxx
-  #     found_owner = Bank::Owner.find(test_id)
-  #     found_owner.id.to_i.must_equal test_id.to_i
-  #     found_owner.last_name.must_equal test_last_name
-  #   end
-  #
-  #   it "Can find the last owner from the CSV" do
-  #     test_id = xx
-  #     test_last_name = xxx
-  #     found_account = Bank::Owner.find(test_id)
-  #     found_account.id.to_i.must_equal test_id.to_i
-  #     found_account.last_name.to_i.must_equal test_last_name.to_i
-  #   end
-  #
-  #   it "Raises an error for an owner that doesn't exist" do
-  #     test_id = xxx
-  #     # found_owner = Bank::Owner.find(test_id)
-  #     proc {
-  #       Bank::Owner.find(test_id)
-  #     }.must_raise ArgumentError
-  #   end
+    it "Raises an error for an owner that doesn't exist" do
+      test_id = 75
+      # found_owner = Bank::Owner.find(test_id)
+      proc {
+        Bank::Owner.find(test_id)
+      }.must_raise ArgumentError
+    end
   end
 end

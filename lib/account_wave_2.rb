@@ -63,10 +63,26 @@ module Bank
 
     def self.all
       # returns a collection of owner instances
+        my_file = CSV.open("support/owners.csv")
+        all_owners = []
+        my_file.each do |line|
+          owner = Owner.new(line[0], line[1], line[2], line[3], line[4], line[5])
+
+          all_owners << owner
+        end
+        return all_owners
     end
 
     def self.find(search_for_id)
       # returns an instance of owner where the id matches
+      all_owners = Bank::Owner.all
+        answer = nil
+        all_owners.each do |owner|
+          answer = owner if owner.id.to_i == search_for_id.to_i
+
+        end
+        raise ArgumentError.new "That owner id doesn't exist!" if answer == nil
+        return answer
     end
 
     attr_reader :id, :last_name, :first_name, :street_address, :city, :state

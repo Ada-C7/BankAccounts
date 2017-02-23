@@ -321,7 +321,11 @@ describe "Wave 2" do
     end
 
     it "Raises an error for an account that doesn't exist" do
-      skip
+
+      proc {
+        Bank::Account.find("00000")
+      }.must_raise ArgumentError
+
       # TODO: Your test code here!
     end
   end

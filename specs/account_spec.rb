@@ -163,32 +163,33 @@ describe "Wave 2" do
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       Bank::Account.all[0][0].must_equal "1212"
-      Bank::Account.all[0][1].must_equal 1235667
+      Bank::Account.all[0][1].must_equal "1235667"
       Bank::Account.all[11][0].must_equal "15156"
-      Bank::Account.all[11][1].must_equal 4356772
+      Bank::Account.all[11][1].must_equal "4356772"
 
       # Feel free to split this into multiple tests if needed
     end
   end
 
-  xdescribe "Account.find" do
+  describe "Account.find" do
     it "Returns an account that exists" do
 
       # TODO: Your test code here!
+      Bank::Account.find("1213").must_equal true
     end
 
     it "Can find the first account from the CSV" do
-
+      skip
       # TODO: Your test code here!
     end
 
     it "Can find the last account from the CSV" do
-
+      skip
       # TODO: Your test code here!
     end
 
     it "Raises an error for an account that doesn't exist" do
-
+      skip
       # TODO: Your test code here!
     end
   end

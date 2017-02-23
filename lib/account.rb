@@ -9,6 +9,21 @@ module Bank
     attr_reader :id
     attr_accessor :balance
 
+
+    def initialize(account_hash)
+
+        @id = account_hash[:id]
+        @balance = account_hash[:balance].to_f
+        @opendatetime = account_hash[:opendatetime]
+
+      if @balance >= 0
+        @balance = @balance
+      else
+        raise ArgumentError.new "Account balance should not start with a negative number"
+      end
+
+    end #end of initialize
+
     def self.all
       accounts = []
       CSV.read("support/accounts.csv").each do |row|
@@ -17,26 +32,20 @@ module Bank
            balance: row[1],
            opendatetime: row[2]
          }
+
          accounts << Account.new(account)
       end
     end
 
-    def initialize(account_hash)
-
-        @id = account_hash[:id]
-        @balance = account_hash[:balance]
-        @opendatetime = account_hash[:opendatetime]
-
-
-      if @balance.to_i >= 0
-        @balance = @balance
-      else
-        raise ArgumentError.new "Account balance should not start with a negative number"
+    def self.find(account_info)
+      self.all do |account|
+        if account.include? account_info
+          print true
+        else
+          print false
+        end
       end
-
-    end #end of initialize
-
-
+    end
 
     def withdraw(withdrawal_amount)
       if withdrawal_amount < 0
@@ -66,6 +75,8 @@ module Bank
 end #end of module
 
 #puts Bank::Account.all.class
-# new_account = Bank::Account.new(id: 1212, balance: 1235667, opendatetime: "1999-03-27 11:30:09 -0800")
-# puts new_account
+ # new_account = Bank::Account.new(id: 1212, balance: 1235667, opendatetime: "1999-03-27 11:30:09 -0800")
+ # puts new_account.id
+ # puts Bank::Account.all.id
 # puts "These are all the Bank accounts: #{Bank::Account.all}"
+Bank::Account.find(id: "1213")

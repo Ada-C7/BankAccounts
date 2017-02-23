@@ -23,10 +23,10 @@ module Bank
       Account.all.each do |account|
         if account.id == id
           return account
-        else
-          puts "That account Does Not Exist"
         end
+
       end
+      puts "That account Does Not Exist"
     end
 
     attr_reader :id, :balance

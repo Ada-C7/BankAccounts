@@ -3,6 +3,7 @@ module Bank
     attr_reader :customer_id
     attr_accessor :name, :address, :phone
     def initialize owner_hash = {}
+    # assumes that the parameter value is either properly formatted hash or an empty hash
       if owner_hash != {}
         # assumes that owner_hash structure is
         # { customer_id: 1024, first_name: "ginny", last_name: "smith", address: {street: "123 main street", city: "seattle", state: "WA", zipcode: "12345"}, phone: "2065573099" }

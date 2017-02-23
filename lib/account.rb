@@ -20,7 +20,6 @@ module Bank
       end
       @id = id
       @open_date = DateTime.parse(open_date)
-      #note: in the future, consider account holder with multiple accounts
       if owner.class == Bank::Owner
         @owner = owner
       else
@@ -44,9 +43,9 @@ module Bank
     def self.find(id)
       raise ArgumentError.new ("Account id must be an positive integer value") if ( id.class != Integer || id < 1 )
 
-      CSV.read("./support/accounts.csv").each do |line|
+      CSV.read("../support/accounts.csv").each do |line|
         if line[0].to_i == id
-          account = Bank::Account.new( line[0], line[1], line[2], nil )
+          account = Bank::Account.new( line[0].to_i, line[1].to_i, line[2].to_s)
           return account
         end
       end

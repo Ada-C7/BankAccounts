@@ -169,10 +169,16 @@ end
 describe "Wave 2" do
 
   describe "Testing Owner class methods" do
+    before do
+      @all_owners = Bank::Owner.all
+    end
 
     it "Returns an array of Owner instances" do
-      all_owners = Bank::Owner.all
-      all_owners.must_be_instance_of(Bank::Owner)
+      @all_owners.must_be_instance_of(Array)
+    end
+
+    it "Verifies every item in array is an Owner" do
+      
     end
 
   end

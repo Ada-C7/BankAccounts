@@ -82,6 +82,14 @@ module Bank
       state = state
     end
 
+    def self.all
+      owners = []
+      CSV.open("support/owners.csv").each do |owner|
+        owners << Bank::Owner.new(owner[0].to_i, owner[1], owner[2], owner[3], owner[4], owner[5])
+      end
+      return owners
+    end
+
   end
 
 end

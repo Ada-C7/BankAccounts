@@ -19,13 +19,14 @@ module Bank
       my_file = CSV.open("support/accounts.csv")
       all_accounts = []
       my_file.each do |line|
-        account = Account.new(line[0], line[1].to_f, line[2])
+        owner_id = Bank::Account.get_owner_id(line[0])
+        account = Account.new(line[0], line[1].to_f, line[2], Bank::Owner.find(owner_id))
         all_accounts << account
       end
       return all_accounts
     end
 
-    def self.associate_owner_with_account(account_id)
+    def self.get_owner_id(account_id)
       #should return the owner id
       my_file = CSV.open("support/account_owners.csv")
       owners_and_accounts = []
@@ -39,7 +40,7 @@ module Bank
       owners_and_accounts.each do |association|
         answer = association[:owner_id] if association[:account_id].to_i == account_id.to_i
       end
-      return answer
+      return answer.to_i
     end
 
     attr_reader :id, :balance, :owner, :open_date

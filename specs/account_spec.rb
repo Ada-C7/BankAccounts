@@ -261,19 +261,29 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      all_accounts = Bank::Account.all
-      test_id = 1212
+      test_id = 15151
       found_account = Bank::Account.find(test_id)
       found_account.id.to_i.must_equal test_id.to_i
-
-      # TODO: Your test code here!
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      test_id = 1212
+      test_balance = 1235667
+      test_open_date = "1999-03-27 11:30:09 -0800"
+      found_account = Bank::Account.find(test_id)
+      found_account.id.to_i.must_equal test_id.to_i
+      found_account.balance.to_i.must_equal test_balance.to_i
+      found_account.open_date.must_equal test_open_date
     end
 
     it "Can find the last account from the CSV" do
+      test_id = 15156
+      test_balance = 4356772
+      test_open_date = "1994-11-17 14:04:56 -0800"
+      found_account = Bank::Account.find(test_id)
+      found_account.id.to_i.must_equal test_id.to_i
+      found_account.balance.to_i.must_equal test_balance.to_i
+      found_account.open_date.must_equal test_open_date
       # TODO: Your test code here!
     end
 

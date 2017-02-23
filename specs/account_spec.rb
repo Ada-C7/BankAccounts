@@ -142,29 +142,42 @@ describe "Wave 1" do
     it "Initializes account without owner property" do
       id = 1337
       balance = 100.0
-      owner = nil
-      account = Bank::Account.new(id, balance, "1999-03-27 11:30:09 -0800", owner)
+      account = Bank::Account.new(id, balance, "1999-03-27 11:30:09 -0800")
 
       account.must_respond_to :owner
       account.owner.class.must_equal Bank::Owner
+      account.owner.id.must_equal 0
     end
+
+    it "Raise an error if the owner_hash is missing a key" do
+      # id = 1337
+      # balance = 100.0
+      # open_date = "1999-03-27 11:30:09 -0800"
+      owner_hash = {
+        id: 1024,
+        last_name: "smith",
+        street_address: "123 main street",
+        city: "seattle",
+        state: "WA"
+      }
+      proc {
+        Bank::Owner.new(owner_hash)
+      }.must_raise ArgumentError
+    end
+
 
     it "Initializes account with owner property" do
       id = 1337
       balance = 100.0
       open_date = "1999-03-27 11:30:09 -0800"
       owner_hash = {
-                      customer_id: 1024,
-                      first_name: "ginny",
-                      last_name: "smith",
-                      address: {
-                                  street: "123 main street",
-                                  city: "seattle",
-                                  state: "WA",
-                                  zipcode: "12345"
-                               },
-                      phone: "2065573099"
-                    }
+        id: 1024,
+        first_name: "ginny",
+        last_name: "smith",
+        street_address: "123 main street",
+        city: "seattle",
+        state: "WA"
+      }
       owner = Bank::Owner.new(owner_hash)
       account = Bank::Account.new(id, balance, open_date, owner)
 
@@ -174,44 +187,42 @@ describe "Wave 1" do
 
     it "Only accounts without initial owner property can be updated" do
       owner_hash = {
-                      customer_id: 1024,
-                      first_name: "ginny",
-                      last_name: "smith",
-                      address: {
-                                  street: "123 main street",
-                                  city: "seattle",
-                                  state: "WA",
-                                  zipcode: "12345"
-                               },
-                      phone: "2065573099"
-                    }
+        id: 10,
+        first_name: "ginny",
+        last_name: "smith",
+        street_address: "123 main street",
+        city: "seattle",
+        state: "WA"
+      }
+
       test_hash = {
-                      customer_id: 8888,
-                      first_name: "sally",
-                      last_name: "smith",
-                      address: {
-                                  street: "456 1st street",
-                                  city: "columbus",
-                                  state: "OH",
-                                  zipcode: "54322"
-                               },
-                      phone: "2234433099"
-                    }
+        id: 9,
+        first_name: "fran",
+        last_name: "swan",
+        street_address: "456 grand street",
+        city: "columbus",
+        state: "OH"
+      }
+
       account_nil = Bank::Account.new(12345, 12, "1999-03-27 11:30:09 -0800")
       account = Bank::Account.new(12346, 0, "1999-03-27 11:30:09 -0800", Bank::Owner.new(test_hash))
 
       account_nil.update_owner_data(owner_hash)
       account.update_owner_data(owner_hash)
 
-      account_nil.owner.customer_id.must_equal 1024
-      account_nil.owner.name.must_equal "ginny smith"
-      account_nil.owner.phone.must_equal "2065573099"
-      account_nil.owner.address.must_equal "123 main street, seattle, WA 12345"
+      account_nil.owner.id.must_equal 10
+      account_nil.owner.first_name.must_equal "ginny"
+      account_nil.owner.last_name.must_equal "smith"
+      account_nil.owner.street_address.must_equal "123 main street"
+      account_nil.owner.city.must_equal "seattle"
+      account_nil.owner.state.must_equal "WA"
 
-      account.owner.customer_id.must_equal 8888
-      account.owner.name.must_equal "sally smith"
-      account.owner.phone.must_equal "2234433099"
-      account.owner.address.must_equal "456 1st street, columbus, OH 54322"
+      account.owner.id.must_equal 9
+      account.owner.first_name.must_equal "fran"
+      account.owner.last_name.must_equal "swan"
+      account.owner.street_address.must_equal "456 grand street"
+      account.owner.city.must_equal "columbus"
+      account.owner.state.must_equal "OH"
     end
   end
 end
@@ -227,8 +238,10 @@ describe "Wave 2" do
       all_array.each do |account|
         account.class.must_equal Bank::Account
       end
+
       # the number of accounts is correct
-      all_array.length.must_equal 12
+      #all_array.length.must_equal 12
+      all_array.length.must_equal CSV.read("support/accounts.csv").length
 
       # the ID and balance of the first and last accounts match what's in the CSV file
       all_array[0].id.must_equal 1212
@@ -283,6 +296,108 @@ describe "Wave 2" do
       proc {
         Bank::Account.find("happy dog")
       }.must_raise ArgumentError
+    end
+  end
+
+  describe "Owner.all" do
+    it "Returns an array of all owners" do
+      # TODO
+      # everything in the array is an Owner
+      all_array = Bank::Owner.all
+
+      all_array.each do |owner|
+        owner.class.must_equal Bank::Owner
+      end
+
+      # the number of accounts is correct
+      #all_array.length.must_equal 12
+      all_array.length.must_equal CSV.read("support/owners.csv").length
+
+      # the ID, last_name, first_name, street_address, city, state of the first
+      # and last accounts match what's in the CSV file
+      all_array[0].id.must_equal 14
+      all_array[0].last_name.must_equal "Morales"
+      all_array[0].first_name.must_equal "Wanda"
+      all_array[0].street_address.must_equal "9003 Gerald Hill"
+      all_array[0].city.must_equal "Honolulu"
+      all_array[0].state.must_equal "Hawaii"
+
+      all_array[-1].id.must_equal 25
+      all_array[-1].last_name.must_equal "Clark"
+      all_array[-1].first_name.must_equal "Kathleen"
+      all_array[-1].street_address.must_equal "72984 Chive Hill"
+      all_array[-1].city.must_equal "New York City"
+      all_array[-1].state.must_equal "New York"
+    end
+  end
+
+  describe "Owner.find" do
+    it "Returns an owner that exists" do
+      owner = Bank::Owner.find(18)
+      owner.id.must_equal 18
+      owner.last_name.must_equal "Gonzalez"
+      owner.first_name.must_equal "Laura"
+      owner.street_address.must_equal "310 Hauk Street"
+      owner.city.must_equal "Springfield"
+      owner.state.must_equal "Illinois"
+    end
+
+    it "Can find the first owner from the CSV" do
+      owner = Bank::Owner.find(14)
+      owner.id.must_equal 14
+      owner.last_name.must_equal "Morales"
+      owner.first_name.must_equal "Wanda"
+      owner.street_address.must_equal "9003 Gerald Hill"
+      owner.city.must_equal "Honolulu"
+      owner.state.must_equal "Hawaii"
+    end
+
+    it "Can find the last account from the CSV" do
+      owner = Bank::Owner.find(25)
+      owner.id.must_equal 25
+      owner.last_name.must_equal "Clark"
+      owner.first_name.must_equal "Kathleen"
+      owner.street_address.must_equal "72984 Chive Hill"
+      owner.city.must_equal "New York City"
+      owner.state.must_equal "New York"
+    end
+
+    it "Raises an error for an owner that doesn't exist" do
+      # TODO: Your test code here!
+      proc {
+        Bank::Owner.find(100233332223003)
+      }.must_raise ArgumentError
+    end
+
+    it "Raises an error for an invalid input data type" do
+      # TODO: Your test code here!
+      proc {
+        Bank::Owner.find(0)
+      }.must_raise ArgumentError
+      proc {
+        Bank::Owner.find(-1233)
+      }.must_raise ArgumentError
+      proc {
+        Bank::Owner.find("happy dog")
+      }.must_raise ArgumentError
+    end
+  end
+  describe "Use account_owners.csv to create owner property for existing " do
+    it "Makes account instance when account.id and owner.id pair doesn not exist within csv file" do
+      account = Bank::Account.new(1223222337, 0, "1999-03-27 11:30:09 -0800")
+      account.owner.id.must_equal 0
+
+      owner_hash = {
+        id: 1000000,
+        first_name: "ginny",
+        last_name: "smith",
+        street_address: "123 main street",
+        city: "seattle",
+        state: "WA"
+      }
+      account = Bank::Account.new(1223222337, 0, "1999-03-27 11:30:09 -0800", Bank::Owner.new(owner_hash))
+      account.owner.id.must_equal 1000000
+
     end
   end
 end

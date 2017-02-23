@@ -20,6 +20,13 @@ module Bank
       end
       @id = id
       @open_date = DateTime.parse(open_date)
+
+      CSV.read("support/account_owners.csv").each do |line|
+        if line[0].to_i == @id
+          @owner = Bank::Owner.find(line[1].to_i)
+        end
+      end
+
       if owner.class == Bank::Owner
         @owner = owner
       else
@@ -30,8 +37,8 @@ module Bank
     # method that returns a collection of Account instances, from data read in CSV
     def self.all
       all_accounts_array= []
-
-      CSV.read("../support/accounts.csv").each do |line|
+      #for efficiency, consider setting all_accounts_array to a class variable
+      CSV.read("support/accounts.csv").each do |line|
         all_accounts_array << Bank::Account.new( line[0].to_i, line[1].to_i, line[2] )
       end
 
@@ -43,9 +50,9 @@ module Bank
     def self.find(id)
       raise ArgumentError.new ("Account id must be an positive integer value") if ( id.class != Integer || id < 1 )
 
-      CSV.read("../support/accounts.csv").each do |line|
+      CSV.read("support/accounts.csv").each do |line|
         if line[0].to_i == id
-          account = Bank::Account.new( line[0].to_i, line[1].to_i, line[2].to_s)
+          account = Bank::Account.new( line[0].to_i, line[1].to_i, line[2])
           return account
         end
       end
@@ -56,9 +63,8 @@ module Bank
     # method that overwrites existing empty @owner instance variable
     def update_owner_data(owner_hash)
       #only overwrite if initially not added to account at the time of initializing account object
-      #note: in the future, consider being able to update names, addess, phone numbers
-      #      individually for existing @owner
-      if @owner.customer_id == "0000"
+      #note: in the future, consider being able to update names, addess, phone number for existing @owners
+      if @owner.id == 0
         @owner = Bank::Owner.new(owner_hash)
       end
     end

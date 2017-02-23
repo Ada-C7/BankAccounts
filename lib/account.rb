@@ -20,20 +20,32 @@ module Bank
     def self.all
 
       accounts_array = []
-      CSV.read("/Users/theresamanney/ada/week_three/Tuesday/BankAccounts/support/accounts.csv").each do |account_info|
-        create_new_accounts = Account.new(account_info[0].to_f, account_info[1].to_f, account_info[2])
+      CSV.read("../support/accounts.csv").each do |account_info|
+        create_new_accounts = Bank::Account.new(account_info[0].to_f, account_info[1].to_f, account_info[2])
         accounts_array.push(create_new_accounts)
       end
 
       accounts_array
+
     end
 
+#A class variable could be used here 
     def self.find(id)
-      find_accounts = Bank::Account.all
+      #accounts_array.include?(Account.find(id))
+      #return Account.new(id)
+      answer = nil
 
-      find_accounts.each do |id|
-        
+      find_accounts = Bank::Account.all
+      find_accounts.each do |account|
+        #counter_id = account.id
+        if account.id == id
+          answer = account
+        end
       end
+
+      raise ArgumentError.new "Warning: Acount #{id} does not exist." if answer == nil
+
+      return answer
 
     end
 

@@ -24,7 +24,7 @@ describe "Wave 1" do
     it "Takes an ID, initial balance, owner, and open date" do
       id = 1337
       balance = 100.0
-      owner = Bank::Owner.new(first_name: "Alix")
+      owner = Bank::Owner.new(id: 12345, first_name: "Alix")
       open_date = "1994-11-17 14:04:56 -0800"
       account = Bank::Account.new(id: id, balance: balance, owner: owner, open_date: open_date)
 
@@ -147,7 +147,7 @@ describe "Wave 1" do
     it "Adds a new owner when the current owner is nil" do
       id = 1337
       balance = 100.0
-      owner = Bank::Owner.new(first_name: "Alix")
+      owner = Bank::Owner.new(id: 12345, first_name: "Alix")
 
       account = Bank::Account.new(id: id, balance: balance)
       account.add_owner(owner)
@@ -158,10 +158,10 @@ describe "Wave 1" do
     it "Does not add a new owner when it is already set" do
       id = 1337
       balance = 100.0
-      owner = Bank::Owner.new(first_name: "Alix")
+      owner = Bank::Owner.new(id: 12345, first_name: "Alix")
       account = Bank::Account.new(id: id, balance: balance, owner: owner)
 
-      another_owner = Bank::Owner.new(first_name: "Hamlet")
+      another_owner = Bank::Owner.new(id: 12334, first_name: "Hamlet")
 
       proc {
         account.add_owner(another_owner)

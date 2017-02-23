@@ -3,6 +3,8 @@ module Bank
     attr_reader :id, :first_name, :last_name
 
     def initialize(personal_info)
+      raise ArgumentError.new("Error: Each user must have an ID.") if personal_info[:id].nil?
+      
       @id = personal_info[:id]
       @last_name = personal_info[:last_name]
       @first_name = personal_info[:first_name]

@@ -154,36 +154,58 @@ describe "Wave 1" do
   end
 end
 
-# # TODO: change 'xdescribe' to 'describe' to run these tests
-# xdescribe "Wave 2" do
-#   describe "Account.all" do
-#     it "Returns an array of all accounts" do
-#       # TODO: Your test code here!
-#       # Useful checks might include:
-#       #   - Account.all returns an array
-#       #   - Everything in the array is an Account
-#       #   - The number of accounts is correct
-#       #   - The ID and balance of the first and last
-#       #       accounts match what's in the CSV file
-#       # Feel free to split this into multiple tests if needed
-#     end
-#   end
-#
-#   describe "Account.find" do
-#     it "Returns an account that exists" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the first account from the CSV" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the last account from the CSV" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Raises an error for an account that doesn't exist" do
-#       # TODO: Your test code here!
-#     end
-#   end
-# end
+# TODO: change 'xdescribe' to 'describe' to run these tests
+describe "Wave 2" do
+  describe "Account.all" do
+    it "Returns an array of all accounts" do
+      # TODO: Your test code here!
+
+      # Useful checks might include:
+      #   - Account.all returns an array
+      accounts_array = Bank::Account.all
+      accounts_array.class.must_equal Array
+      #   - Everything in the array is an Account
+      first_account = accounts_array[0]
+      first_account.class.must_equal Bank::Account
+      #   - The number of accounts is correct
+      number_of_accounts = accounts_array.length
+      number_of_accounts.must_equal 12
+      #   - The ID and balance of the first and last
+      #       accounts match what's in the CSV file
+      id_of_first = accounts_array[0].id
+      id_of_first.must_equal 1212
+      balance_for_first = accounts_array[0].balance
+      balance_for_first.must_equal 1235667
+
+      id_of_last = accounts_array[11].id
+      id_of_last.must_equal 15156
+      balance_for_last = accounts_array[11].balance
+      balance_for_last.must_equal 4356772
+
+      # Feel free to split this into multiple tests if needed
+    end
+  end
+
+  describe "Account.find" do
+    it "Returns an account that exists" do
+      # TODO: Your test code here!
+      account_exists = Bank::Account.find
+      account_exists.must_equal 1216
+    end
+
+    it "Can find the first account from the CSV" do
+      skip
+      # TODO: Your test code here!
+    end
+
+    it "Can find the last account from the CSV" do
+      skip
+      # TODO: Your test code here!
+    end
+
+    it "Raises an error for an account that doesn't exist" do
+      skip
+      # TODO: Your test code here!
+    end
+  end
+end

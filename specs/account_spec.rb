@@ -165,7 +165,7 @@ describe "Wave 1" do
   end
 end
 
-# todo: change 'xdescribe' to 'describe' to run these tests
+#Wave 2
 describe "Wave 2" do
 
   describe "Testing Owner class methods" do
@@ -211,6 +211,13 @@ describe "Wave 2" do
 
     end
 
+  end
+
+  describe "Testing Owner.find" do
+    it "Returns an account that exists" do
+      account = Bank::Owner.find(14)
+      account.must_be_instance_of(Bank::Owner)
+    end
   end
 
   describe "Account.all" do

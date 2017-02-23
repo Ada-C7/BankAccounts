@@ -90,8 +90,16 @@ module Bank
       return owners
     end
 
+    def self.find(id)
+      @owner = nil
+      CSV.open("support/owners.csv").each do |owner|
+        if owner[0].to_i == id
+          @owner = Bank::Owner.new(owner[0].to_i, owner[1], owner[2], owner[3], owner[4], owner[5])
+        end
+      end
+      return @owner
+    end
   end
-
 end
 
 # my_account = Bank::Account.new(1212,1235667,"1999-03-27 11:30:09 -0800")

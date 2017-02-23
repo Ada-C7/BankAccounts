@@ -54,11 +54,12 @@ module Bank
 
     #.find(id) when you input id, it will return the Account (instance) with that id
     def self.find(id)
-      Account.all.each { |account| return account if account.id == id }
+      Account.all.each do |account|
+        if account.id == id
+          return account
+        end
+      end
+      raise ArgumentError.new "Account doesn't exist"
     end
-
   end #end of class
-
 end #end of module
-
-#puts Bank::Account.find(1212)

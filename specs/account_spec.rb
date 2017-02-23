@@ -380,4 +380,19 @@ describe "Wave 2" do
       }.must_raise ArgumentError
     end
   end
+  describe "testing self.associate_owner_with_account" do
+    it "given an account id will return the owner ID that matches on the account_owners.csv file" do
+      my_file = CSV.open("support/account_owners.csv")
+      owners_and_accounts = []
+      my_file.each do |line|
+        association = {}
+        association[:account_id] = line[0]
+        association[:owner_id] = line[1]
+        owners_and_accounts << association
+      end
+
+      
+    end
+
+  end
 end

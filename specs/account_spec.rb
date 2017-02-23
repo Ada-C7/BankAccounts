@@ -184,11 +184,7 @@ describe "Wave 2" do
     end
 
     it "Number of Owners match lines in CSV file" do
-      csv_lines = 0
-      #iterating through CSV & counting the number of lines
-      CSV.open("support/owners.csv").each do |line|
-        csv_lines += 1
-      end
+      csv_lines = CSV.read("support/owners.csv").length
 
       @all_owners.length.must_equal(csv_lines)
     end
@@ -253,11 +249,7 @@ describe "Wave 2" do
 
     it "The number of accounts matches lines in CSV file, so number of accounts is correct" do
 
-      csv_lines = 0
-      #iterating through CSV & counting the number of lines
-      CSV.open("support/accounts.csv").each do |line|
-        csv_lines += 1
-      end
+      csv_lines = CSV.read("support/accounts.csv").length
 
       @new_bank.length.must_equal(csv_lines)
     end

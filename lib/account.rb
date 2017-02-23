@@ -44,14 +44,14 @@ module Bank
 
       each_account.each do |account|
         accounts_array << Account.new(account[0].to_i, account[1].to_i)
-
-      return accounts_array
       end
+      return accounts_array
       #get info from CSV
       #create new instances of Accounts
       #push each new Account instances into an accounts_array
       #return the array
     end
+
   end #end of class
 
 end #end of module

@@ -54,18 +54,12 @@ module Bank
       end
       return @accounts
     end
-    
+
     def self.find(id)
       @accounts.each do |account_info|
         return account_info if account_info.id == id
       end
       raise ArgumentError.new "Error - that account does not exist"
     end
-
-    # this method add the owner class object to this program so now we have access
-    # to owner information (name, address, telephone) in this class
-    # def add_owner(owner)
-    #   @owner = owner
-    # end
   end
 end

@@ -56,14 +56,14 @@ module Bank
     # all of the Accounts described in the CSV. See below for
     # the CSV file specifications.
     def self.all
-      accounts = []
+      @accounts = []
 
       CSV.open("../support/accounts.csv").each do |account|
         new_account = Account.new(account[0].to_f, account[1].to_f, account[2])
-        accounts.push(new_account)
+        @accounts.push(new_account)
       end
 
-      accounts
+      @accounts
     end
 
     # returns an instance of Account where the value of the id
@@ -71,25 +71,38 @@ module Bank
     # Question: what should your program do if Account.find
     # is called with an ID that doesn't exist?
     def self.find(id)
+      Bank::Account.all
+      match = false
+
+      @accounts.each do |account|
+        if account.id == id
+          match = true
+          return "Balance: #{account.balance} Open Date: #{account.open_date}"
+        end
+      end
+
+      if match == false
+        raise ArgumentError.new "That Account ID doesn't exist"
+      end
     end
 
 
     # creates a check_balance method to access
     # the current balance of an account at any time.
-    def check_balance
-    end
+    # def check_balance
+    # end
   end
 
-  class Owner
-  attr_accessor :first_name, :last_name, :address
-
-    def initialize(first_name, last_name, address)
-      @first_name = first_name
-      @last_name = last_name
-      @address = address
-    end
-  end
+  # class Owner
+  # attr_accessor :first_name, :last_name, :address
+  #
+  #   def initialize(first_name, last_name, address)
+  #     @first_name = first_name
+  #     @last_name = last_name
+  #     @address = address
+  #   end
+  # end
 
 end
 
-puts all_accounts = Bank::Account.all
+puts Bank::Account.find(15156)

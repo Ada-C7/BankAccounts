@@ -73,7 +73,7 @@ module Bank
        def initialize(lastname, firstname, street, city, state)
          @name = name
          @dob = dob
-         @address = address
+        # @address = address
         #    street1: "1221 N. Fife",
         #    street2: "#4",
         #    city: "Tacoma",

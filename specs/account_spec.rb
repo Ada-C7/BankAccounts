@@ -211,17 +211,23 @@ describe "Wave 2" do
 
     #   - The ID and balance of the first and last
     #       accounts match what's in the CSV file
-    it "The ID and balance of the first and last accounts match what's in the CSV file" do
+    it " accounts match what's in the CSV file" do
+      index = 0
+      CSV.read("support/accounts.csv") do |line|
+        accounts[index].id.must_equal line[0].to_i
+        accounts[index].id.must_equal line[1].to_i
+        accounts[index].id.must_equal line[2].to_i
+        index += 1
+      end
+    end
+
+    it "The ID and balance of the first and last match csv" do
       @account_array.first.id.must_equal "1212"
       @account_array.first.balance.must_equal 1235667
       @account_array.last.id.must_equal "15156"
       @account_array.last.balance.must_equal 4356772
     end
-
   end
-
-
-
 
 
   describe "Account.find" do
@@ -231,7 +237,6 @@ describe "Wave 2" do
     # self.find(id) - returns an instance of Account
     # where the value of the id field in the CSV matches
     # the passed parameter.
-    # Bank::Account.all
     it "Returns an account that exists" do
       test_variable = Bank::Account.find("1212")
       test_variable.must_be_instance_of Bank::Account

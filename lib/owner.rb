@@ -19,6 +19,14 @@ module Bank
       return owners
     end
 
+    def self.find(id)
+      owners = Bank::Owner.all
+      owners.each do |owner|
+        return owner if id == owner.id
+      end
+      raise ArgumentError.new("Owner does not exist")
+    end
+
     def initialize(owner_hash)
       @owner_hash = owner_hash
       @id = validate_owner_info(:id)
@@ -47,3 +55,5 @@ end
 #   puts owner.state
 #
 # end
+
+#puts Bank::Owner.find("20").first_name

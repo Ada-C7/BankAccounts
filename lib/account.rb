@@ -1,14 +1,15 @@
 require 'csv'
+require 'date'
 require_relative 'owner'
 
 module Bank
   class Account
-    attr_reader :id, :balance, :owner
+    attr_reader :id, :balance, :date, :owner
 
     def self.all
       accounts = []
       CSV.read("support/accounts.csv").each do |line|
-        accounts << Bank::Account.new(line[0], line[1].to_f)
+        accounts << Bank::Account.new(line[0].to_i, line[1].to_i, line[2])
       end
       return accounts
     end
@@ -21,18 +22,30 @@ module Bank
       raise ArgumentError.new("Account does not exist")
     end
 
-    def initialize(id, balance)
+    def initialize(id, balance, date)
+
+      raise ArgumentError.new "ID must be an Integer" if id.class != Integer
       @id = id
 
-      if balance < 0 #throws error if negative balance is given
-        raise ArgumentError.new "Balance cannot be negative"
-      else
-        @balance = balance
+      if balance < 0 || balance.class != Integer
+        raise ArgumentError.new "Balance must be a non-negative number"
+      end
+      @balance = balance
+
+      @date = DateTime.parse(date)
+
+      CSV.read("support/account_owners.csv").each do |line|
+        if line[0].to_i == @id
+          @owner = Bank::Owner.find(line[1].to_i)
+        end
       end
 
     end
 
     def add_owner(owner)
+      if owner.class != Owner
+        raise ArgumentError.new "Cannot accept an owner that is not of class Owner."
+      end
       @owner = owner
     end
 
@@ -64,6 +77,7 @@ module Bank
   end
 end
 
-#accounts = Bank::Account.all
-
-# puts Bank::Account.find("1212").id
+# accounts = Bank::Account.all
+# puts accounts
+#
+# puts Bank::Account.find(1212).date

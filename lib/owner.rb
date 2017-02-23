@@ -8,7 +8,7 @@ module Bank
       owners = []
       CSV.read("support/owners.csv").each do |line|
         owners << Bank::Owner.new( {
-          id: line[0],
+          id: line[0].to_i,
           last_name: line[1],
           first_name: line[2],
           address: line[3],
@@ -29,6 +29,8 @@ module Bank
 
     def initialize(owner_hash)
       @owner_hash = owner_hash
+
+      raise ArgumentError.new "ID must be an Integer" if validate_owner_info(:id).class != Integer
       @id = validate_owner_info(:id)
       @last_name = validate_owner_info(:last_name)
       @first_name = validate_owner_info(:first_name)
@@ -55,5 +57,5 @@ end
 #   puts owner.state
 #
 # end
-
-#puts Bank::Owner.find("20").first_name
+#
+# puts Bank::Owner.find(20).first_name

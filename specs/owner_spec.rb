@@ -78,14 +78,14 @@ describe "Owner class methods" do
       @owner_array.length.must_equal @csv_info.count
 
       # The information for the first & last owners is correct
-      @owner_array[0].id.must_equal @csv_info[0][0]
+      @owner_array[0].id.must_equal @csv_info[0][0].to_i
       @owner_array[0].last_name.must_equal @csv_info[0][1]
       @owner_array[0].first_name.must_equal @csv_info[0][2]
       @owner_array[0].address.must_equal @csv_info[0][3]
       @owner_array[0].city.must_equal @csv_info[0][4]
       @owner_array[0].state.must_equal @csv_info[0][5]
 
-      @owner_array[-1].id.must_equal @csv_info[-1][0]
+      @owner_array[-1].id.must_equal @csv_info[-1][0].to_i
       @owner_array[-1].last_name.must_equal @csv_info[-1][1]
       @owner_array[-1].first_name.must_equal @csv_info[-1][2]
       @owner_array[-1].address.must_equal @csv_info[-1][3]
@@ -97,18 +97,18 @@ describe "Owner class methods" do
 
   describe "Owner.find" do
     it "Returns an owner that exists" do
-      Bank::Owner.find("20").must_be_instance_of Bank::Owner
-      Bank::Owner.find("20").first_name.must_equal "Helen"
+      Bank::Owner.find(20).must_be_instance_of Bank::Owner
+      Bank::Owner.find(20).first_name.must_equal "Helen"
     end
 
     it "Can find the first owner from the CSV" do
-      Bank::Owner.find(@csv_info[0][0]).must_be_instance_of Bank::Owner
-      Bank::Owner.find(@csv_info[0][0]).last_name.must_equal @csv_info[0][1]
+      Bank::Owner.find(@csv_info[0][0].to_i).must_be_instance_of Bank::Owner
+      Bank::Owner.find(@csv_info[0][0].to_i).last_name.must_equal @csv_info[0][1]
     end
 
     it "Can find the last owner from the CSV" do
-      Bank::Owner.find(@csv_info[-1][0]).must_be_instance_of Bank::Owner
-      Bank::Owner.find(@csv_info[-1][0]).address.must_equal @csv_info[-1][3]
+      Bank::Owner.find(@csv_info[-1][0].to_i).must_be_instance_of Bank::Owner
+      Bank::Owner.find(@csv_info[-1][0].to_i).address.must_equal @csv_info[-1][3]
     end
 
     it "Raises an error for an owner that doesn't exist" do

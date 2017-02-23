@@ -229,16 +229,13 @@ describe "Wave 2" do
       # #   # TODO:
       test_array = Bank::Account.all
       # puts account_array[-1].id
-      
+
       Bank::Account.find(test_array[-1].id).id.must_equal "15156"
 
-      # puts test_account
-      puts "THIS SHIT #{test_array[-1].id}"
-      # puts test_account.id
     end
-    # #
-    #  it "Raises an error for an account that doesn't exist" do
-    #    # TODO: Your test code here!
-    # # end
+    #
+     it "Raises an error for an account that doesn't exist" do
+       # TODO: Your test code here!
+    end
   end
  end

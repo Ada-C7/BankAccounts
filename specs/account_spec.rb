@@ -143,6 +143,7 @@ end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
+    #would it be possible to run the @accounts thing here so that it works for both .all and .find tests?
   describe "Account.all" do
       before do
           @accounts = Bank::Account.all
@@ -188,13 +189,37 @@ describe "Wave 2" do
   end
 
   describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
+      
+      it "Returns an account that exists" do
+       # TODO: Your test code here!
+       account = Bank::Account.find(1217)
+
+       account.must_be_instance_of Bank::Account
+       account.id.must_equal 1217
+       account.balance.must_equal 12323
+    #    account.opendate.must_equal "2003-11-07 11:34:56 -0800"
+     end
+
+
+
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+        CSV.read("support/accounts.csv") do
+            accounts(0).id.must_equal 1212
+            accounts(0).balance.must_equal 1235667
+            # accounts(0).opendate.must equal 1999-03-27 11:30:09 -0800
+        end
     end
+
+
+
+
+
+
+
+
+
+
 
     it "Can find the last account from the CSV" do
       # TODO: Your test code here!

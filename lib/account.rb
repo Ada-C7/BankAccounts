@@ -27,6 +27,18 @@ module Bank
         end
 
 
+        def self.find(id)
+            accounts = Bank::Account.all
+            accounts.each do |account|
+                if account.id.to_i == id
+                    return account
+                end
+            end
+                raise ArgumentError.new("this is not an account in our system")
+        end
+
+
+
         def withdraw (amount)
             if amount > 0
                 if @balance - amount < 0

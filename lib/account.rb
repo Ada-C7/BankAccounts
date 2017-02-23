@@ -19,6 +19,7 @@ module Bank
 
     def self.all
       accounts = []
+
       CSV.open("support/accounts.csv").each do |account|
         accounts << Bank::Account.new(account[0].to_i, account[1].to_i, account[2])
       end
@@ -66,12 +67,10 @@ module Bank
 
   class Owner
     attr_reader :name, :phone
-
     def initialize(name, phone)
       name = name
       phone = phone
     end
-
   end
 
 end

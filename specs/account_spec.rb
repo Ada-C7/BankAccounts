@@ -214,20 +214,20 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      first_account = Bank::Account.find(1212)
-      first_account.class.must_equal(Bank::Account)
+      account = Bank::Account.find(15151)
+      account.class.must_equal(Bank::Account)
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find(1212)
     end
 
     it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find(15156)
     end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+    # not yet working
+    # it "Raises an error for an account that doesn't exist" do
+    #   Bank::Account.find(0000000)
     end
   end
 

@@ -2,8 +2,8 @@ require 'csv'
 
 module Bank
   class Account
-    attr_reader :id, :balance #:date
-    def initialize(id, balance) # date = "Jan 1st 2010"
+    attr_reader :id, :balance, :date
+    def initialize(id, balance, date) # date = "Jan 1st 2010"
       raise ArgumentError.new("balance must be >= 0") if balance < 0
       @id = id
       @balance = balance
@@ -33,7 +33,7 @@ module Bank
     def self.all
       all_accounts = []
       CSV.open("../support/accounts.csv").each do |array|
-          all_accounts << self.new(array[0].to_i, array[1].to_f)
+          all_accounts << self.new(array[0].to_i, array[1].to_f, array[2].to_s)
       end
       return all_accounts
     end

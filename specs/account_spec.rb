@@ -176,22 +176,38 @@ describe "Wave 2" do
   end
 
   describe "Account.find" do
+
+    # before do
+    #   all_accounts = Bank
+    # end
+
     it "Returns an account that exists" do
-      Bank::Account.find(1216).must_equal Bank::Account.all[4]
+      # doesn't work due to different object IDs of Bank::Account.all ??
+      # Bank::Account.find(1216).must_be_same_as Bank::Account.all[4]
+      # Bank::Account.find(1216).id.must_equal Bank::Account.all[4].id
+      accounts = Bank::Account.all
+      id_check = accounts[4].id
+      account = Bank::Account.find(id_check)
+      expect(account.id).must_equal id_check
     end
 
     it "Can find the first account from the CSV" do
-      Bank::Account.find(1212).must_equal Bank::Account.all[0]
+      accounts = Bank::Account.all
+      id_check = accounts[0].id
+      account = Bank::Account.find(id_check)
+      expect(account.id).must_equal id_check
     end
 
     it "Can find the last account from the CSV" do
-      Bank::Account.find(15156).must_equal Bank::Account.all[-1]
+      accounts = Bank::Account.all
+      id_check = accounts[-1].id
+      account = Bank::Account.find(id_check)
+      expect(account.id).must_equal id_check
     end
 
     it "Raises an error for an account that doesn't exist" do
-      Bank::Account.find(12345)
       proc {
-        account.deposit(deposit_amount)
+        Bank::Account.find(12345)
         }.must_raise ArgumentError
     end
 

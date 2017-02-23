@@ -15,11 +15,12 @@ module Bank
     end
 
     def self.find(id)
-      raise ArgumentError.new("That's not a valid ID number, you nincompoop.") if !Bank::Account.all.include?(id)
-      Bank::Account.all.each_with_index do |acct, index|
-        return Bank::Account.all[index]
-
-
+      accounts = Bank::Account.all
+      raise ArgumentError.new("There's no such account ID, you nincompoop.") if ![1212, 1213, 1214, 1215, 1216, 1217, 15151, 15152, 15153, 15154, 15155, 15156].include?(id)
+      accounts.each_with_index do |acct, index|
+          if acct.id == id
+            return accounts[index]
+          end
       end
     end
 

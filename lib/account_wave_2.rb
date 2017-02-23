@@ -4,7 +4,13 @@ require 'csv'
 module Bank
   class Account
 
-    def self.find(id)
+    def self.find(search_for_id)
+      all_accounts = Bank::Account.all
+      answer = nil
+      all_accounts.each do |account|
+        answer = account if account.id.to_i == search_for_id.to_i
+      end
+      return answer
     end
 
     def self.all
@@ -60,4 +66,4 @@ module Bank
   end
 end
 
-Bank::Account.all
+# Bank::Account.all

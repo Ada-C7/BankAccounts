@@ -16,6 +16,7 @@ module Bank
     # this method takes in a file and returns a list of owner objects
     def self.all(csv_file)
       @owners = CSV.read(csv_file)
+      # this will turn owners into an array of hashes - each hash holds users id
       @owners.map! do |owner_info|
         owner_hash = Hash.new
         owner_hash[:id] = owner_info[0].to_i
@@ -26,9 +27,8 @@ module Bank
         owner_hash[:state] = owner_info[5]
         owner_info = owner_hash
       end
-      # print @owners
+      # owners is now an array of owner class objects
       @owners.map! { |owner_hash| self.new(owner_hash) }
-      # puts @owners
       return @owners
     end
 

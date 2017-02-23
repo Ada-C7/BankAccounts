@@ -11,15 +11,15 @@ describe "Wave 1" do
   # Add an owner property to each Account to track information about who owns the account.
   describe "Owner#initialize" do
     it "Takes a name and an address" do
-      name = "George Franklin"
-      address = "102 4th Ave West, Seattle, WA, 98110"
-      owner = Bank::Owner.new(name, address)
+      id = "George Franklin"
+      last_name = "102 4th Ave West, Seattle, WA, 98110"
+      owner = Bank::Owner.new(id, last_name)
 
-      owner.must_respond_to :name
-      owner.name.must_equal name
+      owner.must_respond_to :id
+      owner.id.must_equal id
 
-      owner.must_respond_to :address
-      owner.address.must_equal address
+      owner.must_respond_to :last_name
+      owner.last_name.must_equal last_name
     end
   end
 # The Account can be created with an owner, OR you can create a method that will add the owner after the Account has already been created.
@@ -56,7 +56,7 @@ describe "Wave 1" do
 
       account = Bank::Account.new(id, balance, open_date, owner)
 
-      account.owner.name.must_equal account.owner.name
+      account.owner.last_name.must_equal account.owner.last_name
     end
     # it "Takes an ID and an initial balance" do
     #   id = 1337

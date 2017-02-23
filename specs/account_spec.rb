@@ -7,12 +7,13 @@ describe "Wave 1" do
   #writing my own test
   describe "Owner#initialize" do
     it "Takes Name and Phone # to initialize Owner" do
-      name = "Lynn Trickey"
-      phone = "206-240-1029"
-      new_owner = Bank::Owner.new(name, phone)
+      last_name = "Trickey"
+      first_name = "lynn"
 
-      new_owner.must_respond_to :name
-      new_owner.must_respond_to :phone
+      new_owner = Bank::Owner.new(last_name, first_name)
+
+      new_owner.must_respond_to :last_name
+      new_owner.must_respond_to :first_name
       end
   end
 
@@ -166,6 +167,16 @@ end
 
 # todo: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
+
+  describe "Testing Owner class methods" do
+
+    it "Returns an array of Owner instances" do
+      all_owners = Bank::Owner.all
+      all_owners.must_be_instance_of(Bank::Owner)
+    end
+
+  end
+
   describe "Account.all" do
 
     before do
@@ -215,7 +226,7 @@ describe "Wave 2" do
   describe "Account.find" do
     it "Returns an account that exists" do
       account = Bank::Account.find(15151)
-      account.class.must_equal(Bank::Account)
+      account.must_be_instance_of(Bank::Account)
     end
 
     it "Can find the first account from the CSV" do
@@ -232,6 +243,7 @@ describe "Wave 2" do
       Bank::Account.find(0000000)
     }.must_raise ArgumentError
     end
+
   end
 
 end

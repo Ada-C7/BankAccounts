@@ -24,13 +24,12 @@ module Bank
     end
 
     def withdraw_using_check(amount)
-      fee = 2
-      puts "Can't go less than -10!" if @balance - amount < -10
-      if @checks_used > 3
-        puts "Can't go less than -10" if @balance - (fee + amount) < -10 
-        @balance -= (fee + amount)
+      if @checks_used < 4 ? fee = 0 : fee = 2
+      if @balance - (amount + fee) < -10
+        puts "Can't go less than -10!"
+        return
       else
-        @balance -= amount
+        @balance -= (fee + amount)
       end
       @checks_used += 1
       return @balance

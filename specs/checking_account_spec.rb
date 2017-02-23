@@ -70,7 +70,10 @@ describe "CheckingAccount" do
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1,30)
+      account.withdraw_using_check(41)
+      account.balance.must_equal 30
+
     end
 
     it "Requires a positive withdrawal amount" do

@@ -1,4 +1,4 @@
-require_relative 'account'
+require_relative '../lib/account_wave_2'
 
 module Bank
 
@@ -12,8 +12,14 @@ module Bank
     end
 
     def withdraw(amount)
-      super
-
+      fee = 1
+      if @balance - (fee + amount) < 0 || @balance - amount < 0
+        puts "Can't go negative!"
+      else
+        @balance -= fee
+        super
+      end
+      return @balance
     end
 
     def withdraw_using_check(amount)

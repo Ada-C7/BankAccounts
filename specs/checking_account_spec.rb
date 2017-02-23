@@ -3,7 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/checking_account.rb
-# require_relative '../lib/checking_account'
+require_relative '../lib/CheckingAccount'
 
 # Because a CheckingAccount is a kind
 # of Account, and we've already tested a bunch of functionality
@@ -11,7 +11,7 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "CheckingAccount" do
+describe "CheckingAccount" do
   describe "#initialize" do
     # Check that a CheckingAccount is in fact a kind of account
     it "Is a kind of Account" do
@@ -22,12 +22,23 @@ xdescribe "CheckingAccount" do
 
   describe "#withdraw" do
     it "Applies a $1 fee each time" do
-      # TODO: Your test code here!
+      initial_deposit = 15
+      withdrawal_amount = 1
+      account = Bank::CheckingAccount.new(1,initial_deposit)
+      initial_balance = account.balance
+      account.withdraw(withdrawal_amount)
+      final_balance = account.balance
+      (initial_balance - final_balance).must_equal withdrawal_amount + 1
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
-      # TODO: Your test code here!
-    end
+      initial_deposit = 15
+      withdrawal_amount = 15
+      account = Bank::CheckingAccount.new(1,initial_deposit)
+      initial_balance = account.balance
+      account.withdraw(withdrawal_amount)
+      final_balance = account.balance
+      (initial_balance - final_balance).must_equal 0    end
   end
 
   describe "#withdraw_using_check" do

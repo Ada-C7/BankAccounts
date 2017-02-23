@@ -205,9 +205,9 @@ describe "Wave 2" do
       @all_owners[0].first_name.must_equal(first_names[0])
       @all_owners[-1].first_name.must_equal(first_names[-1])
 
-      # #checks first and last balances
-      # @new_bank[0].balance.must_equal(balances[0])
-      # @new_bank[-1].balance.must_equal(balances[-1])
+      #checks first and last street_addresses
+      @all_owners[0].first_name.must_equal(first_names[0])
+      @all_owners[-1].first_name.must_equal(first_names[-1])
 
     end
 

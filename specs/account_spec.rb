@@ -137,7 +137,7 @@ describe "Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
@@ -148,24 +148,33 @@ xdescribe "Wave 2" do
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       # Feel free to split this into multiple tests if needed
+
     end
   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
       # TODO: Your test code here!
+      if Bank::Account.all[6].id == 15151
+        Bank::Account.find(15151).balance.must_equal 9844567
+      end
     end
 
     it "Can find the first account from the CSV" do
       # TODO: Your test code here!
+      Bank::Account.find(1212).balance.must_equal 1235667
+      Bank::Account.find(1212).open_date.must_equal "1999-03-27 11:30:09 -0800"
     end
 
     it "Can find the last account from the CSV" do
       # TODO: Your test code here!
+      Bank::Account.find(15156).balance.must_equal 4356772
+      Bank::Account.find(15156).open_date.must_equal "1994-11-17 14:04:56 -0800"
     end
 
     it "Raises an error for an account that doesn't exist" do
       # TODO: Your test code here!
+      
     end
   end
 end

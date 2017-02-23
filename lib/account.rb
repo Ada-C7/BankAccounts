@@ -60,11 +60,11 @@ module Bank
           match = nil
         end
       end
-      if match == nil
-        raise ArgumentError.new("There are no accounts with that ID")
-      else
-        return match
-      end
+
+      raise ArgumentError.new("There are no accounts with that ID") if match == nil
+      
+      return match
+
 
     end
 

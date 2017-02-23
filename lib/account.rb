@@ -13,19 +13,30 @@ module Bank
     end
 
     @@account_all = []
-    @@csv = CSV.read("./support/accounts.csv")
+
+    @@csv = []
 
     def self.read_csv
+        @@csv = []
+      CSV.read("./support/accounts.csv").each do |account|
+        @@csv << {id: account[0].to_i, balance: account[1].to_i, open_date: account[2]}
+      end
       return @@csv
     end
 
+    # @@csv = CSV.read("./support/accounts.csv")
+    #
+    # def self.read_csv
+    #   return @@csv
+    # end
+    #
 
 
 
     def self.all
       @@account_all = []
-      @@csv.each do |account|
-        @@account_all << self.new(account[0].to_i, account[1].to_i, account[2])
+      self.read_csv.each do |account|
+        @@account_all << self.new(account[:id].to_i, account[:balance].to_i, account[:open_date])
       end
       return @@account_all
     end
@@ -56,3 +67,6 @@ module Bank
 
   end
 end
+# puts Bank::Account.all[0].id
+# puts Bank::Account.read_csv[0][:id]
+# puts Bank::Account.read_csv

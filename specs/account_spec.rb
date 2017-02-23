@@ -160,10 +160,10 @@ describe "Wave 2" do
     it "The ID and balance of the first and last accounts match what's in the CSV file" do
       all_accounts = Bank::Account.all
 
-      all_accounts.first.id.must_equal Bank::Account.read_csv.first[0].to_i
-      all_accounts.first.balance.must_equal Bank::Account.read_csv.first[1].to_i
-      all_accounts.last.id.must_equal Bank::Account.read_csv.last[0].to_i
-      all_accounts.last.balance.must_equal Bank::Account.read_csv.last[1].to_i
+      all_accounts.first.id.must_equal Bank::Account.read_csv.first[:id]
+      all_accounts.first.balance.must_equal Bank::Account.read_csv.first[:balance]
+      all_accounts.last.id.must_equal Bank::Account.read_csv.last[:id]
+      all_accounts.last.balance.must_equal Bank::Account.read_csv.last[:balance]
 
     end
 

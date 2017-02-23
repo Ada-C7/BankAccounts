@@ -9,7 +9,9 @@ module Bank
       answer = nil
       all_accounts.each do |account|
         answer = account if account.id.to_i == search_for_id.to_i
+
       end
+      raise ArgumentError.new "That account id doesn't exist!" if answer == nil
       return answer
     end
 

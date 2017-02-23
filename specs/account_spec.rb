@@ -157,7 +157,6 @@ describe "Wave 2" do
       accounts[11].balance.must_equal 4356772
       #   - accounts match what's in the CSV file
 
-
       # Feel free to split this into multiple tests if needed
     end
   end
@@ -165,6 +164,13 @@ describe "Wave 2" do
   describe "Account.find" do
     it "Returns an account that exists" do
       # TODO: Your test code here!
+      # accounts = Bank::Account.all
+      # id_check = accounts[0].id
+      # account = Bank::Account.find(id_check)
+      # expect(account.id).must_equal id_check
+        accounts = Bank::Account.all
+        account = Bank::Account.find(1212)
+        account.id.must_equal accounts[0].id
     end
 
     it "Can find the first account from the CSV" do

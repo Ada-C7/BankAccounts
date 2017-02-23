@@ -55,3 +55,38 @@ describe "Owner.all" do
     @owners[-1].street_address.must_equal last_owner[3]
   end
 end
+
+describe "Owner.find" do
+  it "Returns an owner that exists" do
+    found_owner = Bank::Owner.find("16")
+
+    found_owner.must_be_instance_of Bank::Owner
+    found_owner.street_address.must_equal "9 Portage Court"
+  end
+
+  it "Can find the first owner from the CSV" do
+    first_owner = CSV.read("support/owners.csv").first
+    first_owner_id = first_owner[0]
+    first_owner_street_address = first_owner[3]
+    found_owner = Bank::Owner.find(first_owner_id)
+
+    found_owner.id.must_equal first_owner_id
+    found_owner.street_address.must_equal first_owner_street_address
+  end
+
+  it "Can find the last owner from the CSV" do
+    last_owner = CSV.read("support/owners.csv").last
+    last_owner_id = last_owner[0]
+    last_owner_street_address = last_owner[3]
+    found_owner = Bank::Owner.find(last_owner_id)
+
+    found_owner.id.must_equal last_owner_id
+    found_owner.street_address.must_equal last_owner_street_address
+  end
+
+  it "Raises an error for an owner that doesn't exist" do
+    proc {
+      Bank::Owner.find("HAMBURGLER")
+    }.must_raise ArgumentError
+  end
+end

@@ -26,5 +26,23 @@ module Bank
       end
     end
 
+    def self.find(id)
+      target_owner = nil
+      CSV.read("support/owners.csv").each do |line|
+        if id == line[0]
+          target_owner = Owner.new(
+            id: line[0],
+            last_name: line[1],
+            first_name: line[2],
+            street_address: line[3],
+            city: line[4],
+            state: line[5]
+          )
+        end
+      end
+      raise ArgumentError.new("Invalid Owner ID.") if target_owner.nil?
+      target_owner
+    end
+
   end
 end

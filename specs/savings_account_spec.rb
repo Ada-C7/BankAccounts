@@ -48,15 +48,29 @@ describe "SavingsAccount" do
       initial_deposit = 15
       account = Bank::SavingsAccount.new(1,initial_deposit)
 
-      proc {account.withdraw(4)}.must_raise ArgumentError
+      proc {account.withdraw(6)}.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
+      initial_deposit = 10
+      withdrawal_amount = 1
+      account = Bank::SavingsAccount.new(1,initial_deposit)
+      initial_balance = account.balance
+      account.withdraw(withdrawal_amount)
+      final_balance = account.balance
+      (initial_balance - final_balance).must_equal 0
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
+
+      initial_deposit = 15
+      withdrawal_amount = 5
+      account = Bank::SavingsAccount.new(1,initial_deposit)
+      initial_balance = account.balance
+      account.withdraw(withdrawal_amount)
+      final_balance = account.balance
+      (initial_balance - final_balance).must_equal 0
+
     end
   end
 

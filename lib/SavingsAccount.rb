@@ -24,7 +24,13 @@ module Bank
       # @balance -= amount
     end
 
+    def deposit(amount)
+      super
+    end
+
     def add_interest
+
+      
     end
 
 

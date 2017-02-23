@@ -8,5 +8,13 @@ module Bank
       else raise ArgumentError.new
       end
     end
+
+    def withdraw(withdrawal_amount)
+      super(withdrawal_amount)
+
+      @balance -= 2.0
+    end
+
+
   end
 end

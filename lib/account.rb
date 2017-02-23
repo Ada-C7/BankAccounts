@@ -8,11 +8,10 @@ module Bank
 
     def initialize (id, balance, open_date = nil)
       @id = id
-      if balance >= 0
-        @balance = balance
-      else
-        raise ArgumentError.new "The initial balance must not be a negative number"
-      end
+      raise ArgumentError.new "The initial balance must not be a negative number" if balance < 0
+
+      @balance = balance
+
 
 
       # raise ArgumentError.new("The initial balance must not be a negative number") if balance < 0
@@ -62,33 +61,28 @@ module Bank
       end
 
       raise ArgumentError.new("There are no accounts with that ID") if match == nil
-      
+
       return match
 
 
     end
 
     def withdraw(money_to_withdraw)
-      if money_to_withdraw > 0 #requires positive withdrawal amount
-        if money_to_withdraw > @balance #requires withdrawal amount less than balance
+      raise ArgumentError.new "The amount to withdraw must be greater than zero" if money_to_withdraw < 0 #requires positive withdrawal amount
+      if money_to_withdraw > @balance #requires withdrawal amount less than balance
           puts "Amount to withdraw must be greater than balance"
-        else
-          @balance -= money_to_withdraw
-        end
-        return @balance
       else
-        raise ArgumentError.new "The amount to withdraw must be greater than zero"
+          @balance -= money_to_withdraw
       end
+      return @balance
     end
 
     def deposit(money_to_deposit)
-      if money_to_deposit > 0
+      raise ArgumentError.new "The deposit amount must be greater than zero" if money_to_deposit < 0
         # start_balance = @balance
         # updated_balance = start_balance + money_to_deposit
         @balance += money_to_deposit
-      else
-        raise ArgumentError.new "The deposit amount must be greater than zero"
-      end
+
     end
 
     # def add_owner

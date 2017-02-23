@@ -74,8 +74,11 @@ describe "CheckingAccount" do
     end
 
     it "Allows 3 free uses" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+      account.withdraw_using_check(20)
+      account.withdraw_using_check(20)
+      account.withdraw_using_check(20)
+      account.balance.must_equal 40.0
     end
 
     it "Applies a $2 fee after the third use" do

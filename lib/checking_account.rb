@@ -28,8 +28,11 @@ module Bank
           print "Warning! This will cause your balance to go below $-10"
           return @balance
         end
-        @balance -= amount
-        return @balance
+        if @checks > 0
+          @balance -= amount
+          @checks -= 1
+          return @balance
+        end
       end
 
       def reset_checks

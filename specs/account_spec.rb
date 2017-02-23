@@ -68,7 +68,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -145,7 +145,6 @@ describe "Wave 2" do
       accounts.must_be_instance_of Array
     end
 
-    # handle empty array? or don't worry about that since checking in next test?
     it "Contains only Account elements in the returned array" do
       accounts = Bank::Account.all
       accounts.each do |account|
@@ -160,7 +159,7 @@ describe "Wave 2" do
     end
 
     it "Creates a first account with the csv's first listed ID and balance" do
-      first_id = CSV.read("support/accounts.csv").first[0].to_i # need to read in from the file?
+      first_id = CSV.read("support/accounts.csv").first[0].to_i
       first_balance = CSV.read("support/accounts.csv").first[1].to_i
       accounts = Bank::Account.all
 
@@ -179,30 +178,25 @@ describe "Wave 2" do
   end
 
   describe "Account.find" do
+    def find_and_verify_account(id)
+      account = Bank::Account.find(id)
+      account.must_be_instance_of Bank::Account
+      account.id.must_equal id
+    end
+
     it "Returns an account that exists" do
-      # #Bank::Account.new(15151,9844567, "1993-01-17 13:30:56 -0800")
-      # accounts = Bank::Account.all # bad to use another method to test this one?
-      # account = Bank::Account.find(15151)
-      # accounts.must_include account # different instances of the same object?
-      account = Bank::Account.find(15151)
-      account.balance.must_equal 9844567
-      account.open_date.must_equal "1993-01-17 13:30:56 -0800"
+      seventh_id = CSV.read("support/accounts.csv")[6][0].to_i
+      find_and_verify_account(seventh_id)
     end
 
     it "Can find the first account from the CSV" do
-      #info = CSV.read("support/accounts.csv").first
-      #first_account = Bank::Account.new(info[0].to_i, info[1].to_i, info[2])
-      #Bank::Account.find(1212).must_be_same_as first_account
-
-      first_account = Bank::Account.find(1212)
-      first_account.balance.must_equal 1235667
-      first_account.open_date.must_equal "1999-03-27 11:30:09 -0800"
+      first_id = CSV.read("support/accounts.csv").first[0].to_i
+      find_and_verify_account(first_id)
     end
 
     it "Can find the last account from the CSV" do
-      last_account = Bank::Account.find(15156)
-      last_account.balance.must_equal 4356772
-      last_account.open_date.must_equal "1994-11-17 14:04:56 -0800"
+      last_id = CSV.read("support/accounts.csv").last[0].to_i
+      find_and_verify_account(last_id)
     end
 
     it "Raises an error for an account that doesn't exist" do

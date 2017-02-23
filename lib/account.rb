@@ -27,27 +27,25 @@ module Bank
 
     def self.all
       accounts = []
-      CSV.open("support/accounts.csv").each do |line| # direct path or relative path?
+      CSV.open("support/accounts.csv").each do |line|
         accounts << self.new(line[0].to_i, line[1].to_i, line[2])
       end
       return accounts
     end
 
-    #better to make @@accounts vs. read file again?
     def self.find(id)
-      CSV.open("support/accounts.csv").each do |line|
-        if line.first.to_i == id
-          return self.new(line[0].to_i, line[1].to_i, line[2])
-        end
+      self.all.each do |account|
+        return account if account.id == id
       end
       raise ArgumentError.new("ID does not exist")
     end
+
+    #   CSV.open("support/accounts.csv").each do |line|
+    #     if line.first.to_i == id
+    #       return self.new(line[0].to_i, line[1].to_i, line[2])
+    #     end
+    #   end
+    #   raise ArgumentError.new("ID does not exist")
+    # end
   end
 end
-#
-# accounts = []
-# CSV.open("../support/accounts.csv").each do |line|
-#   accounts << Bank::Account.new(line[0].to_i, line[1].to_i, line[2])
-# end
-#
-# ap accounts

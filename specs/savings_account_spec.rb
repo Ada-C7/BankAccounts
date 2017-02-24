@@ -52,13 +52,11 @@ describe "SavingsAccount" do
     end
 
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
       withdrawal_amount = 10
       @account.withdraw(withdrawal_amount).must_equal 88
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      # TODO: Your test code here!
       withdrawal_amount = 99
       proc {
         @account.withdraw(withdrawal_amount)
@@ -67,13 +65,11 @@ describe "SavingsAccount" do
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
       @account.withdraw(99).must_equal 100
     end
 
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
       @account.withdraw(90).must_equal 100
 
     end
@@ -88,7 +84,6 @@ describe "SavingsAccount" do
       rate = 0.25
 
       account = Bank::SavingsAccount.new(id, starting_balance, open_date)
-      # TODO: Your test code here!
       account.add_interest(rate).must_equal 0.25
     end
 
@@ -96,10 +91,8 @@ describe "SavingsAccount" do
       id = 12345
       starting_balance = 100
       open_date = 20170101
-      rate = 0.25
 
       account = Bank::SavingsAccount.new(id, starting_balance, open_date)
-      # TODO: Your test code here!
       account.add_interest(0.25)
       account.balance.must_equal 100.25
     end
@@ -111,7 +104,6 @@ describe "SavingsAccount" do
       rate = 0
       account = Bank::SavingsAccount.new(id, starting_balance, open_date)
 
-      # TODO: Your test code here!
       proc {
         account.add_interest(rate)
       }.must_raise ArgumentError

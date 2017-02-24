@@ -5,12 +5,13 @@ module Bank
 
   class CheckingAccount < Bank::Account
 
-      attr_reader :balance, :id, :open_date, :interest
+      attr_reader :balance, :id, :open_date, :interest, :min_balance
       attr_accessor :checks
 
       def initialize(id, balance, open_date, checks)
+        @min_balance = 10
 
-        if balance >= 10
+        if balance >= @min_balance
           @balance = balance
         else
           raise ArgumentError.new "Initial savings account deposit must be at least $10"
@@ -22,17 +23,28 @@ module Bank
 
       end
 
-    def withdraw(withdrawl_amount)
+      def withdraw(withdrawl_amount)
+        fee = 1
 
-      raise ArgumentError.new("withdrawl must be greater than 0") if withdrawl_amount < 0
+        raise ArgumentError.new("withdrawl must be greater than 0") if withdrawl_amount < 0
 
-      if @balance - (withdrawl_amount + 1) >= 10
-        @balance = @balance - (withdrawl_amount + 1)
-      else
-        print "your balance will be less than $10"
-        return @balance
+        if @balance - (withdrawl_amount + fee) >= @min_balance
+
+          super(withdrawl_amount)
+          return @balance - fee
+
+        else
+          puts "insufficient funds"
+          return @balance
+
+        end
+        #   @balance = @balance - (withdrawl_amount + 1)
+        # else
+        #   print "your balance will be less than $10"
+        #   return @balance
+        # end
+
       end
-    end
 
     def withdraw_using_check(amount)
 

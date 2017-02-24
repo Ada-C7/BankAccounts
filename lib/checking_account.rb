@@ -5,7 +5,6 @@ module Bank
 
     def initialize(id, balance, date = '')
       super(id, balance, date = '')
-      # need to rename?
       @checks_used = 0
     end
 

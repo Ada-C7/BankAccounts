@@ -1,5 +1,7 @@
 module Bank
   class CheckingAccount < Account
+    attr_accessor :count_checks_cashed
+
     def initialize id, balance, opendate = "1999-03-27 11:30:09 -0800"
       super
       @count_checks_cashed = 0
@@ -14,7 +16,7 @@ module Bank
     end
 
     def withdraw_using_check amount  #new method
-      if @count_checks_cashed > 3
+      if @count_checks_cashed >= 3
         amount += 2
       end
 
@@ -27,7 +29,7 @@ module Bank
         @count_checks_cashed += 1
         @balance -= amount
       end
-      
+
     end
 
 

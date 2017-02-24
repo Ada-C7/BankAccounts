@@ -90,13 +90,55 @@ describe "CheckingAccount" do
       }.must_raise ArgumentError
     end
 
+    it "Updates number of checks cashed" do
+      account = Bank::CheckingAccount.new(12345, 100)
+
+      account.withdraw_using_check(10)
+      account.count_checks_cashed.must_equal 1
+
+      account.withdraw_using_check(10)
+      account.count_checks_cashed.must_equal 2
+
+      account.withdraw_using_check(10)
+      account.count_checks_cashed.must_equal 3
+
+      account.withdraw_using_check(10)
+      account.count_checks_cashed.must_equal 4
+
+    end
+
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100)
+
+      3.times do
+        old_balance = account.balance
+        account.withdraw_using_check(10)
+        expected_withdrawal = 10
+        expected_balance = old_balance - expected_withdrawal
+        account.balance.must_equal expected_balance
+      end
     end
 
     it "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
-    end
+      account = Bank::CheckingAccount.new(12345, 100)
+
+      3.times do
+        old_balance = account.balance
+        account.withdraw_using_check(10)
+        expected_withdrawal = 10
+        expected_balance = old_balance - expected_withdrawal
+        account.balance.must_equal expected_balance
+      end
+
+      2.times do
+        old_balance = account.balance
+        account.withdraw_using_check(10)
+        expected_withdrawal = 12
+        expected_balance = old_balance - expected_withdrawal
+
+        account.balance.must_equal expected_balance
+      end
+
   end
 
   xdescribe "#reset_checks" do
@@ -112,4 +154,5 @@ describe "CheckingAccount" do
       # TODO: Your test code here!
     end
   end
+end
 end

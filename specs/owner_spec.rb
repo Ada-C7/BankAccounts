@@ -3,7 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/owner'
 
-Minitest::Reporters.use!
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 describe "Owner#initialize" do
 

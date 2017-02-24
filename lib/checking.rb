@@ -50,5 +50,9 @@ module Bank
 
     end
 
+def reset_checks
+  @checks = 3
+end 
+
   end
 end

@@ -20,8 +20,19 @@ module Bank
         raise ArgumentError.new "Savings Accounts must have an Initial Balance of $10"
       end
 
-
     end
 
+    def withdraw(amount)
+
+      if @balance - (amount + 2) < 10
+        @balance = @balance
+        puts "Insufficient Funds"
+      else
+        @balance -= (amount + 2)
+        return @balance
+      end
+
+    end
+    
   end
 end

@@ -18,19 +18,36 @@ module Bank
                all_accounts
           end
 
-          def self.find_account(file, inquiry)
+          def self.find_with_id(file, inquiry) # using ID
 
                all_accounts = Bank::Account.all(file)
+               found = ""
 
                all_accounts.each do | account |
 
+
                     if account.id == inquiry
 
-                         puts account
-
+                         found = account
                     end
 
+
                end
+
+               found
+
+
+          end
+
+          def self.find_with_index(file, inquiry) # using index in array
+
+               all_accounts = Bank::Account.all(file)
+
+               found = all_accounts[inquiry]
+
+               raise ArgumentError.new "Can't create an account with a negative balance." if found == nil
+
+               found
 
           end
 
@@ -94,16 +111,6 @@ module Bank
 
 end
 
-
-
-hash = {name: "Janice", phone: "303-349-1433"}
-
-# owner_1 = Bank::Owner.new(hash)
-
-# puts owner_1.name
-
-# puts owner_1.phone
-
 # new_account = Bank::Account.new(133, 100, hash)
 
 # puts new_account.balance
@@ -116,4 +123,6 @@ hash = {name: "Janice", phone: "303-349-1433"}
 
 # puts expected_balance
 #
-# all_accounts = Bank::Account.all("../support/accounts.csv", hash)
+# all_accounts = Bank::Account.all("../support/accounts.csv")
+
+#find_account = Bank::Account.find("../support/accounts.csv", 1213)

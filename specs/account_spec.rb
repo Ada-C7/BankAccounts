@@ -152,7 +152,7 @@ describe "Wave 2" do
 
           @all_accounts = Bank::Account.all("../support/accounts.csv")
 
-    end
+     end
 
      describe "Account.all" do
 
@@ -160,24 +160,22 @@ describe "Wave 2" do
 
               @all_accounts.must_be_kind_of Array
 
-         end
+          end
 
          it "The number of accounts is correct" do
 
               @all_accounts.length.must_equal 12
 
-         end
+          end
 
 
           it "Everything in the array is an Account" do
-
-
 
               @all_accounts.each do | account |
 
                   account.must_be_kind_of Bank::Account
 
-             end
+               end
 
           end
 
@@ -193,27 +191,38 @@ describe "Wave 2" do
 
      end
 
-  # xdescribe "Account.find" do
-  #   it "Returns an account that exists" do
-  #
-  #        hash = {name: "Janice", phone: "303-349-1433"}
-  #        find_account = Bank::Account.all("../support/accounts.csv", hash, 1213)
-  #
-  #        find_account.must_be_kind_of Bank::Account
-  #    #     find_account.id.must_equal 1213
-  #
-  #   end
-  #
-  #  xit "Can find the first account from the CSV" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #  xit "Can find the last account from the CSV" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #  xit "Raises an error for an account that doesn't exist" do
-  #     # TODO: Your test code here!
-  #   end
-  # end
+   describe "Account.find" do
+
+         it "Returns an account that exists" do
+
+              find_account = Bank::Account.find_with_id("../support/accounts.csv", 1213)
+              find_account.must_be_kind_of Bank::Account
+              find_account.id.must_equal 1213
+
+        end
+
+        it "Can find the first account from the CSV" do
+
+             find_account = Bank::Account.find_with_index("../support/accounts.csv", 0)
+             find_account.must_be_kind_of Bank::Account
+             find_account.id.must_equal 1212
+
+         end
+
+          it "Can find the last account from the CSV" do
+
+              find_account = Bank::Account.find_with_index("../support/accounts.csv", -1)
+              find_account.must_be_kind_of Bank::Account
+              find_account.id.must_equal 15156
+
+          end
+
+          it "Raises an error for an account that doesn't exist" do
+
+               proc {find_account = Bank::Account.find_with_index("../support/accounts.csv", 13)}.must_raise ArgumentError
+
+          end
+
+     end
+
 end

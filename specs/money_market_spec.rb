@@ -26,19 +26,42 @@ describe "MoneyMarketAccount" do
       proc {Bank::MoneyMarketAccount.new(1,9999)}.must_raise ArgumentError
     end
 
+    # it "maximum of 6 transactions per month - output message and do not perform transaction unless it's rectifying an overdrawn account" do
+    # end
+
   end
 
-  describe "#withdraw" do
-    it "Applies a $2 fee each time" do
+  describe "#withdraw updates" do
+    it "if withdrawal transaction brings balance to below 10000, impose $100 fee" do
     end
 
-    it "Outputs a warning if the balance would go below $10" do
+    it "if balance < 10000, no more transactions allowed until balance is increased to >= 10000 using a deposit transaction" do
     end
 
-    it "Doesn't modify the balance if it would go below $10" do
+    it "cannot withdraw if balance < 10000" do
     end
 
-    it "Doesn't modify the balance if the fee would put it below $10" do
+    it "if transactions >= 6 cannot withdraw" do
+    end
+
+    it "a withdrawal increases the number of transactions" do
+    end
+  end
+
+  describe "#deposit updates" do
+    it "if balance is below 10000, cannot deposit unless amount_deposited + balance >= 10000" do
+    end
+
+    it "no more transactions allowed until balance is increased using a deposit transaction" do
+    end
+
+    it "cannot withdraw if balance < 10000" do
+    end
+
+    it "if transactions >= 6 cannot deposit" do
+    end
+
+    it "unless the account is below 10000 and it is a deposit that brings the account back to 10000, a deposit counts toward transactions" do
     end
   end
 
@@ -51,5 +74,14 @@ describe "MoneyMarketAccount" do
 
     it "Requires a positive rate" do
     end
+  end
+
+  describe "#reset_transactions" do
+    it "resets transactions to zero" do
+    end
+
+    it "can be called with no error" do
+    end
+
   end
 end

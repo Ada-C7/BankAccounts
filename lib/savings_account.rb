@@ -1,14 +1,25 @@
-require 'account'
+require_relative 'account'
 require 'csv'
 
 module Bank
 
-  class SavingsAccount < Bank::Account
+  class SavingsAccount < Account
 
     def initialize(id, balance, open_date = nil)
       super(id, balance, open_date = nil)
       raise ArgumentError.new "The initial balance must not be less than 10" if balance < 10
     end
+
+    def withdraw(money_to_withdraw)
+      if @balance - money_to_withdraw < 10
+        puts "Warning! This withdrawal will put you under the $10 account minimum!"
+        return @balance
+      else
+        super(money_to_withdraw)
+          return @balance -= 2.0
+      end
+    end
+
 
   end
 end

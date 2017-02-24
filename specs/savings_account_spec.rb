@@ -22,29 +22,67 @@ describe "SavingsAccount" do
     end
 
     it "Requires an initial balance of at least $10" do
-      skip
+      # account = Bank::SavingsAccount.new(3453, 8)
+
       # TODO: Your test code here!
+      proc {
+        Bank::SavingsAccount.new(1337, 4.0)
+      }.must_raise ArgumentError
+
     end
   end
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      skip
+      start_balance = 300.0
+      withdrawal_amount = 120.0
+      account = Bank::SavingsAccount.new(12345, start_balance)
+
+      account.withdraw(withdrawal_amount)
+
+
+      expected_balance = start_balance - withdrawal_amount - 2.0
+      account.balance.must_equal expected_balance
       # TODO: Your test code here!
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      skip
+      start_balance = 300.0
+      withdrawal_amount = 291.0
+      account = Bank::SavingsAccount.new(1234, start_balance)
+
+      # account.withdraw(withdrawal_amount)
+
+      proc {
+        account.withdraw(withdrawal_amount)
+      }.must_output /.+/
+
+
       # TODO: Your test code here!
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-      skip
-      # TODO: Your test code here!
+        # TODO: Your test code here!
+        start_balance = 300.0
+        withdrawal_amount = 291.0
+        account = Bank::SavingsAccount.new(1234, start_balance)
+        updated_balance = account.withdraw(withdrawal_amount)
+
+        updated_balance.must_equal start_balance
+        account.balance.must_equal start_balance
+
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      skip
+
+      start_balance = 300.0
+      withdrawal_amount = 289.0
+      account = Bank::SavingsAccount.new(1234, start_balance)
+      updated_balance = account.withdraw(withdrawal_amount)
+
+      updated_balance.must_equal start_balance
+      account.balance.must_equal start_balance
+
       # TODO: Your test code here!
     end
   end

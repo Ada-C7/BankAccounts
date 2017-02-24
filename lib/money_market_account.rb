@@ -1,4 +1,20 @@
+require 'CSV'
+require_relative 'account.rb'
+
 # Create a MoneyMarketAccount class which should inherit behavior from the Account class.
+module Bank
+
+  class MoneyMarketAccount < Account
+
+    def initialize(id, balance, open_date = nil)
+      raise ArgumentError.new "Initial balance minimum is $10,000" if balance < 10000
+      super(id, balance, open_date = nil)
+    end
+
+  end
+
+end
+
 
 # A maximum of 6 transactions (deposits or withdrawals) are allowed per month on this account type
 # The initial balance cannot be less than $10,000 - this will raise an ArgumentError

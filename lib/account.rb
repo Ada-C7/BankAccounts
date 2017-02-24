@@ -1,15 +1,38 @@
+require 'csv'
+
 module Bank
   class Account
 
-    attr_reader :balance, :id
+    attr_reader :balance, :id, :open_date
 
-    def initialize(id, balance) #deposit)
-      if balance < 0
-        raise ArgumentError.new "You can only open a new account with real money:)"
-      else
-        @balance = balance
-        @id = id
+    def self.all
+      new_account_info = []
+      accounts_master = CSV.read("../support/accounts.csv")
+      accounts_master.each do |account_array|
+        id = account_array[0].to_i
+        balance = account_array[1].to_i
+        date = account_array[2]
+        new_account_info << Account.new(id, balance, date)
+        #  end_with_object(self).to_a
       end
+      return new_account_info
+    end
+
+    def self.find(id)
+      accounts = Bank::Account.all
+      accounts.each do |account|
+        if account.id == id
+          return account
+        end
+      end
+      raise ArgumentError.new "Account: #{id} does not exist"
+    end
+
+    def initialize(id, balance, open_date = nil)
+      raise ArgumentError.new "Balance must be positive or 0" unless balance >= 0
+      @id = id
+      @balance = balance
+      @open_date = open_date
     end
 
     def new_account(balance)
@@ -23,7 +46,8 @@ module Bank
     def withdraw(amount_to_withdraw)
       if amount_to_withdraw > @balance
         puts "Insufficient funds. Your balance is #{@balance}"
-        raise ArgumentError.new("amount must be >= 0") if amount < 0
+      elsif amount_to_withdraw < 0
+        raise ArgumentError.new "amount must be >= 0"
         # start_balance = @balance
         # @balance = start_balance
       else
@@ -42,3 +66,5 @@ module Bank
     end
   end
 end
+
+#Sself.find(id) #- returns an instance of Account where the value of the id field in the CSV matches the passed parameter.

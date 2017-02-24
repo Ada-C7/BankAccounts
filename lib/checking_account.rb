@@ -8,6 +8,12 @@ module Bank
 
     end
 
+    def withdraw(withdrawal_amount)
+      super(withdrawal_amount)
+
+      fee = 1.0
+      @balance -= fee
+    end
 
 
   end

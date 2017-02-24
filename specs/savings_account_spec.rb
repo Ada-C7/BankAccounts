@@ -76,11 +76,10 @@ describe "SavingsAccount" do
 
     it "Updates the balance with calculated interest" do
       @my_savings.balance.must_equal(501.25)
-
     end
 
     it "Requires a positive rate" do
-      # TODO: Your test code here!
+      proc { @my_savings.add_interest(-0.25) }.must_raise ArgumentError
     end
   end
 end

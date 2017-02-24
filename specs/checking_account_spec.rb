@@ -51,12 +51,12 @@ describe "CheckingAccount" do
       @account.check_withdraw(110).must_equal (-10)
     end
 
-    it "Outputs a warning if the account would go below -$10" do 
+    it "Outputs a warning if the account would go below -$10" do
       proc { @account.check_withdraw(200) }.must_output(/.+/)
     end
 
-    it "Doesn't modify the balance if the account would go below -$10" do skip
-      # TODO: Your test code here!
+    it "Doesn't modify the balance if the account would go below -$10" do 
+      @account.check_withdraw(200).must_equal 100
     end
 
     it "Requires a positive withdrawal amount" do skip

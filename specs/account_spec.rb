@@ -1,3 +1,4 @@
+require 'csv'
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
@@ -137,37 +138,72 @@ describe "Wave 1" do
     end
   end
 end
-#
-# # TODO: change 'xdescribe' to 'describe' to run these tests
-# xdescribe "Wave 2" do
-#   describe "Account.all" do
-#     it "Returns an array of all accounts" do
-#       # TODO: Your test code here!
-#       # Useful checks might include:
-#       #   - Account.all returns an array
-#       #   - Everything in the array is an Account
-#       #   - The number of accounts is correct
-#       #   - The ID and balance of the first and last
-#       #       accounts match what's in the CSV file
-#       # Feel free to split this into multiple tests if needed
-#     end
-#   end
-#
-#   describe "Account.find" do
-#     it "Returns an account that exists" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the first account from the CSV" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the last account from the CSV" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Raises an error for an account that doesn't exist" do
-#       # TODO: Your test code here!
-#     end
-#   end
-# end
+
+# TODO: change 'xdescribe' to 'describe' to run these tests
+describe "Wave 2" do
+  describe "Account.all" do
+
+    before do
+      @accounts = Bank::Account.all
+    end
+
+    it "Returns an array of all accounts" do
+      # skip
+      # TODO: Your test code here!
+      # Useful checks might include:
+      #   - Account.all returns an array
+      @accounts.must_be_instance_of Array
+    end
+    #   - Everything in the array is an Account
+    it "Everything in the array is an Account" do
+      @accounts.each do |account|
+        account.must_be_instance_of Bank::Account
+      end
+    end
+    #   - The number of accounts is correct
+    it "Number of accounts is correct" do
+      @accounts.length.must_equal 12
+    end
+
+    #       accounts match what's in the CSV file
+    it "Match elements in file" do
+      CSV.read('support/accounts.csv') do |line|
+        counter = 0
+        @accounts[counter].id.must_equal line[0].to_i
+        @accounts[counter].balance.must_equal line[1].to_i
+        counter += 1
+      end
+    end
+
+      it "ID and balance match the first and last element" do
+        @accounts.first.id.must_equal 1212
+        @accounts.first.balance.must_equal 1235667
+
+        @accounts.last.id.must_equal 15156
+        @accounts.last.balance.must_equal 4356772
+      end
+    end
+
+
+  describe "Account.find" do
+    it "Returns an account that exists" do
+      skip
+      # TODO: Your test code here!
+    end
+
+    it "Can find the first account from the CSV" do
+      skip
+      # TODO: Your test code here!
+    end
+
+    it "Can find the last account from the CSV" do
+      skip
+      # TODO: Your test code here!
+    end
+
+    it "Raises an error for an account that doesn't exist" do
+      skip
+      # TODO: Your test code here!
+    end
+  end
+end

@@ -1,0 +1,3 @@
+class CheckingAccount < Account
+
+end

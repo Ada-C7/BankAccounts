@@ -127,8 +127,6 @@ describe "CheckingAccount" do
       account.new_month = true
       account.reset_checks
       account.num_checks_used.must_equal 0
-      # account.withdraw_using_check(1000)
-      # account.balance.must_equal (3000)
     end
   end
 end

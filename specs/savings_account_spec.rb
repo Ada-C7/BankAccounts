@@ -88,15 +88,20 @@ describe "SavingsAccount" do
       account = Bank::SavingsAccount.new(12345, 100.0)
       interest = 0.25
       account.add_interest(interest).must_equal 0.25
-
     end
 
     it "Updates the balance with calculated interest" do
       # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(12345, 100.0)
+      interest = 0.25
+      balance = 100.25
+      account.add_interest(interest)
+      account.balance.must_equal balance
     end
 
     it "Requires a positive rate" do
       # TODO: Your test code here!
+
     end
   end
 end

@@ -45,7 +45,7 @@ describe "SavingsAccount" do
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
+      @account.withdraw(100).must_equal 100
     end
   end
 

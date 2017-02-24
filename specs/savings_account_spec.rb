@@ -1,10 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require 'savings_account'
+# require 'savings_account'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
-# require_relative '../lib/savings_account'
+require_relative '../lib/savings_account'
 
 # Because a SavingsAccount is a kind
 # of Account, and we've already tested a bunch of functionality
@@ -70,36 +70,50 @@ describe "SavingsAccount" do
     end
 
 
+
     it "Doesn't modify the balance if the fee would put it below $10" do
         id = 116
-           balance = 20
-           amount = 9
-           fee = 2
-           account = Bank::SavingsAccount.new(id, balance)
+        balance = 20
+        amount = 9
+        fee = 2
+        account = Bank::SavingsAccount.new(id, balance)
 
-           account.balance.must_equal balance
+        account.balance.must_equal balance
     end
   end
 
 
-
-
-
-
-
-
-
-
-
-
+#this does not work and i don't understand for the life of me!
   describe "#add_interest" do
     it "Returns the interest calculated" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10000
+        rate = 0.25
+        interest = balance * rate/100
+
+        account = Bank::SavingsAccount.new(id,balance)
+        account.add_interest(rate).must_equal interest
+        # account.interest.must_equal interest
     end
 
+
+
+
     it "Updates the balance with calculated interest" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10000
+        rate = 0.25
+        interest = balance * rate/100
+        new_balance = interest + balance
+
+
+        account = Bank::SavingsAccount.new(id,balance)
+        account.add_interest(rate)
+        account.balance.must_equal new_balance
     end
+
+
+
 
     it "Requires a positive rate" do
       # TODO: Your test code here!

@@ -31,13 +31,14 @@ describe "SavingsAccount" do
     end
 
     it "Applies a $2 fee each time" do
-      
+
     @account.withdraw(20).must_equal 88
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      skip
-      proc {@account.withdraw(110)}.must_raise ArgumentError
+
+      proc { @account.withdraw(110) }.must_output(/.+/)
+
     end
 
     it "Doesn't modify the balance if it would go below $10" do

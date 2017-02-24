@@ -191,23 +191,23 @@ describe "Wave 2" do
 
      end
 
-   describe "Account.find" do
+     describe "Account.find" do
 
-         it "Returns an account that exists" do
+          it "Returns an account that exists" do
 
-              find_account = Bank::Account.find_with_id("../support/accounts.csv", 1213)
+              find_account = Bank::Account.find("../support/accounts.csv", 1213)
               find_account.must_be_kind_of Bank::Account
               find_account.id.must_equal 1213
 
-        end
+          end
 
-        it "Can find the first account from the CSV" do
+          it "Can find the first account from the CSV" do
 
              find_account = Bank::Account.find_with_index("../support/accounts.csv", 0)
              find_account.must_be_kind_of Bank::Account
              find_account.id.must_equal 1212
 
-         end
+          end
 
           it "Can find the last account from the CSV" do
 
@@ -219,7 +219,9 @@ describe "Wave 2" do
 
           it "Raises an error for an account that doesn't exist" do
 
-               proc {find_account = Bank::Account.find_with_index("../support/accounts.csv", 13)}.must_raise ArgumentError
+               proc {find_account = Bank::Account.find("../support/accounts.csv", 3333)}.must_raise ArgumentError
+
+               proc {find_account = Bank::Account.find_with_index("../support/accounts.csv", 13)}.must_raise IndexError
 
           end
 

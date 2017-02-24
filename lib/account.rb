@@ -10,7 +10,11 @@ module Bank
 
                CSV.open(file).each do | line |
 
-                    account = Account.new(line[0].to_i, line[1].to_i)
+                    id = line[0].to_i
+                    balance = line[1].to_i
+                    date_opened = line[2]
+
+                    account = Account.new(id, balance, date_opened)
 
                     all_accounts << account
                end
@@ -18,95 +22,65 @@ module Bank
                all_accounts
           end
 
-          def self.find_with_id(file, inquiry) # using ID
-
-               all_accounts = Bank::Account.all(file)
-               # found = ""
-               #
-               # all_accounts.each do | account |
-               #
-               #
-               #      if account.id == inquiry
-               #
-               #           found = account
-               #      end
-               #
-               #
-               # end
-               #
-               # found
-
-               all_accounts[]
-
-
-          end
-
-          def self.find_with_index(file, inquiry) # using index in array
+          def self.find(file, id)
 
                all_accounts = Bank::Account.all(file)
 
-               # found = all_accounts[inquiry]
-               #
-               # raise ArgumentError.new "Can't create an account with a negative balance." if found == nil
-               #
-               # found
+               all_accounts.each do | account |
 
-               all_accounts.fetch(inquiry, "Count doesn't exist.")
+                    if account.id == id
 
-          end
+                         return account
 
-          attr_accessor :id, :balance
-
-          def initialize(id,balance)
-
-               @id = id
-
-               if balance >= 0
-                    @balance = balance
-
-               else
-                    raise ArgumentError.new "Can't create an account with a negative balance."
+                    end
 
                end
+
+               raise ArgumentError.new "Account #{id} does not exist."
+
+          end
+
+          def self.find_with_index(file, index)
+
+               all_accounts = Bank::Account.all(file)
+
+               all_accounts.fetch(index)
+               
+          end
+
+
+          attr_accessor :id, :balance, :date_opened
+
+          def initialize(id, balance, date_opened = nil)
+
+               raise ArgumentError.new "Can't create an account with a negative balance." unless balance >= 0
+
+               @id = id
+               @balance = balance
+               @date_opened = date_opened
 
           end
 
           def withdraw(withdrawal_amount)
 
-               if withdrawal_amount >= 0
+               raise ArgumentError.new "Please enter a withdrawal amount greater than 0." unless withdrawal_amount > 0
 
-                    start_balance = @balance
-
-                    if start_balance >= withdrawal_amount
-                         @balance = start_balance - withdrawal_amount
-
-                    else
-                         puts "Your balance is now negative."
-                         @balance
-
-                    end
+               if @balance >= withdrawal_amount
+                    @balance -= withdrawal_amount
 
                else
-                    raise ArgumentError.new "Withdrawal amounts must be positive."
+                    puts "You haven't sufficient funds for withdrawal."
+                    @balance
 
                end
-
 
           end
 
           def deposit(deposit_amount)
 
-               if deposit_amount >= 0
+               raise ArgumentError.new "Please enter a deposit amount greater than 0." unless deposit_amount > 0
 
-                    start_balance = @balance
-
-                    @balance = start_balance + deposit_amount
-
-               else
-                    raise ArgumentError.new "Withdrawal amounts must be positive."
-
-               end
-
+               @balance += deposit_amount
 
           end
 
@@ -115,18 +89,6 @@ module Bank
 
 end
 
-# new_account = Bank::Account.new(133, 100, hash)
-
-# puts new_account.balance
-
-# puts new_account.owner.name
-
-# puts new_account.owner.phone
-
-# expected_balance = new_account.withdraw(25)
-
-# puts expected_balance
-#
-# all_accounts = Bank::Account.all("../support/accounts.csv")
-
-#find_account = Bank::Account.find("../support/accounts.csv", 1213)
+find_account = Bank::Account.find("../support/accounts.csv", 1213)
+puts find_account
+puts find_account.class

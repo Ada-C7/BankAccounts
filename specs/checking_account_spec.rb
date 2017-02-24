@@ -2,7 +2,8 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/checking_account'
-
+require_relative '../lib/account'
+Minitest::Reporters.use!
 
 describe "CheckingAccount" do
   describe "#initialize" do
@@ -50,7 +51,7 @@ describe "CheckingAccount" do
       account = Bank::CheckingAccount.new(1234, 100)
       amount_to_withdraw = 110
       result = account.withdraw_using_check(amount_to_withdraw)
-      result.must_equal -10
+      result.must_equal (-10)
     end
 
     it "Outputs a warning if the account would go below -$10" do
@@ -58,7 +59,7 @@ describe "CheckingAccount" do
       amount_to_withdraw = 90
       proc {
         account.withdraw_using_check(amount_to_withdraw)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
@@ -121,7 +122,7 @@ describe "CheckingAccount" do
         run_withdraw_using_check(2, account, amount)
         account.reset_checks
         run_withdraw_using_check(2, account, amount)
-        
+
         result =account.withdraw_using_check(amount)
         result.must_equal 50
     end

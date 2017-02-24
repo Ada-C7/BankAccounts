@@ -4,6 +4,7 @@ require 'minitest/skip_dsl'
 require_relative '../lib/savings_account'
 require_relative '../lib/account'
 require 'csv'
+Minitest::Reporters.use!
 
 describe "SavingsAccount" do
   describe "#initialize" do
@@ -38,7 +39,7 @@ describe "SavingsAccount" do
         amount_to_withdraw = 90
         proc {
           account.withdraw(amount_to_withdraw)
-        }.must_output /.+/
+        }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if it would go below $10" do

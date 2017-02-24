@@ -15,6 +15,8 @@ module Bank
 
   # Returns array of all Owners
     def self.all
+      # owner.rb file must be called from BankAccount folder in order to avoid "Can't find csv file" error
+      # $ ruby libs/owner.rb
       csv = CSV.read("support/owners.csv", 'r') # object of class CSV
       all_owners = []
       n = 0 # current line of csv file

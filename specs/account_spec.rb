@@ -5,6 +5,8 @@ require_relative '../lib/account'
 require 'csv'
 require 'date'
 
+Minitest::Reporters.use!
+
 describe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
@@ -65,7 +67,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -156,7 +158,7 @@ describe "Wave 2" do
     end
     it " - The ID and balance of the first and last
           accounts match what's in the CSV file" do
-      csv = CSV.read("../support/accounts.csv", 'r')
+      csv = CSV.read("support/accounts.csv", 'r')
       expected_id_first = csv[0][0].to_i
       expected_balance_first = csv[0][1].to_i/100.0
       expected_id_last = csv[11][0].to_i
@@ -182,7 +184,7 @@ describe "Wave 2" do
     end
 
     it "Can find the first account from the CSV" do
-      csv = CSV.read("../support/accounts.csv", 'r')
+      csv = CSV.read("support/accounts.csv", 'r')
       result = Bank::Account.find(csv[0][0].to_i)
       result.id.must_be :==, Bank::Account.all[0].id
       result.balance.must_be :==, Bank::Account.all[0].balance
@@ -190,7 +192,7 @@ describe "Wave 2" do
     end
 
     it "Can find the last account from the CSV" do
-      csv = CSV.read("../support/accounts.csv", 'r')
+      csv = CSV.read("support/accounts.csv", 'r')
       result = Bank::Account.find(csv[11][0].to_i)
       result.id.must_be :==, Bank::Account.all[11].id
       result.balance.must_be :==, Bank::Account.all[11].balance

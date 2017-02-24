@@ -31,6 +31,3 @@ module Bank
     end
   end # end of class CheckingAccount
 end # end of Bank module
-
-acc = Bank::CheckingAccount.new(1, 100)
-acc.withdraw_using_check(110)

@@ -2,9 +2,10 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/owner'
-#require_relative '/lib/owner'
+#require '../support/owner.csv'
 require 'csv'
 
+Minitest::Reporters.use!
 # Owner class inside Bank Module:
 describe "Owner#initialize" do
   it "Can be instantiated" do
@@ -51,14 +52,14 @@ describe "Owner#find(id)" do
   end
 
   it "Can find the first owner from the CSV" do
-    csv = CSV.read("../support/owners.csv", 'r')
+    csv = CSV.read("support/owners.csv", 'r')
     result = Bank::Owner.find(csv[0][0].to_i)
     result.id.must_be :==, Bank::Owner.all[0].id
     result.last_name.must_be :==, Bank::Owner.all[0].last_name
   end
 
   it "Can find the last owner from the CSV" do
-    csv = CSV.read("../support/owners.csv", 'r')
+    csv = CSV.read("support/owners.csv", 'r')
     result = Bank::Owner.find(csv[11][0].to_i)
     result.id.must_be :==, Bank::Owner.all[11].id
     result.last_name.must_be :==, Bank::Owner.all[11].last_name

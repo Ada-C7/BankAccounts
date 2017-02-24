@@ -50,12 +50,11 @@ module Bank
     def reset_transactions
       @maximum_transactions = 0
     end
-
-
+    
   end # end of class MoneyMarket
 end # end of Bank module
 
 acc = Bank::MoneyMarket.new(1, 20000)
 
-acc.withdraw(500)
-acc.withdraw(25000)
+
+acc.withdraw(20000)

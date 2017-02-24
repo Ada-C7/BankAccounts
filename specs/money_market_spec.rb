@@ -32,7 +32,22 @@ describe "MoneyMarketAccount" do
   end
 
   describe "#withdraw updates" do
+
     it "if withdrawal transaction brings balance to below 10000, impose $100 fee" do
+      account = Bank::MoneyMarketAccount.new(1,10000)
+      account.withdraw(1)
+      account.balance.must_equal 9899
+      account.too_low.must_be :==, true
+    end
+
+    it "if too_low is true, return message and don't allow transaction" do
+      skip
+      account = Bank::MoneyMarketAccount.new(1,9999)
+      account.balance.must_equal 9999
+      account.too_low.must_be :==, true
+      proc {account.withdraw(1)}.must_output(/.+/)
+
+      a
     end
 
     it "if balance < 10000, no more transactions allowed until balance is increased to >= 10000 using a deposit transaction" do

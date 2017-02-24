@@ -60,7 +60,8 @@ describe "CheckingAccount" do
       account.balance.must_equal start_balance
     end
   end
-  #
+
+
   describe "#withdraw_using_check" do
 
     it "Reduces the balance" do
@@ -135,34 +136,50 @@ describe "CheckingAccount" do
       start_balance = 500.00
       account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
-      account.check_count=(2)
+      # account.check_count=(2)
+      # account.withdraw_using_check(25.00)
+      # account.balance.must_equal 475.00
+
       account.withdraw_using_check(25.00)
+      account.check_count.must_equal 1
       account.balance.must_equal 475.00
 
-      # account.withdraw_using_check(25.00)
-      # account.check_count.must_equal 1
-      # account.balance.must_equal 475.00
-      #
-      # account.withdraw_using_check(25.00)
-      # account.check_count.must_equal 2
-      # account.balance.must_equal 450.00
-      #
-      # account.withdraw_using_check(25.00)
-      # account.check_count.must_equal 3
-      # account.balance.must_equal 425.00
+      account.withdraw_using_check(25.00)
+      account.check_count.must_equal 2
+      account.balance.must_equal 450.00
+
+      account.withdraw_using_check(25.00)
+      account.check_count.must_equal 3
+      account.balance.must_equal 425.00
     end
 
     it "Applies a $2 fee after the third use" do
       # skip
-      start_balance = 500.00
-      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
-      # can use a writer method to make check_count whatever I want
-      account.check_count=(5)
-      account.withdraw_using_check(25.00)
-      account.balance.must_equal 473.00
+      #put a helper method here that loops and writes a bunch of checks
+      def write_checks()
+        start_balance = 500.00
+        account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+        test_balance = start_balance
+        5.times do |count|
+          account.withdraw_using_check(25.00)
+          count += 1
+          account.check_count.must_equal count
+          if count <= 3
+            test_balance -= 25.00
+            account.balance.must_equal test_balance
+          elsif count > 3
+            test_balance -= 27.00
+            account.balance.must_equal test_balance
+          end
+        end
+      end
+      write_checks
 
-      # or could run the account like a person and make sure fee gets applied after the 3rd check
+      # or can write out a bunch of methods one by one:
+      # start_balance = 500.00
+      # account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
       # account.withdraw_using_check(25.00)
       # account.check_count.must_equal 1
       # account.balance.must_equal 475.00
@@ -202,6 +219,11 @@ describe "CheckingAccount" do
       account.check_count.must_equal 2
       account.reset_checks
       account.check_count.must_equal 0
+
+      # test by calling withdraw_using_check and making sure no fee is applied
+      account.withdraw_using_check(25.00)
+      account.check_count.must_equal 1
+      account.balance.must_equal 475.00
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
@@ -212,6 +234,10 @@ describe "CheckingAccount" do
       account.check_count.must_equal 5
       account.reset_checks
       account.check_count.must_equal 0
+
+      account.withdraw_using_check(25.00)
+      account.check_count.must_equal 1
+      account.balance.must_equal 475.00
     end
   end
 end

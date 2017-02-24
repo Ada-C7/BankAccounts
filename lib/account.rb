@@ -1,6 +1,6 @@
 require 'csv'
 require 'date'
-
+require_relative 'owner'
 # Bank module contains Account class and any future bank account logic.
 module Bank
   class Account

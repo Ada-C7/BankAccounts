@@ -32,7 +32,7 @@ describe "SavingsAccount" do
 
     it "Applies a $2 fee each time" do
 
-    @account.withdraw(20).must_equal 88
+    @account.withdraw(20).must_equal 78
     end
 
     it "Outputs a warning if the balance would go below $10" do

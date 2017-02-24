@@ -6,7 +6,7 @@ require_relative 'account.rb'
 module Bank
   class SavingsAccount < Account
 
-    attr_accessor
+    attr_accessor :balance
 
     def initialize(account)
 
@@ -22,17 +22,16 @@ module Bank
 
     end
 
-    def withdraw(amount)
+    def withdraw(amount) #this one is weird - can figue out how to override the parent
 
-      if @balance - (amount + 2)  < 10
+      if (@balance - (amount + 2) ) < 10
         puts "Insufficient Funds"
         return @balance
-      else
-        @balance = (@balance - (amount + 2)) + 10
-        return @balance
       end
-
+      super
+      return @balance - 2
     end
+
 
     def add_interest(rate)
       if rate < 0

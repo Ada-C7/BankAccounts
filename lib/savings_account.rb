@@ -12,6 +12,12 @@ module Bank
       super(id, balance, open_date = nil)
     end
 
+    def withdraw(amount)
+      raise ArgumentError.new "The mimimum balance is $10.00." if @balance - 2 - amount < 10
+      super(amount)
+      @balance -= 2
+    end
+
   end
 end
 

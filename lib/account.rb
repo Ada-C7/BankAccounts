@@ -1,15 +1,40 @@
+require 'csv'
+
 module Bank
   class Account
 
-    attr_accessor :id, :balance
-    def initialize (id, initial_balance)
+    attr_accessor :id, :balance, :date
+    def initialize (id, initial_balance, date)
       if initial_balance < 0
         raise ArgumentError, 'You cannot use a negative number for your initial balance'
       end
       @id = id
       @balance = initial_balance
+      @date =  date
     end
 
+    @accounts = []
+
+    def self.all
+      @accounts = []
+      CSV.open("./support/accounts.csv").each do |line|
+        @accounts << self.new(line[0].to_i, line[1].to_f, line[2].to_s)
+      end
+      return @accounts
+    end
+
+    def self.find(id)
+      all.each do |account|
+        if account.id == id
+          return account
+        end
+      end
+      raise ArgumentError.new("Account that doesn't exist")
+      # CSV.open("./support/accounts.csv").each
+      # @accounts.each do |account|
+      #   return account
+      # end
+    end
 
     def withdraw(amount)
       raise ArgumentError.new("You do not have sufficient funds, to complete this transaction") if amount < 0
@@ -22,7 +47,7 @@ module Bank
       return @balance
     end
 
-    def deposit (amount)
+    def deposit(amount)
       if amount < 0
         raise ArgumentError.new("You cannot deposit a negative number")
         return @balance

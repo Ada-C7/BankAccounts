@@ -60,5 +60,9 @@ module Bank
       @number_of_checks += 1
     end
 
+    def reset_checks
+
+    end
+
   end#class CheckingAccount
 end#module Bank

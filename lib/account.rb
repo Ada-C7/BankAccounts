@@ -3,7 +3,7 @@ require "csv"
 module Bank
     class Account
         attr_accessor :id, :balance, :opendate
-        def initialize (id, balance, opendate = nil)
+        def initialize (id, balance, opendate = nil )
             raise ArgumentError.new("You need some positive cash flow to open an account") if balance < 0
             @id = id
             @balance = balance
@@ -35,42 +35,27 @@ module Bank
             raise ArgumentError.new("this is not an account in our system")
         end
 
+        def fee
+            0
+        end
+
+        def minimum
+            0
+        end
 
 
         def withdraw (amount)
             if amount > 0
-                if @balance - amount < minimum
+                if @balance - amount < 0 || @balance - amount < minimum || @balance - (amount + fee) < minimum
                     puts "You do not have enough money to withdraw this amount"
                 else
-                    @balance -=amount
+                    @balance -=(amount + fee)
                 end
             else
                 raise ArgumentError.new("You can only withdraw a positive amount of money")
             end
             return @balance
         end
-
-
-        def withdraw(amount)
-            if amount > 0
-                if @balance - amount < @minimum || @balance - [amount + @fee] < @minimum
-                    puts "You don't have enough money in your account for this transaction"
-                else
-                    @balance -=[amount + fee]
-                    return @balance
-                end
-            else
-                puts "You must enter a positive amount of money to withdraw"
-            end
-
-        end
-
-
-
-
-
-
-
 
         def deposit (amount)
             if amount > 0

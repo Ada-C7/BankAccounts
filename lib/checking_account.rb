@@ -9,10 +9,15 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      super(withdrawal_amount)
-
       fee = 1.0
-      @balance -= fee
+      
+      if @balance - (withdrawal_amount + fee) < 0
+        print "You're withdrawing too much."
+        return @balance
+      else
+        @balance -= withdrawal_amount + fee
+      end
+
     end
 
 

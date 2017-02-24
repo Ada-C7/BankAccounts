@@ -15,7 +15,7 @@ describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
-      account = Bank::SavingsAccount.new(12345, 100.0)
+      account = Bank::SavingsAccount.new(12345, 100.0, nil)
       account.must_be_kind_of Bank::Account
     end
 

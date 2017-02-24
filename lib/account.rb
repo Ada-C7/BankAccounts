@@ -50,7 +50,7 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      raise ArgumentError.new("Withdrawal must be >=0") if withdrawal_amount < 0
+      withdraw_positive(withdrawal_amount)
 
       if @balance - withdrawal_amount < 0
         puts "You are going negative."
@@ -58,6 +58,14 @@ module Bank
       else
         @balance -= withdrawal_amount
       end
+    end
+
+    #Should this be private??
+    #creating this as a method b/c
+    #used in check_withdrawal as well
+    def withdraw_positive(withdrawal_amount)
+      #makes sure the withdrawal amount is pos.
+      raise ArgumentError.new("Withdrawal must be >=0") if withdrawal_amount < 0
     end
 
     def deposit(deposit_amount)

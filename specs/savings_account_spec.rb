@@ -23,7 +23,7 @@ describe "SavingsAccount" do
     end
   end
 
-  xdescribe "#withdraw" do
+  describe "#withdraw" do
     it "Applies a $2 fee each time" do
       # TODO: Your test code here!
       Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").withdraw(100).must_equal 9700
@@ -47,7 +47,7 @@ describe "SavingsAccount" do
     end
   end
 
-  xdescribe "#add_interest" do
+  describe "#add_interest" do
     it "Returns the interest calculated" do
       # TODO: Your test code here!
       Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").add_interest(0.25).must_equal 2500

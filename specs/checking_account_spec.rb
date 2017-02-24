@@ -102,9 +102,26 @@ describe "CheckingAccount" do
     it "Allows 3 free uses" do
       start_balance = 100.0
       check_1 = 10.0
-      check_2 = 10.0
-      check_3 = 10.0
+      check_2 = 15.0
+      check_3 = 20.0
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+
+      account.withdraw_using_check(check_1)
+      account.withdraw_using_check(check_2)
+      account.withdraw_using_check(check_3)
+
+      expected_balance = start_balance - check_1 - check_2 - check_3
+
+      account.balance.must_equal expected_balance
+    end
+
+    it "Applies a $2 fee after the third use" do
+      start_balance = 100.0
+      check_1 = 10.0
+      check_2 = 15.0
+      check_3 = 20.0
       check_4 = 10.0
+      fee_for_check_4 = 2.0
       account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       account.withdraw_using_check(check_1)
@@ -112,13 +129,9 @@ describe "CheckingAccount" do
       account.withdraw_using_check(check_3)
       account.withdraw_using_check(check_4)
 
-      expected_balance = start_balance - check_1 - check_2 - check_3 - check_4 - 2.0
+      expected_balance = start_balance - check_1 - check_2 - check_3 - check_4 - fee_for_check_4
 
       account.balance.must_equal expected_balance
-    end
-
-    it "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
     end
   end
 

@@ -5,7 +5,7 @@ require 'date'
 module Bank
   class Account
     attr_accessor :id, :balance, :owner, :date_created
-# To make all given tests pass, default values was given for some paramethers
+    # To make all given tests pass, default values was given for some paramethers
     def initialize(id, balance, date_created = "1991-01-01 11:01:01 -0800", owner=nil)
       raise ArgumentError.new("balance must be >= 0") if balance < 0
       @id = id
@@ -13,14 +13,14 @@ module Bank
       @owner = owner
     end
 
-# Returns array of all instances of class Account
+    # Returns array of all instances of class Account
     def self.all
       csv = CSV.read("../support/accounts.csv", 'r') # object of class CSV
       all_accounts = []
       n = 0 # current line of csv file
       csv.length.times do
         id = csv[n][0].to_i
-        balance = csv[n][1].to_i
+        balance = csv[n][1].to_i/100.0 # /100.0 to convert cents to dollar
         date_created = DateTime.parse(csv[n][2])
         all_accounts << Account.new(id, balance, date_created)
         n += 1
@@ -38,8 +38,9 @@ module Bank
         return result[0]
       end
     end
-# Method returns array of all accounts, with  @owner instance variable, that
-# stores corresponding owner of account (from account_owners.csv file)
+    # Method returns array of all accounts, with  @owner
+    # instance variable, that stores corresponding owner
+    # of account (from account_owners.csv file)
     def self.accounts_with_owners
       accounts_with_owners = []
       csv = CSV.read("../support/account_owners.csv", 'r')
@@ -52,21 +53,36 @@ module Bank
         accounts_with_owners << account
       end
     end
-    # Add owner attribute to account 
+    # Add owner attribute to account
     def add_owner(id, last_name)
       @owner = Bank::Owner.new(id, last_name)
     end
 
-    def withdraw(amount)
+    # method Account#withdraw is interface for withdraw_internal method
+    # I did it to be able use inheritance
+    # without changing my tests in CheckingAccount
+    # and SavingsAccount classes (see these classes for details)
+
+    # SavingsAccount and CheckingsAccount withdraw methods
+    # inherits from Account withdraw, so I added
+    # fee and minimum_balance default paramethers,
+    # that will be default for Bank::Account class
+    # but not default for Savings and CheckingAccount
+    def withdraw(amount, fee=0, minimum_balance=0)
+      withdraw_internal(amount, fee, minimum_balance)
+    end
+
+    def withdraw_internal(amount, fee=0, minimum_balance = 0)
       if amount < 0
          raise ArgumentError.new("amount to withdraw cannot be less than 0")
       end
-      if @balance - amount < 0
-        puts "Warning: This ammount cannot be withdrawed; your balance cannot be negative"
+      if @balance - amount - fee < minimum_balance
+        puts "Warning: This amount cannot be withdrawed;
+         your balance cannot be less than #{minimum_balance}$"
       else
-        @balance -= amount
+        @balance = @balance - amount - fee
       end
-      puts "Your balance now is #{@balance}"
+      puts "Your balance now is #{@balance}$"
       return @balance
     end
 
@@ -77,5 +93,6 @@ module Bank
       @balance += amount
       return @balance
     end
+
   end # end of class Account
 end # end of module Bank

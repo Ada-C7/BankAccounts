@@ -6,7 +6,7 @@ module Bank
     attr_reader :check_count
     def initialize(id, balance, open_date = nil)
       super
-      @check_count = 1
+      @check_count = 0
     end
 
 
@@ -24,7 +24,7 @@ module Bank
 
     def withdraw_using_check(check)
       raise ArgumentError.new("Check cannot be a negative amount") if check < 0
-      if @check_count < 4
+      if @check_count < 3
         if (@balance - check) < -10
           puts "Warning! This withdrawal will cause you to be under more than ten dollars!"
           # return @balance
@@ -43,9 +43,11 @@ module Bank
           @check_count += 1
             @balance = @balance - check - 2.0
         end
-
       end
+    end
 
+    def reset_checks
+      @check_count = 0
     end
 
   end

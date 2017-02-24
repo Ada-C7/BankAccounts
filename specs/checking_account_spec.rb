@@ -149,8 +149,7 @@ describe "CheckingAccount" do
       account.withdraw_using_check(check2).must_equal 70
       account.withdraw_using_check(check3).must_equal 30
       account.withdraw_using_check(check4).must_equal 23
-      # account.check_count.must_equal
-      # account.withdraw_using_check(check4).must_equal 23
+
 
     end
   end
@@ -158,13 +157,84 @@ describe "CheckingAccount" do
   describe "#reset_checks" do
     it "Can be called without error" do
       # TODO: Your test code here!
+
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(1235, start_balance)
+      check1 = 10
+      check2 = 20
+      check3 = 40
+      check4 = 5
+
+      account.withdraw_using_check(check1)
+
+      account.check_count.must_equal 1
+      account.withdraw_using_check(check2)
+      account.check_count.must_equal 2
+
+      account.reset_checks
+      account.check_count.must_equal 0
+
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
       # TODO: Your test code here!
+
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(1235, start_balance)
+      check1 = 5
+      check2 = 10
+      check3 = 10
+      check4 = 5
+      check5 = 3
+      check6 = 2
+
+      account.withdraw_using_check(check1)
+      account.withdraw_using_check(check2)
+      account.reset_checks
+      account.withdraw_using_check(check3)
+      account.withdraw_using_check(check4)
+      account.withdraw_using_check(check5).must_equal 67
+      account.withdraw_using_check(check6).must_equal 63
+
+      account.check_count.must_equal 4
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
+
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(1235, start_balance)
+      check1 = 5
+      check2 = 10
+      check3 = 10
+      check4 = 5
+      check5 = 3
+      check6 = 2
+      check7 = 4
+      check8 = 11
+
+
+      account.withdraw_using_check(check1)
+      account.withdraw_using_check(check2)
+      account.withdraw_using_check(check3)
+      account.withdraw_using_check(check4)
+
+      account.balance.must_equal 68
+      account.check_count.must_equal 4
+
+      account.reset_checks
+
+      account.check_count.must_equal 0
+
+      account.withdraw_using_check(check5)
+      account.withdraw_using_check(check6)
+      account.withdraw_using_check(check7)
+
+      account.balance.must_equal 59
+      account.check_count.must_equal 3
+
+      account.withdraw_using_check(check8)
+      account.balance.must_equal 46
+
       # TODO: Your test code here!
     end
   end

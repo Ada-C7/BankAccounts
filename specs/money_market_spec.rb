@@ -41,25 +41,35 @@ describe "MoneyMarketAccount" do
     end
 
     it "if too_low is true, return message and don't allow transaction" do
-      skip
-      account = Bank::MoneyMarketAccount.new(1,9999)
-      account.balance.must_equal 9999
+      # skip
+      account = Bank::MoneyMarketAccount.new(1,10500)
+      account.balance.must_equal 10500
+      account.too_low.must_be :==, false
+      account.withdraw(501)
+      account.balance.must_equal 9899
       account.too_low.must_be :==, true
       proc {account.withdraw(1)}.must_output(/.+/)
 
-      a
-    end
-
-    it "if balance < 10000, no more transactions allowed until balance is increased to >= 10000 using a deposit transaction" do
-    end
-
-    it "cannot withdraw if balance < 10000" do
     end
 
     it "if transactions >= 6 cannot withdraw" do
+      account = Bank::MoneyMarketAccount.new(1,10500)
+      account.withdraw(10)
+      account.withdraw(10)
+      account.withdraw(10)
+      account.withdraw(10)
+      account.withdraw(10)
+      account.transactions.must_equal 5
+      account.withdraw(10)
+      account.transactions.must_equal 6
+      proc {account.withdraw(10)}.must_output(/.+/)
     end
 
     it "a withdrawal increases the number of transactions" do
+      account = Bank::MoneyMarketAccount.new(1,10500)
+      account.transactions.must_equal 0
+      account.withdraw(10)
+      account.transactions.must_equal 1
     end
   end
 

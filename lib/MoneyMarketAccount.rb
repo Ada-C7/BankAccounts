@@ -15,9 +15,9 @@ module Bank
     end
 
     def withdraw(amount)
-      if @too_low
-        puts "You need to get your balance back up to 10k!"
-        return
+      if @too_low || @transactions >= 6
+        puts "You can't withdraw right now!"
+        # return
       else
         if @balance - amount < 10000
           @too_low = true

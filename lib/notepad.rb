@@ -88,6 +88,4 @@ module Bank
 end
 
 # print Bank::Account.all
-# all = Bank::Account.all
-# all[0].withdraw(100)
-# print all[0].balance
+s

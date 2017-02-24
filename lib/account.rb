@@ -15,6 +15,8 @@ module Bank
         raise ArgumentError.new "Starting balance is not valid."
       end
       @opendate = Time.parse(opendate)
+      @withdraw_fee = 0
+      @minimum_balance = 0
       # @opendate = DateTime.strptime(opendate, '%Y-%m-%d %H:%M:%S %z')
     end
 
@@ -38,11 +40,12 @@ module Bank
       unless amount > 0
         raise ArgumentError.new "Withdrawal has be a positive amount!"
       end
-      if amount > @balance
+
+      if @balance - (amount + @withdraw_fee) < @minimum_balance
         puts "Can't withdraw more than you have!"
         return @balance
       else
-        @balance -= amount
+        @balance -= (amount + @withdraw_fee)
         return @balance
       end
     end
@@ -55,16 +58,12 @@ module Bank
       return @balance
     end
 
-    # def add_owner(owner) #optional to add an owner id later on
-    #   @owner = owner
-    # end
-
     def self.all
-      @@all_accounts = []
+      @all_accounts = []
       CSV.foreach("../support/accounts.csv") do |row|
-         @@all_accounts << Account.new(row[0], row[1], row[2])
+         @all_accounts << Account.new(row[0], row[1], row[2])
       end
-      return @@all_accounts
+      return @all_accounts
     end
 
     def self.find(id)
@@ -83,25 +82,3 @@ module Bank
     end
   end
 end
-
-# print Bank::Account.all
-all = Bank::Account.all
-print all
-
-# Instead of creating instance self.find is looking through self.all instances to return exact same object
-#
-# def self.find(id)
-#   @find_account = nil
-#   @@all_accounts.each do |account|
-#     if @id==id
-#       @find_account = account
-#     else
-#     end
-#   end
-#   if @find_account == nil
-#     raise ArgumentError.new("There is no matching account.")
-#   else
-#     return @find_account
-#   end
-# end
-# DEADEND: initially thought that I had to read in the data outside of the class

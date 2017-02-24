@@ -34,32 +34,25 @@ module Bank
     end
 
     def check_amount_is_over_zero(amount)
-      unless amount >= 0
-        raise ArgumentError.new "Amount must be greater than zero"
-      end
+      raise ArgumentError.new "Amount must be greater than zero" unless amount >= 0
     end
 
     # below are the class methods...
     # will read in info from CSV file return an array of account instances
     def self.all(csv_file)
-      @accounts = CSV.read(csv_file)
+      accounts = CSV.read(csv_file)
       # change the id to an integer and the balance to a dollar floats
-      @accounts.each do |info_array|
-        info_array[0] = info_array[0].to_i
-        info_array[1] = info_array[1].to_f / 100
-        info_array[2] = DateTime.parse(info_array[2])
-      end
-
-      #initiate the accounts using self.new
-      @accounts.map! do |account_info|
-        # Account.new(id, balance, date)
+      accounts.map! do |account_info|
+        account_info[0] = account_info[0].to_i
+        account_info[1] = account_info[1].to_f / 100
+        account_info[2] = DateTime.parse(account_info[2])
         self.new(account_info[0], account_info[1], account_info[2])
       end
-      return @accounts
+      return accounts
     end
 
-    def self.find(id)
-      @accounts.each do |account_info|
+    def self.find(id, accounts)
+      accounts.each do |account_info|
         return account_info if account_info.id == id
       end
       raise ArgumentError.new "Error - that account does not exist"

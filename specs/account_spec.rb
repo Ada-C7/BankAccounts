@@ -203,31 +203,30 @@ describe "Wave 2" do
   describe "Account#find" do
 
     it "Returns an account that exists" do
-      Bank::Account.all('./support/accounts.csv').each do |account|
-        Bank::Account.find(account.id).must_be_instance_of Bank::Account
+      accounts = Bank::Account.all('./support/accounts.csv')
+      accounts.each do |account|
+        Bank::Account.find(account.id, accounts).must_be_instance_of Bank::Account
       end
     end
 
     it "Can find the first account from the CSV" do
-      # do I need to call .all (to create the accounts array that I will be searching through to find the certain account)
-      # in each test?
-      Bank::Account.all('./support/accounts.csv')
-      Bank::Account.find(1212).must_be_instance_of Bank::Account
+      accounts = Bank::Account.all('./support/accounts.csv')
+      Bank::Account.find(1212, accounts).must_be_instance_of Bank::Account
       # the tests above(frome wave 1) check that accounts have to respond to id, balance
       # so you don't need them again  here
-      Bank::Account.find(1212).id.must_equal 1212
-      Bank::Account.find(1212).balance.must_equal 12356.67
+      Bank::Account.find(1212, accounts).id.must_equal 1212
+      Bank::Account.find(1212, accounts).balance.must_equal 12356.67
     end
 
     it "Can find the last account from the CSV" do
-      Bank::Account.all('./support/accounts.csv')
-      Bank::Account.find(15156).must_be_instance_of Bank::Account
-      Bank::Account.find(15156).id.must_equal 15156
-      Bank::Account.find(15156).balance.must_equal 43567.72
+      accounts = Bank::Account.all('./support/accounts.csv')
+      Bank::Account.find(15156, accounts).must_be_instance_of Bank::Account
+      Bank::Account.find(15156, accounts).id.must_equal 15156
+      Bank::Account.find(15156, accounts).balance.must_equal 43567.72
     end
 
     it "Raises an error for an account that doesn't exist" do
-      Bank::Account.all('./support/accounts.csv')
+      # accounts = Bank::Account.all('./support/accounts.csv')
       proc { Bank::Account.find() }.must_raise ArgumentError
     end
   end

@@ -28,13 +28,15 @@ describe "SavingsAccount" do
   end
 
   describe "#withdraw" do
+
+    #interpreting 200 as $2.00
     it "Applies a $2 fee each time" do
       start_balance = @account.balance
       withdrawal_amount = 1000
 
       @account.withdraw(withdrawal_amount)
 
-      expected_balance = start_balance - withdrawal_amount - 200 #interpreting 200 as $2.00
+      expected_balance = start_balance - withdrawal_amount - 200
       @account.balance.must_equal expected_balance
 
     end
@@ -44,25 +46,33 @@ describe "SavingsAccount" do
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
+      updated_balance = @account.withdraw(9500)
+      updated_balance.must_equal 10000
+      @account.balance.must_equal 10000
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
+      updated_balance = @account.withdraw(8801)
+      updated_balance.must_equal 10000
+      @account.balance.must_equal 10000
     end
   end
 
   describe "#add_interest" do
     it "Returns the interest calculated" do
-      # TODO: Your test code here!
+      @account.add_interest(0.25).must_equal 25
     end
 
     it "Updates the balance with calculated interest" do
-      # TODO: Your test code here!
+      @account.add_interest(0.35)
+      @account.balance.must_equal 10035
     end
 
     it "Requires a positive rate" do
-      # TODO: Your test code here!
+      proc { @account.add_interest(0) }.must_raise ArgumentError
+      proc { @account.add_interest(-5) }.must_raise ArgumentError
+
     end
+
   end
 end

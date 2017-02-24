@@ -15,8 +15,18 @@ module Bank
         puts "You can't withdraw that much"
         return @balance
       end
+
       super(withdrawal_amount)
-      @balance -= 200 #interpreting 200 as $2.00
+
+      return @balance -= 200 #interpreting 200 as $2.00
     end
+
+    def add_interest(rate)
+      raise ArgumentError.new "Rate must be positive" if rate <= 0
+      interest = @balance * (rate / 100)
+      @balance += interest
+      return interest
+    end
+
   end
 end

@@ -21,7 +21,12 @@ module Bank
       else
         @balance -= 2
       end
+    end
 
+    def add_interest
+      interest = @balance * 0.25/100
+      @balance += interest
+      return interest
     end
 
   end

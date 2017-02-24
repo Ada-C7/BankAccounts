@@ -80,7 +80,7 @@ describe "Wave 1" do
       # expression matching one or more characters - as long as
       # anything at all is printed out the test will pass.
       proc {
-        account.withdraw(withdrawal_amount)
+        puts account.withdraw(withdrawal_amount)
       }.must_output (/.+/)
     end
 
@@ -90,11 +90,12 @@ describe "Wave 1" do
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
-      updated_balance = account.withdraw(withdrawal_amount)
+      # updated_balance = account.withdraw(withdrawal_amount)
+      account.withdraw(withdrawal_amount)
 
       # Both the value returned and the balance in the account
       # must be un-modified.
-      updated_balance.must_equal start_balance
+      # updated_balance.must_equal start_balance
       account.balance.must_equal start_balance
     end
 

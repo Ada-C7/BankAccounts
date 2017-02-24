@@ -40,7 +40,7 @@ describe "SavingsAccount" do
       # skip
       account = Bank::SavingsAccount.new(12345, 5000.00)
       proc {
-        account.withdraw(4995)
+        puts account.withdraw(4995)
       }.must_output (/.+/)
 
     end
@@ -48,13 +48,15 @@ describe "SavingsAccount" do
     it "Doesn't modify the balance if it would go below $10" do
       # skip
       account = Bank::SavingsAccount.new(12345, 5000.00)
-      account.withdraw(4995).must_equal 5000.00
+      account.withdraw(4995)
+      account.balance.must_equal 5000.00
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
       # skip
       account = Bank::SavingsAccount.new(12345, 5000.00)
-      account.withdraw(4990).must_equal 5000.00
+      account.withdraw(4990)
+      account.balance.must_equal 5000.00
     end
   end
 

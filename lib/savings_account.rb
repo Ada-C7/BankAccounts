@@ -1,4 +1,5 @@
 module Bank
+  # SavingsAccount mainitains the balance of a savings account
   class SavingsAccount < Account
     attr_reader :balance, :id, :opening_date
 
@@ -7,13 +8,11 @@ module Bank
       super(id, balance, date = '')
     end
 
-    # need to refractor this ...
+    # this method will rewrite the balance as long at the withdrawal amount
+    # meets certain conditions
     def withdraw(withdrawal_amount)
-      @balance = super(withdrawal_amount + 2)
-      if @balance < 10
-        @balance = @balance + withdrawal_amount + 2
-        puts "Your savings account balance must have 10 or more dollars at all times"
-      end
+      return "Insufficient Funds" if @balance - withdrawal_amount - 2 < 10
+      super(withdrawal_amount + 2)
       return @balance
     end
 

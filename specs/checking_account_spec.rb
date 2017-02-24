@@ -42,23 +42,24 @@ describe "CheckingAccount" do
       start_balace = 100.0
       withdrawal_amount = 100.0
       account = Bank::CheckingAccount.new(123, start_balace)
-      account.withdraw(withdrawal_amount)
+      # account.withdraw(withdrawal_amount)
       proc {
-        account.withdraw(withdrawal_amount)
+        puts account.withdraw(withdrawal_amount)
       }.must_output (/.+/)
     end
 
     # maybe you don't need this test cause you know checking account is a account type so it should pass all account types
     it "will not change the balance if withdrawl causes negative" do
       # skip
-      start_balance = 100.0
-      withdrawal_amount = 200.0
+      start_balance = 100.00
+      withdrawal_amount = 200.00
       account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
-      updated_balance = account.withdraw(withdrawal_amount)
+      # updated_balance = account.withdraw(withdrawal_amount)
+      account.withdraw(withdrawal_amount)
       # Both the value returned and the balance in the account
       # must be un-modified.
-      updated_balance.must_equal start_balance
-      account.balance.must_equal start_balance
+      # updated_balance.must_equal start_balance
+      account.balance.must_equal 100.00
     end
   end
 
@@ -104,9 +105,9 @@ describe "CheckingAccount" do
       withdrawal_amount = 125.00
       account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
-      account.withdraw_using_check(withdrawal_amount)
+      # account.withdraw_using_check(withdrawal_amount)
       proc {
-        account.withdraw(withdrawal_amount)
+        puts account.withdraw(withdrawal_amount)
       }.must_output (/.+/)
     end
 

@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require_relative '../lib/account'
+require_relative '../lib/notepad'
 require 'time'
 
 describe "Wave 1" do

@@ -32,7 +32,7 @@ describe "CheckingAccount" do
       # TODO: Your test code here!
       start_balance = 100.0
       withdrawal_amount = 100.0
-      account = Bank::SavingsAccount.new(12345, 100.0)
+      account = Bank::CheckingAccount.new(12345, 100.0)
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -46,14 +46,24 @@ describe "CheckingAccount" do
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
       # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100.0)
+      account.withdraw_using_check(10.0)
+      account.balance.must_equal 90.0
     end
 
     it "Returns the modified balance" do
       # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100.0)
+      withdrawal_amount = 20
+      account.withdraw_using_check(withdrawal_amount).must_equal 80
     end
 
     it "Allows the balance to go down to -$10" do
       # TODO: Your test code here!
+      withdrawal_amount = 110.0
+      account = Bank::CheckingAccount.new(12345, 100.0)
+
+      account.withdraw_using_check(withdrawal_amount)
     end
 
     it "Outputs a warning if the account would go below -$10" do

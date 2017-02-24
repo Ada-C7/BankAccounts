@@ -8,7 +8,7 @@ describe "Bank::MoneyMarketAccount" do
 
   describe "#initialize" do
     #Check that MoneyMarketAccount is a kind of account
-    it "Check Initialize" do
+    it "Check#Initialize" do
       account = Bank::MoneyMarketAccount.new(123, 10000.00, "5/5/5")
       account.must_be_kind_of Bank::Account
     end
@@ -112,14 +112,30 @@ describe "Bank::MoneyMarketAccount" do
 
     end
 
+    describe "#add_interest" do
+      before do
+        @my_money_market = Bank::MoneyMarketAccount.new(1234, 10000.00)
+        @my_interest = @my_money_market.add_interest(0.25)
+      end
+
+      it "Returns the interest calculated" do
+        @my_interest.must_equal(25)
+      end
+
+      it "Updates the balance with calculated interest" do
+        @my_money_market.balance.must_equal(10025.00)
+      end
+
+      it "Requires a positive rate" do
+        proc { @my_money_market.add_interest(-0.25) }.must_raise ArgumentError
+      end
+
+    end
+
   end
 end
 
 
-
-# Reset transactions - same as with check withdrawal.
-# inputs are just calling the method.
-# Output is the transaction total being reset to zero.
 
 # Add interest same as to SavingsAccount
 # Inputs are interest rate, balance

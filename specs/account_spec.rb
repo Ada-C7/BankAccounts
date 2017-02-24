@@ -4,7 +4,7 @@ require 'minitest/skip_dsl'
 require 'csv'
 require_relative '../lib/account'
 
-xdescribe 'Wave 1' do
+describe 'Wave 1' do
     describe 'Account#initialize' do
         it 'Takes an ID and an initial balance' do
             id = '1214'
@@ -138,7 +138,7 @@ xdescribe 'Wave 1' do
 end
 
 # : change 'xdescribe' to 'describe' to run these tests
-xdescribe 'Wave 2' do
+describe 'Wave 2' do
     describe 'Account.all' do
         it 'Returns an array of all accounts' do
             #   - Account.all returns an array
@@ -172,7 +172,7 @@ xdescribe 'Wave 2' do
     end
 end
 
-xdescribe 'Account.find' do
+describe 'Account.find' do
     it 'Returns an account that exists' do
         found = Bank::Account.find('1216')
         csv_file = CSV.open('support/accounts.csv')

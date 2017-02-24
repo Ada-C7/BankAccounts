@@ -37,6 +37,16 @@ module Bank
       super(amount)
     end
 
+    def add_interest(rate)
+      # Rate must be only between 0 and 1
+      if rate < 0 || rate > 1
+        raise ArgumentError.new("Rate should be between 0 and 1")
+      end
+      amount =  @balance * rate/100
+      @balance += amount
+      return amount
+    end
+
     def reset_transactions
       @maximum_transactions = 0
     end

@@ -46,7 +46,7 @@ describe "CheckingAccount" do
       checking_account = Bank::CheckingAccount.new(11, 200)
       checking_account.balance.must_equal 200
       checking_account.withdraw_with_check(10)
-      checking_account.balance.must_equal 189
+      checking_account.balance.must_equal 190
     end
 
     it "Returns the modified balance" do
@@ -55,15 +55,14 @@ describe "CheckingAccount" do
       checking_account = Bank::CheckingAccount.new(11, 200)
       checking_account.balance.must_equal 200
       checking_account.withdraw_with_check(10)
-      checking_account.balance.must_equal 189
+      checking_account.balance.must_equal 190
     end
 
     it "Allows the balance to go down to -$10" do
       # skip
       # TODO: Your test code here!
       checking_account = Bank::CheckingAccount.new(11, 200)
-      checking_account.balance.must_equal 200
-      checking_account.withdraw_with_check(209)
+      checking_account.withdraw_with_check(210)
       checking_account.balance.must_equal(-10)
     end
 
@@ -71,18 +70,16 @@ describe "CheckingAccount" do
       # skip
       # TODO: Your test code here!
       checking_account = Bank::CheckingAccount.new(11, 200)
+      checking_account.withdraw_with_check(211)
       checking_account.balance.must_equal 200
-      checking_account.withdraw_with_check(210)
-      checking_account.balance.must_equal 200
-      proc { checking_account.withdraw_with_check(210)}.must_output(/.+/)
+      proc { checking_account.withdraw_with_check(211)}.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
       # skip
       # TODO: Your test code here!
       checking_account = Bank::CheckingAccount.new(11, 200)
-      checking_account.balance.must_equal 200
-      checking_account.withdraw_with_check(210)
+      checking_account.withdraw_with_check(211)
       checking_account.balance.must_equal 200
     end
 

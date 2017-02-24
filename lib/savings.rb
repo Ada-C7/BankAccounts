@@ -4,7 +4,13 @@ require_relative 'account.rb'
 
 
 module Bank
-  class Savings < Account
+  class SavingsAccount < Account
+
+    attr_accessor
+
+    def initialize(account_hash)
+      super
+    end
 
   end
 end

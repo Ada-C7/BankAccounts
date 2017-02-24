@@ -10,38 +10,40 @@ require_relative '../lib/savings_account'
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "SavingsAccount" do
-  before do
-    @account = Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800")
-  end
-
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
-      @account.must_be_kind_of Bank::Account
+      Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").must_be_kind_of Bank::Account
     end
 
-    it "Requires an initial balance of at least $10" do
+    it "Requires an initial balance of at least $10, raises error otherwise" do
       proc {
         Bank::SavingsAccount.new(12345, 100, "1999-03-27 11:30:09 -0800")
       }.must_raise ArgumentError
     end
   end
 
-  xdescribe "#withdraw" do
+  describe "#withdraw" do
     it "Applies a $2 fee each time" do
       # TODO: Your test code here!
+      Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").withdraw(100).must_equal 9700
     end
 
     it "Outputs a warning if the balance would go below $10" do
       # TODO: Your test code here!
+      proc {
+        Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").withdraw(9500)
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if it would go below $10" do
       # TODO: Your test code here!
+      Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").withdraw(9100).must_equal 10000
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
       # TODO: Your test code here!
+        Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").withdraw(9000).must_equal 10000
     end
   end
 

@@ -1,41 +1,108 @@
+require 'csv'
+require 'time'
 
 module Bank
   class Account
-    attr_accessor :withdraw, :deposit
-    attr_reader :id, :balance
-    def initialize(id, balance)
-      unless balance >= 0
+    # attr_accessor :withdraw, :deposit, :all_accounts
+    attr_reader :id, :balance, :opendate, :show_id, :account_count, :find_account
+    @@account_count = 0
+    def initialize(id, balance, opendate)
+      @@account_count += 1
+      @id = id.to_i
+      unless balance.to_i >= 0
         raise ArgumentError.new "Starting balance is not valid."
       end
-      @id = id
-      @balance = balance
+      @balance = balance.to_i
+      @opendate = Time.parse(opendate)
+      # @opendate = DateTime.strptime(opendate, '%Y-%m-%d %H:%M:%S %z')
     end
 
     def withdraw(amount)
       unless amount > 0
-        raise ArgumentError.new "Has to be a positive amount!"
+        raise ArgumentError.new "Withdrawal has be a positive amount!"
       end
       if amount > @balance
         puts "Can't withdraw more than you have!"
-      elsif amount == @balance
-        puts "You're taking out all your funds!?"
-        @balance -= amount
       else
         @balance -= amount
+        return @balance
       end
-      return @balance
     end
 
     def deposit(amount)
       unless amount > 0
-        raise ArgumentError.new "Must deposit a positve amount!"
+        raise ArgumentError.new "Must deposit a positive amount!"
       end
       @balance += amount
       return @balance
     end
 
-    # def add_owner(id)
-    #   @id = id
-    # end
+    def add_owner(owner) #optional to add an owner id later on
+      @owner = owner
+    end
+
+    def self.all
+      @@all_accounts = []
+      CSV.foreach("../support/accounts.csv") do |row|
+         @@all_accounts << Account.new(row[0], row[1], row[2])
+      end
+      return @@all_accounts
+    end
+
+    def self.find(id)
+      @find_account = nil
+      CSV.foreach("../support/accounts.csv") do |row|
+        if row[0].to_i == id
+          @find_account = Account.new(row[0], row[1], row[2])
+        end
+      end
+
+      if @find_account == nil
+        raise ArgumentError.new("No matching account on file.")
+      else
+        return @find_account
+      end
+    end
   end
 end
+
+# print Bank::Account.all
+all = Bank::Account.all
+print all.first.id
+
+
+# found = Bank::Account.find(1212)
+# # print found.id
+# print found.balance
+
+# print Bank::Account.all
+# puts Bank::Account.find(1212) <don't create a new one!
+# def self.find(id)
+#   @find_account = nil
+#   @@all_accounts.each do |account|
+#     if @id==id
+#       @find_account = account
+#     else
+#     end
+#   end
+#   if @find_account == nil
+#     raise ArgumentError.new("There is no matching account.")
+#   else
+#     return @find_account
+#   end
+# end
+# DEADEND: initially thought that I had to read in the data outside of the class
+#
+# def self.all
+#   print @@all_accounts
+# end
+#
+# def self.find(id)
+#   @@all_accounts.each do |account_array|
+#     if account_array[0] == id
+#       print account_array
+#     else
+#       break
+#     end
+#   end
+# end

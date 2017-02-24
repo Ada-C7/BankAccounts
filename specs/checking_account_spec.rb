@@ -34,36 +34,40 @@ describe "CheckingAccount" do
     end
   end
 
-  xdescribe "#withdraw_using_check" do
+  describe "#check_withdraw" do
+    before do
+      @account = Bank::CheckingAccount.new({balance: 100})
+    end
+
     it "Reduces the balance" do
+    @account.check_withdraw(20).must_equal 80
+    end
+
+    it "Returns the modified balance" do skip
       # TODO: Your test code here!
     end
 
-    it "Returns the modified balance" do
+    it "Allows the balance to go down to -$10" do skip
       # TODO: Your test code here!
     end
 
-    it "Allows the balance to go down to -$10" do
+    it "Outputs a warning if the account would go below -$10" do skip
       # TODO: Your test code here!
     end
 
-    it "Outputs a warning if the account would go below -$10" do
+    it "Doesn't modify the balance if the account would go below -$10" do skip
       # TODO: Your test code here!
     end
 
-    it "Doesn't modify the balance if the account would go below -$10" do
+    it "Requires a positive withdrawal amount" do skip
       # TODO: Your test code here!
     end
 
-    it "Requires a positive withdrawal amount" do
+    it "Allows 3 free uses" do skip
       # TODO: Your test code here!
     end
 
-    it "Allows 3 free uses" do
-      # TODO: Your test code here!
-    end
-
-    it "Applies a $2 fee after the third use" do
+    it "Applies a $2 fee after the third use" do skip
       # TODO: Your test code here!
     end
   end

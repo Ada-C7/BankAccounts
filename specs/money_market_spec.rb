@@ -66,7 +66,6 @@ describe "MoneyMarketAccount" do
 
   describe "#add_interest" do
     it "Returns the interest calculated" do
-      skip
       account = Bank::MoneyMarketAccount.new(1337, 10000.0)
       account.interest(0.25).must_equal 25.0
     end
@@ -87,12 +86,15 @@ describe "MoneyMarketAccount" do
 
   describe "reset_transactions" do
     it "Can be called without error" do
-      skip
-      account = Bank::MoneyMarket.new(1337, 10000.0)
+      account = Bank::MoneyMarketAccount.new(1337, 10000.0)
       account.must_respond_to :reset_transactions
     end
 
     it "Resets transaction count" do
+      account = Bank::MoneyMarketAccount.new(1337, 10000.0)
+      account.reset_transactions
+      account.transactions.must_equal 6
+
     end
 
   end

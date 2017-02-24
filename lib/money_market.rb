@@ -42,6 +42,10 @@ module Bank
         return interest
       end
 
+      def reset_transactions
+        @transactions = 6
+      end
+
     end
 
   end

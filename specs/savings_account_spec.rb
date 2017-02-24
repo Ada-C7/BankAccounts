@@ -38,11 +38,10 @@ describe "SavingsAccount" do
     it "Outputs a warning if the balance would go below $10" do
 
       proc { @account.withdraw(110) }.must_output(/.+/)
-
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-
+      @account.withdraw(200).must_equal 100
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do

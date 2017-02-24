@@ -187,23 +187,38 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      account = Bank::Account.find(1216)
+
+      account.must_be_instance_of Bank::Account
+      account.id.must_equal 1216
+      account.balance.must_equal 100022
     end
 
     it "Can find the first account from the CSV" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      account = Bank::Account.find(1212)
+
+       account.must_be_instance_of Bank::Account
+       account.id.must_equal 1212
+       account.balance.must_equal 1235667
     end
 
     it "Can find the last account from the CSV" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      account = Bank::Account.find(15156)
+
+       account.must_be_instance_of Bank::Account
+       account.id.must_equal 15156
+       account.balance.must_equal 4356772
     end
 
     it "Raises an error for an account that doesn't exist" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      # account = Bank::Account.find(666, 666)
+      proc {
+        Bank::Account.find(666)
+      }.must_raise ArgumentError
     end
   end
 end

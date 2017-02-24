@@ -41,7 +41,7 @@ module Bank
       read_file.each do |line|
         id = line[0].to_i
         balance = line[1].to_i
-        open_date = line[2]
+        # open_date = line[2] #REMOVE
         account = Bank::Account.new(id, balance)
         accounts_array << account
       end
@@ -49,8 +49,16 @@ module Bank
       return accounts_array
     end
 
-    # def self.find(id)
-    # end
+    def self.find(id)
+      accounts = Bank::Account.all
+
+      accounts.each do |account|
+        if account.id  == id
+          return account
+        end
+      end
+      raise ArgumentError.new "Account does not exist."
+    end
 
   end
 end

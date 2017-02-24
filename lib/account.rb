@@ -1,21 +1,26 @@
 
 require 'csv'
+require 'pry'
+
 
 
 module Bank
 
   class Account
 
-    attr_reader :id
-    attr_accessor :balance
+
+
+
+    attr_accessor :balance, :id
 
 
     def initialize(account_hash)
 
-        @id = account_hash[:id]
-        @balance = account_hash[:balance].to_f
+        @id = account_hash[:id].to_i
+        @balance = account_hash[:balance].to_i #currently this will assign a negaitve number
         @opendatetime = account_hash[:opendatetime]
 
+#method open_account assign to instance v.
       if @balance >= 0
         @balance = @balance
       else
@@ -24,6 +29,8 @@ module Bank
 
     end #end of initialize
 
+
+### look into class var. or other way to save accounts
     def self.all
       accounts = []
       CSV.read("support/accounts.csv").each do |row|
@@ -33,18 +40,17 @@ module Bank
            opendatetime: row[2]
          }
 
-         accounts << Account.new(account)
+         accounts << Bank::Account.new(account)
       end
+      return accounts
     end
 
-    def self.find(account_info)
-      self.all do |account|
-        if account.include? account_info
-          print true
-        else
-          print false
-        end
-      end
+    def self.find(id)
+
+      account = Bank::Account.all.find {|row| row.id == id }
+      binding.pry
+      return account
+
     end
 
     def withdraw(withdrawal_amount)
@@ -79,4 +85,4 @@ end #end of module
  # puts new_account.id
  # puts Bank::Account.all.id
 # puts "These are all the Bank accounts: #{Bank::Account.all}"
-Bank::Account.find(id: "1213")
+puts Bank::Account.find(1213)

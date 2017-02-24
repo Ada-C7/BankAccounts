@@ -104,18 +104,51 @@ describe "CheckingAccount" do
     it "Requires a positive withdrawal amount" do
         id = 116
         balance = 10
-        amount = -10
 
         account = Bank::CheckingAccount.new(id, balance)
         account.balance.must_equal balance
     end
 
+
+
+
+
+
+
+
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 200
+        amount = 10
+
+        account = Bank::CheckingAccount.new(id, balance)
+        3.times do account.withdraw_using_check(amount) end
+        account.balance.must_equal (balance - (3 * amount))
     end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     it "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
+        # account.withdraw_using_check(amount)
+        # account.balance.must_equal ((balance - (4 * amount)) - 2)
     end
   end
 

@@ -2,7 +2,6 @@
 require_relative 'account.rb'
 module Bank
     class CheckingAccount < Account
-        attr_reader :minimum, :fee
         def initialize (id, balance, opendate = nil)
             #super sets the instance variables found in the Account initialize method
             super
@@ -21,14 +20,21 @@ module Bank
 
 
         def withdraw_using_check(amount)
+            check_counter = 0
+            check_fee = 0
+
+            if check_counter >= 4
+                check_fee = 2
+            end
+
             if amount < 0
                 puts "You must withdraw a positive amount"
-            else 
-                if @balance - amount < -10
+            else
+                if @balance - (amount + check_fee) < -10
                     puts "You do not have enough money in your account for this"
-
                 else
-                    @balance -=amount
+                    check_counter +=1
+                    @balance -=(amount + check_fee)
                     return @balance
                 end
             end

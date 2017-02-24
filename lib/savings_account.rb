@@ -2,7 +2,6 @@ require_relative 'account.rb'
 
 module Bank
     class SavingsAccount < Account
-        attr_reader :minimum, :fee
         def initialize (id, balance, opendate = nil)
             super
             # @fee = 2

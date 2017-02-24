@@ -5,7 +5,7 @@ module Bank
   class CheckingAccount < Account
 
 
-    def initialize(id, balance, timedate = nil)
+    def initialize(id, balance, timedate = nil, min_bal = -10)
       super
       @number_of_checks = 0
     end

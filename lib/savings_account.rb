@@ -2,10 +2,19 @@ require_relative 'account'
 
 module Bank
   class SavingsAccount < Account
-    def initialize(id, balance, timedate = nil)
+
+    def initialize(id, balance, timedate = nil, min_bal = 10)
       super
     end
 
+    def withdraw(withdrawal_amount)
+      super
+      if @balance < withdrawal_amount
+        @balance
+      else
+        @balance -= 2
+      end
+    end
 
   end#class SavingsAccount
 end#module Bank

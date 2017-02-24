@@ -10,8 +10,8 @@ module Bank
   class Account
     attr_accessor :id, :balance, :timedate
 
-    def initialize(id, balance, timedate = nil)
-      raise ArgumentError.new("balance must be greater than zero") if balance < 0
+    def initialize(id, balance, timedate = nil, min_bal = 0)
+      raise ArgumentError.new("balance must be greater than zero") if balance < min_bal
       @id = id
       @balance = balance
       @timedate = timedate

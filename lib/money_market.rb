@@ -26,6 +26,15 @@ module Bank
         end
       end
 
+      def deposit(amount)
+        if (balance < 10000) && (balance + amount >= 10000)
+          @balance += amount
+        else
+          @balance += amount
+          @transactions -= 1
+        end
+      end
+
     end
 
   end

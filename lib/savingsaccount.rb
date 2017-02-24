@@ -3,16 +3,16 @@ module Bank
 
     def initialize(account_info)
       super
-      raise ArgumentError.new("Minimum balance is $10.") if @balance < 1000
+      raise ArgumentError.new("Minimum balance is $10.") if @balance < 10
     end
 
     def withdraw(amount)
-      if amount + 1200 > @balance
+      if amount + 12 > @balance
         puts "Insufficient funds."
         @balance
       else
         super
-        @balance -= 200
+        @balance -= 2
       end
     end
 

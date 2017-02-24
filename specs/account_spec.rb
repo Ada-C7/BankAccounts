@@ -8,7 +8,7 @@ describe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance without owner parameter" do
       id = 1337
-      balance = 100.0
+      balance = 100
       account = Bank::Account.new(id: id, balance: balance)
 
       account.must_respond_to :id
@@ -23,7 +23,7 @@ describe "Wave 1" do
 
     it "Takes an ID, initial balance, owner, and open date" do
       id = 1337
-      balance = 100.0
+      balance = 100
       owner = Bank::Owner.new(id: 12345, first_name: "Alix")
       open_date = "1994-11-17 14:04:56 -0800"
       account = Bank::Account.new(id: id, balance: balance, owner: owner, open_date: open_date)
@@ -33,7 +33,7 @@ describe "Wave 1" do
 
       # Account attribute classes match schema data types
       account.id.must_be_instance_of Integer
-      account.balance.must_be_instance_of Integer
+      account.balance.must_be_instance_of Float
       account.open_date.must_be_instance_of DateTime
 
       # Appropriately handles open_date as DateTime object
@@ -46,7 +46,7 @@ describe "Wave 1" do
       # This code checks that, when the proc is executed, it
       # raises an ArgumentError.
       proc {
-        Bank::Account.new(id: 1337, balance: -100.0)
+        Bank::Account.new(id: 1337, balance: -100)
       }.must_raise ArgumentError
     end
 
@@ -57,67 +57,60 @@ describe "Wave 1" do
   end
 
   describe "Account#withdraw" do
+    before do
+      @account = Bank::Account.new(id: 1337, balance: 100)
+      @start_balance = @account.balance
+    end
+
     it "Reduces the balance" do
-      start_balance = 100.0
-      withdrawal_amount = 25.0
-      account = Bank::Account.new(id: 1337, balance: start_balance)
+      withdrawal_amount = 25
 
-      account.withdraw(withdrawal_amount)
+      @account.withdraw(withdrawal_amount)
 
-      expected_balance = start_balance - withdrawal_amount
-      account.balance.must_equal expected_balance
+      expected_balance = @start_balance - withdrawal_amount
+      @account.balance.must_equal expected_balance
     end
 
     it "Returns the modified balance" do
-      start_balance = 100.0
-      withdrawal_amount = 25.0
-      account = Bank::Account.new(id: 1337, balance: start_balance)
+      withdrawal_amount = 25
 
-      updated_balance = account.withdraw(withdrawal_amount)
+      updated_balance = @account.withdraw(withdrawal_amount)
 
-      expected_balance = start_balance - withdrawal_amount
+      expected_balance = @start_balance - withdrawal_amount
       updated_balance.must_equal expected_balance
     end
 
     it "Outputs a warning if the account would go negative and doesn't modify balance" do
-      start_balance = 100.0
-      withdrawal_amount = 200.0
-      account = Bank::Account.new(id: 1337, balance: start_balance)
+      withdrawal_amount = 200
 
-      # Another proc! This test expects something to be printed
-      # to the terminal, using 'must_output'. /.+/ is a regular
-      # expression matching one or more characters - as long as
-      # anything at all is printed out the test will pass.
+      # Must print out error to the terminal
       proc {
-        account.withdraw(withdrawal_amount)
+        @account.withdraw(withdrawal_amount)
       }.must_output(/.+/)
 
       # Must not update balance
-      account.balance.must_equal start_balance
+      @account.balance.must_equal @start_balance
     end
 
     it "Allows the balance to go to 0" do
-      account = Bank::Account.new(id: 1337, balance: 100.0)
-      updated_balance = account.withdraw(account.balance)
+      updated_balance = @account.withdraw(@account.balance)
       updated_balance.must_equal 0
-      account.balance.must_equal 0
+      @account.balance.must_equal 0
     end
 
     it "Requires a positive withdrawal amount" do
-      start_balance = 100.0
-      withdrawal_amount = -25.0
-      account = Bank::Account.new(id: 1337, balance: start_balance)
+      withdrawal_amount = -25
 
       proc {
-        account.withdraw(withdrawal_amount)
+        @account.withdraw(withdrawal_amount)
       }.must_raise ArgumentError
     end
   end
 
   describe "Account#deposit" do
     it "Increases the balance" do
-      start_balance = 100.0
-      deposit_amount = 25.0
+      start_balance = 100
+      deposit_amount = 25
       account = Bank::Account.new(id: 1337, balance: start_balance)
 
       account.deposit(deposit_amount)
@@ -127,8 +120,8 @@ describe "Wave 1" do
     end
 
     it "Returns the modified balance" do
-      start_balance = 100.0
-      deposit_amount = 25.0
+      start_balance = 100
+      deposit_amount = 25
       account = Bank::Account.new(id: 1337, balance: start_balance)
 
       updated_balance = account.deposit(deposit_amount)
@@ -138,8 +131,8 @@ describe "Wave 1" do
     end
 
     it "Requires a positive deposit amount" do
-      start_balance = 100.0
-      deposit_amount = -25.0
+      start_balance = 100
+      deposit_amount = -25
       account = Bank::Account.new(id: 1337, balance: start_balance)
 
       proc {
@@ -151,7 +144,7 @@ describe "Wave 1" do
   describe "Account#add_owner" do
     it "Adds a new owner when the current owner is nil" do
       id = 1337
-      balance = 100.0
+      balance = 100
       owner = Bank::Owner.new(id: 12345, first_name: "Alix")
 
       account = Bank::Account.new(id: id, balance: balance)
@@ -162,7 +155,7 @@ describe "Wave 1" do
 
     it "Does not add a new owner when it is already set" do
       id = 1337
-      balance = 100.0
+      balance = 100
       owner = Bank::Owner.new(id: 12345, first_name: "Alix")
       account = Bank::Account.new(id: id, balance: balance, owner: owner)
 
@@ -202,11 +195,11 @@ describe "Wave 2" do
       # accounts match what's in the CSV file
       first_account = CSV.read("support/accounts.csv").first
       @accounts[0].id.must_equal first_account[0].to_i
-      @accounts[0].balance.must_equal first_account[1].to_i
+      @accounts[0].balance.must_equal first_account[1].to_f/100
 
       last_account = CSV.read("support/accounts.csv").last
       @accounts[-1].id.must_equal last_account[0].to_i
-      @accounts[-1].balance.must_equal last_account[1].to_i
+      @accounts[-1].balance.must_equal last_account[1].to_f/100
     end
   end
 
@@ -215,13 +208,13 @@ describe "Wave 2" do
       found_account = Bank::Account.find(1214)
 
       found_account.must_be_instance_of Bank::Account
-      found_account.balance.must_equal 9876890.0
+      found_account.balance.must_equal 98768.90
     end
 
     it "Can find the first account from the CSV" do
       first_account = CSV.read("support/accounts.csv").first
       first_account_id = first_account[0].to_i
-      first_account_balance = first_account[1].to_i
+      first_account_balance = first_account[1].to_f/100
       found_account = Bank::Account.find(first_account_id)
 
       found_account.id.must_equal first_account_id
@@ -231,7 +224,7 @@ describe "Wave 2" do
     it "Can find the last account from the CSV" do
       last_account = CSV.read("support/accounts.csv").last
       last_account_id = last_account[0].to_i
-      last_account_balance = last_account[1].to_i
+      last_account_balance = last_account[1].to_f/100
       found_account = Bank::Account.find(last_account_id)
 
       found_account.id.must_equal last_account_id

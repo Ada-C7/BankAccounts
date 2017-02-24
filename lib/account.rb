@@ -10,7 +10,7 @@ module Bank
       raise ArgumentError.new("Balance cannot be negative.") if account_info[:balance] < 0
 
       @id = account_info[:id].to_i
-      @balance = account_info[:balance].to_i
+      @balance = account_info[:balance].to_f
       @open_date = DateTime.parse(account_info[:open_date]) unless account_info[:open_date].nil?
       @owner = account_info[:owner]
     end
@@ -24,7 +24,7 @@ module Bank
       CSV.read("support/accounts.csv").collect do |account|
         Account.new(
           id: account[0].to_i,
-          balance: account[1].to_i,
+          balance: account[1].to_f/100,
           open_date: account[2],
           owner: Owner.find(accounts_to_owners[account[0].to_i])
         )

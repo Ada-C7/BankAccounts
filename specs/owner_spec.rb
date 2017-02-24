@@ -2,43 +2,66 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/owner'
+require 'csv'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-describe "Owner#initialize" do
+xdescribe "Owner#initialize" do
 
+
+
+end
+
+describe "Owner.all"do
   before do
-    @owner_hash = {
-      :in_first_name => "Grace",
-      :in_last_name => "Hopper",
-      :in_address => "456 Anytown, USA",
-      :in_phone => "206-440-0725"
-    }
-
-    @owner = Bank::Owner.new(@owner_hash)
+    @owners = Bank::Owner.all
   end
 
-  it "Takes a first and last name" do
-
-
-
-    @owner.must_respond_to :first_name #this is the instance variable in the class
-    @owner.first_name.must_equal @owner_hash[:in_first_name] #this is the key-value pair in the passed Hash
-
-    @owner.must_respond_to :last_name #this is the instance variable in the class
-    @owner.last_name.must_equal @owner_hash[:in_last_name] #this is the key-value pair in the passed Hash
-
+  it "returns an array"do
+    @owners.must_be_instance_of Array
   end
 
-  it "Takes an address" do
-    @owner.must_respond_to :address
-    @owner.address.must_equal @owner_hash[:in_address]
+  it "Every in Array is an Owner"do
+    @owners.each do |owner|
+      owner.must_be_instance_of Bank::Owner
+    end
   end
 
-  it "Takes a phone number" do
-    @owner.must_respond_to :phone_number
-    @owner.phone_number.must_equal @owner_hash[:in_phone]
+  it "Has 12 Owners" do
+    check_array = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/owners.csv")
+    @owners.length.must_equal check_array.length
   end
 
+end
 
+
+describe "Owner.find(id)" do
+  before do
+    @owners = Bank::Owner.all
+  end
+
+  it "Returns an owner that exists" do
+    find_owner = Bank::Owner.find(16)
+    find_owner.must_be_instance_of Bank::Owner
+  end
+
+  it "Can find the first account from the CSV" do
+    test_array = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/owners.csv")
+    id_check = test_array[0][0].to_i
+    find_owner = Bank::Owner.find(14)
+    find_owner.id.must_equal id_check
+  end
+
+  it "Can find the last account from the CSV" do
+    test_array = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/owners.csv")
+    id_check = test_array[-1][0].to_i
+    find_owner = Bank::Owner.find(25)
+    find_owner.id.must_equal id_check
+  end
+
+  it "Raises an Error for an account hat doesn't exist" do
+    proc {
+      Bank::Owner.find(77)
+    }.must_output /.+/
+  end
 end

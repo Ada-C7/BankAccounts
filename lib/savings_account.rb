@@ -2,10 +2,8 @@ require_relative 'account.rb'
 
 module Bank
     class SavingsAccount < Account
-        attr_accessor :interest
         def initialize (id, balance, opendate = nil)
         raise ArgumentError.new("You must have at least $10") if balance < 10
-        @interest = 0
         super
         end
 
@@ -31,16 +29,16 @@ module Bank
     end
 
     def add_interest(rate)
-        @interest = @balance * rate/100
-        @balance += @interest
-        return @interest
+        interest = @balance * rate/100
+        @balance += interest
+        return interest
     end
 
     # return @balance
 
 
-account = Bank::SavingsAccount.new(116,10000)
-puts account.add_interest(0.25)
+# account = Bank::SavingsAccount.new(116,10000)
+# puts account.add_interest(0.25)
 
 
 

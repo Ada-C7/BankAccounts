@@ -93,7 +93,6 @@ describe "SavingsAccount" do
 
         account = Bank::SavingsAccount.new(id,balance)
         account.add_interest(rate).must_equal interest
-        # account.interest.must_equal interest
     end
 
 

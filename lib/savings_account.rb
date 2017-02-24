@@ -2,7 +2,7 @@ require 'csv'
 require_relative '../lib/account'
 module Bank
   class SavingsAccount < Bank::Account
-    attr_reader :balance, :id, :open_date
+    attr_reader :balance, :id, :open_date, :interest
 
 
     def initialize(id, balance, open_date)
@@ -19,20 +19,22 @@ module Bank
 
     def withdraw(withdrawl_amount)
       raise ArgumentError.new("withdrawl must be greater than 0") if withdrawl_amount < 0
-      fee = 2
-
-      if @balance - withdrawl_amount - fee >= 10
-        @balance -= (withdrawl_amount + fee)
+      if @balance - (withdrawl_amount + 2) >= 10
+        @balance = @balance - (withdrawl_amount + 2)
       else
         print "your balance will be less than $10"
-        return @balance += (@balance * rate/100)
+        return @balance
+
       end
     end
 
-
     def add_interest(rate)
-      rate = 0.25
-      @balance += @balance
+      if rate > 0
+        @interest = @balance * (rate/100)
+        @balance = @balance + @interest
+        return @interest.round(2)
+      else raise ArgumentError.new ("rate must be positive")
+      end
     end
   end
 end

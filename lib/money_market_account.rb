@@ -38,7 +38,10 @@ module Bank
     end
 
     def deposit(deposit_amount)
-      @total_transactions += 1
+      if @balance > 10000
+        @total_transactions += 1
+      end
+
       if @total_transactions > 6
         raise ArgumentError.new "You cannot make more than six transactions per month."
       end

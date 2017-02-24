@@ -31,7 +31,7 @@ describe "CheckingAccount" do
       start_balance = 100.0
       withdrawal_amount = 110.0 # consider $10 overdraft
       hidden_fee = 1.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -59,7 +59,7 @@ describe "CheckingAccount" do
       withdrawal_amount = 109.0
       hidden_fee = 1.0
       min_value = -10.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -73,14 +73,14 @@ describe "CheckingAccount" do
       hidden_fee = 1.0
 
       proc {
-         Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800").withdraw(withdrawal_amount)
+         Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800").withdraw(withdrawal_amount)
       }.must_raise ArgumentError
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
       start_balance = 100.0
       withdrawal_amount = 120.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -92,7 +92,7 @@ describe "CheckingAccount" do
     it "Requires a positive withdrawal amount" do
       start_balance = 100.0
       withdrawal_amount = -25.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       proc {
         account.withdraw(withdrawal_amount)
@@ -100,7 +100,21 @@ describe "CheckingAccount" do
     end
 
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      check_1 = 10.0
+      check_2 = 10.0
+      check_3 = 10.0
+      check_4 = 10.0
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+
+      account.withdraw_using_check(check_1)
+      account.withdraw_using_check(check_2)
+      account.withdraw_using_check(check_3)
+      account.withdraw_using_check(check_4)
+
+      expected_balance = start_balance - check_1 - check_2 - check_3 - check_4 - 2.0
+
+      account.balance.must_equal expected_balance
     end
 
     it "Applies a $2 fee after the third use" do
@@ -111,7 +125,7 @@ describe "CheckingAccount" do
   describe "#reset_checks" do
     it "Can be called without error" do
     skip
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       proc {
         account.reset_checks

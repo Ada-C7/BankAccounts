@@ -21,10 +21,9 @@ module Bank
       end
 
       @check_count += 1
-      case @check_count
-      when > 3
+      if @check_count > 3
         @check_fee = 2.0
-      when < 3
+      else
         @check_fee = 0
       end
 
@@ -34,11 +33,6 @@ module Bank
         @balance -= (amount + @check_fee)
       end
       return @balance
-      end
-
-      unless amount > 0
-        raise ArgumentError.new "Withdrawal has be a positive amount!"
-      end
     end
   end
 end

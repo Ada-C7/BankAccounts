@@ -126,11 +126,31 @@ describe "CheckingAccount" do
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100)
+      withdrawal_amount = 10
+      2.times {account.withdraw_using_check(withdrawal_amount)}
+      account.reset_checks
+      3.times {account.withdraw_using_check(withdrawal_amount)}
+      account.balance.must_equal 50
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100)
+      withdrawal_amount = 10
+      4.times {account.withdraw_using_check(withdrawal_amount)}
+      account.reset_checks
+      3.times {account.withdraw_using_check(withdrawal_amount)}
+      account.balance.must_equal 28
     end
+
+    it "Makes ONLY the next three checks free if more than 3 checks had been used" do
+      account = Bank::CheckingAccount.new(1337, 100)
+      withdrawal_amount = 10
+      4.times {account.withdraw_using_check(withdrawal_amount)}
+      account.reset_checks
+      4.times {account.withdraw_using_check(withdrawal_amount)}
+      account.balance.must_equal 16
+    end
+
   end
 end

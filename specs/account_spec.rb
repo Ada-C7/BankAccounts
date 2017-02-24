@@ -139,8 +139,8 @@ describe "Wave 2" do
     it "Returns an array of all accounts" do
 
       #before do
-    #   @accounts = Bank::Account.all
-    # end
+      #   @accounts = Bank::Account.all
+      # end
 
       account = Bank::Account.all
       #  account.class.must_equal Array

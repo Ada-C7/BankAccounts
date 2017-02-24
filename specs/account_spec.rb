@@ -22,17 +22,21 @@ describe "Wave 1" do
 
 
   describe "Account#initialize" do
-    it "Takes an ID, and an initial balance" do
+    it "Takes an ID, and an initial balance and an owner of Owner class" do
       id = 1337
       balance = 100.0
       opendate = "1999-03-27 11:30:09 -0800"
-      account = Bank::Account.new(id, balance, opendate)
+      owner = Bank::Owner.new(1, "Hopper", "Grace", "123 Main St", "Seattle", "WA")
+      account = Bank::Account.new(id, balance, opendate, owner)
 
       account.must_respond_to :id
       account.id.must_equal id
 
       account.must_respond_to :balance
       account.balance.must_equal balance
+
+      account.must_respond_to :owner
+      account.owner.must_be_instance_of Bank::Owner
 
       # account.must_respond_to :owner
       # account.owner.must_equal @owner_hash
@@ -218,28 +222,29 @@ describe "Wave 2" do
 
 
     it "Returns an account that exists" do
-      find_account = Bank::Account.find("1213")
+      find_account = Bank::Account.find(1213)
       find_account.must_be_instance_of Bank::Account
     end
 
     it "Can find the first account from the CSV" do
       test_array = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv")
-      id_check = test_array[0][0]
-      find_account = Bank::Account.find("1212")
+      id_check = test_array[0][0].to_i
+      find_account = Bank::Account.find(1212)
       find_account.id.must_equal id_check
     end
 
       it "Can find the last account from the CSV" do
         test_array = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv")
-        id_check= test_array[-1][0]
-        find_account = Bank::Account.find("15156")
+        id_check= test_array[-1][0].to_i
+        find_account = Bank::Account.find(15156)
         find_account.id.must_equal id_check
 
       end
 
       it "Raises an error for an account that doesn't exist" do
-        find_account = Bank::Account.find("7777")
-        find_account == nil
+        proc {
+          Bank::Account.find(7777)
+        }.must_output /.+/
       end
   end
 end

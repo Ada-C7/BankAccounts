@@ -3,9 +3,9 @@ require 'csv'
 
 module Bank
   class Account
-    attr_reader :id, :balance, :opendate
+    attr_reader :id, :balance, :opendate, :owner
 
-    def initialize id, balance, opendate = "1999-03-27 11:30:09 -0800"
+    def initialize id, balance, opendate = "1999-03-27 11:30:09 -0800", owner = Bank::Owner.new(1, "Hopper", "Grace", "123 Main St", "Seattle", "WA")
       @id = id
       if balance >= 0
         @balance = balance
@@ -13,13 +13,14 @@ module Bank
         raise ArgumentError.new "Initial balance must be more than zero."
       end
       @opendate = opendate
+      @owner = owner
 
     end
 
     def self.all  #reads in csv file and returns collection of Account instances
       accounts = []
       CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv").each do |line|
-        accounts << Account.new(line[0], line[1].to_i, line[2])
+        accounts << Account.new(line[0].to_i, line[1].to_i, line[2])
       end
       return accounts
     end
@@ -29,13 +30,12 @@ module Bank
       account_found = false
       all_accounts.each do |account|
         if account.id == id
-          return account
           account_found = true
+          return account
         end
       end
       if !account_found
         puts "ID not found"
-        return nil
       end
     end
 

@@ -60,9 +60,7 @@ module Bank
     def deposit(deposit)
       #Make sure the amount is a positive number
         raise ArgumentError.new "The deposit must be a positive amount" if deposit < 0
-
         @balance += deposit
-
     end
 
     #Add an owner object to the account. The owner has a name, address and

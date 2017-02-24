@@ -27,6 +27,10 @@ module Bank
     end
 
     def check_withdraw(amount)
+      if amount < 0
+       print "Cannot enter negative amount"
+       return @balance
+      end
 
       check_fee = 0
 
@@ -40,6 +44,7 @@ module Bank
         @balnace = @balance
       else
         @balance = @balance - (amount + check_fee)
+        @checks -= 1
         return @balance
       end
 

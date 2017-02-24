@@ -74,8 +74,6 @@ describe "SavingsAccount" do
     it "Doesn't modify the balance if the fee would put it below $10" do
         id = 116
         balance = 20
-        amount = 9
-        fee = 2
         account = Bank::SavingsAccount.new(id, balance)
 
         account.balance.must_equal balance

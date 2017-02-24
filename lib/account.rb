@@ -57,6 +57,7 @@ module Bank
             return @balance
         end
 
+
         def deposit (amount)
             if amount > 0
                 @balance +=amount

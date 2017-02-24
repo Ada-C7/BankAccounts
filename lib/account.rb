@@ -6,6 +6,14 @@ module Bank
     attr_reader :id, :balance, :date
     attr_accessor :owner
 
+    def initialize(id, balance, date, owner = "Customer Name")
+      raise ArgumentError.new("You cannot create a bank account with a 0 or negative balance, you goober.") if balance < 0
+      @id = id
+      @balance = balance
+      @date = date
+      @owner = owner
+    end
+
     def self.all
       all_accounts = []
       CSV.open("/Users/brenna/ada/week3/BankAccounts/support/accounts.csv").each do | line |
@@ -15,21 +23,14 @@ module Bank
     end
 
     def self.find(id)
-      accounts = Bank::Account.all
-      raise ArgumentError.new("There's no such account ID, you nincompoop.") if ![1212, 1213, 1214, 1215, 1216, 1217, 15151, 15152, 15153, 15154, 15155, 15156].include?(id)
-      accounts.each_with_index do |acct, index|
+     accounts = Bank::Account.all
+      # raise ArgumentError.new("There's no such account ID, you nincompoop.") if ![1212, 1213, 1214, 1215, 1216, 1217, 15151, 15152, 15153, 15154, 15155, 15156].include?(id)
+      accounts.each do |acct|
           if acct.id == id
-            return accounts[index]
+            return acct
           end
       end
-    end
-
-    def initialize(id, balance, date, owner = "Customer Name")
-      raise ArgumentError.new("You cannot create a bank account with a 0 or negative balance, you goober.") if balance < 0
-      @id = id
-      @balance = balance
-      @date = date
-      @owner = owner
+      raise ArgumentError.new("There's no such account ID, you nincompoop.")
     end
 
     def withdraw(withdrawal_amount)

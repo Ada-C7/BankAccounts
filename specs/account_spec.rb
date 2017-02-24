@@ -8,7 +8,7 @@ require_relative '../lib/owner'
 describe "Wave 1" do
 
   before do
-    brenna_hash = {name: "Brenna Darroch", address: "3426 Cotton Top Ct", birthday: "May 22, 1993", favefood: "chocolate"}
+    brenna_hash = {id: 0522, last_name: "Darroch", first_name: "Brenna", st_address: "3426 Cotton Top Ct", city: "Fairfax", state: "VA"}
     @brenna = Bank::Owner.new(brenna_hash)
   end # remember, end is garbage collector!
 
@@ -31,10 +31,9 @@ describe "Wave 1" do
       account.must_respond_to :owner
       account.owner.must_equal @brenna
 
-      account.owner.name.must_equal "Brenna Darroch"
-      account.owner.address.must_equal "3426 Cotton Top Ct"
-      account.owner.birthday.must_equal "May 22, 1993"
-      account.owner.favefood.must_equal "chocolate"
+      account.owner.last_name.must_equal "Darroch"
+      account.owner.first_name.must_equal "Brenna"
+      account.owner.st_address.must_equal "3426 Cotton Top Ct"
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
@@ -153,33 +152,50 @@ describe "Wave 1" do
 end
 
 describe "Wave 2" do
+  # to make test adaptable (eg. calling diff account files), need to read in CSV file to spec file too
+
+  before do
+    @accounts = Bank::Account.all
+  end
 
   describe "Account.all" do
+
     it "Returns an array of all accounts" do
-      #   - Account.all returns an array
-      Bank::Account.all.must_be_kind_of Array
-      #   - Everything in the array is an Account
-      Bank::Account.all.each do |inst|
+      @accounts.must_be_kind_of Array
+    end
+
+    it "Everything in the array is an Account" do
+      # Bank::Account.all.each do |inst|
+      @accounts.each do |inst|
         inst.must_be_instance_of Bank::Account
       end
-      #   - The number of accounts is correct
-      Bank::Account.all.length.must_equal 12
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      Bank::Account.all[0].id.must_equal 1212
-      Bank::Account.all[0].balance.must_equal 1235667
+    end
 
-      Bank::Account.all[-1].id.must_equal 15156
-      Bank::Account.all[-1].balance.must_equal 4356772
+    it "The number of accounts is correct" do
+      # Bank::Account.all.length.must_equal 12
+      @accounts.length.must_equal 12
+    end
 
+    it "The ID and balance of the first and last accounts match what's in the CSV file" do
+      @accounts[0].id.must_equal 1212
+      @accounts[0].balance.must_equal 1235667
+
+      @accounts[-1].id.must_equal 15156
+      @accounts[-1].balance.must_equal 4356772
+    end
+
+    it "The elements match what's in the file" do
+      index = 0
+      CSV.read("support/accounts.csv") do |line|
+        accounts[index].id.must_equal line[0].to_i
+        accounts[index].balance.must_equal line[1].to_f
+        accounts[index].date.must_equal line[2]
+        index += 1
+      end
     end
   end
 
   describe "Account.find" do
-
-    # before do
-    #   all_accounts = Bank
-    # end
 
     it "Returns an account that exists" do
       # doesn't work due to different object IDs of Bank::Account.all ??

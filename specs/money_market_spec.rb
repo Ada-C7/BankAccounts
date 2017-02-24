@@ -37,6 +37,16 @@ describe "MoneyMarketAccount" do
       account.balance.must_equal 9400
     end
 
+    it "Doesn't allow transactions if user has used all transaction" do
+      account = Bank::MoneyMarketAccount.new(12345, 20000)
+      6.times do
+        account.withdraw(50)
+      end
+      proc {
+        account.withdraw(50)
+      }.must_raise ArgumentError
+    end
+
   end
 
 end

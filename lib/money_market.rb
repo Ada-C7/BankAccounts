@@ -13,13 +13,16 @@ module Bank
       end
 
       def withdraw(amount)
+        raise ArgumentError.new "You have run out of transactions" if @transactions == 0
         if balance < 10000
           puts "You cannot make any more transactions until you are over $10,000"
         elsif balance - amount < 10000
           amount += 100
           @balance -= amount
+          @transactions -= 1
         else
           @balance -= amount
+          @transactions -= 1
         end
       end
 

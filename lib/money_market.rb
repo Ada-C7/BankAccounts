@@ -28,6 +28,19 @@ module Bank
       return @balance
     end
 
+    def deposit(amount)
+      # A deposit performed to reach or exceed the minimum balance
+      # of $10,000 is not counted as part of the 6 transactions.
+      if @balance > 10000
+        @maximum_transactions -= 1
+      end
+      super(amount)
+    end
+
+    def reset_transactions
+      @maximum_transactions = 0
+    end
+
 
   end # end of class MoneyMarket
 end # end of Bank module

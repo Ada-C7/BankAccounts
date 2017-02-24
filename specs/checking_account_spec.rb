@@ -45,11 +45,19 @@ describe "CheckingAccount" do
     # skip
     it "Reduces the balance" do
       # TODO: Your test code here!
+      checking_account = Bank::CheckingAccount.new(11, 200)
+      checking_account.balance.must_equal 200
+      checking_account.withdraw_with_check(10)
+      checking_account.balance.must_equal 190
     end
 
     it "Returns the modified balance" do
       # skip
       # TODO: Your test code here!
+      checking_account = Bank::CheckingAccount.new(11, 200)
+      checking_account.withdraw_with_check(10)
+      checking_account.balance.must_equal 190
+      checking_account.balance.must_equal
     end
 
     it "Allows the balance to go down to -$10" do

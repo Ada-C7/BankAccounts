@@ -18,6 +18,15 @@ describe "MoneyMarketAccount" do
       }.must_raise ArgumentError
     end
 
-
   end
+
+  describe "#withdrawal" do
+
+    it "Imposes a $100 fee if the balance goes below $10,000" do
+      account = Bank::MoneyMarketAccount.new(12345, 10000)
+      account.withdraw(500)
+      account.balance.must_equal 9400
+    end
+  end
+
 end

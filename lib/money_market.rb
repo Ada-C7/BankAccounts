@@ -12,6 +12,13 @@ module Bank
         @transactions = 6
       end
 
+      def withdraw(amount)
+        if balance - amount < 10000
+          amount += 100
+          @balance -= amount
+        end
+      end
+
     end
 
   end

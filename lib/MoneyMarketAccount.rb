@@ -75,6 +75,7 @@ module Bank
 
     def reset_transactions
       @transactions = 0
+      @max_trans_reached = false
     end
 
   end

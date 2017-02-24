@@ -161,7 +161,7 @@ describe "MoneyMarketAccount" do
     end
 
     it "Updates the balance with calculated interest" do
-      skip
+      # skip
       account = Bank::MoneyMarketAccount.new(1,10000)
       first_balance = account.balance
       interest_earned = account.add_interest(0.25)
@@ -170,7 +170,7 @@ describe "MoneyMarketAccount" do
     end
 
     it "Requires a positive rate" do
-      skip
+      # skip
       account = Bank::MoneyMarketAccount.new(1,10000)
       test_rate = -0.25
       proc {account.add_interest(test_rate)}.must_output(/.+/)
@@ -179,10 +179,27 @@ describe "MoneyMarketAccount" do
 
   describe "#reset_transactions" do
     it "resets transactions to zero" do
-
+      account = Bank::MoneyMarketAccount.new(1,10000)
+      account.deposit(10)
+      account.deposit(10)
+      account.deposit(10)
+      account.deposit(10)
+      account.deposit(10)
+      account.deposit(10)
+      account.deposit(10)
+      account.balance.must_equal 10060
+      account.max_trans_reached.must_equal true
+      account.transactions.must_equal 6
+      account.reset_transactions
+      account.max_trans_reached.must_equal false
+      account.transactions.must_equal 0
     end
 
     it "can be called with no error" do
+      account = Bank::MoneyMarketAccount.new(1,10000)
+      account.deposit(10)
+      account.reset_transactions
+      account.transactions.must_equal 0
     end
 
   end

@@ -3,12 +3,10 @@ require 'csv'
 module Bank
   class Account
     attr_reader :id, :balance, :Accounts
-    @@Accounts = []
     def initialize(id, balance) # date_created)
       @id = id
       @balance = balance
       # @date_created = date_created
-      @@Accounts << [id, balance] # date_created]
       raise ArgumentError.new("balance must be >= 0") if balance < 0
     end
 
@@ -27,16 +25,11 @@ module Bank
       return @balance += amount
     end
 
-    def self.all
-      @@Accounts
-    end
-
     def self.find(id)
       return_account = []
-      @@Accounts.each do |account|
-        # this logic was so wrong but then i FIXED IIIIIIT
-        if account[0] == id
-          return_account = account
+      self.all.each do |account|
+          if account.id == id
+            return_account = [account.id, account.balance]
         end
       end
       if return_account == []
@@ -46,10 +39,10 @@ module Bank
       end
     end
 
-    def self.create_many_accounts
+    def self.all
       many_accounts = []
       CSV.open("./support/accounts.csv").each do |line|
-        many_accounts << self.new(line[0].to_i, line[1].to_i)
+        many_accounts << self.new(line[0].to_i, line[1].to_f)
       end
       return many_accounts
     end

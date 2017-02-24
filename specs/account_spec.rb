@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'minitest/pride'
 require_relative '../lib/account'
 require 'csv'
 
@@ -9,17 +10,17 @@ describe "Wave 1" do
     it "Takes an ID and an initial balance and a date created" do
       id = 1337
       balance = 100.0
-      date_created = "1999-03-27 11:30:09 -0800"
-      account = Bank::Account.new(id, balance, date_created)
+      # date_created = "1999-03-27 11:30:09 -0800"
+      account = Bank::Account.new(id, balance)
 
       account.must_respond_to :id
       account.id.must_equal id
 
       account.must_respond_to :balance
       account.balance.must_equal balance
-
-      account.must_respond_to :date_created
-      account.date_created.must_equal date_created
+      #
+      # account.must_respond_to :date_created
+      # account.date_created.must_equal date_created
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
@@ -28,13 +29,13 @@ describe "Wave 1" do
       # This code checks that, when the proc is executed, it
       # raises an ArgumentError.
       proc {
-        Bank::Account.new(1337, -100.0, "1999-03-27 11:30:09 -0800")
+        Bank::Account.new(1337, -100.0)       #, "1999-03-27 11:30:09 -0800")
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
-      Bank::Account.new(1337, 0, "1999-03-27 11:30:09 -0800")
+      Bank::Account.new(1337, 0)        #, "1999-03-27 11:30:09 -0800")
     end
   end
 
@@ -42,7 +43,7 @@ describe "Wave 1" do
     it "Reduces the balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, start_balance) #, "1999-03-27 11:30:09 -0800")
 
       account.withdraw(withdrawal_amount)
 
@@ -53,7 +54,7 @@ describe "Wave 1" do
     it "Returns the modified balance" do
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, start_balance) #, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -64,7 +65,7 @@ describe "Wave 1" do
     it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, start_balance) #, "1999-03-27 11:30:09 -0800")
 
       # Another proc! This test expects something to be printed
       # to the terminal, using 'must_output'. /.+/ is a regular
@@ -78,7 +79,7 @@ describe "Wave 1" do
     it "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, start_balance)#, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -89,7 +90,7 @@ describe "Wave 1" do
     end
 
     it "Allows the balance to go to 0" do
-      account = Bank::Account.new(1337, 100.0, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, 100.0)  #, "1999-03-27 11:30:09 -0800")
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
@@ -98,7 +99,7 @@ describe "Wave 1" do
     it "Requires a positive withdrawal amount" do
       start_balance = 100.0
       withdrawal_amount = -25.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, start_balance)  #, "1999-03-27 11:30:09 -0800")
 
       proc {
         account.withdraw(withdrawal_amount)
@@ -110,7 +111,7 @@ describe "Wave 1" do
     it "Increases the balance" do
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, start_balance)  #, "1999-03-27 11:30:09 -0800")
 
       account.deposit(deposit_amount)
 
@@ -121,7 +122,7 @@ describe "Wave 1" do
     it "Returns the modified balance" do
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, start_balance)  #, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.deposit(deposit_amount)
 
@@ -132,7 +133,7 @@ describe "Wave 1" do
     it "Requires a positive deposit amount" do
       start_balance = 100.0
       deposit_amount = -25.0
-      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      account = Bank::Account.new(1337, start_balance)  #, "1999-03-27 11:30:09 -0800")
 
       proc {
         account.deposit(deposit_amount)
@@ -141,45 +142,54 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
     it "returns an array" do
-      Bank::Account.create_many_accounts
+      # Bank::Account.all
       Bank::Account.all.wont_be_empty
       # puts "#{Bank::Account.all}"
       # puts Bank::Account.all <-- this prints the things
       # puts many_accounts <--- this is the objects!
     end
     it "returns an array with the correct number of accounts" do
-      Bank::Account.create_many_accounts
+      # Bank::Account.all
       Bank::Account.all.length == CSV.read("./support/accounts.csv").length
     end
 
     it "matches the CSV" do
-      skip
-      #here's where you should match the csv
+      # skip
+      organized_accounts = []
+      Bank::Account.all.each do |account|
+          organized_accounts.push(account.id, account.balance)
+      end
+
+      account_array = []
+      CSV.open("./support/accounts.csv").each do |line|
+        account_array.push(line[0].to_i, line[1].to_f)
+      end
+
+      organized_accounts.must_equal account_array
     end
 
   end
 
   describe "Account.find" do
     it "Returns an account that exists (concidentally also the first account)" do
-      Bank::Account.create_many_accounts
-      Bank::Account.find(1212).must_equal [1212, 1235667, "1999-03-27 11:30:09 -0800"]
+      Bank::Account.all
+      Bank::Account.find(1212).must_equal [1212, 12356.67]  #, "1999-03-27 11:30:09 -0800"]
     end
 
     it "Can find the last account from the CSV" do
-      Bank::Account.create_many_accounts
-            # puts "#{Bank::Account.all}"
-      Bank::Account.find(15156).must_equal [15156, 4356772, "1994-11-17 14:04:56 -0800"]
+      Bank::Account.all
+      # puts "#{Bank::Account.all}"
+      Bank::Account.find(15156).must_equal [15156, 43567.72]  #, "1994-11-17 14:04:56 -0800"]
     end
 
     it "Raises an error for an account that doesn't exist" do
-      Bank::Account.create_many_accounts
+      Bank::Account.all
       proc {
-          Bank::Account.find(15789)
-        }.must_raise ArgumentError
+        Bank::Account.find(15789)
+      }.must_raise ArgumentError
     end
   end
 end

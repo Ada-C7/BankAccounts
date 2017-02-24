@@ -1,3 +1,4 @@
+require_relative "account"
 module Bank
   class SavingsAccount < Account
     def initialize(id, balance)
@@ -25,3 +26,6 @@ module Bank
     end
   end
 end
+
+# account = Bank::SavingsAccount.new(33, 330)
+# Bank:: SavingsAccount.all

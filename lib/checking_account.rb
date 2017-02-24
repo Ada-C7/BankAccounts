@@ -1,3 +1,4 @@
+require_relative "account"
 module Bank
   class CheckingAccount < Account
     attr_reader :check_count

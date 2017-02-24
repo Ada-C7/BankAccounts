@@ -10,6 +10,7 @@ module Bank
 
 
 
+    @@accounts = Bank::Account.all
 
     attr_accessor :balance, :id, :opendatetime
 
@@ -19,6 +20,7 @@ module Bank
       @id = account_hash[:id].to_i
       @balance = account_hash[:balance].to_i #currently this will assign a negaitve number
       @opendatetime = account_hash[:opendatetime]
+
 
       #method open_account assign to instance v.
       if @balance >= 0
@@ -91,3 +93,4 @@ end #end of module
  # puts Bank::Account.all.id
 # puts "These are all the Bank accounts: #{Bank::Account.all}"
 #print Bank::Account.find(15115)
+print @@accounts

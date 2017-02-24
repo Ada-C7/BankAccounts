@@ -43,27 +43,34 @@ describe "SavingsAccount" do
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     it "Outputs a warning if the balance would go below $10" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 20
+        amount = 11
+        account = Bank::SavingsAccount.new(id, balance)
+
+        proc{
+            account.withdraw(amount)
+        }.must_raise ArgumentError
+        # account.withdraw.must_raise ArgumentError
     end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     it "Doesn't modify the balance if it would go below $10" do
       # TODO: Your test code here!

@@ -10,13 +10,14 @@ module Bank
 
     def withdraw (amount)
         #inherit withdraw functionality from Account
+        #can not go below $10
+        raise ArgumentError.new("You must leave a balance of $10 in your account") if @balance - amount < 10
 
         #incur $2 fee each transaction
         super
         @balance -=2
         return @balance
 
-        #can not go below $10
     end
 
 

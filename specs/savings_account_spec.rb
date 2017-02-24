@@ -70,10 +70,9 @@ describe "SavingsAccount" do
       # TODO: Your test code here!
       start_balance = 100.0
       withdrawal_amount = 89.0
-      new_withdrawal = withdrawal_amount
       account = Bank::SavingsAccount.new(12345, 100.0)
 
-      updated_balance = account.withdraw(new_withdrawal)
+      updated_balance = account.withdraw(withdrawal_amount)
 
       # Both the value returned and the balance in the account
       # must be un-modified.
@@ -86,6 +85,10 @@ describe "SavingsAccount" do
   describe "#add_interest" do
     it "Returns the interest calculated" do
       # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(12345, 100.0)
+      interest = 0.25
+      account.add_interest(interest).must_equal 0.25
+
     end
 
     it "Updates the balance with calculated interest" do

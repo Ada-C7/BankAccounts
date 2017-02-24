@@ -26,5 +26,16 @@ module Bank
       end
       return @balance
     end
+
+    #method that handles interest
+    def add_interest(rate)
+      raise ArgumentError.new("The interest rate must be a positive numerical value") if rate <= 0
+
+      interest = @balance * rate
+      @balance += interest
+
+      return interest
+    end
+
   end
 end

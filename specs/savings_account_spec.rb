@@ -66,5 +66,6 @@ describe "SavingsAccount" do
         Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").add_interest(-0.32)
       }.must_raise ArgumentError
     end
+
   end
 end

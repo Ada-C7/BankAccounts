@@ -1,26 +1,41 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 require_relative '../lib/account'
 require_relative '../lib/owner'
 
-Minitest::Reporters.use!
+
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 
 describe "Wave 1" do
+  # before do
+  #   @owner_hash = {
+  #     :in_first_name => "Grace",
+  #     :in_last_name => "Hopper",
+  #     :in_address => "456 Anytown, USA",
+  #     :in_phone => "206-440-0725"
+  #   }
+  # end
+
 
 
   describe "Account#initialize" do
-    it "Takes an ID and an initial balance" do
+    it "Takes an ID, and an initial balance" do
       id = 1337
       balance = 100.0
-      account = Bank::Account.new(id, balance)
+      opendate = "1999-03-27 11:30:09 -0800"
+      account = Bank::Account.new(id, balance, opendate)
 
       account.must_respond_to :id
       account.id.must_equal id
 
       account.must_respond_to :balance
       account.balance.must_equal balance
+
+      # account.must_respond_to :owner
+      # account.owner.must_equal @owner_hash
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
@@ -29,16 +44,14 @@ describe "Wave 1" do
       # This code checks that, when the proc is executed, it
       # raises an ArgumentError.
       proc {
-        Bank::Account.new(1337, -100.0)
+        Bank::Account.new(1337, -100.0, "1999-03-27 11:30:09 -0800" )
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
       # If this raises, the test will fail. No 'must's needed!
-      Bank::Account.new(1337, 0)
+      Bank::Account.new(1337, 0, "1999-03-27 11:30:09 -0800")
     end
-
-
 
   end
 
@@ -48,7 +61,7 @@ describe "Wave 1" do
 
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       account.withdraw(withdrawal_amount)
 
@@ -60,7 +73,7 @@ describe "Wave 1" do
 
       start_balance = 100.0
       withdrawal_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -72,7 +85,7 @@ describe "Wave 1" do
 
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       # Another proc! This test expects something to be printed
       # to the terminal, using 'must_output'. /.+/ is a regular
@@ -87,7 +100,7 @@ describe "Wave 1" do
 
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.withdraw(withdrawal_amount)
 
@@ -99,7 +112,7 @@ describe "Wave 1" do
 
     it "Allows the balance to go to 0" do
 
-      account = Bank::Account.new(1337, 100.0)
+      account = Bank::Account.new(1337, 100.0, "1999-03-27 11:30:09 -0800")
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
@@ -109,7 +122,7 @@ describe "Wave 1" do
 
       start_balance = 100.0
       withdrawal_amount = -25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       proc {
         account.withdraw(withdrawal_amount)
@@ -123,7 +136,7 @@ describe "Wave 1" do
 
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       account.deposit(deposit_amount)
 
@@ -135,7 +148,7 @@ describe "Wave 1" do
 
       start_balance = 100.0
       deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       updated_balance = account.deposit(deposit_amount)
 
@@ -147,7 +160,7 @@ describe "Wave 1" do
 
       start_balance = 100.0
       deposit_amount = -25.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       proc {
         account.deposit(deposit_amount)
@@ -156,53 +169,77 @@ describe "Wave 1" do
   end
 end
 
-  describe "Account#get_owner_info" do
-    it "Takes a Bank::Owner class object for owner var in Bank::Account"
-      account = Bank::Account.new(1337, 100.0)
-      owner_hash = {
-        :in_first_name => "Grace",
-        :in_last_name => "Hopper",
-        :in_address => "456 Anytown, USA",
-        :in_phone => "206-440-0725"
-      }
-      account.get_owner_info(owner_hash)
-
-      #test that the method responds to the hash maybe with must_respond_to
-      account.owner.
 
 
-  end
+
+
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+    # it "Returns an array of all accounts" do
+    #   # TODO: Your test code here!
+    #   # Useful checks might include:
+    #   #   - Account.all returns an array
+    #   #   - Everything in the array is an Account
+    #   #   - The number of accounts is correct
+    #   #   - The ID and balance of the first and last
+    #   #       accounts match what's in the CSV file
+    #   # Feel free to split this into multiple tests if needed
+    # end
+
+    before do
+      @accounts = Bank::Account.all
+    end
+
+    it "returns an array" do
+      @accounts.must_be_instance_of Array
+
+    end
+
+    it "Everything in the Array is an Account" do
+      @accounts.each do |element|
+        element.must_be_instance_of Bank::Account
+      end
+    end
+
+    it "Has twelve accounts" do
+      check_array = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv")
+      @accounts.length.must_equal check_array.length
+
+      #could also do
+      @accounts.length.must_equal CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv").length
+
+
     end
   end
 
   describe "Account.find" do
+
+
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      find_account = Bank::Account.find("1213")
+      find_account.must_be_instance_of Bank::Account
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      test_array = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv")
+      id_check = test_array[0][0]
+      find_account = Bank::Account.find("1212")
+      find_account.id.must_equal id_check
     end
 
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
+      it "Can find the last account from the CSV" do
+        test_array = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv")
+        id_check= test_array[-1][0]
+        find_account = Bank::Account.find("15156")
+        find_account.id.must_equal id_check
 
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
+      end
+
+      it "Raises an error for an account that doesn't exist" do
+        find_account = Bank::Account.find("7777")
+        find_account == nil
+      end
   end
 end

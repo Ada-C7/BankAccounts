@@ -19,12 +19,14 @@ module Bank
         end
 
 
-
-
         def add_interest(rate)
-            interest = @balance * rate/100
-            @balance += interest
-            return interest
+            if rate > 0
+                interest = @balance * rate/100
+                @balance += interest
+                return interest
+            else
+                puts "Rate must be a positive amount"
+            end
         end
 
     end

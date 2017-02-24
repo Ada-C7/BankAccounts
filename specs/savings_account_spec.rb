@@ -110,10 +110,18 @@ describe "SavingsAccount" do
     end
 
 
-
-#WHOOPS NEED TO FINISH THIS!!!
     it "Requires a positive rate" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10000
+        rate = -0.25
+
+
+        account = Bank::SavingsAccount.new(id,balance)
+
+        proc{
+            account.add_interest(rate)
+        }.must_output( /.+/)
+
     end
   end
 end

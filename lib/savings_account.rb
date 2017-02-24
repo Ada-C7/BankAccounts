@@ -8,6 +8,7 @@ module Bank
     def initialize(id, balance, open_date = nil)
       super(id, balance, open_date = nil)
       raise ArgumentError.new "The initial balance must not be less than 10" if balance < 10
+      @interest
     end
 
     def withdraw(money_to_withdraw)
@@ -20,6 +21,12 @@ module Bank
       end
     end
 
+    def add_interest(rate)
+        @interest = balance * rate / 100
+
+        
+
+    end
 
   end
 end

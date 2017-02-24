@@ -78,6 +78,21 @@ describe "Bank::MoneyMarketAccount" do
       proc { @my_money_market.withdraw(500) }.must_raise ArgumentError
     end
 
+    it "if withdrawal goes below 10k, then deposit goes above 10k, should be allow to withdraw again" do
+      @my_money_market.withdraw(500)
+      @my_money_market.deposit(1000)
+      #should not raise an issue.
+      @my_money_market.withdraw(10)
+    end
+
+    it "all transactions count towards 6 transactions, except for deposit to bring balance back up to 10k" do
+      @my_money_market.withdraw(500)
+      @my_money_market.deposit(1000)
+      #should not raise an issue.
+      @my_money_market.withdraw(10)
+      @my_money_market.total_transactions.must_equal(2)
+    end
+
   end
 
 end
@@ -87,18 +102,9 @@ end
 
 #Withdrawal logic
 
-#If a withdrawal goes below 10k a fee of $100 is imposed and no more transactions are allowed until the balance is increased using a deposit transaction.
-# inputs are withdrawals, withdrawawl_ammount
-# Outputs are updated balance, a fee to charge against updated balance, a warning.  A stop on withdrawals until a deposit is made that brings the balance over 10k, updated transaction number
-
-#Each transaction will be counted against the maximum number of transactions.
-# inputs are withdrawals and ammount.
-# Outputs are updated balance and updated number of total transactions.
 
 #Deposit logic
-# Each transaction will be counted against the maximum number of transactions.
-# inputs are withdrawal or deposit and ammount.
-# output is updated total transactions
+
 # Exception to the above: A deposit performed to reach or exceed the minimum balance of $10,000 is not counted as part of the 6 transactions.
 # input are whether or not balance is below 10k, withdrawal or deposit, amount.
 # outputs are updated balance, number of transactions NOT updated.

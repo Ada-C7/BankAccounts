@@ -137,7 +137,6 @@ describe "CheckingAccount" do
 
   describe "#reset_checks" do
     it "Can be called without error" do
-    skip
       account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       proc {
@@ -146,11 +145,18 @@ describe "CheckingAccount" do
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
+      no_checks = 0
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      @check_count = 2
+      account.reset_checks.must_equal no_checks
+
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
+      no_checks = 0
+      account = Bank::CheckingAccount.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
+      @check_count = 4
+      account.reset_checks.must_equal no_checks
     end
   end
 end

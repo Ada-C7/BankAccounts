@@ -91,15 +91,16 @@ describe "SavingsAccount" do
     it "Returns the interest calculated" do
       account = Bank::SavingsAccount.new(1234, 120)
 
-      interest = account.add_interest(25.0)
+      balance_with_interest = account.add_interest(25.0)
 
-      interest.must_equal 30
+
+      account.interest.must_equal 30
 
       # TODO: Your test code here!
     end
 
     it "Updates the balance with calculated interest" do
-      
+
 
       # TODO: Your test code here!
     end

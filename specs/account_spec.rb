@@ -185,12 +185,20 @@ describe "Wave 1" do
     end
   end
   #Optional
-  xdescribe "Owner#initialize" do
-    it "Takes an ID, name, and address" do
-      id = 101
-      name = "Owner Name"
-      address = "101 Wave Street"
-      owner = Bank::Owner.new(id, name, address)
+  describe "Owner#initialize" do
+    it "Takes an ID, first name, last name, street address, city, and state" do
+      #18,Gonzalez,Laura,310 Hauk Street,Springfield,Illinois
+      id = 18
+      name_first = "Laura"
+      name_last = "Gonzalez"
+      address_street = "310 Hauk Street"
+      address_city = "Springfield"
+      address_state = "Illinois"
+
+      name = name_first + " " + name_last
+      address = address_street + ", " + address_city + ", " + address_state
+
+      owner = Bank::Owner.new(id, name_first, name_last, address_street, address_city, address_state)
 
       owner.must_respond_to :id
       owner.id.must_equal id
@@ -208,142 +216,72 @@ end
 describe "Wave 2" do
   describe "Account.all" do
     before do
-
-    end
-    it "Returns an array of all accounts" do
-      #Bank::Account.import_accounts_csv("support/accounts.csv")
-      Bank::Account.all.must_be_kind_of Array
-      puts "Accounts is #{Bank::Account.all}"
-    end
-
-    it "Everything in the array is an Account" do
-      #Bank::Account.import_accounts_csv("support/accounts.csv")
-      Bank::Account.all.each do |account|
-        account.must_be_instance_of Bank::Account
-      end
-    end
-  describe "check accounts_array length" do
-    before do
       @all_accounts_array = Bank::Account.all
     end
 
-    it "The number of accounts is correct = 12" do
-      #skip
-
-      #Bank::Account.import_accounts_csv("support/accounts.csv")
-      @all_accounts_array.length.must_equal 12
-    end
-  end
-    it "The ID and balance of the first account match what's in the CSV file" do
-      #skip
-      test_id = 1212
-      test_balance = 1235667
-
-      #Bank::Account.import_accounts_csv("support/accounts.csv")
-
-      first_instance = Bank::Account.all[0]
-      first_instance.id.must_equal test_id
-      first_instance.balance.must_equal test_balance
-
-    end
-
-    it "The ID and balance of the last account match what's in the CSV file" do
-
-      test_id = 15156
-      test_balance = 4356772
-
-      #Bank::Account.import_accounts_csv("support/accounts.csv")
-
-      puts "last_instance = #{Bank::Account.all[11]}"
-      last_instance = Bank::Account.all[11]
-      last_instance.id.must_equal test_id
-      last_instance.balance.must_equal test_balance
-
+    it "Check that class have a all method" do
+      Bank::Account.must_respond_to :all
     end
 
     it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+      @all_accounts_array.must_be_kind_of Array
     end
-      # describe "Account.self.import_csv" do
-      #   it 'returns an array' do
-      #
-      #   end
-      # end
-      #   it "takes an ID, balance, and open_date" do
-      #     id = 333
-      #     balance = 22222
-      #     open_date = "2222-03-27 11:30:09 -0800"
-      #     account = Bank::Account.new(id, balance, open_date)
-      #
-      #     account.must_respond_to :id
-      #     account.must_equal id
-      #
-      #     account.must_respond_to :balnce
-      #     account.must_equal balance
-      #
-      #     account.must_respond_to :open_date
-      #     account.must_equal open_date
-      #
-      #     account.length must_equal 12
-      # end
+
+    it "Everything in the array is an instance of Account class" do
+      @all_accounts_array.each do |account_instance|
+        account_instance.must_be_instance_of Bank::Account
+      end
+    end
+
+    it "The number of accounts is correct = 12" do
+      @all_accounts_array.length.must_equal 12
+    end
+
+    it "The ID and balance of the first account match what's in the CSV file" do
+      test_id = 1212
+      test_balance = 12356.67
+
+      first_instance = @all_accounts_array.first
+      first_instance.id.must_equal test_id
+      first_instance.balance.must_equal test_balance
+    end
+
+    it "The ID and balance of the last account match what's in the CSV file" do
+      test_id = 15156
+      test_balance = 43567.72
+
+      last_instance = @all_accounts_array.last
+      last_instance.id.must_equal test_id
+      last_instance.balance.must_equal test_balance
+    end
   end
 
-  xdescribe "Account.find" do
+  describe "Account.find" do
+    it "Check that class have a find method" do
+      Bank::Account.must_respond_to :find
+    end
+
     it "Returns an account that exists" do
-      Bank::Account.import_accounts_csv("support/accounts.csv")
-
-      Bank.Account.must_respond_to :find
-      #Bank::Account.find(1212).wont_equal nil
-      proc {
-        Bank::Account.find(account_id)
-      }.wont_raise ArgumentError
-
-      Bank::Account.find(1212).must_be_instance_of Bank::Account
+      account_id = 15151
+      #proc { Bank::Account.find(account_id) }.wont_raise ArgumentError
+      Bank::Account.find(account_id).must_be_instance_of Bank::Account
     end
 
     it "Can find the first account from the CSV" do
-      account_id = 1212
-      Bank::Account.import_accounts_csv("support/accounts.csv")
-
-      Bank.Account.must_respond_to :find
-      #Bank::Account.find(account_id).wont_equal nil
-      proc {
-        Bank::Account.find(account_id)
-      }.wont_raise ArgumentError
-
-      Bank::Account.find(account_id).must_be_instance_of Bank::Account
+      first_account_id = 1212
+      #proc { Bank::Account.find(account_id) }.wont_raise ArgumentError
+      Bank::Account.find(first_account_id).must_be_instance_of Bank::Account
     end
 
     it "Can find the last account from the CSV" do
-      account_id = 15156
-      Bank::Account.import_accounts_csv("support/accounts.csv")
-
-      Bank.Account.must_respond_to :find
-      #Bank::Account.find(account_id).wont_equal nil
-      proc {
-        Bank::Account.find(account_id)
-      }.wont_raise ArgumentError
-
-      Bank::Account.find(account_id).must_be_instance_of Bank::Account
+      last_account_id = 15156
+      #proc { Bank::Account.find(account_id) }.wont_raise ArgumentError
+      Bank::Account.find(last_account_id).must_be_instance_of Bank::Account
     end
 
     it "Raises an error for an account that doesn't exist" do
-      ccount_id = 9999
-
-      Bank::Account.import_accounts_csv("support/accounts.csv")
-
-      Bank.Account.must_respond_to :find
-
-      proc {
-        Bank::Account.find(account_id)
-      }.must_raise ArgumentError
+      test_account_id = 9999
+      proc { Bank::Account.find(test_account_id) }.must_raise ArgumentError
     end
   end
 end

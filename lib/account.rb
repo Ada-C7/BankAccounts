@@ -6,8 +6,7 @@ require 'csv'
 module Bank
 
   class Owner
-    attr_reader :id, :name, :address
-    @@all_owners = []
+    attr_reader :id
 
     def initialize(owner_id, name_first, name_last, address_street, address_city, address_state)
       @id = owner_id
@@ -17,37 +16,30 @@ module Bank
       @address_street = address_street
       @address_city = address_city
       @address_state = address_state
-
-      @@all_owners << self
-
+      #@@all_owners << self
     end
 
     def self.all
-      return @@all_owners
-    end
-
-    def self.find(id)
-      @@all_owners.each do |owner|
-        return owner if owner.id = id
-      end
-
-      raise ArgumentError.new "owner #{id} does not exist!!"
-    end
-
-    def self.import_owners_csv(filename)
-      require 'csv'
-      CSV.open(filename, 'r').each do |line|
+      all_owners_array = []
+      CSV.read("support/owners.csv").each do |line|
         id = line[0].to_i
         last = line[1]
         first = line[2]
         street = line[3]
         city = line[4]
         state = line[5]
-
-        Owner.new(id, first, last, street, city, state)
+        all_owners_array << Owner.new(id, first, last, street, city, state)
       end
-    end
 
+      def self.find(id)
+        all_owners_array = Bank::Owner.all
+        all_owners_array.each do |owner_instance|
+          return owner_instance if owner_instance.id == id
+        end
+        raise ArgumentError.new "Owner #{id} does not exist!!"
+      end
+
+    end
 
     def name
       @name_first + " " + @name_last
@@ -56,7 +48,7 @@ module Bank
     def address
       @address_street + ", " + @address_city + ", " + @address_state
     end
-   end
+  end
 
   class Account
 
@@ -77,15 +69,22 @@ module Bank
     end
 
     def self.all
-        all_accounts = []
-        CSV.open("support/accounts.csv", 'r').each do |line|
-          id = line[0].to_i
-          balance = line[1].to_i
-          open_date = line[2]
-          account = Bank::Account.new(id, balance, open_date)
-          all_accounts << account
-        end
-          return all_accounts
+      all_accounts_array = []
+      CSV.read("support/accounts.csv").each do |line|
+        id = line[0].to_i
+        balance = line[1].to_i/100.0
+        open_date = line[2]
+        all_accounts_array << Bank::Account.new(id, balance, open_date)
+      end
+      return all_accounts_array
+    end
+
+    def self.find(id)
+      all_accounts_array = Bank::Account.all #also works as = self.all
+      all_accounts_array.each do |account_instance|
+        return account_instance if account_instance.id == id
+      end
+      raise ArgumentError.new "Account: #{id} does not exist"
     end
 
     def withdraw(amount)
@@ -107,8 +106,9 @@ module Bank
     end
   end
 
-
 end
+
+#puts Bank::Account.find(1212).inspect
 # puts Bank::Account.all.inspect
 # puts Bank::Account.all.length
 

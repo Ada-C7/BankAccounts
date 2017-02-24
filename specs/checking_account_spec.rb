@@ -71,7 +71,7 @@ describe "CheckingAccount" do
     end
 
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+      proc { @my_checking.withdraw_using_check(-25) }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do

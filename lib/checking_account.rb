@@ -19,13 +19,15 @@ module Bank
     end
 
     def withdraw_using_check(withdrawal_amount)
+      raise ArgumentError.new("Withdrawal must be >=0") if withdrawal_amount < 0
+
       if @balance - withdrawal_amount < -10
         puts "You can only go negative up to -$10"
         return @balance
       else
         @balance -= withdrawal_amount
       end
-      
+
     end
 
   end

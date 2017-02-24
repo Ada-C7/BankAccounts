@@ -7,7 +7,7 @@ module Bank
     attr_accessor :owner
 
     def initialize(id, balance, date, owner = "Customer Name")
-      raise ArgumentError.new("You cannot create a bank account with a 0 or negative balance, you goober.") if balance < 0
+      raise ArgumentError.new("You cannot create a bank account with a 0 or negative balance.") if balance < 0
       @id = id
       @balance = balance
       @date = date
@@ -30,14 +30,14 @@ module Bank
             return acct
           end
       end
-      raise ArgumentError.new("There's no such account ID, you nincompoop.")
+      raise ArgumentError.new("There's no such account ID.")
     end
 
     def withdraw(withdrawal_amount)
-      raise ArgumentError.new("You cannot withdraw a negative amount of money, you silly pants.") if withdrawal_amount < 0
+      raise ArgumentError.new("You cannot withdraw a negative amount of money.") if withdrawal_amount < 0
       # if withdrawal_amount > 0
         if withdrawal_amount > @balance
-          print "Uh oh! You can't overdraw your account, you doof!"
+          print "You can't overdraw your account, you doof."
         else
           return @balance -= withdrawal_amount
         end
@@ -48,7 +48,7 @@ module Bank
     end
 
     def deposit(deposit_amount)
-      raise ArgumentError.new("You cannot deposit a negative amount of money, you goofball.") if deposit_amount < 0
+      raise ArgumentError.new("You cannot deposit a negative amount of money.") if deposit_amount < 0
       # if deposit_amount > 0
         @balance += deposit_amount
       # else

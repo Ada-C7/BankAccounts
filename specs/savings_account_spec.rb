@@ -4,40 +4,48 @@ require 'minitest/skip_dsl'
 
 require_relative '../lib/savings'
 
-# Because a SavingsAccount is a kind
-# of Account, and we've already tested a bunch of functionality
-# on Account, we effectively get all that testing for free!
 # Here we'll only test things that are different.
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
+
+  before do
+      @account = Bank::SavingsAccount.new(12345, 100.0, "Jan 1, 2017")
+  end
+
   describe "#initialize" do
     it "Is a kind of Account" do
-      # Check that a SavingsAccount is in fact a kind of account
-      account = Bank::SavingsAccount.new(12345, 100.0)
-      account.must_be_kind_of Bank::Account
+      @account.must_be_kind_of Bank::Account
     end
 
-    it "Requires an initial balance of at least $10" do
-      # TODO: Your test code here!
+    it "Raises an error if initial balance is less than $10" do
+      proc {
+        Bank::SavingsAccount.find(12345, 5, "Jan 1, 2017")
+        }.must_raise ArgumentError
     end
   end
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
+      @account.withdraw(50)
+      @account.balance.must_equal 48.0
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      # TODO: Your test code here!
+      proc {
+        @account.withdraw(150)
+      }.must_output /.+/
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
+      starting_balance = @account.balance
+      updated_balance = @account.withdraw(150)
+      updated_balance.must_equal starting_balance
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
+      starting_balance = @account.balance
+      updated_balance = @account.withdraw(90)
+      updated_balance.must_equal starting_balance
     end
   end
 

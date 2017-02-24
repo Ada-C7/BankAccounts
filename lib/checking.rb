@@ -1,10 +1,8 @@
 
 module Bank
 
-  class CheckingAccount
-
-    def initialize
-    end
+  class CheckingAccount < Account
+    
 
   end
 

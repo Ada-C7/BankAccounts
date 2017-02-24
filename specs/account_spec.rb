@@ -89,9 +89,6 @@ describe "Wave 1" do
       account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
 
       updated_balance = account.withdraw(withdrawal_amount)
-
-      # Both the value returned and the balance in the account
-      # must be un-modified.
       updated_balance.must_equal start_balance
       account.balance.must_equal start_balance
     end

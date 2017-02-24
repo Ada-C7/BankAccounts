@@ -42,22 +42,25 @@ module Bank
     end
 
     def deposit(amount)
-
       if @too_low
         if @balance + amount < 10000
           puts "Your deposit must get you back up to 10k!"
-        else
+        elsif @balance + amount >= 10000
           @balance += amount
+          @too_low = false
         end
-      elsif @max_trans_reached
+      elsif @transactions >= 6
+        @max_trans_reached = true
         puts "Sorry, you've reached your max transactions for the month."
       else
         @balance += amount
         @transactions += 1
+        if @transactions >= 6
+          @max_trans_reached = true
+        end
       end
-      if @transactions >= 6
-        @max_trans_reached = true
-      end
+      
+      # super
     end
 
     def add_interest(rate)

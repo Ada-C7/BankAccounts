@@ -47,7 +47,7 @@ describe "MoneyMarketAccount" do
       account.too_low.must_be :==, false
       account.withdraw(501)
       account.balance.must_equal 9899
-      account.too_low.must_be :==, true
+      account.too_low.must_equal true
       proc {account.withdraw(1)}.must_output(/.+/)
 
     end
@@ -75,18 +75,78 @@ describe "MoneyMarketAccount" do
 
   describe "#deposit updates" do
     it "if balance is below 10000, cannot deposit unless amount_deposited + balance >= 10000" do
+      account = Bank::MoneyMarketAccount.new(1,10500)
+      account.withdraw(501)
+      account.too_low.must_equal true
+      account.balance.must_equal 9899
+      account.deposit(1)
+      account.balance.must_equal 9899
+      account.deposit(101)
+      account.balance.must_equal 10000
     end
 
-    it "no more transactions allowed until balance is increased using a deposit transaction" do
-    end
-
-    it "cannot withdraw if balance < 10000" do
-    end
 
     it "if transactions >= 6 cannot deposit" do
+      account = Bank::MoneyMarketAccount.new(1,10500)
+      account.deposit(1)
+      account.deposit(1)
+      account.deposit(1)
+      account.deposit(1)
+      account.deposit(1)
+      account.deposit(1)
+      account.balance.must_equal 10506
+      account.deposit(1)
+      account.balance.must_equal 10506
     end
 
-    it "unless the account is below 10000 and it is a deposit that brings the account back to 10000, a deposit counts toward transactions" do
+    it "if balance is below 10000 and it is a deposit that brings the account back to 10000, it doesn't count toward transactions" do
+      account = Bank::MoneyMarketAccount.new(1,10500)
+      account.transactions.must_equal 0
+      account.withdraw(501)
+      account.transactions.must_equal 1
+      account.too_low.must_equal true
+      account.balance.must_equal 9899
+      account.deposit(1)
+      account.transactions.must_equal 1
+      account.deposit(101)
+      account.transactions.must_equal 1
+      account.balance.must_equal 10000
+    end
+
+    it "after fixing a too_low, transactions continue to increment" do
+      account = Bank::MoneyMarketAccount.new(1,10500)
+      account.transactions.must_equal 0
+      account.withdraw(501) #overdrawn
+      account.transactions.must_equal 1
+      account.too_low.must_equal true
+      account.deposit(1) #doesn't count
+      account.transactions.must_equal 1
+      account.too_low.must_equal true
+      account.deposit(101) #not overdrawn
+      account.too_low.must_equal false
+      account.transactions.must_equal 1 #didn't count
+      account.balance.must_equal 10000
+      account.deposit(100) #not overdrawn
+      account.too_low.must_equal false
+      account.transactions.must_equal 2 #counted
+
+    end
+
+    it "if max_trans_reached a deposit fixing too_low will be permitted" do
+      # skip
+      account = Bank::MoneyMarketAccount.new(1,10500)
+      account.withdraw(10) #overdrawn
+      account.withdraw(10) #overdrawn
+      account.withdraw(10) #overdrawn
+      account.withdraw(10) #overdrawn
+      account.withdraw(10) #overdrawn
+      account.withdraw(451) #overdrawn
+      account.transactions.must_equal 6
+      account.too_low.must_equal true
+      account.max_trans_reached.must_equal true
+
+
+
     end
   end
 

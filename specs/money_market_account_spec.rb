@@ -45,15 +45,45 @@ describe "Bank::MoneyMarketAccount" do
       proc { @my_money_market.deposit(10) }.must_raise ArgumentError
     end
 
+    it "Does not allow more than six mixed deposits and withdrawals together" do
+      #Maximum of 6 transactions allowed per month
+      3.times do
+        @my_money_market.deposit(10)
+      end
+
+      3.times do
+        @my_money_market.withdraw(10)
+      end
+
+      #7th transaction should raise error
+      proc { @my_money_market.deposit(10) }.must_raise ArgumentError
+    end
+
+  end
+
+  describe "transactions" do
+    before do
+      @my_money_market = Bank::MoneyMarketAccount.new(1234, 10000.00)
+    end
+
+    it "if withdrawal takes balance below 10k, charges a fee of $100" do
+      @my_money_market.withdraw(500)
+
+      @my_money_market.balance.must_equal(9400)
+    end
+
+    it "if withdrawal goes below 10k, no more transactions are allowed" do
+      @my_money_market.withdraw(500)
+
+      proc { @my_money_market.withdraw(500) }.must_raise ArgumentError
+    end
+
   end
 
 end
 
 
 
-#Maximum of 6 transactions allowed per month
-# inputs - transaction numbers.
-# outputs - argument error if number of transactions goes over 6
 
 #Withdrawal logic
 

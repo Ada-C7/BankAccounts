@@ -1,4 +1,3 @@
-
 # UNFINISHED
 module Bank
   class Owner

@@ -9,12 +9,28 @@ module Bank
     def initialize(id, balance, opendate)
       @@account_count += 1
       @id = id.to_i
-      unless balance.to_i >= 0
+      @balance = monify(balance)
+      unless @balance >= 0
         raise ArgumentError.new "Starting balance is not valid."
       end
-      @balance = balance.to_i
       @opendate = Time.parse(opendate)
       # @opendate = DateTime.strptime(opendate, '%Y-%m-%d %H:%M:%S %z')
+    end
+
+    # check if balance is in cents or in dollars with '.'
+    def monify(amount)
+      float_already = false
+      amount.to_s.each_char do |letter|
+        if letter == "."
+          float_already = true
+        else
+        end
+      end
+      if float_already == false
+        return amount.to_i/100.0
+      else
+        return amount.to_f
+      end
     end
 
     def withdraw(amount)
@@ -23,6 +39,7 @@ module Bank
       end
       if amount > @balance
         puts "Can't withdraw more than you have!"
+        return @balance
       else
         @balance -= amount
         return @balance
@@ -37,9 +54,9 @@ module Bank
       return @balance
     end
 
-    def add_owner(owner) #optional to add an owner id later on
-      @owner = owner
-    end
+    # def add_owner(owner) #optional to add an owner id later on
+    #   @owner = owner
+    # end
 
     def self.all
       @@all_accounts = []
@@ -54,9 +71,9 @@ module Bank
       CSV.foreach("../support/accounts.csv") do |row|
         if row[0].to_i == id
           @find_account = Account.new(row[0], row[1], row[2])
+        else
         end
       end
-
       if @find_account == nil
         raise ArgumentError.new("No matching account on file.")
       else
@@ -70,13 +87,8 @@ end
 all = Bank::Account.all
 print all.first.id
 
-
-# found = Bank::Account.find(1212)
-# # print found.id
-# print found.balance
-
-# print Bank::Account.all
-# puts Bank::Account.find(1212) <don't create a new one!
+# Instead of creating instance self.find is looking through self.all instances to return exact same object
+#
 # def self.find(id)
 #   @find_account = nil
 #   @@all_accounts.each do |account|
@@ -92,17 +104,3 @@ print all.first.id
 #   end
 # end
 # DEADEND: initially thought that I had to read in the data outside of the class
-#
-# def self.all
-#   print @@all_accounts
-# end
-#
-# def self.find(id)
-#   @@all_accounts.each do |account_array|
-#     if account_array[0] == id
-#       print account_array
-#     else
-#       break
-#     end
-#   end
-# end

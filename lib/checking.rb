@@ -35,7 +35,7 @@ module Bank
       end
 
 
-      if @balance - (amount + check_fee) < 10
+      if @balance - (amount + check_fee) < (-10)
         print "Insufficient Funds"
         @balnace = @balance
       else

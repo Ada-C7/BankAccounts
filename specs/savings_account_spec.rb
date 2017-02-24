@@ -18,21 +18,29 @@ describe "SavingsAccount" do
 
   end
 
-  xdescribe "#withdraw" do
+  describe "#withdraw" do
+
+    before do
+      @account = Bank::SavingsAccount.new(12345, 100.0)
+    end
+
     it "Applies a $2 fee each time" do
-      skip
+      @account.withdraw(10)
+      @account.balance.must_equal(88)
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      skip
+      proc {@account.withdraw(95)}.must_raise ArgumentError
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-      skip
+      proc {@account.withdraw(95)}.must_raise ArgumentError
+      @account.balance.must_equal 100
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      skip
+      proc {@account.withdraw(89)}.must_raise ArgumentError
+      @account.balance.must_equal 100
     end
   end
 

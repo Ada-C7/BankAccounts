@@ -3,6 +3,8 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/checking_account'
 
+#Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 # Because a CheckingAccount is a kind
 # of Account, and we've already tested a bunch of functionality
 # on Account, we effectively get all that testing for free!
@@ -20,6 +22,18 @@ describe "CheckingAccount" do
   end
 
   describe "#withdraw" do
+
+    #Since withdraw was overridden, must retest the basic functionality
+    it "Requires a positive withdrawal amount" do
+      start_balance = 100.0
+      withdrawal_amount = -25.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      proc {
+        account.withdraw(withdrawal_amount)
+      }.must_raise ArgumentError
+    end
+
+
     it "Applies a $1 fee each time" do
       start_balance = 100.0
       withdrawal_amount = 25.0
@@ -120,7 +134,7 @@ describe "CheckingAccount" do
   end
 
   describe "#reset_checks" do
-     it "Can be called without error" do
+    it "Can be called without error" do
       account = Bank::CheckingAccount.new(1337, 100)
       account.reset_checks
     end

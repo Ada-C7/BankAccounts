@@ -8,7 +8,6 @@ require_relative '../lib/savings_account'
 # on Account, we effectively get all that testing for free!
 # Here we'll only test things that are different.
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
@@ -26,6 +25,17 @@ describe "SavingsAccount" do
 
 
   describe "#withdraw" do
+    
+    #Since withdraw was overridden, must retest the basic functionality
+    it "Requires a positive withdrawal amount" do
+      start_balance = 100.0
+      withdrawal_amount = -25.0
+      account = Bank::SavingsAccount.new(1337, start_balance)
+      proc {
+        account.withdraw(withdrawal_amount)
+      }.must_raise ArgumentError
+    end
+
     it "Applies a $2 fee each time" do
       start_balance = 100.0
       withdrawal_amount = 25.0

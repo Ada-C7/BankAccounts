@@ -3,6 +3,11 @@ require 'csv'
 
 module Bank
   class CheckingAccount < Account
+    attr_reader :check_count
+    def initialize(id, balance, open_date = nil)
+      super
+      @check_count = 1
+    end
 
 
     def withdraw(withdrawal_amount)
@@ -19,13 +24,28 @@ module Bank
 
     def withdraw_using_check(check)
       raise ArgumentError.new("Check cannot be a negative amount") if check < 0
-      if @balance - (check) < -10
-        puts "Warning! This withdrawal will cause you to be under more than ten dollars!"
-        # return @balance
+      if @check_count < 4
+        if (@balance - check) < -10
+          puts "Warning! This withdrawal will cause you to be under more than ten dollars!"
+          # return @balance
+
+          return @balance
+        else
+            @check_count += 1
+            @balance -= check
+        end
+
       else
-          @balance -= check
+        if (@balance - (check + 2.0)) < -10
+          puts "Warning! This withdrawal will cause you to be under more than ten dollars!"
+          return @balance
+        else
+          @check_count += 1
+            @balance = @balance - check - 2.0
+        end
+
       end
-      return @balance
+
     end
 
   end

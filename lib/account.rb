@@ -21,20 +21,22 @@ module Bank
           def self.find_with_id(file, inquiry) # using ID
 
                all_accounts = Bank::Account.all(file)
-               found = ""
+               # found = ""
+               #
+               # all_accounts.each do | account |
+               #
+               #
+               #      if account.id == inquiry
+               #
+               #           found = account
+               #      end
+               #
+               #
+               # end
+               #
+               # found
 
-               all_accounts.each do | account |
-
-
-                    if account.id == inquiry
-
-                         found = account
-                    end
-
-
-               end
-
-               found
+               all_accounts[]
 
 
           end
@@ -43,11 +45,13 @@ module Bank
 
                all_accounts = Bank::Account.all(file)
 
-               found = all_accounts[inquiry]
+               # found = all_accounts[inquiry]
+               #
+               # raise ArgumentError.new "Can't create an account with a negative balance." if found == nil
+               #
+               # found
 
-               raise ArgumentError.new "Can't create an account with a negative balance." if found == nil
-
-               found
+               all_accounts.fetch(inquiry, "Count doesn't exist.")
 
           end
 

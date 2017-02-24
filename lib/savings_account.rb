@@ -11,7 +11,7 @@ module Bank
     end
 
     def withdraw(money_to_withdraw)
-      if @balance - money_to_withdraw < 10
+      if @balance - (money_to_withdraw + 2) < 10
         puts "Warning! This withdrawal will put you under the $10 account minimum!"
         return @balance
       else

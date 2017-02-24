@@ -43,11 +43,10 @@ module Bank
 
       if @balance - (amount + @withdraw_fee) < @minimum_balance
         puts "Can't withdraw more than you have!"
-        return @balance
       else
         @balance -= (amount + @withdraw_fee)
-        return @balance
       end
+      return @balance
     end
 
     def deposit(amount)

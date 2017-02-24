@@ -7,11 +7,38 @@ module Bank
       super
       @withdraw_fee = 1.0
       @minimum_balance = 0
+      @check_count = 0
+      @overdraft = -10
     end
 
     def withdraw(amount)
       super
     end
 
+    def withdraw_using_check(amount)
+      unless amount > 0
+        raise ArgumentError.new "Withdrawal has be a positive amount!"
+      end
+
+      @check_count += 1
+      case @check_count
+      when > 3
+        @check_fee = 2.0
+      when < 3
+        @check_fee = 0
+      end
+
+      if @balance - (amount + @check_fee) < @overdraft
+        puts "You cannot overdraft more than $10!"
+      else
+        @balance -= (amount + @check_fee)
+      end
+      return @balance
+      end
+
+      unless amount > 0
+        raise ArgumentError.new "Withdrawal has be a positive amount!"
+      end
+    end
   end
 end

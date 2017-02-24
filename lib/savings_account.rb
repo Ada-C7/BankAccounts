@@ -7,7 +7,7 @@ module Bank
       super
 
       if @balance < 10
-        raise ArgumentError.new "You must initially deposit at least $10.00"
+        argument("You must initially deposit at least $10.00")
       end
 
     end
@@ -29,7 +29,7 @@ module Bank
 
     def add_interest(rate)
 
-      raise ArgumentError.new("Interest rate >=0") if rate < 0
+      argument("Interest rate must be >= 0") if rate < 0
 
       interest = @balance * (rate/100)
       @balance += interest

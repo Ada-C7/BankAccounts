@@ -134,9 +134,3 @@ describe "Bank::MoneyMarketAccount" do
 
   end
 end
-
-
-
-# Add interest same as to SavingsAccount
-# Inputs are interest rate, balance
-# Outputs are updated balance, returning interest earned.

@@ -14,7 +14,7 @@ module Bank
 
     def set_balance(start_balance)
       if start_balance < 0
-        raise ArgumentError.new "You cannot initialize a new account with a negative balance."
+        argument("You cannot initialize a new account with a negative balance.")
       else
         start_balance
       end
@@ -38,7 +38,7 @@ module Bank
       end
 
       if @account == nil
-        raise ArgumentError.new "This account doee not exist!"
+        raise ArgumentError.new "This account does not exist!"
       else
         return @account
       end
@@ -48,7 +48,7 @@ module Bank
       if owner.class == Owner
         @owner = owner
       else
-        raise ArgumentError.new "You must add a class type of Owner."
+        argument("You must add a class type of Owner.")
       end
     end
 
@@ -68,15 +68,19 @@ module Bank
     #used in check_withdrawals
     def withdraw_positive(withdrawal_amount)
       #makes sure the withdrawal amount is pos.
-      raise ArgumentError.new("Withdrawal must be >=0") if withdrawal_amount < 0
+      argument("Withdrawal must be >= 0") if withdrawal_amount < 0
     end
 
     def deposit(deposit_amount)
       if deposit_amount > 0
         @balance += deposit_amount
       else
-        raise ArgumentError.new "Your deposit must be greater than zero."
+        argument("Your deposit must be greater than zero.")
       end
+    end
+
+    def argument(output)
+      raise ArgumentError.new "#{ output }"
     end
 
   end
@@ -85,7 +89,7 @@ module Bank
     attr_reader :last_name, :first_name, :street_address, :city, :state
 
     def initialize(id = nil, last_name = nil, first_name = nil, street_address = nil, city = nil, state = nil)
-      id = id
+      @id = id
       @last_name = last_name
       @first_name = first_name
       @street_address = street_address
@@ -110,7 +114,7 @@ module Bank
       end
 
       if @owner == nil
-        raise ArgumentError.new "This owner does not exist!"
+        argument("This owner does not exist!")
       else
         return @owner
       end

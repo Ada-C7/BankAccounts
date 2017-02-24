@@ -86,8 +86,11 @@ describe "CheckingAccount" do
     it "Requires a positive withdrawal amount" do
       account = Bank::CheckingAccount.new(12345, 50)
       proc {
-        account.withdraw_using_check(-30)
+        account.withdraw(-50)
       }.must_raise ArgumentError
+
+
+
     end
 
     it "Updates number of checks cashed" do
@@ -141,18 +144,44 @@ describe "CheckingAccount" do
 
   end
 
-  xdescribe "#reset_checks" do
+  describe "#reset_checks" do
     it "Can be called without error" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100)
+
+      account.withdraw_using_check(10)
+      account.count_checks_cashed.must_equal 1
+
+      account.withdraw_using_check(10)
+      account.count_checks_cashed.must_equal 2
+
+      account.withdraw_using_check(10)
+      account.count_checks_cashed.must_equal 3
+
+      account.reset_checks
+      account.count_checks_cashed.must_equal 0
+
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100)
+
+      2.times do
+        account.withdraw_using_check(10)
+      end
+
+      account.reset_checks
+      account.count_checks_cashed.must_equal 0
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100)
+        5.times do
+          account.withdraw_using_check(10)
+        end
+      account.reset_checks
+      account.count_checks_cashed.must_equal 0
     end
+
   end
 end
 end

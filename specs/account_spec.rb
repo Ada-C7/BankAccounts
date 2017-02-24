@@ -6,7 +6,7 @@ require_relative '../lib/account'
 
 describe "Wave 1" do
   describe "Account#initialize" do
-    it "Takes an ID and an initial balance" do
+    it "Takes an ID , initial balance and open_date" do
       id = 1337
       balance = 100.0
       open_date = "1/1/2017"
@@ -212,14 +212,13 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
     before do
       @all_accounts_array = Bank::Account.all
     end
 
-    it "Check that class have a all method" do
+    it "Check that class have the all method" do
       Bank::Account.must_respond_to :all
     end
 
@@ -364,5 +363,5 @@ describe "Wave 2" do
       proc { Bank::Owner.find(test_owner_id) }.must_raise ArgumentError
     end
   end
-  
+
 end

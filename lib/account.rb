@@ -5,10 +5,10 @@ module Bank
   class Account
     # attr_accessor :withdraw, :deposit, :all_accounts
     attr_reader :id, :balance, :opendate, :show_id, :account_count, :find_account
-    @@account_count = 0
+    @@count = 0
 
     def initialize(id, balance, opendate)
-      @@account_count += 1
+      @@count += 1
       @id = id.to_i
       @balance = monify(balance)
       unless @balance >= 0

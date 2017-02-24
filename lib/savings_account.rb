@@ -8,21 +8,12 @@ module Bank
         raise ArgumentError.new "Need at least $10."
       end
       super(id, balance, opendate)
+      @withdraw_fee = 2.0
+      @minimum_balance = 10.0
     end
 
     def withdraw(amount)
-      fee = 2.0
-      unless amount > 0
-        raise ArgumentError.new "Withdrawal has be a positive amount!"
-      end
-
-      if @balance - (amount + fee) < 10.0
-        puts "Can't withdraw more than you have!"
-        return @balance
-      else
-        @balance -= (amount + fee)
-        return @balance
-      end
+      super
     end
 
     def add_interest(rate)

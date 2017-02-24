@@ -108,35 +108,34 @@ describe "Wave 1" do
   end
 
   describe "Account#deposit" do
+    before do
+      @account = Bank::Account.new(id: 1337, balance: 100)
+      @start_balance = @account.balance
+    end
+
     it "Increases the balance" do
-      start_balance = 100
       deposit_amount = 25
-      account = Bank::Account.new(id: 1337, balance: start_balance)
 
-      account.deposit(deposit_amount)
+      @account.deposit(deposit_amount)
 
-      expected_balance = start_balance + deposit_amount
-      account.balance.must_equal expected_balance
+      expected_balance = @start_balance + deposit_amount
+      @account.balance.must_equal expected_balance
     end
 
     it "Returns the modified balance" do
-      start_balance = 100
       deposit_amount = 25
-      account = Bank::Account.new(id: 1337, balance: start_balance)
 
-      updated_balance = account.deposit(deposit_amount)
+      updated_balance = @account.deposit(deposit_amount)
 
-      expected_balance = start_balance + deposit_amount
+      expected_balance = @start_balance + deposit_amount
       updated_balance.must_equal expected_balance
     end
 
     it "Requires a positive deposit amount" do
-      start_balance = 100
       deposit_amount = -25
-      account = Bank::Account.new(id: 1337, balance: start_balance)
 
       proc {
-        account.deposit(deposit_amount)
+        @account.deposit(deposit_amount)
       }.must_raise ArgumentError
     end
   end

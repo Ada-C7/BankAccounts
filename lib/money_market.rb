@@ -13,8 +13,12 @@ module Bank
       end
 
       def withdraw(amount)
-        if balance - amount < 10000
+        if balance < 10000
+          puts "You cannot make any more transactions until you are over $10,000"
+        elsif balance - amount < 10000
           amount += 100
+          @balance -= amount
+        else
           @balance -= amount
         end
       end

@@ -27,6 +27,16 @@ describe "MoneyMarketAccount" do
       account.withdraw(500)
       account.balance.must_equal 9400
     end
+
+    it "Doesn't allow anymore transactions if the balance goes below $10000" do
+      account = Bank::MoneyMarketAccount.new(12345, 10000)
+      account.withdraw(500)
+      proc {
+        account.withdraw(500)
+      }.must_output(/.+/)
+      account.balance.must_equal 9400
+    end
+
   end
 
 end

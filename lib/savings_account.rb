@@ -10,9 +10,18 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      super(withdrawal_amount)
+      # Does not allow the account to go below the $10 minimum balance
+      # Will output a warning message
+      # return the original un-modified balan.0ce
+      fee = 2.0
+      if @balance - (withdrawal_amount + fee) < 10
+        print "Balance cannot be under $10"
+        return @balance
+      else
+        @balance -= withdrawal_amount + fee
+      end
 
-      @balance -= 2.0
+      # return @balance
     end
 
 

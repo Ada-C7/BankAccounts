@@ -7,7 +7,7 @@ module Bank
       unless balance >= 10
         raise ArgumentError.new "Need at least $10."
       end
-      super(id, balance, opendate)
+      super
       @withdraw_fee = 2.0
       @minimum_balance = 10.0
     end

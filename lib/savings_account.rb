@@ -23,9 +23,11 @@ class SavingsAccount < Bank::Account
     return @balance
   end
 
-  # def add_interest(rate)
-  #   raise ArgumentError.new "Invalid negative amount" if amount < 0
-  #   @balance += amount
-  #   return @balance
-  # end
+  def add_interest(rate)
+    raise ArgumentError.new "Requires a positive interest rate." if rate < 0
+
+    interest_amount = @balance * rate/100.0
+    @balance += interest_amount
+    return interest_amount
+  end
 end

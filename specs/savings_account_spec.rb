@@ -65,17 +65,40 @@ describe "SavingsAccount" do
     end
   end
 
-  xdescribe "#add_interest" do
+  describe "#add_interest" do
     it "Returns the interest calculated" do
-      # TODO: Your test code here!
+      initial_balance = 100.0
+      account = SavingsAccount.new(12345, initial_balance)
+      rate = 1.0
+      account.must_respond_to :add_interest
+
+      calculated_interest = initial_balance * rate/100.0
+
+      account.add_interest(rate).must_equal calculated_interest
     end
 
     it "Updates the balance with calculated interest" do
-      # TODO: Your test code here!
+      initial_balance = 100.0
+      account = SavingsAccount.new(12345, initial_balance)
+      rate = 1.0
+
+      interest_amount = initial_balance * rate/100.0
+      calculated_balance = initial_balance + interest_amount
+
+      account.must_respond_to :add_interest
+      account.must_respond_to :balance
+
+      account.add_interest(rate)
+
+      account.balance.must_equal calculated_balance
     end
 
     it "Requires a positive rate" do
-      # TODO: Your test code here!
+      initial_balance = 100.0
+      account = SavingsAccount.new(12345, initial_balance)
+      rate = -1.0
+
+      proc {account.add_interest(rate)}.must_raise ArgumentError  
     end
   end
 end

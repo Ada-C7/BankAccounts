@@ -20,26 +20,28 @@ describe "SavingsAccount" do
     end
 
     it "Requires an initial balance of at least $10" do
-  proc { Bank::SavingsAccount.new({balance: 5})}.must_raise ArgumentError
+  proc { Bank::SavingsAccount.new({id: 555555, balance: 5}) }.must_raise ArgumentError
     end
   end
 
-  xdescribe "#withdraw" do
+  describe "#withdraw" do
 
     before do
-      @account = Bank:SavingsAccount.new ({balance: 100})
+      @account = Bank::SavingsAccount.new({balance: 100})
     end
 
     it "Applies a $2 fee each time" do
+      
     @account.withdraw(20).must_equal 88
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      proc {account.withdraw(110)}.must_raise ArgumentError
+      skip
+      proc {@account.withdraw(110)}.must_raise ArgumentError
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
+
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do

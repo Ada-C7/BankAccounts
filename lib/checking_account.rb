@@ -33,7 +33,7 @@ module Bank
       else
         if withdrawal_amount > (@balance + 10 - 2)
           puts "You don't have enough in your account to withdraw that amount and pay the check fee, even with your $10 overdraft allowance!"
-        else @balance -= (withdrawal_amount +2)
+        else @balance -= (withdrawal_amount + 2)
         end
       end
       return @balance
@@ -42,15 +42,5 @@ module Bank
     def reset_checks
       @free_checks_used = 0
     end
-
-    #withdraw_using_check(amount): The input amount gets taken out of the account as a result of a check withdrawal. Returns the updated account balance.
-    # Allows the account to go into overdraft up to -$10 but not any lower
-    # The user is allowed three free check uses in one month, but any subsequent use adds a $2 transaction fee
-
   end
 end
-
-#
-# account = Bank::CheckingAccount.new(1337, 100)
-#
-# puts account.withdraw_using_check(110.01)

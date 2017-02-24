@@ -60,21 +60,3 @@ module Bank
 
   end
 end
-
-#
-# acct = Bank::Account.new(1212,1235667,'1999-03-27 11:30:09 -0800')
-# Bank::Account.find(1212)
-#
-# puts acct.balance
-
-# puts Bank::Account.reset_all_accounts_for_test
-# puts Bank::Account.all
-
-# puts acct.id
-
-# puts acct.open_date
-
-# acct.owner = Bank::Owner.new(name:"Janice Lichtman", address:"512A N 46th St, Seattle, WA", birthday:"May 16, 1974", pets_name: "Marshmallo")
-#
-# puts acct.owner
-# puts acct.owner.birthday

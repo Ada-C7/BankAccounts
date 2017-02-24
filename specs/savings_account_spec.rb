@@ -35,7 +35,7 @@ describe "SavingsAccount" do
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      # TODO: Your test code here!
+      proc {account.withdraw(110)}.must_raise ArgumentError
     end
 
     it "Doesn't modify the balance if it would go below $10" do

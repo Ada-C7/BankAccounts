@@ -62,6 +62,7 @@ describe "MoneyMarketAccount" do
       account.transactions.must_equal 5
       account.withdraw(10)
       account.transactions.must_equal 6
+      account.deposit(1)
       account.max_trans_reached.must_equal true
     end
 
@@ -87,7 +88,7 @@ describe "MoneyMarketAccount" do
 
 
     it "if transactions >= 6 cannot deposit" do
-      skip
+      # skip
       account = Bank::MoneyMarketAccount.new(1,10500)
       account.deposit(1)
       account.deposit(1)
@@ -98,6 +99,8 @@ describe "MoneyMarketAccount" do
       account.balance.must_equal 10506
       account.deposit(1)
       account.balance.must_equal 10506
+      account.max_trans_reached.must_equal true
+
     end
 
     it "if balance is below 10000 and it is a deposit that brings the account back to 10000, it doesn't count toward transactions" do
@@ -142,15 +145,10 @@ describe "MoneyMarketAccount" do
       account.withdraw(10)
       account.withdraw(10)
       account.transactions.must_equal 5
-
       account.withdraw(451) #overdrawn
       account.balance.must_equal 9899
       account.transactions.must_equal 6
       account.too_low.must_equal true
-      account.max_trans_reached.must_equal true
-
-
-
     end
   end
 

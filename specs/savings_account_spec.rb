@@ -3,7 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
-# require_relative '../lib/savings_account'
+require_relative '../lib/savings_account'
 
 # Because a SavingsAccount is a kind
 # of Account, and we've already tested a bunch of functionality
@@ -11,22 +11,43 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
   describe "#initialize" do
+
+    before do
+      @account = Bank::SavingsAccount.new(12345, 100.0)
+    end
+
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
-      account = Bank::SavingsAccount.new(12345, 100.0)
-      account.must_be_kind_of Bank::Account
+      @account.must_be_kind_of Bank::Account
     end
 
     it "Requires an initial balance of at least $10" do
       # TODO: Your test code here!
+      @account.balance.must_be :>=, 10.0
+
+      proc {
+        Bank::SavingsAccount.new(12345, 5.0)
+      }.must_raise ArgumentError
     end
   end
 
   describe "#withdraw" do
+    FEE = 2.00
+
+    before do
+      @withdraw_amount = 25.0
+      @balance = 100.0
+      @account = Bank::SavingsAccount.new(12345, @balance)
+      @withdraw = @account.withdraw(@withdraw_amount)
+    end
+
     it "Applies a $2 fee each time" do
       # TODO: Your test code here!
+
+      expected_balance = @balance - @withdraw_amount - FEE
+      @account.balance.must_equal expected_balance
     end
 
     it "Outputs a warning if the balance would go below $10" do

@@ -2,13 +2,13 @@ require 'csv'
 
 module Bank
   class Account
-    attr_reader :id, :balance, :date_created, :Accounts
+    attr_reader :id, :balance, :Accounts
     @@Accounts = []
-    def initialize(id, balance, date_created)
+    def initialize(id, balance) # date_created)
       @id = id
       @balance = balance
-      @date_created = date_created
-      @@Accounts << [id, balance, date_created]
+      # @date_created = date_created
+      @@Accounts << [id, balance] # date_created]
       raise ArgumentError.new("balance must be >= 0") if balance < 0
     end
 
@@ -49,7 +49,7 @@ module Bank
     def self.create_many_accounts
       many_accounts = []
       CSV.open("./support/accounts.csv").each do |line|
-          many_accounts << self.new(line[0].to_i, line[1].to_i, line[2])
+          many_accounts << self.new(line[0].to_i, line[1].to_i)
       end
       return many_accounts
     end

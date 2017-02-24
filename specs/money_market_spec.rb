@@ -17,8 +17,8 @@ describe "MoneyMarketAccount" do
     end
 
     it "Is a kind of Account" do
-      account = Bank::MoneyMarketAccount.new
-      account.must_be_kind_of Account
+      account = Bank::MoneyMarketAccount.new(1,100)
+      account.must_be_kind_of Bank::Account
     end
 
     it "Requires an initial balance of at least $10" do

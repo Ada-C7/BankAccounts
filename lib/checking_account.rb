@@ -2,18 +2,18 @@ require_relative 'account'
 
 module Bank
   class CheckingAccount < Bank::Account
-    attr_reader :id, :amount
+    # attr_reader :id, :balance
     attr_accessor :num_withdrawal
     def initialize(id, balance)
-      # super(id, balance)
-      @id = id
-      @balance = balance
-      raise ArgumentError.new("balance must be >= 0") if balance < 10
+      super(id, balance)
+      # @id = id
+      # @balance = balance
+      # raise ArgumentError.new("balance must be >= 10") if balance < 10
       @num_withdrawal = 0
     end
 
     def withdraw(amount)
-      if @balance - (amount + 1) < 10
+      if @balance - (amount + 1) < 0
         puts "balance must be greater than 0"
         return @balance
       else

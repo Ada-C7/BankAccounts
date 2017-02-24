@@ -23,13 +23,13 @@ describe "CheckingAccount" do
 
   describe "#withdraw" do
     it "Applies a $1 fee each time" do
-      acount = Bank::CheckingAccount.new(12345, 100.0)
-      acount.withdraw(50).must_equal 49
+      account = Bank::CheckingAccount.new(12345, 100.0)
+      account.withdraw(50).must_equal 49
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
       account = Bank::CheckingAccount.new(12345, 100.0)
-      new_balance = account.withdraw(95)
+      new_balance = account.withdraw(100)
       new_balance.must_equal 100
     end
   end

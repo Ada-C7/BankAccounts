@@ -2,11 +2,11 @@ require_relative 'account'
 
 module Bank
   class SavingsAccount < Bank::Account
-    attr_reader :id, :amount
+    # attr_reader :id, :amount
     def initialize(id, balance)
-      # super(id, balance)
-      @id = id
-      @balance = balance
+      super(id, balance)
+      # @id = id
+      # @balance = balance
       raise ArgumentError.new("balance must be greater than 10") if balance < 10
     end
 

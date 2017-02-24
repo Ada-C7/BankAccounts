@@ -18,6 +18,7 @@ module Bank
     end
 
     def withdraw_using_check(check)
+      raise ArgumentError.new("Check cannot be a negative amount") if check < 0
       if @balance - (check) < -10
         puts "Warning! This withdrawal will cause you to be under more than ten dollars!"
         # return @balance

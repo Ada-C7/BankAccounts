@@ -5,7 +5,7 @@ module Bank
 
     def initialize(id, balance, date)
       super(id, balance, date)
-      @monthly_checks_left = 3
+      @monthly_checks_used = 0
     end
 
     def withdraw(withdrawal_amount)
@@ -22,7 +22,7 @@ module Bank
     def withdraw_using_check(amount)
       raise ArgumentError.new "You cannot withdraw a negative amount." if amount <= 0
 
-      if @monthly_checks_left <= 0
+      if @monthly_checks_used >= 3
         fee = 200
       else
         fee = 0
@@ -33,9 +33,13 @@ module Bank
         return @balance
       end
 
-      @monthly_checks_left -= 1
+      @monthly_checks_used += 1
       return @balance -= (amount + fee)
 
+    end
+
+    def reset_checks
+      @monthly_checks_used = 0
     end
 
   end

@@ -103,15 +103,36 @@ describe "CheckingAccount" do
 
   describe "#reset_checks" do
     it "Can be called without error" do
-      # TODO: Your test code here!
+      @account.reset_checks.must_equal 0
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
+      @account.withdraw_using_check(100)
+      balance_before_reset = @account.balance
+
+      @account.reset_checks
+      @account.withdraw_using_check(250)
+      @account.withdraw_using_check(475)
+      @account.withdraw_using_check(1000)
+
+      @account.balance.must_equal (balance_before_reset - 250 - 475 - 1000)
+
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
+      @account.withdraw_using_check(100)
+      @account.withdraw_using_check(200)
+      @account.withdraw_using_check(50)
+      @account.withdraw_using_check(10)
+
+      balance_before_reset = @account.balance
+
+      @account.reset_checks
+      @account.withdraw_using_check(30)
+      @account.withdraw_using_check(340)
+      @account.withdraw_using_check(950)
+
+      @account.balance.must_equal (balance_before_reset - 30 - 340 - 950)
     end
   end
 end

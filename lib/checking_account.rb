@@ -2,7 +2,10 @@
 require_relative 'account.rb'
 module Bank
     class CheckingAccount < Account
+        attr_reader :minimum, :fee
         def initialize (id, balance, opendate = nil)
+            @fee
+            @minimum
             #super sets the instance variables found in the Account initialize method
             super
         end
@@ -11,10 +14,11 @@ module Bank
 
         def withdraw(amount)
             #fee of $1 for each withdraw
-            super
-            fee = 1
-            @balance -=fee
-            return @balance
+            # super
+            @fee = 1
+            @minimum = 0
+            # @balance -=fee
+            # return @balance
 
             #display new balance
             #balance can't go below -10 including fee

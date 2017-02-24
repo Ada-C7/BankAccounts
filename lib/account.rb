@@ -39,7 +39,7 @@ module Bank
 
         def withdraw (amount)
             if amount > 0
-                if @balance - amount < 0
+                if @balance - amount < minimum
                     puts "You do not have enough money to withdraw this amount"
                 else
                     @balance -=amount
@@ -49,6 +49,27 @@ module Bank
             end
             return @balance
         end
+
+
+        def withdraw(amount)
+            if amount > 0
+                if @balance - amount < @minimum || @balance - [amount + @fee] < @minimum
+                    puts "You don't have enough money in your account for this transaction"
+                else
+                    @balance -=[amount + fee]
+                    return @balance
+                end
+            else
+                puts "You must enter a positive amount of money to withdraw"
+            end
+
+        end
+
+
+
+
+
+
 
 
         def deposit (amount)

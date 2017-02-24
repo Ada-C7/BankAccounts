@@ -35,27 +35,6 @@ describe "CheckingAccount" do
     end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     it "Doesn't modify the balance if the fee would put it negative" do
       # TODO: Your test code here!
     end

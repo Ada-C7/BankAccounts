@@ -20,10 +20,30 @@ module Bank
         end
 
 
-        # def withdraw_using_check
-        #
-        # end
-        #
+        def withdraw_using_check(amount)
+            @balance -=amount
+            return @balance
+        end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         # def reset_checks
         #
         # end

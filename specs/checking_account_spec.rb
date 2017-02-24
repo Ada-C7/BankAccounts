@@ -45,31 +45,37 @@ describe "CheckingAccount" do
   end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      id = 116
+      balance = 20
+      amount = 15
+      new_balance = balance - amount
+
+      account = Bank::CheckingAccount.new(id,balance)
+      account.withdraw_using_check(amount)
+      account.balance.must_equal new_balance
+
     end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     it "Returns the modified balance" do
       # TODO: Your test code here!

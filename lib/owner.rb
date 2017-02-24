@@ -4,7 +4,7 @@ require 'date'
 module Bank
   class Owner
     attr_reader  :id, :last_name, :first_name, :address, :city, :state
-    def initialize (id,last_name, first_name = "Fakefirstname", address = "123 Main st", city = "Bellevue", state = "WA")
+    def initialize(id,last_name, first_name = "Fakefirstname", address = "123 Main st", city = "Bellevue", state = "WA")
       @id = id
       @last_name = last_name
       @first_name = first_name
@@ -15,7 +15,7 @@ module Bank
 
   # Returns array of all Owners
     def self.all
-      csv = CSV.read("../support/owners.csv", 'r') # object of class CSV
+      csv = CSV.read("support/owners.csv", 'r') # object of class CSV
       all_owners = []
       n = 0 # current line of csv file
       csv.length.times do

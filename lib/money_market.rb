@@ -3,6 +3,7 @@ require 'csv'
 require 'date'
 module Bank
   class MoneyMarket < Account
+    attr_reader :maximum_transactions
     def initialize(id, balance)
       raise ArgumentError.new("balance must be greater than 10.000$") if balance < 10000
       super(id, balance)
@@ -25,7 +26,7 @@ module Bank
         @maximum_transactions -= 1
       end
       return @balance
-     end
+    end
 
 
   end # end of class MoneyMarket

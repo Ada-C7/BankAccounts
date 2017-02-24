@@ -15,7 +15,7 @@ module Bank
 
     # Returns array of all instances of class Account
     def self.all
-      csv = CSV.read("../support/accounts.csv", 'r') # object of class CSV
+      csv = CSV.read("support/accounts.csv", 'r') # object of class CSV
       all_accounts = []
       n = 0 # current line of csv file
       csv.length.times do
@@ -43,7 +43,7 @@ module Bank
     # of account (from account_owners.csv file)
     def self.accounts_with_owners
       accounts_with_owners = []
-      csv = CSV.read("../support/account_owners.csv", 'r')
+      csv = CSV.read("support/account_owners.csv", 'r')
       csv.each do |line|
         # Match account instance with id in csv file
         account = Bank::Account.find(line[0].to_i)
@@ -89,7 +89,7 @@ module Bank
     def deposit(amount)
       if amount < 0
          raise ArgumentError.new("amount to withdraw cannot be less than 0")
-       end
+      end
       @balance += amount
       return @balance
     end

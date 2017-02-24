@@ -1,6 +1,5 @@
 module Bank
   class SavingsAccount < Account
-
     def initialize(id, balance)
       @id = id
       @balance = balance
@@ -19,10 +18,10 @@ module Bank
     end
 
     def add_interest(rate)
-        raise ArgumentError.new("interest rate must be > 0") if rate < 0
-        interest = @balance * rate/100
-        @balance += interest
-        return interest
+      raise ArgumentError.new("interest rate must be > 0") if rate < 0
+      interest = @balance * rate/100
+      @balance += interest
+      return interest
     end
   end
 end

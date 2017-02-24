@@ -19,7 +19,7 @@ describe "SavingsAccount" do
 
     it "Raises an error if initial balance is less than $10" do
       proc {
-        Bank::SavingsAccount.find(12345, 5, "Jan 1, 2017")
+        Bank::SavingsAccount.new(12345, 5, "Jan 1, 2017")
         }.must_raise ArgumentError
     end
   end
@@ -51,15 +51,20 @@ describe "SavingsAccount" do
 
   describe "#add_interest" do
     it "Returns the interest calculated" do
-      # TODO: Your test code here!
+      rich_account = Bank::SavingsAccount.new(23456, 10000, "Jan 1, 2017")
+      rich_account.add_interest(0.25)
+      rich_account.interest.must_equal 25.0
     end
 
     it "Updates the balance with calculated interest" do
-      # TODO: Your test code here!
+      rich_account = Bank::SavingsAccount.new(23456, 10000, "Jan 1, 2017")
+      rich_account.add_interest(0.25).must_equal 10025.0
     end
 
-    it "Requires a positive rate" do
-      # TODO: Your test code here!
+    it "Raises an error if a negative rate is given" do
+      proc {
+        @account.add_interest(-0.5)
+        }.must_raise ArgumentError
     end
   end
 end

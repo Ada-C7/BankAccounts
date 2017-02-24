@@ -4,11 +4,11 @@ require 'csv'
 module Bank
 
   class SavingsAccount < Account
-    attr_reader :interest
+    attr_reader :calculated_interest
     def initialize(id, balance, open_date = nil)
       super(id, balance, open_date = nil)
       raise ArgumentError.new "The initial balance must not be less than 10" if balance < 10
-      @interest
+      @calculated_interest = 0
     end
 
     def withdraw(money_to_withdraw)
@@ -22,9 +22,15 @@ module Bank
     end
 
     def add_interest(rate)
-        @interest = balance * rate / 100
+        @calculated_interest = balance * rate / 100
+        @balance += @calculated_interest
+        return @calculated_interest
 
     end
+
+    # def calculate_interest(rate)
+    #   @calculated_interest = balance * rate / 100
+    # end
 
   end
 end

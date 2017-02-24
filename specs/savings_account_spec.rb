@@ -45,10 +45,10 @@ describe "SavingsAccount" do
     end
 
     it "Outputs a warning if the balance would go below $10" do
-      initial_deposit = 15
+      initial_deposit = 100.0
       account = Bank::SavingsAccount.new(1,initial_deposit)
 
-      proc {account.withdraw(6)}.must_output(/.+/)
+      proc {account.withdraw(93.0)}.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if it would go below $10" do

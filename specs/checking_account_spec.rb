@@ -30,7 +30,7 @@ describe "CheckingAccount" do
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
-      # TODO: Your test code here!
+      @account.withdraw(110).must_equal 100
     end
   end
 

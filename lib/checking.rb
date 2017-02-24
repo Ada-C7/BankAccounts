@@ -15,12 +15,13 @@ module Bank
 
     def withdraw(amount)
 
-      if @balance - (amount + 1) < 0
-        raise ArgumentError.new "Insufficient Funds"
+      if @balance - (amount + 1) < 1
+        print "Insufficient Funds"
+        @balnace = @balance
+      else
+        @balance -= (amount + 1)
+        return @balance
       end
-
-      @balance -= (amount + 1)
-      return @balance
 
     end
 

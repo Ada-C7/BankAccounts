@@ -89,7 +89,7 @@ describe "CheckingAccount" do
       }.must_raise ArgumentError
     end
 
-    xit "Allows 3 free uses" do
+    it "Allows 3 free uses" do
       account = Bank::CheckingAccount.new(1212, 300.0)
       withdrawal_amount = 10
       # balance_before = account.balance
@@ -99,7 +99,7 @@ describe "CheckingAccount" do
       puts account.balance
       puts account.checks_used
       # account.checks_used must_equal 3
-      account.balance must_equal 270
+      account.balance.must_equal 270
     end
 
     it "Applies a $2 fee after the third use" do

@@ -13,30 +13,26 @@ module Bank
     def withdraw(amount)
       @withdrawal_fee = 1
       super
-      # raise ArgumentError.new ("Withdrawal must be >=0") if amount < 0
-      #
-      # if @balance - amount - 1 < 0
-      #   puts "This withdrawal would create a negative balance."
-      #   @balance
-      # else
-      #   @balance = @balance - amount - 1
-      # end
     end
 
     def withdraw_using_check(amount)
       raise ArgumentError.new ("Withdrawal must be >=0") if amount < 0
+      @balance_limit = -10
 
-      if @checks_used < 4 && @balance - amount >= -10
-        @checks_used += 1
-        @balance = @balance - amount
-      elsif @checks_used >= 4 && @balance - amount - 2 >= -10
-        @checks_used += 1
-        @balance = @balance - amount - 2
+      if @checks_used < 4
+        @withdrawal_fee = 0
       else
-        puts "This withdrawal would create an overdraft of more than -$10."
-        @balance
+        @withdrawal_fee = 2
       end
 
+      if @balance - amount - @withdrawal_fee < @balance_limit
+        puts "This withdrawal would create a balance below #{balance_limit}."
+        @balance
+      else
+        @checks_used += 1
+        @balance = @balance - amount - @withdrawal_fee
+      end
+      
     end
 
     def reset_checks

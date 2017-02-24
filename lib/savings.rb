@@ -25,11 +25,11 @@ module Bank
     def withdraw(amount)
 
       if @balance - (amount + 2)  < 10
-        #@balance = @balance
         puts "Insufficient Funds"
+        return @balance
       else
         @balance = (@balance - (amount + 2)) + 10
-        #return @balance
+        return @balance
       end
     end
 

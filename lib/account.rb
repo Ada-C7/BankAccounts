@@ -10,9 +10,10 @@ module Bank
 
 
 
-    @@accounts = Bank::Account.all
 
-    attr_accessor :balance, :id, :opendatetime
+
+
+    attr_accessor :balance, :id, :opendatetime, :accounts
 
 
     def initialize(account_hash)
@@ -20,7 +21,7 @@ module Bank
       @id = account_hash[:id].to_i
       @balance = account_hash[:balance].to_i #currently this will assign a negaitve number
       @opendatetime = account_hash[:opendatetime]
-
+      #@accounts = Bank::Account.all
 
       #method open_account assign to instance v.
       if @balance >= 0
@@ -60,15 +61,15 @@ module Bank
       raise ArgumentError.new "#{id} returned no results"
     end
 
-    def withdraw(withdrawal_amount)
-      if withdrawal_amount < 0
+    def withdraw(amount)
+      if amount < 0
         raise ArgumentError.new "Withdrawal amount cannot be negative number"
       else
-        if @balance < withdrawal_amount
+        if @balance < amount
           print "Your account is going to be overdrawn"
           @balance = @balance
-        elsif @balance >= withdrawal_amount
-          return @balance -= withdrawal_amount
+        elsif @balance >= amount
+          return @balance -= amount
         end
       end
 
@@ -93,4 +94,4 @@ end #end of module
  # puts Bank::Account.all.id
 # puts "These are all the Bank accounts: #{Bank::Account.all}"
 #print Bank::Account.find(15115)
-print @@accounts
+#puts @accounts

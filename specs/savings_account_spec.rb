@@ -35,11 +35,9 @@ describe "SavingsAccount" do
 
     it "Outputs a warning if the balance would go below $10" do
       account = Bank::SavingsAccount.new(12345, 100.0)
-      start_balance = 100.0
-      withdrawal_amount = 191
-      account = Bank::CheckingAccount.new(1337, start_balance)
+      withdrawal_amount = 91
       proc {
-        account.withdraw_using_check(withdrawal_amount)
+        account.withdraw(withdrawal_amount)
       }.must_output /.+/
     end
 

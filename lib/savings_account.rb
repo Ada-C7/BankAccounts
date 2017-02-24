@@ -9,7 +9,8 @@ module Bank
 
     def withdraw(withdrawal_amount)
       super
-      if @balance < withdrawal_amount
+      if @balance < withdrawal_amount - 10
+        puts "Warning low balance!"
         @balance
       else
         @balance -= 2

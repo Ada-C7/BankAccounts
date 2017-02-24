@@ -14,10 +14,14 @@ module Bank
 
 
     def withdraw amount  #hoW can I use super?
-      # if @balance - amount - 2 <= 10
+      if @balance - amount - 2 < 10
+        puts "Insufficient Funds (balance will go below $10)"
+        return @balance
+      else
+        amount += 2
+        super
+      end
 
-      #new balance can't go below 10
-      #adds a transaction fee
     end
 
     def add_interest rate

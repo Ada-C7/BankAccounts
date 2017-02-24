@@ -1,9 +1,6 @@
-# Janice Lichtman's Bank Accounts - Wave 1
-
 require 'csv'
 require 'date'
 require_relative 'owner'
-
 
 module Bank
   class Account
@@ -29,8 +26,10 @@ module Bank
     def self.read_csv
       @@all_accounts = []
       CSV.open("./support/accounts.csv").each do |acct|
+        acct_id = acct[0].to_i
+        acct_balance_dollars = acct[1].to_i / 100.0
         acct_date = DateTime.parse(acct[2])
-        self.new(acct[0].to_i, acct[1].to_i, acct_date)
+        self.new(acct_id,   acct_balance_dollars, acct_date)
       end
     end
 
@@ -39,21 +38,11 @@ module Bank
     end
 
     def self.find(id)
-     found_accounts = @@all_accounts.select {|acct| acct.id == id}
-     raise ArgumentError.new("That account doesn't exist!")  if found_accounts[0]==nil
-     return found_accounts[0]
-   end
+      found_accounts = @@all_accounts.select {|acct| acct.id == id}
+      raise ArgumentError.new("That account doesn't exist!")  if found_accounts[0]==nil
+      return found_accounts[0]
+    end
 
-
-    #   found_account = ""
-    #   @@all_accounts.each do |account|
-    #     if account.id == id
-    #       found_account = account
-    #     end
-    #   end
-    #   raise ArgumentError.new("That account doesn't exist!")  if found_account == ""
-    #   return found_account
-    # end
 
     def withdraw(withdrawal_amount)
       raise ArgumentError.new("Withdrawal amount must be >= 0") if withdrawal_amount < 0
@@ -72,14 +61,17 @@ module Bank
   end
 end
 
+#
+# acct = Bank::Account.new(1212,1235667,'1999-03-27 11:30:09 -0800')
+# Bank::Account.find(1212)
+#
+# puts acct.balance
 
-Bank::Account.read_csv
-Bank::Account.find(1212)
 # puts Bank::Account.reset_all_accounts_for_test
 # puts Bank::Account.all
-# acct = Bank::Account.new(1212,1235667,'1999-03-27 11:30:09 -0800')
+
 # puts acct.id
-# puts acct.balance
+
 # puts acct.open_date
 
 # acct.owner = Bank::Owner.new(name:"Janice Lichtman", address:"512A N 46th St, Seattle, WA", birthday:"May 16, 1974", pets_name: "Marshmallo")

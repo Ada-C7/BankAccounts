@@ -171,13 +171,13 @@ describe "Wave 2" do
     expect(Bank::Account.all.first.id).must_equal 1212, "ID of first account is incorrect."
     Bank::Account.reset_all_accounts_for_test
     Bank::Account.read_csv
-    expect(Bank::Account.all.first.balance).must_equal 1235667, "ID of first account is incorrect."
+    expect(Bank::Account.all.first.balance).must_equal 12356.67, "ID of first account is incorrect."
     Bank::Account.reset_all_accounts_for_test
     Bank::Account.read_csv
     expect(Bank::Account.all.last.id).must_equal 15156, "ID of first account is incorrect."
     Bank::Account.reset_all_accounts_for_test
     Bank::Account.read_csv
-    expect(Bank::Account.all.last.balance).must_equal 4356772, "ID of first account is incorrect."
+    expect(Bank::Account.all.last.balance).must_equal 43567.72, "ID of first account is incorrect."
   end
 end
 

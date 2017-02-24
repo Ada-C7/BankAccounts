@@ -1,4 +1,3 @@
-
 module Bank
   FEE = 2.00
 
@@ -19,11 +18,22 @@ module Bank
       if @balance - withdraw_amount < 10.0
         print "Balance cannot be less than $10"
         return @balance
-      # elsif @balance - withdraw_amount - FEE < 10.0
-      #   return @balance
+      elsif @balance - withdraw_amount - FEE < 10.0
+        return @balance
       else
         @balance -= withdraw_amount + FEE
       end
-    end
-  end#end of class
+    end#end of withdraw def
+
+    def add_interest(rate)
+      if rate < 0
+        raise ArgumentError.new "The interest rate must be positive"
+      else
+        interest = balance * rate/100
+        @balance = @balance + interest
+        return interest
+      end#end of if/else
+    end#end of interest def
+
+  end#end of Class
 end#end of module

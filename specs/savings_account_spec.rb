@@ -101,6 +101,12 @@ describe "SavingsAccount" do
 
     it "Requires a positive rate" do
       # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(12345, 100.0)
+      interest = -10
+
+      proc {
+        account.add_interest(interest)
+      }.must_raise ArgumentError
 
     end
   end

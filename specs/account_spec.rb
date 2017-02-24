@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require 'date'
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -67,7 +68,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -136,36 +137,58 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
-  describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-    end
+
+
+describe "Account.all" do
+  it "Returns an array of all accounts" do
+    Bank::Account.all.must_be_kind_of Array, "Must be an array"
+
   end
+end
 
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+describe "Test that each account has the correct number of items" do
+  it "Fits the template for an account" do
+    Bank::Account.all.each do |account|
+      account.must_be_kind_of Bank::Account, "This should be an account"
     end
   end
 end
+
+describe "Tests that the number of accounts is correct" do
+it "Account.all should be same length as CSV file" do
+  file_size = CSV.readlines("support/accounts.csv").size
+    Bank::Account.all.length.must_equal file_size
+    end
+end
+#
+describe "Tests that ID/Balance of 1st/nth account match whats in the CSV" do
+  it "Matches the opening and closing of the .csv file" do
+CSV.readlines("support/accounts.csv")[0][0].to_i.must_equal Bank::Account.all[0].id.to_i,  "the first item's ids should be the same"
+CSV.readlines("support/accounts.csv")[-1][0].to_i.must_equal Bank::Account.all[-1].id.to_i,  "the last items's ids should be the same"
+
+CSV.readlines("support/accounts.csv")[0][1].to_i.must_equal Bank::Account.all[0].balance.to_i,  "the first item's balance should be the same"
+CSV.readlines("support/accounts.csv")[-1][1].to_i.must_equal Bank::Account.all[-1].balance.to_i,  "the last items's balance should be the same"
+end
+end
+
+  describe "Account.find" do
+    it "Returns an account that exists" do
+      Bank::Account.find(1217).must_be_kind_of Bank::Account, "This should be a valid account #{}"
+    end
+
+    it "Can find the first acount in the CSV" do
+      Bank::Account.find(1212).must_be_kind_of Bank::Account, "This should show account #1212"
+    end
+end
+describe "Account.find the last" do
+    it "Can find the last account from the CSV" do
+        Bank::Account.find(15153).must_be_kind_of Bank::Account, "This should show account #15156"
+      end
+
+
+    it "Raises an error for an account that doesn't exist" do
+       proc {
+        Bank::Account.find(5)
+      }.must_raise ArgumentError
+    end
+  end

@@ -6,10 +6,7 @@ module Bank
 
 
     def initialize(id, balance, timedate = nil)
-      raise ArgumentError.new("balance must be greater than zero") if balance < 0
-      @id = id
-      @balance = balance
-      @timedate = timedate
+      super
       @number_of_checks = 0
     end
 
@@ -33,13 +30,13 @@ module Bank
 
     end
 
-    def check_for_overdraft(withdrawal_amount, limit)
+    def check_for_overdraft(withdrawal_amount, odlimit)
       @withdrawal_amount = withdrawal_amount
       overdraw_amount = @balance - withdrawal_amount
       add_checks
-      if withdrawal_amount <= balance + limit
+      if withdrawal_amount <= balance + odlimit
         @balance -= withdrawal_amount
-      elsif overdraw_amount < -10
+      elsif overdraw_amount < -odlimit
         puts "Balance will be more than $10 negative"
         @balance
       end

@@ -1,7 +1,9 @@
 module Bank
-  class Savings < Account
+  class SavingsAccount < Account
+    def initialize(id, balance, timedate = nil)
+      super
+    end
 
 
-
-  end#class savings 
+  end#class SavingsAccount
 end#module Bank

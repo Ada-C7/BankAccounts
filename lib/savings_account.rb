@@ -9,6 +9,7 @@ module Bank
 
     def withdraw(amount)
       @withdrawal_fee = 2
+      @balance_limit = 10
       super
     end
   end

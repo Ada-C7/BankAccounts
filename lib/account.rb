@@ -3,20 +3,21 @@ require 'csv'
 module Bank
   class Account
     attr_reader :id
-    attr_accessor :balance, :withdrawal_fee
+    attr_accessor :balance, :withdrawal_fee, :balance_limit
 
     def initialize(id, balance)
       raise ArgumentError.new("balance must be >=0") if balance < 0
       @id = id
       @balance = balance
       @withdrawal_fee = 0
+      @balance_limit = 0
     end
 
     def withdraw(withdrawal_amount)
       raise ArgumentError.new ("Withdrawal must be >=0") if withdrawal_amount < 0
 
-      if @balance - withdrawal_amount - withdrawal_fee < 0
-        puts "This withdrawal would create a negative balance."
+      if @balance - withdrawal_amount - withdrawal_fee < balance_limit
+        puts "This withdrawal would create a balance below #{balance_limit}."
         @balance
       else
         @balance = @balance - withdrawal_amount - withdrawal_fee

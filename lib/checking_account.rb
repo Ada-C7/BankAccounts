@@ -14,11 +14,20 @@ module Bank
     end
 
     def withdraw_using_check amount  #new method
-      #if > 3 checks, then charge a $2 check transaction fee
-      #update number of checks cashed counter
-      #can overdraft to -10 (balance)
-      #returns updated account balance
-      #total_checks_cashed += 1
+      if @count_checks_cashed > 3
+        amount += 2
+      end
+
+      if amount <=0
+        raise ArgumentError.new "withdrawal must be greater than 0"
+      elsif @balance - amount < -10
+        puts "Insufficient funds"  #puts statement returns nil
+        @balance #this is what is returned by this elsif
+      else
+        @count_checks_cashed += 1
+        @balance -= amount
+      end
+      
     end
 
 

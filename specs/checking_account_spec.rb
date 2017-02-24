@@ -37,33 +37,57 @@ describe "CheckingAccount" do
       proc {
         account.withdraw(20)
       }.must_output /.+/
-    
+
     end
   end
 
-  xdescribe "#withdraw_using_check" do
+  describe "#withdraw_using_check" do
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100.0)
+      account.withdraw_using_check 50
+
+      account.balance.must_equal 50
     end
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdraw_amount = 25.0
+      account = Bank::CheckingAccount.new(12345, start_balance)
+
+      updated_balance = account.withdraw_using_check(withdraw_amount)
+
+      expected_balance = start_balance - withdraw_amount
+      updated_balance.must_equal expected_balance
+
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 50)
+      account.withdraw_using_check 60
+
+      account.balance.must_equal -10
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 50)
+      proc {
+        account.withdraw_using_check(70)
+      }.must_output /.+/
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 50)
+      account.withdraw_using_check(70)
+
+      account.balance.must_equal 50
+
     end
 
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 50)
+      proc {
+        account.withdraw_using_check(-30)
+      }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do

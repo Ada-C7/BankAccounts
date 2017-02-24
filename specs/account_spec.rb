@@ -197,7 +197,7 @@ describe "Wave 2" do
        account.must_be_instance_of Bank::Account
        account.id.must_equal 1217
        account.balance.must_equal 12323
-    #    account.opendate.must_equal "2003-11-07 11:34:56 -0800"
+       account.opendate.must_equal "2003-11-07 11:34:56 -0800"
      end
 
 
@@ -207,7 +207,7 @@ describe "Wave 2" do
         CSV.read("support/accounts.csv") do
             accounts(0).id.must_equal 1212
             accounts(0).balance.must_equal 1235667
-            # accounts(0).opendate.must equal 1999-03-27 11:30:09 -0800
+            accounts(0).opendate.must equal "1999-03-27 11:30:09 -0800"
         end
     end
 
@@ -217,7 +217,7 @@ describe "Wave 2" do
         CSV.read("support/accounts.csv") do
             accounts(-1).id.must_equal 15156
             accounts(-1).balance.must_equal 4356772
-            # accounts(-1).opendate.must_equal 1994-11-17 14:04:56 -0800
+            accounts(-1).opendate.must_equal "1994-11-17 14:04:56 -0800"
         end
 
     end

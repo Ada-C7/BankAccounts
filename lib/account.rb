@@ -1,15 +1,13 @@
 #this is the new, second try at this
 require "csv"
-
 module Bank
-
     class Account
         attr_accessor :id, :balance, :opendate
         def initialize (id, balance, opendate = nil)
             raise ArgumentError.new("You need some positive cash flow to open an account") if balance < 0
             @id = id
             @balance = balance
-            @opendate
+            @opendate = opendate
         end
 
 

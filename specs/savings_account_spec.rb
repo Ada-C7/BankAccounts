@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+# require 'savings_account'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
 # require_relative '../lib/savings_account'
@@ -11,7 +12,7 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account

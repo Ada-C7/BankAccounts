@@ -57,6 +57,10 @@ describe "MoneyMarketAccount" do
 
     it " A deposit performed to reach or exceed the minimum balance of $10,000
     is not counted as part of the 6 transactions." do
+    account = Bank::MoneyMarketAccount.new(1337, 10000.0)
+    account.withdraw(500)
+    account.deposit(600)
+    account.transactions.must_equal 5
     end
   end
 

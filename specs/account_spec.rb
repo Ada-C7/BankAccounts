@@ -4,8 +4,6 @@ require 'minitest/skip_dsl'
 require_relative '../lib/account'
 require_relative '../lib/owner'
 
-
-
 describe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do

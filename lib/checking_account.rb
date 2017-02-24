@@ -2,11 +2,12 @@
 
 module Bank
   class CheckingAccount < Account
+    attr_reader :used_checks
 
     def initialize(id, start_balance)
       super(id, start_balance)
 
-      @uses = 0
+      @used_checks = 0
 
     end
 
@@ -29,14 +30,15 @@ module Bank
       elsif @balance - withdrawal_amount < -10.0
         print "You are withdrawing too much!"
         return @balance
-      elsif @uses += 1
-       @balance -= fee if @uses > 3
+      elsif @used_checks += 1
+       @balance -= fee if @used_checks > 3
        @balance -= withdrawal_amount
       end
-      
+
     end
 
     def reset_checks
+      @used_checks = 0
     end
 
   end

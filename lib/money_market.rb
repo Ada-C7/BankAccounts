@@ -3,10 +3,13 @@ require_relative 'account'
 module Bank
 
   class MoneyMarketAccount < Account
-    
-    def initialize
+    attr_accessor :transactions
+
+    def initialize(id, balance)
+        super(id, balance)
+        @transactions = 6
+      end
+
     end
 
   end
-
-end

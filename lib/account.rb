@@ -34,16 +34,12 @@ module Bank
 
 
     def self.find(entered_id)
-      id_exist = false
       @@account_all.each do |account|
         if account.id == entered_id
           return account
-          id_exist = true
         end
       end
-      if id_exist == false
         raise ArgumentError.new "Entered ID doesn't exist"
-      end
     end
 
 
@@ -72,4 +68,47 @@ module Bank
     end
 
   end
+
+#     class Owner
+#       attr_reader :last_name, :first_name, :address
+#       def initialize(last_name, first_name, address)
+#         @last_name = last_name
+#         @first_name = first_name
+#         @address = address
+#       end
+#
+#       @@owner = []
+#       @@csv = []
+#       # CSV.read("../support/accounts.csv").each do |account|
+#       #   @@csv << {id: account[0].to_i, balance: account[1].to_i, open_date: account[2]}
+#       # end
+#       CSV.read("../support/owners.csv").each do |owner|
+#         @@owner << {last_name: owner[1], first_name: owner[2], address: owner[3]}
+#       end
+# # ap @@owner[0].last_name
+# # puts Bank::Account.csv
+# # puts @@owner
+#
+#
+#       def self.merge_info
+#         n = 0
+#         @@owner.length.times do |n|
+#           Bank::Account.csv[n].merge!(@@owner[n])
+#           n +=1
+#         end
+#       end
+#
+#
+#
+#
+#     end
+
+
+
+
 end
+
+# a = Bank::Account.new(12334, 5000)
+# puts a.id
+# Bank::Owner.merge_info
+# ap Bank::Account.csv

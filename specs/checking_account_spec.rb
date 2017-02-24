@@ -73,6 +73,15 @@ describe "CheckingAccount" do
 
     it "Allows the balance to go down to -$10" do
       # TODO: Your test code here!
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(1235, start_balance)
+      check_amount = 110.00
+      updated_balance = account.withdraw_using_check(check_amount)
+
+      account.balance.must_equal updated_balance
+      account.balance.must_equal (start_balance - check_amount)
+      account.balance.must_equal -10
+
     end
 
     it "Outputs a warning if the account would go below -$10" do

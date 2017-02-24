@@ -80,4 +80,3 @@ end
 # my_account = Bank::Account.new(16, 1000)
 # puts my_account.show_balance
 # puts my_account.withdraw(1200)
-# puts my_account.deposit(200)

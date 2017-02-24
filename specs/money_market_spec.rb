@@ -72,14 +72,12 @@ describe "MoneyMarketAccount" do
     end
 
     it "Updates the balance with calculated interest" do
-      skip
       account = Bank::MoneyMarketAccount.new(1337, 10000.0)
       account.interest(0.25)
       account.balance.must_equal 10025
     end
 
     it "Requires a positive rate" do
-      skip
       account = Bank::MoneyMarketAccount.new(1337, 10000.0)
       proc {
         account.interest(-0.25)

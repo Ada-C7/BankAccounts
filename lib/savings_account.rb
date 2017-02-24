@@ -21,6 +21,9 @@ module Bank
     end
 
     def add_interest rate
+      if rate <= 0
+        raise ArgumentError.new "Interest rate must be more than 0"
+      end
       interest = @balance * rate / 100
       @balance += interest
       return interest

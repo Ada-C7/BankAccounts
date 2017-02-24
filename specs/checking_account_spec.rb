@@ -41,33 +41,65 @@ describe "CheckingAccount" do
     end
   end
 
-  xdescribe "#withdraw_using_check" do
+  describe "#withdraw_using_check" do
+    # before do
+    #   @account = Bank::CheckingAccount.new(1714, 450.0)
+    # end
+
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1714, 450.0)
+      balance_before = account.balance
+      account.withdraw_using_check(100)
+      account.balance.must_be :<, balance_before
     end
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1714, 450.0)
+      balance_before = account.balance
+      account.withdraw_using_check(100)
+      account.balance.must_equal (balance_before - 100)
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1714, 450.0)
+      account.withdraw_using_check(460)
+      account.balance.must_equal (-10)
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1714, 450.0)
+      proc {
+        account.withdraw_using_check(500)
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1714, 450.0)
+      balance_before = account.balance
+      account.withdraw_using_check(500)
+      account.balance.must_equal balance_before
     end
 
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1714, 450.0)
+      withdrawal_amount = -25.0
+
+      proc {
+        account.withdraw_using_check(withdrawal_amount)
+      }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1212, 300.0)
+      withdrawal_amount = 10
+      balance_before = account.balance
+      3.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+      puts account.balance
+      puts account.checks_used
+      # account.checks_used must_equal 3
+      account.balance must_equal 270
     end
 
     it "Applies a $2 fee after the third use" do

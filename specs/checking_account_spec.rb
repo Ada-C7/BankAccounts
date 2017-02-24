@@ -75,36 +75,37 @@ describe "CheckingAccount" do
 
     it "Allows 3 free uses" do
       account = Bank::CheckingAccount.new(1337, 100.0)
-      account.withdraw_using_check(20)
-      account.withdraw_using_check(20)
-      account.withdraw_using_check(20)
+      3.times do
+        account.withdraw_using_check(20)
+      end
       account.balance.must_equal 40.0
     end
 
     it "Applies a $2 fee after the third use" do
       account = Bank::CheckingAccount.new(1337, 100.0)
-      account.withdraw_using_check(20)
-      account.withdraw_using_check(20)
-      account.withdraw_using_check(20)
-      account.withdraw_using_check(20)
+      4.times do
+        account.withdraw_using_check(20)
+      end
       account.balance.must_equal 18.0
     end
   end
 
   describe "#reset_checks" do
     it "Can be called without error" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+      account.must_respond_to :reset_checks
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+      account.reset_checks
+      account.checks.must_equal 3
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
-      skip
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(1337, 100.0)
+      account.reset_checks
+      account.checks.must_equal 3
     end
   end
 end

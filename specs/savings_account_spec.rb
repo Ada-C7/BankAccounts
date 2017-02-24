@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require_relative '../lib/savingsaccount'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
 # require_relative '../lib/savings_account'
@@ -11,48 +12,66 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
-      account = Bank::SavingsAccount.new(12345, 100.0)
+      account = Bank::SavingsAccount.new(id: 12345, balance: 10000)
       account.must_be_kind_of Bank::Account
     end
 
     it "Requires an initial balance of at least $10" do
-      # TODO: Your test code here!
+      proc {
+        Bank::SavingsAccount.new(id: 12345, balance: 900)
+      }.must_raise ArgumentError
     end
   end
 
   describe "#withdraw" do
+    before do
+      @account = Bank::SavingsAccount.new(id: 12345, balance: 10000)
+    end
+
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
+      @account.withdraw(1000)
+      @account.balance.must_equal 8800
     end
 
-    it "Outputs a warning if the balance would go below $10" do
-      # TODO: Your test code here!
-    end
+    it "Outputs a warning & doesn't modify the balance if it would go below $10" do
+      proc {
+        @account.withdraw(9000)
+      }.must_output(/.+/)
 
-    it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
+      @account.balance.must_equal 10000
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
+      proc {
+        @account.withdraw(9000)
+      }.must_output(/.+/)
+
+      @account.balance.must_equal 10000
     end
   end
 
   describe "#add_interest" do
+    before do
+      @account = Bank::SavingsAccount.new(id: 12345, balance: 1000000)
+    end
+
     it "Returns the interest calculated" do
-      # TODO: Your test code here!
+      @account.add_interest(0.25).must_equal 2500
     end
 
     it "Updates the balance with calculated interest" do
-      # TODO: Your test code here!
+      @account.add_interest(0.25)
+      @account.balance.must_equal 1002500
     end
 
     it "Requires a positive rate" do
-      # TODO: Your test code here!
+      proc {
+        @account.add_interest(-0.25)
+      }.must_raise ArgumentError
     end
   end
 end

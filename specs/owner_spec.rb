@@ -27,13 +27,3 @@ describe "Owner#initialize" do
   # end
 
 end
-
-# test format for all inputs
-
-#Owner.new should have address
-
-#Account should be created with Owner
-
-#OR
-
-#Account.add_owner should associate an Owner with an account

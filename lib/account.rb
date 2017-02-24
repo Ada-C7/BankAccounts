@@ -30,7 +30,7 @@ module Bank
     end
 
     def self.all
-      #returns a collection(array or hash) of Account instances based on data from CSV file
+      #returns a collection of Account instances based on data from CSV file
       all_accounts = CSV.open("support/accounts.csv")
       account_array = []
 
@@ -39,6 +39,7 @@ module Bank
         balance = line[1].to_i
         # will need to add open_date = line[2]
         account_array << Account.new(id, balance)
+        # could store in class variable to make available to self.find
       end
       return account_array
       # build hash where ID maps to array of other data?

@@ -31,7 +31,15 @@ module Bank
         @balance = (@balance - (amount + 2)) + 10
         return @balance
       end
+
     end
+
+def add_interest(rate)
+  interest = @balance * (rate/100)
+  @balance += interest
+  return interest
+end
+
 
   end
 end

@@ -49,9 +49,14 @@ describe "SavingsAccount" do
     end
   end
 
-  xdescribe "#add_interest" do
+  describe "#add_interest" do
+
+    before do
+      @account = Bank::SavingsAccount.new({balance: 10000})
+    end
+
     it "Returns the interest calculated" do
-      # TODO: Your test code here!
+      @account.add_interest(0.25).must_equal 25
     end
 
     it "Updates the balance with calculated interest" do

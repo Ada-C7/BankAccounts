@@ -22,6 +22,7 @@ module Bank
 
     def withdraw(withdrawal_amount)
       @total_transactions += 1
+
       if @total_transactions > 6
         raise ArgumentError.new "You cannot make more than six transactions per month."
       end
@@ -31,6 +32,7 @@ module Bank
       end
 
       super
+
       if @balance < 10000
         @balance -= 100
       end
@@ -38,6 +40,7 @@ module Bank
     end
 
     def deposit(deposit_amount)
+
       if @balance > 10000
         @total_transactions += 1
       end
@@ -45,17 +48,15 @@ module Bank
       if @total_transactions > 6
         raise ArgumentError.new "You cannot make more than six transactions per month."
       end
+
       super
+
+    end
+
+    def reset_transactions
+      @total_transactions = 0
     end
 
   end
 
 end
-
-@my_money_market = Bank::MoneyMarketAccount.new(1234, 100000.00)
-
-6.times do
-  @my_money_market.withdraw(10)
-end
-
-print @total_transactions

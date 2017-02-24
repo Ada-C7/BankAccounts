@@ -95,19 +95,27 @@ describe "Bank::MoneyMarketAccount" do
 
   end
 
+  describe "#reset_transactions" do
+    before do
+      @my_money_market = Bank::MoneyMarketAccount.new(1234, 100000.00)
+    end
+
+    it "resets total_transactions to 0" do
+
+    3.times do
+      @my_money_market.withdraw(10)
+    end
+
+    @my_money_market.reset_transactions
+
+    @my_money_market.total_transactions.must_equal(0)
+
+    end
+
+  end
 end
 
 
-
-
-#Withdrawal logic
-
-
-#Deposit logic
-
-# Exception to the above: A deposit performed to reach or exceed the minimum balance of $10,000 is not counted as part of the 6 transactions.
-# input are whether or not balance is below 10k, withdrawal or deposit, amount.
-# outputs are updated balance, number of transactions NOT updated.
 
 # Reset transactions - same as with check withdrawal.
 # inputs are just calling the method.

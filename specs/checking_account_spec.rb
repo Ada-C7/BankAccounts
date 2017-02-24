@@ -30,14 +30,13 @@ describe 'CheckingAccount' do
         it 'Reduces the balance' do
             account = Bank::CheckingAccount.new(12_345, 100.0)
             account.withdraw_using_check(50)
-            account.balance.must_be :<, 100.0
+            account.balance.must_equal 50
         end
 
         it 'Returns the modified balance' do
             account = Bank::CheckingAccount.new(12_345, 100.0)
-            account.withdraw_using_check(50)
-            account.balance.must_be :<=, 50
-            account.balance.must_be :>, 40
+            result = account.withdraw_using_check(50)
+            result.must_equal 50
         end
 
         it 'Allows the balance to go down to -$10' do

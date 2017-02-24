@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+#require_relative '/lib/account'
 require 'csv'
 require 'date'
 
@@ -166,9 +167,9 @@ describe "Wave 2" do
           accounts match what's in the CSV file" do
       csv = CSV.read("../support/accounts.csv", 'r')
       expected_id_first = csv[0][0].to_i
-      expected_balance_first = csv[0][1].to_i
+      expected_balance_first = csv[0][1].to_i/100.0 # to convert cents to dollars
       expected_id_last = csv[11][0].to_i
-      expected_balance_last = csv[11][1].to_i
+      expected_balance_last = csv[11][1].to_i/100.0 # to convert cents to dollars
       all_accounts = Bank::Account.all
       all_accounts[0].id.must_equal expected_id_first
       all_accounts[0].balance.must_equal expected_balance_first

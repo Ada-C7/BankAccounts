@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/checking_account'
-
+#require_relative '/lib/checking_account'
 
 describe "CheckingAccount" do
   describe "#initialize" do

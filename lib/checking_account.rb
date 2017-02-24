@@ -5,7 +5,8 @@ module Bank
 
   class CheckingAccount < Bank::Account
 
-      attr_reader :balance, :id, :open_date, :interest, :checks
+      attr_reader :balance, :id, :open_date, :interest
+      attr_accessor :checks
 
       def initialize(id, balance, open_date, checks)
 
@@ -37,8 +38,6 @@ module Bank
 
       raise ArgumentError.new("check withdraw must be greater than 0") if amount < 0
 
-      @checks -= 1 # this means even if it's a bad check, they still used one of them
-
       if @checks > 0
         withdrawl = amount
       else
@@ -47,12 +46,13 @@ module Bank
       end
 
       if @balance - (withdrawl) >= (-10)
-        @balance = @balance - (withdrawl)
+        @balance -= withdrawl
         return @balance
       else
         print "your balance will be less than -$10"
         return @balance
       end
+      @checks -= 1 # this means even if it's a bad check, they still used one of them
 
     end
 

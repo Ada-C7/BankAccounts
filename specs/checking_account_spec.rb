@@ -143,22 +143,23 @@ describe "CheckingAccount" do
       account = Bank::CheckingAccount.new(id, starting_balance,open_date, 3)
       2.times do account.withdraw_using_check(10) # this decreases balance by 20
         #returned balance should be 80
-
-        account.reset_checks
-        account.withdraw_using_check(10).must_equal 70
       end
+      account.reset_checks
+      account.withdraw_using_check(10).must_equal 70
     end
+  
 
     it "Makes the next three checks free if more than 3 checks had been used" do
       id = 12345
       starting_balance = 100
       open_date = 20170101
       account = Bank::CheckingAccount.new(id, starting_balance,open_date, 3)
-      3.times do account.withdraw_using_check(10)
 
-        account.reset_checks
-        account.withdraw_using_check(10).must_equal 60
+      3.times do account.withdraw_using_check(10)
       end
+
+      account.reset_checks
+      account.withdraw_using_check(10).must_equal 60
     end
   end
 end

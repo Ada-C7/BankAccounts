@@ -24,7 +24,6 @@ module Bank
         if account.id == id
           return account
         end
-
       end
       puts "That account Does Not Exist"
     end
@@ -63,7 +62,12 @@ module Bank
     end
   end
 end
+# puts Bank::Account.withdraw(10) 
 
+# class CheckingAccount < Account
+# end
+#
+# puts CheckingAccount
 # puts Bank::Account.all
 # def withdraw(amount)
 #   raise ArgumentError.new("amount must be >= 0") if amount < 0

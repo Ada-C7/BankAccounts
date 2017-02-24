@@ -85,9 +85,7 @@ describe "Wave 1" do
 
     it "Allows the balance to go to 0" do
       account = Bank::Account.new(1337, 100.0)
-      updated_balance = account.withdraw(account.balance)
-      updated_balance.must_equal 0
-      account.balance.must_equal 0
+      updated_balance = account.withdraw(100.0)
     end
 
     it "Requires a positive withdrawal amount" do
@@ -139,34 +137,57 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
+
+    before do
+      @accounts = Bank::Account.all
+    end
+
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
-      accounts = Bank::Account.all
-      accounts.class.must_equal Array
+      # accounts = Bank::Account.all
+      @accounts.class.must_equal Array
+
       #   - Everything in the array is an Account
-      #(accounts.each { |i| return i }).must_be_instance_of Bank::Account
-      accounts[0].must_be_instance_of Bank::Account
+      # (accounts.each { |i| return i }).must_be_instance_of Bank::Account
+      # accounts[0].must_be_instance_of Bank::Account
+      @accounts.each { |account| account.must_be_instance_of Bank::Account }
+
       #   - The number of accounts is correct
-      accounts.length.must_equal 12
+      @accounts.length.must_equal 12
+
       #   - The ID and balance of the first and last
-      accounts[0].id.must_equal 1212
-      accounts[0].balance.must_equal 1235667
-      accounts[11].id.must_equal 15156
-      accounts[11].balance.must_equal 4356772
+      @accounts[0].id.must_equal 1212
+      @accounts[0].balance.must_equal 1235667
+      @accounts[-1].id.must_equal 15156
+      @accounts[-1].balance.must_equal 4356772
       #   - accounts match what's in the CSV file
+
+      index = 0
+      CSV.read("support/accounts.csv") do |line|
+
+        accounts[index].id.must_equal line[0].to_i
+        accounts[index].balance.must_equal line[1].to_i
+        accounts[index].open_date.must_equal line[2]
+        index += 1
+      end
 
       # Feel free to split this into multiple tests if needed
     end
   end
 
   describe "Account.find" do
+
+    before do
+      @accounts = Bank::Account.all
+    end
+
     it "Returns an account that exists" do
       # TODO: Your test code here!
 
-        account = Bank::Account.find(1212)
-        account.must_be_instance_of Bank::Account
+      account = Bank::Account.find(1212)
+      account.must_be_instance_of Bank::Account
     end
 
     it "Can find the first account from the CSV" do
@@ -176,22 +197,21 @@ describe "Wave 2" do
       # id_check = accounts[0].id
       # account = Bank::Account.find(id_check)
       # expect(account.id).must_equal id_check
-      accounts = Bank::Account.all
+
+      # accounts = Bank::Account.all
       account = Bank::Account.find(1212)
-      account.id.must_equal accounts[0].id
+      account.id.must_equal @accounts[0].id
     end
 
     it "Can find the last account from the CSV" do
       # TODO: Your test code here!
-      accounts = Bank::Account.all
+      # accounts = Bank::Account.all
       account = Bank::Account.find(15156)
-      account.id.must_equal accounts[-1].id
+      account.id.must_equal @accounts[-1].id
     end
 
     it "Raises an error for an account that doesn't exist" do
       # TODO: Your test code here!
-
-      # accounts = Bank::Account.all
       proc {
         Bank::Account.find(1111111)
       }.must_raise ArgumentError

@@ -2,8 +2,10 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require 'CSV'
+require 'skip'
 
-describe "Wave 1" do
+xdescribe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
       id = 1337
@@ -63,7 +65,7 @@ describe "Wave 1" do
     it "Outputs a warning if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
-      account = Bank::Account.new(1337, start_balance)
+      account = Bank::Account.new(1337, start_balance,)
       # Another proc! This test expects something to be printed
       # to the terminal, using 'must_output'. /.+/ is a regular
       # expression matching one or more characters - as long as
@@ -117,8 +119,6 @@ describe "Wave 1" do
       account.balance.must_equal expected_balance
     end
 
-
-
     it "Returns the modified balance" do
       start_balance = 100.0
       deposit_amount = 25.0
@@ -143,36 +143,89 @@ describe "Wave 1" do
 end
 
 
-# # TODO: change 'xdescribe' to 'describe' to run these tests
-# # xdescribe "Wave 2" do
-# #   describe "Account.all" do
-# #     it "Returns an array of all accounts" do
-# #       # TODO: Your test code here!
-# #       # Useful checks might include:
-# #       #   - Account.all returns an array
-# #       #   - Everything in the array is an Account
-# #       #   - The number of accounts is correct
-# #       #   - The ID and balance of the first and last
-# #       #       accounts match what's in the CSV file
-# #       # Feel free to split this into multiple tests if needed
-# #     end
-# #   end
-# #
-# #   describe "Account.find" do
-# #     it "Returns an account that exists" do
-# #       # TODO: Your test code here!
-# #     end
-# #
-# #     it "Can find the first account from the CSV" do
-# #       # TODO: Your test code here!
-# #     end
-# #
-# #     it "Can find the last account from the CSV" do
-# #       # TODO: Your test code here!
-# #     end
-# #
-# #     it "Raises an error for an account that doesn't exist" do
-# #       # TODO: Your test code here!
-# #     end
-# #   end
-# # end
+# TODO: change 'xdescribe' to 'describe' to run these tests
+describe "Wave 2" do
+  describe "Account.all" do
+
+    #   - Account.all returns an array
+    it "Returns an array" do
+      accounts = Bank::Account.all("support/accounts.csv")
+      accounts.must_be_kind_of (Array)
+    end
+
+    it "contains only accounts" do
+      accounts = Bank::Account.all("support/accounts.csv")
+      accounts.each do |acct|
+        acct.must_be_kind_of Bank::Account
+      end
+    end
+
+    it "has the right number of elements" do
+      accounts = Bank::Account.all("support/accounts.csv")
+
+      accounts.length == CSV.read("support/accounts.csv").length
+    end
+
+    it "matches the first and last row" do
+      accounts = Bank::Account.all("support/accounts.csv")
+      compare_to = CSV.read("support/accounts.csv")
+
+      accounts.first.id.must_equal compare_to.first.first.to_i
+
+      accounts.first.balance.must_equal compare_to.first[1].to_i
+
+      accounts.last.balance.must_equal compare_to.last[1].to_i
+
+      accounts.last.balance.must_equal compare_to.last[1].to_i
+    end
+  end
+
+
+  describe "Account.find" do
+    it "Returns an account that exists" do
+      csv_filename = "support/accounts.csv"
+
+      account = Bank::Account.find(csv_filename, 1212)
+
+      acct_arr  =  [account.id.to_s, account.balance.to_s, account.date]
+
+      exists = false
+      CSV.open(csv_filename).each do |row|
+        if acct_arr == row
+          exists = true
+        end
+      end
+      exists.must_equal true
+    end
+
+
+    it "Can find the first account from the CSV" do
+      csv_filename = "support/accounts.csv"
+      first_row = CSV.read(csv_filename).first
+
+      account = Bank::Account.find(csv_filename, first_row.first)
+
+      acct_arr  =  [account.id.to_s, account.balance.to_s, account.date]
+
+      acct_arr.must_equal first_row
+
+    end
+
+    it "Can find the last account from the CSV" do
+      csv_filename = "support/accounts.csv"
+      last_row = CSV.read(csv_filename).last
+
+      account = Bank::Account.find(csv_filename, last_row.first)
+
+      acct_arr  =  [account.id.to_s, account.balance.to_s, account.date]
+
+      acct_arr.must_equal last_row
+    end
+
+    it "Raises an error for an account that doesn't exist" do
+      proc {
+        Bank::Account.find("support/accounts.csv", "5892")
+      }.must_raise ArgumentError
+    end
+  end
+end

@@ -11,7 +11,7 @@ module Bank
 
     def withdraw(withdrawal_amount)
       original_balance = @balance
-      super(withdrawal_amount)
+      super
 
       if @balance == original_balance
         @balance

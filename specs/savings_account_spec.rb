@@ -81,5 +81,7 @@ describe "SavingsAccount" do
     it "Requires a positive rate" do
       proc { @my_savings.add_interest(-0.25) }.must_raise ArgumentError
     end
+
   end
+  
 end

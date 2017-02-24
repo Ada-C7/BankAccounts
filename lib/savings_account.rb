@@ -8,10 +8,8 @@ module Bank
       super(id, balance, date = '')
     end
 
-    # this method will rewrite the balance as long at the withdrawal amount
-    # meets certain conditions
     def withdraw(withdrawal_amount)
-      return "Insufficient Funds" if @balance - withdrawal_amount - 2 < 10
+      return "Insufficient Funds" if ( @balance - withdrawal_amount - 2 ) < 10
       super(withdrawal_amount + 2)
       return @balance
     end

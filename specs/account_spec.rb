@@ -89,13 +89,7 @@ describe "Wave 1" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
-
-      # updated_balance = account.withdraw(withdrawal_amount)
       account.withdraw(withdrawal_amount)
-
-      # Both the value returned and the balance in the account
-      # must be un-modified.
-      # updated_balance.must_equal start_balance
       account.balance.must_equal start_balance
     end
 
@@ -128,7 +122,6 @@ describe "Wave 1" do
       account = Bank::Account.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
       account.deposit(deposit_amount)
-
       expected_balance = start_balance + deposit_amount
       account.balance.must_equal expected_balance
     end
@@ -140,7 +133,6 @@ describe "Wave 1" do
       account = Bank::Account.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
       updated_balance = account.deposit(deposit_amount)
-
       expected_balance = start_balance + deposit_amount
       updated_balance.must_equal expected_balance
     end
@@ -156,26 +148,6 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
-
-  # describe "Account#Owner" do
-  #
-  #   it "adds a owner class object that you can use to access own info" do
-  #     owner_info = {
-  #                       last_name: "Cobb",
-  #                       first_name: "Cynthia",
-  #                       phone_number: "234-456-7890",
-  #                       street: "123 Street",
-  #                       city: "seattle",
-  #                       zipcode: "98011",
-  #                       state: "WA"
-  #                       }
-  #     owner = Bank::Owner.new(owner_info)
-  #     account = Bank::Account.new(1337, 890)
-  #     account.add_owner(owner).must_respond_to :last_name
-  #     account.add_owner(owner).must_respond_to :first_name
-  #     account.add_owner(owner).must_respond_to :phone_number
-  #   end
-  # end
 end
 
 

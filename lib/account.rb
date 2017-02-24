@@ -1,20 +1,17 @@
-# require_relative 'owner'
 require 'csv'
 require 'date'
 
 module Bank
   # Account responsibility: mainitain the balance
   class Account
-    # you are not using writer methods when you change @balance so can get away with an attr_reader
-    # #the owner is going to be the owner object
     attr_reader :id, :balance, :owner, :opening_date
 
     # takes in 3 arguments, sets the id, balance, and opening date
     def initialize(id, balance, date = '')
-      @id = id
       unless balance >= 0
         raise ArgumentError.new "Balance must be greater or equal to 0"
       end
+      @id = id
       @balance = balance
       @opening_date = date
     end
@@ -24,12 +21,8 @@ module Bank
     # checking that withdrawal amount is greater than zero and wont return a negative balance
     def withdraw(withdrawal_amount)
       check_amount_is_over_zero(withdrawal_amount)
-      if @balance - withdrawal_amount >= 0
-        return @balance = @balance - withdrawal_amount
-      else
-        return "Insufficient funds"
-
-      end
+      return "Insufficient funds" if @balance - withdrawal_amount < 0
+      @balance = @balance - withdrawal_amount
     end
 
     def deposit(deposit_amount)
@@ -41,22 +34,10 @@ module Bank
       raise ArgumentError.new "Amount must be greater than zero" unless amount >= 0
     end
 
-
-
-
-
-
-
-
-
-
-
-
-    # below are the class methods...
+    # below are the class methods
     # will read in info from CSV file return an array of account instances
     def self.all(csv_file)
       accounts = CSV.read(csv_file)
-      # change the id to an integer and the balance to a dollar floats
       accounts.map! do |account_info|
         account_info[0] = account_info[0].to_i
         account_info[1] = account_info[1].to_f / 100

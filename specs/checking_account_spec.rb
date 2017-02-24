@@ -2,10 +2,6 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/checking_account'
-# require_relative '../lib/account'
-# TODO: uncomment the next line once you start wave 3 and add lib/checking_account.rb
-
-
 
 # Because a CheckingAccount is a kind
 # of Account, and we've already tested a bunch of functionality
@@ -42,27 +38,21 @@ describe "CheckingAccount" do
       start_balace = 100.0
       withdrawal_amount = 100.0
       account = Bank::CheckingAccount.new(123, start_balace)
-      # account.withdraw(withdrawal_amount)
+
       proc {
         puts account.withdraw(withdrawal_amount)
       }.must_output (/.+/)
     end
 
-    # maybe you don't need this test cause you know checking account is a account type so it should pass all account types
     it "will not change the balance if withdrawl causes negative" do
       # skip
       start_balance = 100.00
       withdrawal_amount = 200.00
       account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
-      # updated_balance = account.withdraw(withdrawal_amount)
       account.withdraw(withdrawal_amount)
-      # Both the value returned and the balance in the account
-      # must be un-modified.
-      # updated_balance.must_equal start_balance
       account.balance.must_equal 100.00
     end
   end
-
 
   describe "#withdraw_using_check" do
 
@@ -105,7 +95,6 @@ describe "CheckingAccount" do
       withdrawal_amount = 125.00
       account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
-      # account.withdraw_using_check(withdrawal_amount)
       proc {
         puts account.withdraw(withdrawal_amount)
       }.must_output (/.+/)
@@ -121,7 +110,6 @@ describe "CheckingAccount" do
       account.balance.must_equal start_balance
     end
 
-    # this is test is also part of the account -withdrawl method
     it "Requires a positive withdrawal amount" do
       # skip
       start_balance = 90.00
@@ -138,26 +126,31 @@ describe "CheckingAccount" do
       start_balance = 500.00
       account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
-      # account.check_count=(2)
+      test_balance = start_balance
+      3.times do |count|
+        account.withdraw_using_check(25.00)
+        count += 1
+        account.checks_used.must_equal count
+        test_balance -= 25.00
+        account.balance.must_equal test_balance
+      end
+
+      #here is writing out each check use individually
       # account.withdraw_using_check(25.00)
+      # account.checks_used.must_equal 1
       # account.balance.must_equal 475.00
-
-      account.withdraw_using_check(25.00)
-      account.check_count.must_equal 1
-      account.balance.must_equal 475.00
-
-      account.withdraw_using_check(25.00)
-      account.check_count.must_equal 2
-      account.balance.must_equal 450.00
-
-      account.withdraw_using_check(25.00)
-      account.check_count.must_equal 3
-      account.balance.must_equal 425.00
+      #
+      # account.withdraw_using_check(25.00)
+      # account.checks_used.must_equal 2
+      # account.balance.must_equal 450.00
+      #
+      # account.withdraw_using_check(25.00)
+      # account.checks_used.must_equal 3
+      # account.balance.must_equal 425.00
     end
 
     it "Applies a $2 fee after the third use" do
       # skip
-
       #put a helper method here that loops and writes a bunch of checks
       def write_checks()
         start_balance = 500.00
@@ -166,7 +159,7 @@ describe "CheckingAccount" do
         5.times do |count|
           account.withdraw_using_check(25.00)
           count += 1
-          account.check_count.must_equal count
+          account.checks_used.must_equal count
           if count <= 3
             test_balance -= 25.00
             account.balance.must_equal test_balance
@@ -178,28 +171,28 @@ describe "CheckingAccount" do
       end
       write_checks
 
-      # or can write out a bunch of methods one by one:
+      # or can write out one by one:
       # start_balance = 500.00
       # account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
       # account.withdraw_using_check(25.00)
-      # account.check_count.must_equal 1
+      # account.checks_used.must_equal 1
       # account.balance.must_equal 475.00
       #
       # account.withdraw_using_check(25.00)
-      # account.check_count.must_equal 2
+      # account.checks_used.must_equal 2
       # account.balance.must_equal 450.00
       #
       # account.withdraw_using_check(25.00)
-      # account.check_count.must_equal 3
+      # account.checks_used.must_equal 3
       # account.balance.must_equal 425.00
       #
       # account.withdraw_using_check(25.00)
-      # account.check_count.must_equal 4
+      # account.checks_used.must_equal 4
       # account.balance.must_equal 398.00
       #
       # account.withdraw_using_check(25.00)
-      # account.check_count.must_equal 5
+      # account.checks_used.must_equal 5
       # account.balance.must_equal 371.00
     end
   end
@@ -217,29 +210,27 @@ describe "CheckingAccount" do
       # skip
       start_balance = 500.00
       account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
-      account.check_count=(2)
-      account.check_count.must_equal 2
+      2.times do |count|
+        account.withdraw_using_check(20.00)
+        count += 1
+        account.checks_used.must_equal count
+      end
       account.reset_checks
-      account.check_count.must_equal 0
-
-      # test by calling withdraw_using_check and making sure no fee is applied
-      account.withdraw_using_check(25.00)
-      account.check_count.must_equal 1
-      account.balance.must_equal 475.00
+      account.checks_used.must_equal 0
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
       # skip
       start_balance = 500.00
       account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
-      account.check_count=(5)
-      account.check_count.must_equal 5
-      account.reset_checks
-      account.check_count.must_equal 0
 
-      account.withdraw_using_check(25.00)
-      account.check_count.must_equal 1
-      account.balance.must_equal 475.00
+      5.times do |count|
+        account.withdraw_using_check(20.00)
+        count += 1
+        account.checks_used.must_equal count
+      end
+      account.reset_checks
+      account.checks_used.must_equal 0
     end
   end
 end

@@ -41,35 +41,63 @@ describe "CheckingAccount" do
 
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      start_balance = @account.balance
+      withdrawal_amount = 2500
+
+      @account.withdraw_using_check(withdrawal_amount)
+
+      expected_balance = start_balance - withdrawal_amount
+      @account.balance.must_equal expected_balance
     end
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+      start_balance = @account.balance
+      withdrawal_amount = 2300
+
+      updated_balance = @account.withdraw_using_check(withdrawal_amount)
+
+      expected_balance = start_balance - withdrawal_amount
+      updated_balance.must_equal expected_balance
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      @account.withdraw_using_check(11000)
+      @account.balance.must_equal(-1000)
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      proc { @account.withdraw_using_check(11001) }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+      @account.withdraw_using_check(11001)
+      @account.balance.must_equal 10000
     end
 
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+      proc { @account.withdraw_using_check(0) }.must_raise ArgumentError
+      proc { @account.withdraw_using_check(-5) }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+      original_balance = @account.balance
+
+      @account.withdraw_using_check(100)
+      @account.withdraw_using_check(250)
+      @account.withdraw_using_check(1000)
+
+      @account.balance.must_equal (original_balance - 100 - 250 - 1000)
     end
 
     it "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
+      original_balance = @account.balance
+
+      @account.withdraw_using_check(100)
+      @account.withdraw_using_check(250)
+      @account.withdraw_using_check(1000)
+      @account.withdraw_using_check(100)
+
+      @account.balance.must_equal (original_balance - 100 - 250 - 1000 - 100 - 200)
     end
   end
 

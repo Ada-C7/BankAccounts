@@ -134,22 +134,41 @@ describe "CheckingAccount" do
   end
 
 
-
-
-
-
-
   describe "#reset_checks" do
     it "Can be called without error" do
-      # TODO: Your test code here!
-    end
+        id = 116
+        balance = 100
 
-    it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
-    end
-
-    it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
+        account = Bank::CheckingAccount.new(id, balance)
+        account.reset_checks
     end
   end
+
+
+    it "Makes the next three checks free if less than 3 checks had been used" do
+        id = 116
+        balance = 100
+        amount = 10
+
+        account = Bank::CheckingAccount.new(id, balance)
+        account.withdraw_using_check(amount)
+        account.reset_checks
+
+        3.times do account.withdraw_using_check(amount)end
+        account.balance.must_equal (balance - (4 * amount))
+    end
+
+
+    it "Makes the next three checks free if more than 3 checks had been used" do
+        id = 116
+        balance = 100
+        amount = 10
+
+        account = Bank::CheckingAccount.new(id, balance)
+        5.times do account.withdraw_using_check(amount)end
+        account.reset_checks
+        account.withdraw_using_check(amount)
+        # account.balance.must_equal 36
+        account.balance.must_equal ((balance - (6 * amount)) - 4)
+    end
 end

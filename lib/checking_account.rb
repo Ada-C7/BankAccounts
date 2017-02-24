@@ -42,27 +42,9 @@ module Bank
         end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # def reset_checks
-        #
-        # end
+        def reset_checks
+            @check_counter = 0 
+        end
     end
 
 end

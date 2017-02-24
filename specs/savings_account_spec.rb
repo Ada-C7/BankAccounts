@@ -12,7 +12,7 @@ require_relative '../lib/savings_account'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
@@ -22,12 +22,17 @@ xdescribe "SavingsAccount" do
 
     it "Requires an initial balance of at least $10" do
       # TODO: Your test code here!
+      proc{ account = Bank::SavingsAccount.new(1212, 9)
+    }.must_raise(ArgumentError)
     end
   end
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
       # TODO: Your test code here!
+      savings_account = Bank::SavingsAccount.new(11, 200)
+      new_balance = savings_account.withdraw(10)
+      new_balance.must_equal 188
     end
 
     it "Outputs a warning if the balance would go below $10" do

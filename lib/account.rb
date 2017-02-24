@@ -24,7 +24,6 @@ module Bank
 
     def self.find(id)
      accounts = Bank::Account.all
-      # raise ArgumentError.new("There's no such account ID, you nincompoop.") if ![1212, 1213, 1214, 1215, 1216, 1217, 15151, 15152, 15153, 15154, 15155, 15156].include?(id)
       accounts.each do |acct|
           if acct.id == id
             return acct
@@ -35,24 +34,17 @@ module Bank
 
     def withdraw(withdrawal_amount)
       raise ArgumentError.new("You cannot withdraw a negative amount of money.") if withdrawal_amount < 0
-      # if withdrawal_amount > 0
         if withdrawal_amount > @balance
-          print "You can't overdraw your account, you doof."
+          print "You can't overdraw your account."
         else
           return @balance -= withdrawal_amount
         end
         return @balance
-      # else
-      #   raise ArgumentError.new "You cannot withdraw a negative amount of money, you silly pants."
-      # end
     end
 
     def deposit(deposit_amount)
       raise ArgumentError.new("You cannot deposit a negative amount of money.") if deposit_amount < 0
-      # if deposit_amount > 0
-        @balance += deposit_amount
-      # else
-        # raise ArgumentError.new "You cannot deposit a negative amount of money, you goofball."
+      @balance += deposit_amount
     end
 
   end

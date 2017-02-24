@@ -37,15 +37,12 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100, "Jan 1, 2001", @brenna)
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
-      # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0, "Jan 1, 2001", @brenna)
     end
   end
@@ -77,7 +74,6 @@ describe "Wave 1" do
       start_balance = 100.0
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance, "Jan 1, 2001", @brenna)
-      # Another proc! This test expects something to be printed to the terminal, using 'must_output'. /.+/ is a regular expression matching one or more characters - as long as anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
       }.must_output /.+/
@@ -162,14 +158,12 @@ describe "Wave 2" do
     end
 
     it "Everything in the array is an Account" do
-      # Bank::Account.all.each do |inst|
       @accounts.each do |inst|
         inst.must_be_instance_of Bank::Account
       end
     end
 
     it "The number of accounts is correct" do
-      # Bank::Account.all.length.must_equal 12
       @accounts.length.must_equal 12
     end
 
@@ -195,9 +189,6 @@ describe "Wave 2" do
   describe "Account.find" do
 
     it "Returns an account that exists" do
-      # doesn't work due to different object IDs of Bank::Account.all ??
-      # Bank::Account.find(1216).must_be_same_as Bank::Account.all[4]
-      # Bank::Account.find(1216).id.must_equal Bank::Account.all[4].id
       accounts = Bank::Account.all
       id_check = accounts[4].id
       account = Bank::Account.find(id_check)

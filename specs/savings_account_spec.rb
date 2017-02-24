@@ -4,8 +4,6 @@ require 'minitest/skip_dsl'
 
 require_relative '../lib/savings'
 
-# Here we'll only test things that are different.
-
 describe "SavingsAccount" do
 
   before do

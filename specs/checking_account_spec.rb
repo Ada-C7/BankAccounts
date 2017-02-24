@@ -75,11 +75,19 @@ describe "CheckingAccount" do
     end
 
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+      3.times do
+        @my_checking.withdraw_using_check(10)
+      end
+
+      @my_checking.balance.must_equal(470)
     end
 
     it "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
+      4.times do
+        @my_checking.withdraw_using_check(10)
+      end
+
+      @my_checking.balance.must_equal(458)
     end
   end
 

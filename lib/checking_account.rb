@@ -1,6 +1,7 @@
 module Bank
 
   class CheckingAccount < Account
+    @@check_withdrawals = 0
 
     def withdraw(withdrawal_amount)
 
@@ -25,7 +26,13 @@ module Bank
         puts "You can only go negative up to -$10"
         return @balance
       else
-        @balance -= withdrawal_amount
+        #THIS IS FUCKED UP!
+        @@check_withdrawals += 1
+        if @@check_withdrawals > 3
+          return @balance -= 2
+        else
+          return @balance -= withdrawal_amount
+        end
       end
 
     end

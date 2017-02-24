@@ -18,6 +18,10 @@ module Bank
       end
     end
 
+    def withdraw_using_check(withdrawal_amount)
+      @balance -= withdrawal_amount
+    end
+
   end
 
 end

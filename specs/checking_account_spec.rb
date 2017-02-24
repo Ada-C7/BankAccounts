@@ -42,8 +42,13 @@ describe "CheckingAccount" do
   end
 
   describe "#withdraw_using_check" do
+    before do
+      @my_checking = Bank::CheckingAccount.new(1234, 500.00)
+    end
+
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      @my_checking.withdraw_using_check(20)
+      @my_checking.balance.must_equal(480)
     end
 
     it "Returns the modified balance" do

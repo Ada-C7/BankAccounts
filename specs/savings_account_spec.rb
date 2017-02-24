@@ -61,11 +61,11 @@ describe "SavingsAccount" do
 
     it "Updates the balance with calculated interest" do
         @account.add_interest(0.25)
-        @account.balance.must_equal 10025 
+        @account.balance.must_equal 10025
     end
 
     it "Requires a positive rate" do
-      # TODO: Your test code here!
+      @account.add_interest(-1).must_equal 10000
     end
   end
 end

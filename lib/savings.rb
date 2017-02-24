@@ -34,11 +34,16 @@ module Bank
 
     end
 
-def add_interest(rate)
-  interest = @balance * (rate/100)
-  @balance += interest
-  return interest
-end
+    def add_interest(rate)
+      if rate < 0
+        print "We do not accept negative rates"
+        return @balance
+      else
+        interest = @balance * (rate/100)
+        @balance += interest
+        return interest
+      end
+    end
 
 
   end

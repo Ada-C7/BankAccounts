@@ -1,7 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require_relative '/Users/sai/Documents/ada/projects/BankAccounts/lib/account.rb'
+require_relative '/Users/sai/Documents/ada/projects/BankAccounts/lib/savings_account.rb'
 
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
 # require_relative '../lib/savings_account'
 
@@ -11,7 +14,7 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
@@ -20,8 +23,18 @@ xdescribe "SavingsAccount" do
     end
 
     it "Requires an initial balance of at least $10" do
-      # TODO: Your test code here!
+      #raises an error if initial balance is less than 10
+      proc {
+        Bank::SavingsAccount.new(1337, 5, "1999-03-27 11:30:09 -0800" )
+      }.must_raise ArgumentError
     end
+
+    it "Initial balance over $10 is okay" do
+      account = Bank::SavingsAccount.new(12345, 100.0)
+      account.balance.must_equal 100.0
+
+    end
+
   end
 
   describe "#withdraw" do

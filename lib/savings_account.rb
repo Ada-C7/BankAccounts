@@ -12,5 +12,14 @@ module Bank
       @balance_limit = 10
       super
     end
+
+    def add_interest(rate)
+      raise ArgumentError.new("Rate must be a positive value") if rate < 0
+
+      interest = @balance * (rate/100)
+      @balance = @balance + interest
+      return interest
+      
+    end
   end
 end

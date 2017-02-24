@@ -47,47 +47,74 @@ describe "CheckingAccount" do
 
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
-      id = 116
-      balance = 20
-      amount = 15
-      new_balance = balance - amount
+        id = 116
+        balance = 20
+        amount = 15
 
-      account = Bank::CheckingAccount.new(id,balance)
-      account.withdraw_using_check(amount)
-      account.balance.must_equal new_balance
-
+        account = Bank::CheckingAccount.new(id, balance)
+        account.withdraw_using_check(amount)
+        account.balance.must_be :<, balance
     end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 20
+        amount = 15
+        new_balance = balance - amount
+
+        account = Bank::CheckingAccount.new(id,balance)
+        account.withdraw_using_check(amount)
+        account.balance.must_equal new_balance
     end
+
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10
+        amount = 20
+
+        account = Bank::CheckingAccount.new(id, balance)
+        account.withdraw_using_check(amount)
+        account.balance.must_equal (balance - amount)
     end
 
+
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+     id = 116
+     balance = 10
+     amount = 21
+
+     account = Bank::CheckingAccount.new(id, balance)
+
+     proc{
+        account.withdraw_using_check(amount)
+     }.must_output( /.+/)
+
+
+
+
+
+
     end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     it "Doesn't modify the balance if the account would go below -$10" do
       # TODO: Your test code here!

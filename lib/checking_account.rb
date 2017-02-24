@@ -21,8 +21,13 @@ module Bank
 
 
         def withdraw_using_check(amount)
-            @balance -=amount
-            return @balance
+            if @balance - amount < -10
+                puts "You do not have enough money in your account for this"
+
+            else
+                @balance -=amount
+                return @balance
+            end
         end
 
 

@@ -4,13 +4,14 @@ require_relative '../lib/account'
 module Bank
 
   class SavingsAccount < Account
-    attr_reader :id, :balance
+    attr_reader :id, :balance, :interest
 
     def initialize(id, balance)
 
       raise ArgumentError.new "Balance must be at least $10" unless balance >= 10
       @id = id
       @balance = balance
+      @interest = interest
     end
 
     def withdraw(withdrawal_amount)
@@ -21,12 +22,17 @@ module Bank
       else
         super + (-2)
       end
+    end
 
-
-
-
+    def add_interest(rate)
+      # rate = 0.25
+      interest = @balance * (rate / 100).to_f
+      @balance += interest
+      return interest
     end
 
 
   end
+
+
 end

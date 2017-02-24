@@ -6,23 +6,14 @@ require_relative 'account.rb'
 module Bank
   class SavingsAccount < Account
 
-    attr_accessor :balance
-
     def initialize(account)
 
-      @id = account[:id].to_i
-      @balance = account[:balance].to_i
-      @opendatetime = account[:opendatetime]
-
-      if @balance >= 10
-        @balance = @balance
-      else
-        raise ArgumentError.new "Savings Accounts must have an Initial Balance of $10"
-      end
+      raise ArgumentError.new "Savings Accounts must have an Initial Balance of $10" if account[:balance] < 10
+      super
 
     end
 
-    def withdraw(amount) #this one is weird - can figue out how to override the parent
+    def withdraw(amount)
 
       if (@balance - (amount + 2) ) < 10
         puts "Insufficient Funds"
@@ -30,10 +21,12 @@ module Bank
       end
       super
       return @balance - 2
+
     end
 
 
     def add_interest(rate)
+
       if rate < 0
         print "We do not accept negative rates"
         return @balance
@@ -42,8 +35,12 @@ module Bank
         @balance += interest
         return interest
       end
+
     end
 
 
   end
 end
+
+new_account = Bank::SavingsAccount.new({balance: 10})
+puts new_account.balance

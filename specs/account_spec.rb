@@ -5,7 +5,7 @@ require_relative '../lib/account'
 
 
 
-xdescribe "Wave 1" do
+describe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do #this is one test case with 4 assertions
 
@@ -149,7 +149,7 @@ xdescribe "Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
 
     before do

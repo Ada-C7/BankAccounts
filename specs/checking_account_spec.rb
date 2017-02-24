@@ -52,7 +52,9 @@ describe "CheckingAccount" do
     end
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+      modified_balance = @my_checking.withdraw_using_check(20)
+
+      modified_balance.must_equal(480)
     end
 
     it "Allows the balance to go down to -$10" do

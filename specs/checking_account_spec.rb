@@ -64,7 +64,7 @@ describe "CheckingAccount" do
       checking_account = Bank::CheckingAccount.new(11, 200)
       checking_account.balance.must_equal 200
       checking_account.withdraw_with_check(209)
-      checking_account.balance.must_equal -10
+      checking_account.balance.must_equal(-10)
     end
 
     it "Outputs a warning if the account would go below -$10" do

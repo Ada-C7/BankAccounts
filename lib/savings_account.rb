@@ -14,13 +14,19 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
-      super + (-2)
+      # c_balance = @balance - (withdrawal_amount + 1)
+      if @balance < 10
+        puts "Warning, this will be below 0 ," + (@balance.to_s)
+         @balance = @balance
+      else
+        super + (-2)
+      end
+
+
+
+
     end
 
 
-
-
   end
-
-
 end

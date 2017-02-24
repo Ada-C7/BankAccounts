@@ -39,9 +39,7 @@ describe "Wave 1" do
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
-
       account.withdraw(withdrawal_amount)
-
       expected_balance = start_balance - withdrawal_amount
       account.balance.must_equal expected_balance
     end
@@ -189,9 +187,8 @@ describe "Wave 2" do
 
       it "Raises an error for an account that doesn't exist" do
         # TODO: Your test code here!
-        proc {
-                Bank::Account.find(111111)
-              }.must_output /.+/
+        proc { Bank::Account.find(111111)
+        }.must_output(/.+/)
       end
     end
   end

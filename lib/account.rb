@@ -51,7 +51,7 @@ module Bank
 
     def withdraw(withdrawal_amount)
 
-      if withdrawal_amount < 0 #throws error if withdrawal is negative
+      if withdrawal_amount <= 0 #throws error if withdrawal is not positive
         raise ArgumentError.new "You cannot withdraw a negative amount."
 
       elsif withdrawal_amount <= @balance

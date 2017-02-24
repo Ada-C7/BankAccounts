@@ -6,7 +6,7 @@ module Bank
     # attr_accessor :withdraw, :deposit, :all_accounts
     attr_reader :id, :balance, :opendate, :show_id, :account_count, :find_account
     @@account_count = 0
-    
+
     def initialize(id, balance, opendate)
       @@account_count += 1
       @id = id.to_i
@@ -86,7 +86,7 @@ end
 
 # print Bank::Account.all
 all = Bank::Account.all
-print all.first.id
+print all
 
 # Instead of creating instance self.find is looking through self.all instances to return exact same object
 #

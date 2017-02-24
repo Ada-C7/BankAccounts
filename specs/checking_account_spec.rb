@@ -8,13 +8,15 @@ describe "CheckingAccount" do
   describe "Checking#initialize" do
     # Check that a CheckingAccount is in fact a kind of account
     it "Is a kind of Account" do
+      skip
       account = Bank::CheckingAccount.new(12345, 100.0, "1999-03-27 11:30:09 -0800")
-      account.must_be_kind_of Bank::CheckingAccount
+      account.must_be_kind_of Bank::Account
     end
   end
 
   describe "#withdraw" do
     it "Applies a $1 fee each time" do
+      skip
       start_balance = 100.0
       withdrawal_amount = 25.0
       fee = 1.0
@@ -27,6 +29,7 @@ describe "CheckingAccount" do
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
+      skip
       start_balance = 100.0
       withdrawal_amount = 110.0 # consider $10 overdraft
       hidden_fee = 1.0
@@ -43,14 +46,17 @@ describe "CheckingAccount" do
 
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
+    skip
       # TODO: Your test code here!
     end
 
     it "Returns the modified balance" do
+    skip
       # TODO: Your test code here!
     end
 
     it "Allows the balance to go down to -$10" do
+    skip
       start_balance = 100.0
       withdrawal_amount = 109.0
       hidden_fee = 1.0
@@ -63,6 +69,7 @@ describe "CheckingAccount" do
     end
 
     it "Outputs a warning if the account would go below -$10" do
+    skip
       start_balance = 100.0
       withdrawal_amount = 110.0
       hidden_fee = 1.0
@@ -105,6 +112,7 @@ describe "CheckingAccount" do
 
   describe "#reset_checks" do
     it "Can be called without error" do
+    skip
       account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
 
       proc {

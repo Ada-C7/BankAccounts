@@ -49,14 +49,12 @@ describe "SavingsAccount" do
         amount = 11
         account = Bank::SavingsAccount.new(id, balance)
 
+
         proc{
             account.withdraw(amount)
-        }.must_raise ArgumentError
-        # account.withdraw.must_raise ArgumentError
+        }.must_output( /.+/)
+
     end
-
-
-
 
 
 
@@ -64,40 +62,35 @@ describe "SavingsAccount" do
     it "Doesn't modify the balance if it would go below $10" do
         id = 116
         balance = 20
-        amount = 9
-        fee = 2
+        amount = 11
         account = Bank::SavingsAccount.new(id, balance)
+        account.withdraw(amount)
 
-        proc{
-            account.withdraw(amount)
-        }.must_raise ArgumentError
+        account.balance.must_equal balance
     end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
+        id = 116
+           balance = 20
+           amount = 9
+           fee = 2
+           account = Bank::SavingsAccount.new(id, balance)
+
+           account.balance.must_equal balance
     end
   end
+
+
+
+
+
+
+
+
+
+
+
 
   describe "#add_interest" do
     it "Returns the interest calculated" do

@@ -21,7 +21,10 @@ module Bank
         @balance -= withdrawal_amount + fee
       end
 
-      # return @balance
+    end
+
+    def add_interest(rate)
+      balance * rate/100
     end
 
 

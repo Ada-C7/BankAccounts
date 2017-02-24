@@ -16,9 +16,6 @@ module Bank
       @opening_date = date
     end
 
-    # methods should do one type of thing: subtract the withdrawal amount from balance
-    # its running application logic (check amount > 0 and if else) and its rewriting balance
-    # checking that withdrawal amount is greater than zero and wont return a negative balance
     def withdraw(withdrawal_amount)
       check_amount_is_over_zero(withdrawal_amount)
       return "Insufficient funds" if @balance - withdrawal_amount < 0

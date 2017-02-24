@@ -28,7 +28,6 @@ describe "CheckingAccount" do
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
-      skip
       start_balance = 100.0
       withdrawal_amount = 110.0 # consider $10 overdraft
       hidden_fee = 1.0

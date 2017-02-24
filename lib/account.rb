@@ -12,7 +12,6 @@ module Bank
       @id = owner_id
       @name_first = name_first
       @name_last = name_last
-      @name = name
       @address_street = address_street
       @address_city = address_city
       @address_state = address_state
@@ -30,15 +29,15 @@ module Bank
         state = line[5]
         all_owners_array << Owner.new(id, first, last, street, city, state)
       end
+      return all_owners_array
+    end
 
-      def self.find(id)
-        all_owners_array = Bank::Owner.all
-        all_owners_array.each do |owner_instance|
-          return owner_instance if owner_instance.id == id
-        end
-        raise ArgumentError.new "Owner #{id} does not exist!!"
+    def self.find(id)
+      all_owners_array = Bank::Owner.all
+      all_owners_array.each do |owner_instance|
+        return owner_instance if owner_instance.id == id
       end
-
+      raise ArgumentError.new "Owner #{id} does not exist!!"
     end
 
     def name
@@ -56,7 +55,7 @@ module Bank
     attr_accessor :owner_id
     # @@all_accounts = []
 
-    def initialize (id, initial_balance, open_date, owner_id = -1)
+    def initialize(id, initial_balance, open_date, owner_id = -1)
 
       raise ArgumentError.new "An account can't be created with negative balance" if initial_balance < 0
 

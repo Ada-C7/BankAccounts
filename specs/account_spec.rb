@@ -284,4 +284,85 @@ describe "Wave 2" do
       proc { Bank::Account.find(test_account_id) }.must_raise ArgumentError
     end
   end
+
+  describe "Owner.all" do
+    before do
+      @all_owners_array = Bank::Owner.all
+    end
+
+    it "Check that class have a all method" do
+      Bank::Owner.must_respond_to :all
+    end
+
+    it "Returns an array of all owners" do
+      @all_owners_array.must_be_kind_of Array
+    end
+
+    it "Everything in the array is an instance of Owner class" do
+      @all_owners_array.each do |owner_instance|
+        owner_instance.must_be_instance_of Bank::Owner
+      end
+    end
+
+    it "The number of owners is correct = 12" do
+      @all_owners_array.length.must_equal 12
+    end
+
+    it "The ID and balance of the first owner match what's in the CSV file" do
+      #14,Morales,Wanda,9003 Gerald Hill,Honolulu,Hawaii
+      test_id = 14
+      test_name = "Wanda Morales"
+      test_address = "9003 Gerald Hill, Honolulu, Hawaii"
+
+      first_instance = @all_owners_array.first
+      first_instance.must_respond_to :id
+      first_instance.id.must_equal test_id
+      first_instance.must_respond_to :name
+      first_instance.name.must_equal test_name
+      first_instance.must_respond_to :address
+      first_instance.address.must_equal test_address
+    end
+
+    it "The ID and balance of the last owner match what's in the CSV file" do
+      #25,Clark,Kathleen,72984 Chive Hill,New York City,New York
+      test_id = 25
+      test_name = "Kathleen Clark"
+      test_address = "72984 Chive Hill, New York City, New York"
+
+      last_instance = @all_owners_array.last
+      last_instance.must_respond_to :id
+      last_instance.id.must_equal test_id
+      last_instance.must_respond_to :name
+      last_instance.name.must_equal test_name
+      last_instance.must_respond_to :address
+      last_instance.address.must_equal test_address
+    end
+  end
+
+  describe "Owner.find" do
+    it "Check that class have a find method" do
+      Bank::Owner.must_respond_to :find
+    end
+
+    it "Returns an owner that exists" do
+      owner_id = 19
+      Bank::Owner.find(owner_id).must_be_instance_of Bank::Owner
+    end
+
+    it "Can find the first owner from the CSV" do
+      first_owner_id = 14
+      Bank::Owner.find(first_owner_id).must_be_instance_of Bank::Owner
+    end
+
+    it "Can find the last owner from the CSV" do
+      last_owner_id = 14
+      Bank::Owner.find(last_owner_id).must_be_instance_of Bank::Owner
+    end
+
+    it "Raises an error for an owner that doesn't exist" do
+      test_owner_id = 9999
+      proc { Bank::Owner.find(test_owner_id) }.must_raise ArgumentError
+    end
+  end
+  
 end

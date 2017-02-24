@@ -153,9 +153,7 @@ describe 'Wave 2' do
         end
         it 'Returns all accounts listed in csv file' do
             #   - The number of accounts is correct
-            csv_file = 'support/accounts.csv'
-            number_of_accounts = `wc -l "#{csv_file}"`.strip.split(' ')[0].to_i
-            Bank::Account.all.to_a.length.must_equal number_of_accounts
+            Bank::Account.all.to_a.length.must_equal 12
         end
         it 'Returns accurate data' do
             #   - The ID and balance of the first and last accounts match what's in the CSV file

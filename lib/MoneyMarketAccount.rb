@@ -19,24 +19,30 @@ module Bank
     end
 
     def withdraw(amount)
+
       if @too_low || @max_trans_reached
         puts "You can't withdraw right now!"
-        # return
+        return
       else
         if @balance - amount < 10000
           @too_low = true
           @balance -= @withdraw_fee + amount
           puts "You need to get your balance back up to 10k!"
           @transactions += 1
+          return
         else
           @balance -= amount
           @transactions += 1
         end
       end
+      if @transactions >= 6
+        @max_trans_reached = true
+      end
       # super
     end
 
     def deposit(amount)
+
       if @too_low
         if @balance + amount < 10000
           puts "Your deposit must get you back up to 10k!"
@@ -48,6 +54,9 @@ module Bank
       else
         @balance += amount
         @transactions += 1
+      end
+      if @transactions >= 6
+        @max_trans_reached = true
       end
     end
 

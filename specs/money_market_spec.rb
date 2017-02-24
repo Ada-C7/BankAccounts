@@ -62,7 +62,7 @@ describe "MoneyMarketAccount" do
       account.transactions.must_equal 5
       account.withdraw(10)
       account.transactions.must_equal 6
-      proc {account.withdraw(10)}.must_output(/.+/)
+      account.max_trans_reached.must_equal true
     end
 
     it "a withdrawal increases the number of transactions" do

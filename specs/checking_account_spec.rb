@@ -31,8 +31,14 @@ describe "CheckingAccount" do
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
-      # TODO: Your test code here!
+      updated_balance = @my_checking.withdraw(500.00)
+
+      #Both the value returned and balance in account
+      #must be un-modified
+      updated_balance.must_equal 500
+      @my_checking.balance.must_equal 500
     end
+
   end
 
   describe "#withdraw_using_check" do

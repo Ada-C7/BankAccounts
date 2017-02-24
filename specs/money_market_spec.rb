@@ -17,13 +17,13 @@ describe "MoneyMarketAccount" do
     end
 
     it "Is a kind of Account" do
-      account = Bank::MoneyMarketAccount.new(1,100)
+      account = Bank::MoneyMarketAccount.new(1,10000)
       account.must_be_kind_of Bank::Account
     end
 
-    it "Requires an initial balance of at least $10" do
-    end
-    it "Raises error if initial balance < 10" do
+    it "Raises error if initial balance < 10,000" do
+      # account = Bank::MoneyMarketAccount.new(1,9999)
+      proc {Bank::MoneyMarketAccount.new(1,9999)}.must_raise ArgumentError
     end
 
   end

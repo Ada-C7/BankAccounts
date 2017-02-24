@@ -5,6 +5,7 @@ module Bank
   class MoneyMarketAccount < Account
 
     def initialize(id, starting_balance)
+      raise ArgumentError.new "starting must be >= 10000" if starting_balance < 10_000
       @id = id
       @balance = starting_balance
       @transactions = 0

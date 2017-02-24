@@ -23,6 +23,11 @@ describe "SavingsAccount" do
       # TODO: Your test code here!
       account = Bank::SavingsAccount.new(12345, 100.0)
       account.balance.must_be  :>=, 10.0
+
+      proc {
+        Bank::SavingsAccount.new(12345, 5.0)
+      }.must_raise ArgumentError
+
     end
   end
 
@@ -36,20 +41,45 @@ describe "SavingsAccount" do
 
     it "Outputs a warning if the balance would go below $10" do
       # TODO: Your test code here!
-      account = Bank::SavingsAccount.new(12345, 10.0)
-      withdrawal_amount = 10.0
+      account = Bank::SavingsAccount.new(12345, 100.0)
+      withdrawal_amount = 95.0
+
       proc {
         account.withdraw(withdrawal_amount)
       }.must_output /.+/
-    
+
     end
 
     it "Doesn't modify the balance if it would go below $10" do
       # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 200.0
+      account = Bank::SavingsAccount.new(12345, 100.0)
+
+      updated_balance = account.withdraw(withdrawal_amount)
+
+      # Both the value returned and the balance in the account
+      # must be un-modified.
+      updated_balance.must_equal start_balance
+      account.balance.must_equal start_balance
+
+
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
       # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 89.0
+      new_withdrawal = withdrawal_amount
+      account = Bank::SavingsAccount.new(12345, 100.0)
+
+      updated_balance = account.withdraw(new_withdrawal)
+
+      # Both the value returned and the balance in the account
+      # must be un-modified.
+      updated_balance.must_equal start_balance
+      account.balance.must_equal start_balance
+
     end
   end
 

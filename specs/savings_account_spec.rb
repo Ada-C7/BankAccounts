@@ -112,7 +112,8 @@ describe "SavingsAccount" do
       rate = 25.0
       interest = account.add_interest(rate)
 
-      account.calculated_interest.must_equal 30
+      interest.must_equal 30
+      account.calculated_interest.must_equal interest
       account.balance.must_equal start_balance + interest
       account.balance.must_equal 150
 
@@ -121,7 +122,16 @@ describe "SavingsAccount" do
     end
 
     it "Requires a positive rate" do
-      skip
+
+      start_balance = 120
+
+      account = Bank::SavingsAccount.new(1234, start_balance)
+
+      proc {
+        account.add_interest(-0.35)
+      }.must_raise ArgumentError
+
+
       # TODO: Your test code here!
     end
   end

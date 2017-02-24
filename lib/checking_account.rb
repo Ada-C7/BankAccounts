@@ -5,6 +5,7 @@ module Bank
         def initialize (id, balance, opendate = nil)
             #super sets the instance variables found in the Account initialize method
             super
+            @check_counter = 0
         end
 
 
@@ -19,11 +20,11 @@ module Bank
         end
 
 
+
         def withdraw_using_check(amount)
-            check_counter = 0
             check_fee = 0
 
-            if check_counter >= 4
+            if @check_counter >= 3
                 check_fee = 2
             end
 
@@ -33,7 +34,7 @@ module Bank
                 if @balance - (amount + check_fee) < -10
                     puts "You do not have enough money in your account for this"
                 else
-                    check_counter +=1
+                    @check_counter +=1
                     @balance -=(amount + check_fee)
                     return @balance
                 end

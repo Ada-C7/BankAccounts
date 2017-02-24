@@ -111,11 +111,6 @@ describe "CheckingAccount" do
 
 
 
-
-
-
-
-
     it "Allows 3 free uses" do
         id = 116
         balance = 200
@@ -127,30 +122,22 @@ describe "CheckingAccount" do
     end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     it "Applies a $2 fee after the third use" do
-        # account.withdraw_using_check(amount)
-        # account.balance.must_equal ((balance - (4 * amount)) - 2)
+        id = 116
+        balance = 200
+        amount = 10
+
+        account = Bank::CheckingAccount.new(id, balance)
+        4.times do account.withdraw_using_check(amount) end
+        account.balance.must_equal ((balance - (4 * amount)) - 2)
     end
   end
+
+
+
+
+
+
 
   describe "#reset_checks" do
     it "Can be called without error" do

@@ -62,11 +62,12 @@ describe "CheckingAccount" do
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      proc { @my_checking.withdraw_using_check(520) }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+      @my_checking.withdraw_using_check(520)
+      @my_checking.balance.must_equal(500)
     end
 
     it "Requires a positive withdrawal amount" do

@@ -6,7 +6,7 @@ module Bank
     attr_accessor :balance
     attr_reader :id , :datetime
 
-    def initialize(id, balance, datetime = "")
+    def initialize(id, balance, datetime=nil)
       @id = id
       @datetime = datetime
 

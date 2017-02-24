@@ -12,9 +12,7 @@ module Bank
       @too_low = false
       @transactions = 0
       @max_trans_reached = false
-      if @transactions >= 6
-        @max_trans_reached = true
-      end
+
       @withdraw_fee = 100
     end
 
@@ -35,33 +33,45 @@ module Bank
           @transactions += 1
         end
       end
-      if @transactions >= 6
-        @max_trans_reached = true
-      end
+      check_num_of_transactions
       # super
     end
 
     def deposit(amount)
-      if @too_low
-        if @balance + amount < 10000
-          puts "Your deposit must get you back up to 10k!"
-        elsif @balance + amount >= 10000
-          @balance += amount
-          @too_low = false
-        end
-      elsif @transactions >= 6
-        @max_trans_reached = true
-        puts "Sorry, you've reached your max transactions for the month."
-      else
-        @balance += amount
-        @transactions += 1
-        if @transactions >= 6
-          @max_trans_reached = true
-        end
+      # each deposit increases number of transactions
+      # unless the deposit brings the acct back up to 10k
+      #
+      # IF not too low AND max trans
+      if !@too_low && @max_trans_reached
+        #   you cant do anything
+        puts "Max transactions reached."
+        return @balance
       end
-      
-      # super
+      # ELSIF too low AND deposit brings back to 10k
+      if @too_low && @balance + amount >= 10000
+      #   update balance
+        @balance += amount
+      #   reset too low to false
+        @too_low = false
+        # return @balance
+      # ELSIF not too low AND not max trans
+      elsif !@too_low && !@max_trans_reached
+      #   regular deposit happens
+      #     balance is updated
+        @balance += amount
+      #     transactions increased
+        @transactions += 1
+        return @balance
+      end
+      check_num_of_transactions
     end
+
+    def check_num_of_transactions
+      if @transactions >= 6
+        @max_trans_reached = true
+      end
+    end
+
 
     def add_interest(rate)
       if rate < 0
@@ -81,3 +91,22 @@ module Bank
   end
 
 end
+
+
+      # if @too_low
+      #   if @balance + amount < 10000
+      #     puts "Your deposit must get you back up to 10k!"
+      #   elsif @balance + amount >= 10000
+      #     @balance += amount
+      #     @too_low = false
+      #   end
+      # elsif @transactions >= 6
+      #   @max_trans_reached = true
+      #   puts "Sorry, you've reached your max transactions for the month."
+      # else
+      #   @balance += amount
+      #   @transactions += 1
+      #   if @transactions >= 6
+      #     @max_trans_reached = true
+      #   end
+      # end

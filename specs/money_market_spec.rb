@@ -87,6 +87,7 @@ describe "MoneyMarketAccount" do
 
 
     it "if transactions >= 6 cannot deposit" do
+      skip
       account = Bank::MoneyMarketAccount.new(1,10500)
       account.deposit(1)
       account.deposit(1)
@@ -135,12 +136,15 @@ describe "MoneyMarketAccount" do
     it "if max_trans_reached a deposit fixing too_low will be permitted" do
       # skip
       account = Bank::MoneyMarketAccount.new(1,10500)
-      account.withdraw(10) #overdrawn
-      account.withdraw(10) #overdrawn
-      account.withdraw(10) #overdrawn
-      account.withdraw(10) #overdrawn
-      account.withdraw(10) #overdrawn
+      account.withdraw(10)
+      account.withdraw(10)
+      account.withdraw(10)
+      account.withdraw(10)
+      account.withdraw(10)
+      account.transactions.must_equal 5
+
       account.withdraw(451) #overdrawn
+      account.balance.must_equal 9899
       account.transactions.must_equal 6
       account.too_low.must_equal true
       account.max_trans_reached.must_equal true

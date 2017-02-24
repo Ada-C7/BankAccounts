@@ -44,27 +44,62 @@ describe "CheckingAccount" do
 
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 25.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      account.withdraw_using_check(withdrawal_amount)
+
+      expected_balance = start_balance  - withdrawal_amount
+      account.balance.must_equal expected_balance
     end
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 25.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+
+      expected_balance = start_balance - withdrawal_amount
+      updated_balance.must_equal expected_balance
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 110.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+
+      expected_balance = start_balance - withdrawal_amount
+      updated_balance.must_equal expected_balance
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 110.01
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      proc {
+        account.withdraw_using_check(withdrawal_amount)
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 110.01
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      # Both the value returned and the balance in the account
+      # must be un-modified.
+      updated_balance.must_equal start_balance
+      account.balance.must_equal start_balance
     end
 
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+      proc {
+        Bank::Account.new(1337, -100.0)
+      }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do

@@ -89,39 +89,25 @@ describe "CheckingAccount" do
      proc{
         account.withdraw_using_check(amount)
      }.must_output( /.+/)
-
-
-
-
-
-
     end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10
+        amount = 21
+
+        account = Bank::CheckingAccount.new(id, balance)
+        account.withdraw_using_check(amount)
+        account.balance.must_equal balance
     end
 
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10
+        amount = -10
+
+        account = Bank::CheckingAccount.new(id, balance)
+        account.balance.must_equal balance
     end
 
     it "Allows 3 free uses" do

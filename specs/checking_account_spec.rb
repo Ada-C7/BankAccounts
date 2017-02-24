@@ -114,22 +114,21 @@ describe "CheckingAccount" do
     updated_balance = account.withdraw_using_check(withdrawal_amount)
     updated_balance = account.withdraw_using_check(withdrawal_amount)
     updated_balance = account.withdraw_using_check(withdrawal_amount)
-    updated_balance.must_equal 58.0
-
+    updated_balance.must_equal 58
   end
     end
     #
-    xdescribe "#reset_checks" do
+    describe "#reset_checks" do
       it "Can be called without error" do
         # TODO: Your test code here!
       end
 
-      it "Makes the next three checks free if less than 3 checks had been used" do
-        # TODO: Your test code here!
-      end
-
-      it "Makes the next three checks free if more than 3 checks had been used" do
-        # TODO: Your test code here!
-      end
+      # it "Makes the next three checks free if less than 3 checks had been used" do
+      #   # TODO: Your test code here!
+      # end
+      #
+      # it "Makes the next three checks free if more than 3 checks had been used" do
+      #   # TODO: Your test code here!
+      # end
     end
   end

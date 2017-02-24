@@ -45,6 +45,7 @@ module Bank
 
     def reset_checks
       @checks_used = 0
+      @check_fee = 0
     end
 
   end

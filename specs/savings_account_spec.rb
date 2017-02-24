@@ -19,22 +19,44 @@ describe "SavingsAccount" do
       account.must_be_kind_of Bank::Account
     end
 
-    it "Requires an initial balance of at least $10" do
-      # TODO: Your test code here!
+    describe "Requires $10 opening balance." do
+      it "Requires an initial balance of at least $10" do
+        account = Bank::SavingsAccount.new(12345, 9.0, nil)
+        proc { account.check_for_min_balance
+        }.must_raise ArgumentError
+
+      end
     end
   end
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(12345, 100.0, nil)
+      account.balance.must_equal 100
+      account.withdraw_fee(10)
+      account.balance.must_equal 88
     end
 
-    it "Outputs a warning if the balance would go below $10" do
-      # TODO: Your test code here!
+  describe "Outputs a warning if the balance would go below $10" do
+      it "Outputs a warning if the account would go negative" do
+            start_balance = 100.0
+            withdrawal_amount = 200.0
+            account = Bank::Account.new(1337, start_balance)
+
+            # Another proc! This test expects something to be printed
+            # to the terminal, using 'must_output'. /.+/ is a regular
+            # expression matching one or more characters - as long as
+            # anything at all is printed out the test will pass.
+            proc {
+              account.withdraw(withdrawal_amount)
+            }.must_output /.+/
+          end
     end
 
+describe "If balance goes below 10, don't modify" do
     it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 95.00
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do

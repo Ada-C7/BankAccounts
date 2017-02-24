@@ -4,28 +4,29 @@ module Bank
 
   class SavingsAccount < Bank::Account
 
-    def initialize(id, balance, date)
+    def initialize(id, balance, min_balance = 10, date)
       super(id, balance, date)
-      @minimum_balance
-
+      #@account = Bank::SavingsAccount.new
+      @withdrawal_amount = 0
+      @fee = 2.00
+      @min_balance = min_balance
     end
 
-    def new_10(opening_balance)
-      if @balance >= 0
-        @new_account  #Account.new(balance)
+    def check_for_min_balance(amount)
+      if @min_balance <= 10
+        raise ArgumentError.new "You can only open a new account with at least $10.00"
       else
-        raise ArgumentError.new "You can only open a new account with at least $10.00)"
+        return "Great job. New savings account."
       end
     end
 
+
     def withdraw_fee(amount)
-      @balance -= 2.00
+      @balance = @balance - (amount + @fee)
     end
 
-    def minimum_balance(amount)
-    @minimum_balance == 10.00
-
-
+    def min_balance(amount)
+      @min_balance == 10.00
 
     end
 

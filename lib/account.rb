@@ -4,7 +4,7 @@ module Bank
   class Account
 
     attr_reader :balance, :id, :open_date
-
+#can self.all be refactored if for no other reason than my understanding
     def self.all
       new_account_info = []
       accounts_master = CSV.read("../support/accounts.csv")
@@ -14,6 +14,7 @@ module Bank
         date = account_array[2]
         new_account_info << Account.new(id, balance, date)
         #  end_with_object(self).to_a
+        opening_balance = 0
       end
       return new_account_info
     end
@@ -34,10 +35,10 @@ module Bank
       @balance = balance
       @open_date = open_date
     end
-
-    def new_account(balance)
-      if @new_account >= 0
-        @new_account  #Account.new(balance)
+#redundant as @min_balance in savings account - i think it is being overridden by min balance
+    def opening_balance(balance)
+      if @opening_balance >= 0
+        @opening_balance
       else
         raise ArgumentError.new "You can only open a new account with real money:)"
       end

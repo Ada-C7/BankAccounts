@@ -79,7 +79,6 @@ describe "SavingsAccount" do
       savings_account = Bank::SavingsAccount.new(11, 10000)
       proc{ savings_account.add_interest(-1)
       }.must_raise(ArgumentError)
-
     end
   end
 end

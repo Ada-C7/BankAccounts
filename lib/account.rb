@@ -62,7 +62,7 @@ module Bank
     end
   end
 end
-# puts Bank::Account.withdraw(10) 
+# puts Bank::Account.withdraw(10)
 
 # class CheckingAccount < Account
 # end

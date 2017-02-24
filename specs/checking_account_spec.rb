@@ -24,13 +24,20 @@ describe "CheckingAccount" do
     end
   end
 
-  xdescribe "#withdraw" do
+  describe "#withdraw" do
     it "Applies a $1 fee each time" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100.0)
+      account.withdraw(10)
+      account.balance.must_equal 89
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 20)
+
+      proc {
+        account.withdraw(20)
+      }.must_output /.+/
+    
     end
   end
 

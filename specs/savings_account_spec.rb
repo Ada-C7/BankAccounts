@@ -30,18 +30,36 @@ describe "SavingsAccount" do
 
 
 
-
-
-
-
-
-
-
-
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 20
+        fee = 2
+        amount = 2
+        account = Bank::SavingsAccount.new(id,balance)
+        account.withdraw(amount)
+        account.balance.must_equal balance - (amount + fee)
     end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     it "Outputs a warning if the balance would go below $10" do
       # TODO: Your test code here!

@@ -7,5 +7,27 @@ module Bank
         super
         end
 
+
+    def withdraw (amount)
+        #inherit withdraw functionality from Account
+
+        #incur $2 fee each transaction
+        super
+        @balance -=2
+        return @balance
+
+        #can not go below $10
+    end
+
+
+
+
+
+
+
+
+
+
+
     end
 end

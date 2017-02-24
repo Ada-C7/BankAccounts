@@ -25,7 +25,7 @@ describe "SavingsAccount" do
     it "Requires an initial balance of at least $10" do
       # skip
     proc {
-          account = Bank::SavingsAccount.new(12345, 7.0)
+         Bank::SavingsAccount.new(12345, 7.0)
          }.must_raise ArgumentError
     end
   end
@@ -60,18 +60,24 @@ describe "SavingsAccount" do
 
   describe "#add_interest" do
     it "Returns the interest calculated" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      account = Bank::SavingsAccount.new(12345, 5000.00)
+      account.add_interest(0.25).must_equal 12.5
     end
 
     it "Updates the balance with calculated interest" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      account = Bank::SavingsAccount.new(12345, 5000.00)
+      account.add_interest(0.25)
+      account.balance.must_equal 5012.5
     end
 
     it "Requires a positive rate" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      account = Bank::SavingsAccount.new(12345, 5000.00)
+      proc {
+           account.add_interest(-0.20)
+           }.must_raise ArgumentError
     end
   end
 end

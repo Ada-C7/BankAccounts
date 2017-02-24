@@ -17,5 +17,11 @@ module Bank
       return @balance
     end
 
+    def add_interest(rate)
+      raise ArgumentError if rate < 0
+      interest_added = @balance * rate/100
+      @balance = @balance + interest_added
+      return interest_added
+    end
   end
 end

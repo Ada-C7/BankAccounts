@@ -67,14 +67,16 @@ describe "SavingsAccount" do
   describe "#add_interest" do
     before do
       @my_savings = Bank::SavingsAccount.new(1234, 500.00)
+      @my_interest = @my_savings.add_interest(0.25)
     end
 
     it "Returns the interest calculated" do
-      @my_savings.add_interest.must_equal(1.25)
+      @my_interest.must_equal(1.25)
     end
 
     it "Updates the balance with calculated interest" do
-      # TODO: Your test code here!
+      @my_savings.balance.must_equal(501.25)
+
     end
 
     it "Requires a positive rate" do

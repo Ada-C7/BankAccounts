@@ -1,5 +1,4 @@
 require 'csv'
-#require_relative '../support'
 
 module Bank
   class Account
@@ -12,10 +11,10 @@ module Bank
       @balance = balance
     end
 
-    def self.all
+      def self.all
       accounts = []
       CSV.read("support/accounts.csv").each do |line|
-        accounts << Account.new(line[0], line[1].to_i)
+        accounts << Account.new(line[0], line[1].to_f/100)
       end
       return accounts
     end
@@ -23,7 +22,7 @@ module Bank
     def self.find(id)
       CSV.read("support/accounts.csv").each do |line|
         if line[0] == id
-          return Account.new(line[0], line[1].to_i)
+          return Account.new(line[0], line[1].to_f/100)
         end
       end
       raise ArgumentError.new("account id doesn't exist")

@@ -3,10 +3,10 @@ require 'csv'
 module Bank
 
   class Account
-    # attr_accessor :balance
-    attr_reader :id, :owner, :balance
+    attr_accessor :balance
+    attr_reader :id, :owner
 
-    def initialize(id, start_balance, opendate = "nodate")
+    def initialize(id, start_balance, opendate = nil)
       @id = id
       @opendate = opendate
       @balance = set_balance(start_balance)

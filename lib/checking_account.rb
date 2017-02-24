@@ -2,7 +2,7 @@ module Bank
 
   class CheckingAccount < Account
 
-    def initialize(id, balance, opendate = "nodate")
+    def initialize(id, balance, opendate = nil)
 
       super
       @check_withdrawals = 0

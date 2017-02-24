@@ -15,6 +15,16 @@ module Bank
       end
     end
 
+    def withdraw_using_check(check)
+      if @balance - (check) < -10
+        puts "Warning! This withdrawal will cause you to be under more than ten dollars!"
+        return @balance
+      else
+          return @balance - check
+      end
+
+    end
+
   end
 end
 

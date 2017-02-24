@@ -49,6 +49,14 @@ describe "CheckingAccount" do
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
       # TODO: Your test code here!
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(1235, start_balance)
+      check_amount = 80
+      updated_balance = account.withdraw_using_check(check_amount)
+
+      updated_balance.must_equal (start_balance - check_amount)
+      updated_balance.must_equal 20
+
     end
 
     it "Returns the modified balance" do

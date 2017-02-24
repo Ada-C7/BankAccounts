@@ -20,10 +20,41 @@ describe "CheckingAccount" do
     end
   end
 
+
+
   describe "#withdraw" do
     it "Applies a $1 fee each time" do
-      # TODO: Your test code here!
+        id = 16
+        balance = 20
+        fee = 1
+        # new_balance = balance - (withdraw + fee)
+
+        account = Bank::CheckingAccount.new(id, balance)
+        account.withdraw(9)
+        account.balance.must_equal 10
     end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     it "Doesn't modify the balance if the fee would put it negative" do
       # TODO: Your test code here!

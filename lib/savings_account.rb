@@ -25,12 +25,14 @@ module Bank
     end
 
     def add_interest(rate)
-      # rate = 0.25
-      interest = @balance * (rate / 100).to_f
-      @balance += interest
-      return interest
+      if rate < 0
+        raise ArgumentError.new "The interest rate cannot be negative"
+      else
+        interest = @balance * (rate / 100).to_f
+        @balance += interest
+        return interest
+      end
     end
-
 
   end
 

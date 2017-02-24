@@ -49,16 +49,13 @@ describe "SavingsAccount" do
       # savings_account.balance.must_equal 200
       savings_account.withdraw(191)
       savings_account.balance.must_equal 200
-      proc { savings_account.withdraw(191)}.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
       # TODO: Your test code here!
       savings_account = Bank::SavingsAccount.new(1212, 200)
-      # savings_account.balance.must_equal 200
       savings_account.withdraw(189)
       savings_account.balance.must_equal 200
-      proc { savings_account.withdraw(189)}.must_output(/.+/)
     end
   end
 
@@ -79,6 +76,10 @@ describe "SavingsAccount" do
 
     it "Requires a positive rate" do
       # TODO: Your test code here!
+      savings_account = Bank::SavingsAccount.new(11, 10000)
+      proc{ savings_account.add_interest(-1)
+      }.must_raise(ArgumentError)
+
     end
   end
 end

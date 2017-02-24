@@ -37,7 +37,6 @@ describe "SavingsAccount" do
     FEE = 2.00
 
     before do
-
       @balance = 100.0
       @account = Bank::SavingsAccount.new(12345, @balance)
       #@withdraw = @account.withdraw(@withdraw_amount)
@@ -78,20 +77,43 @@ describe "SavingsAccount" do
 
     it "Doesn't modify the balance if the fee would put it below $10" do
       # TODO: Your test code here!
+      withdraw_amount = 90.0
+
+      updated_balance = @account.withdraw(withdraw_amount)
+
+      # Both the value returned and the balance in the account
+      # must be un-modified.
+      updated_balance.must_equal @balance
+      @account.balance.must_equal @balance
+    end
     end
   end
 
   describe "#add_interest" do
+    before do
+      @account = Bank::SavingsAccount.new(12345, 100.0)
+    end
+
     it "Returns the interest calculated" do
       # TODO: Your test code here!
+      rate = 0.25
+      @account.add_interest(rate).must_equal 0.25
     end
 
     it "Updates the balance with calculated interest" do
       # TODO: Your test code here!
+      rate = 0.25
+      @account.add_interest(rate)
+      #updated_balance.must_equal @balance
+      @account.balance.must_equal 100.25
     end
 
     it "Requires a positive rate" do
+      rate = -0.25
+
+      proc {
+        @account.add_interest(rate)
+      }.must_raise ArgumentError
       # TODO: Your test code here!
     end
   end
-end

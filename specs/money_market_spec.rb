@@ -6,9 +6,16 @@ require_relative '../lib/money_market'
 
 describe "MoneyMarketAccount" do
   describe "#initialize" do
+
     it "Is a kind of Account" do
       account = Bank::MoneyMarketAccount.new(12345, 10000)
       account.must_be_kind_of Bank::Account
+    end
+
+    it "Must be initialized with a balance of $10,000" do
+      proc {
+        Bank::MoneyMarketAccount.new(12345, 9999)
+      }.must_raise ArgumentError
     end
 
 

@@ -5,6 +5,19 @@ module Bank
   class Owner
     attr_reader :id, :last_name, :first_name, :st_address, :city, :state #, :name, :address, :birthday, :favefood
 
+    def initialize(owner_hash)
+      # @name = owner_hash[:name]
+      # @address = owner_hash[:address]
+      # @birthday = owner_hash[:birthday]
+      # @favefood = owner_hash[:favefood]
+      @id = owner_hash[:id]
+      @last_name = owner_hash[:last_name]
+      @first_name = owner_hash[:first_name]
+      @st_address = owner_hash[:st_address]
+      @city = owner_hash[:city]
+      @state = owner_hash[:state]
+    end
+
     def self.all
       CSV.open("/Users/brenna/ada/week3/BankAccounts/support/account_owners.csv").each do | line |
         owner_hash = {
@@ -28,19 +41,6 @@ module Bank
       #       return accounts[index]
       #     end
       # end
-    end
-
-    def initialize(owner_hash)
-      # @name = owner_hash[:name]
-      # @address = owner_hash[:address]
-      # @birthday = owner_hash[:birthday]
-      # @favefood = owner_hash[:favefood]
-      @id = owner_hash[:id]
-      @last_name = owner_hash[:last_name]
-      @first_name = owner_hash[:first_name]
-      @st_address = owner_hash[:st_address]
-      @city = owner_hash[:city]
-      @state = owner_hash[:state]
     end
 
   end

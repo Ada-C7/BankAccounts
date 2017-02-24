@@ -30,10 +30,6 @@ describe "Wave 1" do
 
       account.must_respond_to :owner
       account.owner.must_equal @brenna
-
-      account.owner.last_name.must_equal "Darroch"
-      account.owner.first_name.must_equal "Brenna"
-      account.owner.st_address.must_equal "3426 Cotton Top Ct"
     end
 
     it "Raises an ArgumentError when created with a negative balance" do

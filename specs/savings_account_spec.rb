@@ -104,18 +104,17 @@ describe "SavingsAccount" do
     end
 
     it "Updates the balance with calculated interest" do
-      # skip
-      # start_balance = 120
-      #
-      # account = Bank::SavingsAccount.new(1234, start_balance)
-      # account.interest = 25.0
-      #
-      # balance_with_interest = start_balance + account.interest
-      #
-      # balance_with_interest = account.add_interest(25.0)
-      #
-      account.add_interest(25.0).must_equal balance_with_interest
-      account.balance.must_equal balance_with_interest
+
+      start_balance = 120
+
+      account = Bank::SavingsAccount.new(1234, start_balance)
+
+      rate = 25.0
+      interest = account.add_interest(rate)
+
+      account.calculated_interest.must_equal 30
+      account.balance.must_equal start_balance + interest
+      account.balance.must_equal 150
 
 
       # TODO: Your test code here!

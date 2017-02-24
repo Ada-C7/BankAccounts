@@ -10,13 +10,19 @@ module Bank
   class Account
     attr_accessor :id, :balance, :timedate
 
+    def initialize(id, balance, timedate = nil)
+      raise ArgumentError.new("balance must be greater than zero") if balance < 0
+      @id = id
+      @balance = balance
+      @timedate = timedate
+    end
+
     def self.all
-      data_array = CSV.read("support/accounts.csv")
-      @account_array = []
-      data_array.each do |account|
-        @account_array << (Account.new(account[0], account[1].to_i, account[2]))
+      account_array = []
+      CSV.read("support/accounts.csv").each do |account|
+        account_array << (Account.new(account[0], account[1].to_i/100.0, account[2]))
       end
-      return @account_array
+      account_array
     end
 
     # self.find(id) - returns an instance of Account
@@ -24,37 +30,23 @@ module Bank
     # the passed parameter.
 
     def self.find(id)
-      found = false
-      @account_array.each do |account|
+      account_array = Bank::Account.all
+      account_array.each do |account|
         if id == account.id
-          @this_account = account
-          found = true
-          return @this_account
+          return account
         end
       end
-      if !found
-        raise ArgumentError.new "Account #{id} does not exist"
-
-        puts "Error!"
-      end
+      raise ArgumentError.new "Account #{id} does not exist"
     end
 
 
-    def initialize(id, balance, timedate = nil)
-      @id = id
-      @timedate = timedate
-      raise ArgumentError.new("balance must be greater than zero") if balance < 0
-      if balance >= 0
-        @balance = balance
-      end
-    end
 
     def withdraw(withdrawal_amount)
       raise ArgumentError.new "You cannot withdraw a negative amount" if withdrawal_amount < 0
-      if @balance >= withdrawal_amount
-        @balance -= withdrawal_amount
-      else
+      if @balance < withdrawal_amount
         puts "Cannot withdraw more than is in the account"
+      else
+        @balance -= withdrawal_amount
       end
       return @balance
     end
@@ -63,21 +55,20 @@ module Bank
       raise ArgumentError.new "You must deposit an amount" if deposit_amount < 0
       @balance += deposit_amount
     end
-
   end #end class Account
 
 
-    class Owner
-      attr_accessor :lastname, :firstname,
-
-       def initialize(lastname, firstname, street, city, state)
-         @lastname = lastname
-         @firstname = firstname
-         @street = street
-         @city = city
-         @state = state
-
-
-       end
-    end #end owner class
+    # class Owner
+    #   attr_accessor :lastname, :firstname,
+    #
+    #    def initialize(lastname, firstname, street, city, state)
+    #      @lastname = lastname
+    #      @firstname = firstname
+    #      @street = street
+    #      @city = city
+    #      @state = state
+    #
+    #
+    #    end
+    # end #end owner class
 end #end module Bank

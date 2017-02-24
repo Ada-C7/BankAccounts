@@ -223,9 +223,9 @@ describe "Wave 2" do
 
     it "The ID and balance of the first and last match csv" do
       @account_array.first.id.must_equal "1212"
-      @account_array.first.balance.must_equal 1235667
+      @account_array.first.balance.must_equal 12356.67
       @account_array.last.id.must_equal "15156"
-      @account_array.last.balance.must_equal 4356772
+      @account_array.last.balance.must_equal 43567.72
     end
   end
 

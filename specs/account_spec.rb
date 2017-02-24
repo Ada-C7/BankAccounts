@@ -55,9 +55,7 @@ describe "Wave 1" do
       account = Bank::Account.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
       account.withdraw(withdrawal_amount)
-
-      expected_balance = start_balance - withdrawal_amount
-      account.balance.must_equal expected_balance
+      account.balance.must_be :<, start_balance
     end
 
     it "Returns the modified balance" do
@@ -67,7 +65,6 @@ describe "Wave 1" do
       account = Bank::Account.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
 
       updated_balance = account.withdraw(withdrawal_amount)
-
       expected_balance = start_balance - withdrawal_amount
       updated_balance.must_equal expected_balance
     end
@@ -84,7 +81,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do

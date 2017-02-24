@@ -9,7 +9,7 @@ module Bank
     # #the owner is going to be the owner object
     attr_reader :id, :balance, :owner, :opening_date
 
-    def initialize(id, balance, date)
+    def initialize(id, balance, date = '')
       @id = id
       unless balance >= 0
         raise ArgumentError.new "Balance must be greater or equal to 0"
@@ -21,11 +21,11 @@ module Bank
     def withdraw(withdrawal_amount)
       check_amount_is_over_zero(withdrawal_amount)
       if @balance - withdrawal_amount >= 0
-        @balance = @balance - withdrawal_amount
+        return @balance = @balance - withdrawal_amount
       else
         puts "Insufficient funds"
+        return @balance
       end
-      @balance
     end
 
     def deposit(deposit_amount)

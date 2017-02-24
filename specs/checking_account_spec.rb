@@ -3,7 +3,8 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/checking_account.rb
-# require_relative '../lib/checking_account'
+require_relative '../lib/checking_account'
+# require_relative '../lib/account'
 
 # Because a CheckingAccount is a kind
 # of Account, and we've already tested a bunch of functionality
@@ -11,70 +12,206 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "CheckingAccount" do
+describe "CheckingAccount" do
+
   describe "#initialize" do
     # Check that a CheckingAccount is in fact a kind of account
     it "Is a kind of Account" do
+      # skip
       account = Bank::CheckingAccount.new(12345, 100.0)
       account.must_be_kind_of Bank::Account
     end
   end
 
   describe "#withdraw" do
+
     it "Applies a $1 fee each time" do
-      # TODO: Your test code here!
+      # skip
+      start_balace = 100.0
+      withdrawal_amount = 25.0
+      account = Bank::CheckingAccount.new(123, start_balace)
+
+      account.withdraw(withdrawal_amount)
+      expected_balance = start_balace - withdrawal_amount - 1.0
+      account.balance.must_equal expected_balance
     end
 
-    it "Doesn't modify the balance if the fee would put it negative" do
-      # TODO: Your test code here!
+    it "outputs a warning message if you will account will go negative" do
+      # skip
+      start_balace = 100.0
+      withdrawal_amount = 100.0
+      account = Bank::CheckingAccount.new(123, start_balace)
+      account.withdraw(withdrawal_amount)
+      proc {
+        account.withdraw(withdrawal_amount)
+      }.must_output (/.+/)
+    end
+
+    # maybe you don't need this test cause you know checking account is a account type so it should pass all account types
+    it "will not change the balance if withdrawl causes negative" do
+      # skip
+      start_balance = 100.0
+      withdrawal_amount = 200.0
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+      updated_balance = account.withdraw(withdrawal_amount)
+      # Both the value returned and the balance in the account
+      # must be un-modified.
+      updated_balance.must_equal start_balance
+      account.balance.must_equal start_balance
     end
   end
-
+  #
   describe "#withdraw_using_check" do
+
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 100.0
+      withdrawal_amount = 25.0
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
+      account.withdraw_using_check(withdrawal_amount)
+      account.balance.must_be :<, start_balance
     end
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 300.0
+      withdrawal_amount = 125.0
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      expected_balance = start_balance - withdrawal_amount
+      updated_balance.must_equal expected_balance
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 90.00
+      # withdrawal_amount = 100.00
+      withdrawal_amount = 96.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      expected_balance = start_balance - withdrawal_amount
+      updated_balance.must_equal expected_balance
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 90.00
+      withdrawal_amount = 125.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
+      account.withdraw_using_check(withdrawal_amount)
+      proc {
+        account.withdraw(withdrawal_amount)
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 90.00
+      withdrawal_amount = 125.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
+      account.withdraw_using_check(withdrawal_amount)
+      account.balance.must_equal start_balance
     end
 
+    # this is test is also part of the account -withdrawl method
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 90.00
+      withdrawal_amount = -125.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
+      proc {
+        account.withdraw_using_check(withdrawal_amount)
+      }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 500.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
+      account.check_count=(2)
+      account.withdraw_using_check(25.00)
+      account.balance.must_equal 475.00
+
+      # account.withdraw_using_check(25.00)
+      # account.check_count.must_equal 1
+      # account.balance.must_equal 475.00
+      #
+      # account.withdraw_using_check(25.00)
+      # account.check_count.must_equal 2
+      # account.balance.must_equal 450.00
+      #
+      # account.withdraw_using_check(25.00)
+      # account.check_count.must_equal 3
+      # account.balance.must_equal 425.00
     end
 
     it "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 500.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+
+      # can use a writer method to make check_count whatever I want
+      account.check_count=(5)
+      account.withdraw_using_check(25.00)
+      account.balance.must_equal 473.00
+
+      # or could run the account like a person and make sure fee gets applied after the 3rd check
+      # account.withdraw_using_check(25.00)
+      # account.check_count.must_equal 1
+      # account.balance.must_equal 475.00
+      #
+      # account.withdraw_using_check(25.00)
+      # account.check_count.must_equal 2
+      # account.balance.must_equal 450.00
+      #
+      # account.withdraw_using_check(25.00)
+      # account.check_count.must_equal 3
+      # account.balance.must_equal 425.00
+      #
+      # account.withdraw_using_check(25.00)
+      # account.check_count.must_equal 4
+      # account.balance.must_equal 398.00
+      #
+      # account.withdraw_using_check(25.00)
+      # account.check_count.must_equal 5
+      # account.balance.must_equal 371.00
     end
   end
 
   describe "#reset_checks" do
+    # dont get what this test is asking for
     it "Can be called without error" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 500.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+      account.must_respond_to :reset_checks
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 500.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+      account.check_count=(2)
+      account.check_count.must_equal 2
+      account.reset_checks
+      account.check_count.must_equal 0
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
+      # skip
+      start_balance = 500.00
+      account = Bank::CheckingAccount.new(1337, start_balance, DateTime.parse("1999-03-27 11:30:09"))
+      account.check_count=(5)
+      account.check_count.must_equal 5
+      account.reset_checks
+      account.check_count.must_equal 0
     end
   end
 end

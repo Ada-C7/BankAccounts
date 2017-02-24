@@ -83,5 +83,5 @@ describe "SavingsAccount" do
     end
 
   end
-  
+
 end

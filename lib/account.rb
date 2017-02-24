@@ -3,17 +3,20 @@ require 'csv'
 module Bank
 
   class Account
-    attr_accessor :balance, :owner
-    attr_reader :id
+    # attr_accessor :balance
+    attr_reader :id, :owner, :balance
 
-    def initialize(id, balance, opendate = "nodate")
+    def initialize(id, start_balance, opendate = "nodate")
       @id = id
       @opendate = opendate
+      @balance = set_balance(start_balance)
+    end
 
-      if balance < 0
+    def set_balance(start_balance)
+      if start_balance < 0
         raise ArgumentError.new "You cannot initialize a new account with a negative balance."
       else
-        @balance = balance
+        start_balance
       end
     end
 
@@ -52,9 +55,9 @@ module Bank
     def withdraw(withdrawal_amount)
       withdraw_positive(withdrawal_amount)
 
-      if @balance - withdrawal_amount < 0
+      if balance - withdrawal_amount < 0
         puts "You are going negative."
-        return @balance
+        return balance
       else
         @balance -= withdrawal_amount
       end
@@ -62,7 +65,7 @@ module Bank
 
     #Should this be private??
     #creating this as a method b/c
-    #used in check_withdrawal as well
+    #used in check_withdrawals
     def withdraw_positive(withdrawal_amount)
       #makes sure the withdrawal amount is pos.
       raise ArgumentError.new("Withdrawal must be >=0") if withdrawal_amount < 0

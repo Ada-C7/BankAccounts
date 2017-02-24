@@ -126,7 +126,7 @@ describe "CheckingAccount" do
       end
 
       @my_checking.balance.must_equal(428)
-      
+
     end
   end
 end

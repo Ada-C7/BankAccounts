@@ -3,7 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/checking_account.rb
-# require_relative '../lib/checking_account'
+require_relative '../lib/checking_account'
 
 # Because a CheckingAccount is a kind
 # of Account, and we've already tested a bunch of functionality

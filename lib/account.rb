@@ -20,7 +20,7 @@ module Bank
     def self.all
 
       accounts_array = []
-      CSV.read("../support/accounts.csv").each do |account_info|
+      CSV.read("/Users/theresamanney/ada/week_three/Tuesday/BankAccounts/support/accounts.csv").each do |account_info|
         create_new_accounts = Bank::Account.new(account_info[0].to_f, account_info[1].to_f, account_info[2])
         accounts_array.push(create_new_accounts)
       end
@@ -29,7 +29,7 @@ module Bank
 
     end
 
-#A class variable could be used here 
+#A class variable could be used here
     def self.find(id)
       #accounts_array.include?(Account.find(id))
       #return Account.new(id)

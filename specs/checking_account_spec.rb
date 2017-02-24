@@ -60,11 +60,15 @@ describe "CheckingAccount" do
     end
 
     it "Requires a positive withdrawal amount" do
-      @account.check_withdraw(-100).must_equal 100 
+      @account.check_withdraw(-100).must_equal 100
     end
 
-    it "Allows 3 free uses" do skip
-      # TODO: Your test code here!
+    it "Allows 3 free uses" do 
+      @account.check_withdraw(20).must_equal 80
+      @account.check_withdraw(20).must_equal 60
+      @account.check_withdraw(20).must_equal 40
+      @account.check_withdraw(20).must_equal 18
+
     end
 
     it "Applies a $2 fee after the third use" do skip

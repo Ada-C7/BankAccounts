@@ -24,10 +24,13 @@ module Bank
       def withdraw_with_check(withdrawal_amount)
         # counter to see how many checks drawn
         # keep track of what check fee is, at one point at 4 goes up to 2
-
-        if @balance - withdrawal_amount < -10
+        if withdrawal_amount < 0
+          raise ArgumentError.new "You cannot withdraw a negative amount"
+        elsif @balance - (withdrawal_amount + 1) < -10
           puts "Warning, the balance cannot be negative "
-          return
+          return @balance
+        # elsif withdrawal_amount < 0
+        #     raise ArgumentError.new "You cannot withdraw a negative amount"
         end
 
         if @check_num >= 3

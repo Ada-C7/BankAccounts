@@ -34,10 +34,8 @@ describe "CheckingAccount" do
     it "Doesn't modify the balance if the fee would put it negative" do
       # skip
       checking_account = Bank::CheckingAccount.new(11, 200)
-      # new_balance = checking_account.withdraw(500)
       proc { checking_account.withdraw(200)}.must_output(/.+/)
-
-
+      checking_account.balance.must_equal 200
     end
   end
 
@@ -75,18 +73,28 @@ describe "CheckingAccount" do
       checking_account = Bank::CheckingAccount.new(11, 200)
       checking_account.balance.must_equal 200
       checking_account.withdraw_with_check(210)
-      checking_account.balance.must_equal -11
+      checking_account.balance.must_equal 200
       proc { checking_account.withdraw_with_check(210)}.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
       # skip
       # TODO: Your test code here!
+      checking_account = Bank::CheckingAccount.new(11, 200)
+      checking_account.balance.must_equal 200
+      checking_account.withdraw_with_check(210)
+      checking_account.balance.must_equal 200
     end
 
     it "Requires a positive withdrawal amount" do
       # skip
       # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = -25.0
+      checking_account = Bank::CheckingAccount.new(11, start_balance)
+      proc {
+        checking_account.withdraw_with_check(withdrawal_amount)
+      }.must_raise(ArgumentError)
     end
 
     it "Allows 3 free uses" do

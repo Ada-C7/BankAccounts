@@ -6,8 +6,8 @@ module Bank
 
 
     def withdraw(withdrawal_amount)
-      if @balance - (withdrawal_amount + 2) < 10
-        puts "Warning! This withdrawal will put you under the $10 account minimum!"
+      if @balance - (withdrawal_amount + 1) < 0
+        puts "Warning! This withdrawal will cause you to overdraft!"
         return @balance
       else
         super(withdrawal_amount)

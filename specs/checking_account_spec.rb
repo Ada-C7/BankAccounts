@@ -30,11 +30,19 @@ describe "CheckingAccount" do
 
       updated_balance.must_equal (start_balance - (withdraw_amount + 1))
 
-
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
       # TODO: Your test code here!
+
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(12345, start_balance)
+      withdraw_amount = 100
+      updated_balance = account.withdraw(withdraw_amount)
+
+      updated_balance.must_equal start_balance
+      account.balance.must_equal start_balance
+
     end
   end
 

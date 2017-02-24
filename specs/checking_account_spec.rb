@@ -58,7 +58,7 @@ describe "CheckingAccount" do
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      @my_checking.withdraw_using_check(510)
     end
 
     it "Outputs a warning if the account would go below -$10" do

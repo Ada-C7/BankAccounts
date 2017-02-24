@@ -8,21 +8,23 @@ module Bank
     def withdraw(withdrawal_amount)
       if @balance - (withdrawal_amount + 1) < 0
         puts "Warning! This withdrawal will cause you to overdraft!"
-        return @balance
+        # return @balance
       else
         super(withdrawal_amount)
-        return @balance -= 1.0
+        @balance -= 1.0
       end
+      return @balance
+
     end
 
     def withdraw_using_check(check)
       if @balance - (check) < -10
         puts "Warning! This withdrawal will cause you to be under more than ten dollars!"
-        return @balance
+        # return @balance
       else
-          return @balance - check
+          @balance -= check
       end
-
+      return @balance
     end
 
   end

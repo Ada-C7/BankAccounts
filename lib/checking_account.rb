@@ -34,8 +34,8 @@ module Bank
           @withdrawal_fee = 2
         end
 
-        @balance -= withdrawal_amount
-        return @balance
+        @balance -= (withdrawal_amount + 1)
+
 
       end
 

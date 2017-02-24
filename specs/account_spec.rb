@@ -65,9 +65,8 @@ describe "Wave 1" do
       # to the terminal, using 'must_output'. /.+/ is a regular
       # expression matching one or more characters - as long as
       # anything at all is printed out the test will pass.
-      proc {
-        account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      proc { account.withdraw(withdrawal_amount)
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do

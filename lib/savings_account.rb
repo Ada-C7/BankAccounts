@@ -7,9 +7,9 @@ module Bank
     def initialize(id, balance, min_balance = 10, date)
       super(id, balance, date)
       #@account = Bank::SavingsAccount.new
-      @withdrawal_amount = 0
       @fee = 2.00
-      @min_balance = min_balance
+      @min_balance = 10
+
     end
 
     def check_for_min_balance(amount)
@@ -20,15 +20,14 @@ module Bank
       end
     end
 
-
     def withdraw_fee(amount)
-      @balance = @balance - (amount + @fee)
+      updated_balance = @balance - amount - @fee
+      if updated_balance < @min_balance
+        return @balance
+      else
+        @balance = updated_balance
     end
-
-    def min_balance(amount)
-      @min_balance == 10.00
-
-    end
+  end
 
     def add_interest(rate)
       updated_balance = @balance *= ()

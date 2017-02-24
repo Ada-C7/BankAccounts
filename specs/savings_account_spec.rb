@@ -57,10 +57,16 @@ describe "If balance goes below 10, don't modify" do
     it "Doesn't modify the balance if it would go below $10" do
       start_balance = 100.0
       withdrawal_amount = 95.00
+      account = Bank::Account.new(1337, start_balance)
     end
+  end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 89.00
+      account = Bank::SavingsAccount.new(1337, start_balance, min_balance = 10, open_date = nil)
+      account.withdraw_fee(withdrawal_amount)
+      account.balance.must_equal start_balance
     end
   end
 

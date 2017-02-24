@@ -1,17 +1,23 @@
+# Question for teacher or tutor... Am I actually inheriting anything from Account??
+
 require 'csv'
 require_relative 'account'
 # SavingsAccount class to inherit behavior from the Account class
 
 module Bank
-  class SavingsAccount < Bank::Account
+  class SavingsAccount < Account
     attr_reader :balance
 
-    def initialize(id, initial_balance)
+    def initialize(id, balance, datetime=nil)
 
-      raise ArgumentError.new("Initial balance must be >= $10") if initial_balance < 10
-
-      @balance = initial_balance
-
+      if balance > 10
+        @balance = balance
+      else
+        raise ArgumentError.new("Initial balance must be >= $10")
+      end
+      # Calling super will now allow SavingsAccount to use info from Account
+      # if the balance is not less than 10
+      super
 
     end
 

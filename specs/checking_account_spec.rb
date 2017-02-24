@@ -125,9 +125,16 @@ describe "CheckingAccount" do
         account.reset_checks
       end
 
-      # it "Makes the next three checks free if less than 3 checks had been used" do
-      #   # TODO: Your test code here!
-      # end
+      it "Makes the next three checks free if less than 3 checks had been used" do
+        start_balance = 100.0
+        withdrawal_amount = 10
+        account = Bank::CheckingAccount.new(1337, start_balance)
+        account.reset_checks
+        updated_balance = account.withdraw_using_check(withdrawal_amount)
+        updated_balance = account.withdraw_using_check(withdrawal_amount)
+        updated_balance = account.withdraw_using_check(withdrawal_amount)
+        updated_balance.must_equal 70
+      end
       #
       # it "Makes the next three checks free if more than 3 checks had been used" do
       #   # TODO: Your test code here!

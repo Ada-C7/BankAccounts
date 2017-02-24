@@ -61,7 +61,7 @@ module Bank
     end
 
     def reset_checks
-
+      @number_of_checks = 0
     end
 
   end#class CheckingAccount

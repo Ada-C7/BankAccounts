@@ -8,7 +8,7 @@ require 'minitest/skip_dsl'
 # Because a CheckingAccount is a kind
 # of Account, and we've already tested a bunch of functionality
 # on Account, we effectively get all that testing for free!
-# Here we'll only test things that are different.
+# Here we'll only test things that are differxnent.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "CheckingAccount" do

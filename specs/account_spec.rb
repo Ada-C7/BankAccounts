@@ -150,8 +150,7 @@ end
 describe "Wave 2" do
   describe "Account.all" do
     it "Account.all returns an array" do
-      all_accounts = Bank::Account.all
-      all_accounts.must_be_kind_of Array
+      Bank::Account.all.must_be_kind_of Array
     end
     it "Everything in the array is an Account" do
       all_accounts = Bank::Account.all

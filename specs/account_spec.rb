@@ -200,7 +200,7 @@ describe "Wave 2" do
     #       accounts match what's in the CSV file
     it "accounts match what's in the CSV file" do
       index = 0
-      CSV.read("/Users/theresamanney/ada/week_three/Tuesday/BankAccounts/support/accounts.csv") do
+      CSV.read("/Users/theresamanney/ada/week_three/BankAccounts/support/accounts.csv") do
         accounts[index].id.must_equal line[0].to_i
         accounts[index].balance.must_equal line[1].to_i
         accounts[index].datetime.must_equal line[2]

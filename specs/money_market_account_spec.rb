@@ -22,10 +22,10 @@ describe "Bank::MoneyMarketAccount" do
 
   describe "transactions" do
     before do
-      @my_money_market = Bank::MoneyMarketAccount.new(1234, 100000.00)
+      @my_money_market = Bank::MoneyMarketAccount.new(1234, 1000000.00)
     end
 
-    it "Does not allow more than six transactions" do
+    it "Does not allow more than six withdrawals" do
       #Maximum of 6 transactions allowed per month
       6.times do
         @my_money_market.withdraw(10)
@@ -33,9 +33,18 @@ describe "Bank::MoneyMarketAccount" do
 
       #7th transaction should raise error
       proc { @my_money_market.withdraw(10) }.must_raise ArgumentError
-
     end
-    
+
+    it "Does not allow more than six deposits" do
+      #Maximum of 6 transactions allowed per month
+      6.times do
+        @my_money_market.deposit(10)
+      end
+
+      #7th transaction should raise error
+      proc { @my_money_market.deposit(10) }.must_raise ArgumentError
+    end
+
   end
 
 end

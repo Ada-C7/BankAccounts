@@ -12,7 +12,7 @@ require 'minitest/skip_dsl'
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "CheckingAccount" do
-  describe "#initialize" do
+  xdescribe "#initialize" do
     # Check that a CheckingAccount is in fact a kind of account
     it "Is a kind of Account" do
       account = Bank::CheckingAccount.new(12345, 100.0)
@@ -20,7 +20,7 @@ xdescribe "CheckingAccount" do
     end
   end
 
-  describe "#withdraw" do
+  xdescribe "#withdraw" do
     it "Applies a $1 fee each time" do
       # TODO: Your test code here!
     end
@@ -30,7 +30,7 @@ xdescribe "CheckingAccount" do
     end
   end
 
-  describe "#withdraw_using_check" do
+  xdescribe "#withdraw_using_check" do
     it "Reduces the balance" do
       # TODO: Your test code here!
     end
@@ -64,7 +64,7 @@ xdescribe "CheckingAccount" do
     end
   end
 
-  describe "#reset_checks" do
+  xdescribe "#reset_checks" do
     it "Can be called without error" do
       # TODO: Your test code here!
     end

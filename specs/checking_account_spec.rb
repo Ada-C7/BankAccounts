@@ -40,11 +40,11 @@ describe "CheckingAccount" do
     end
 
     it "Reduces the balance" do
-    @account.check_withdraw(20).must_equal 80
+    @account.check_withdraw(20).must_be :<, 100
     end
 
-    it "Returns the modified balance" do skip
-      # TODO: Your test code here!
+    it "Returns the modified balance" do 
+      @account.check_withdraw(50).must_equal 50
     end
 
     it "Allows the balance to go down to -$10" do skip

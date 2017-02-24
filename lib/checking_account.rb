@@ -1,7 +1,11 @@
 module Bank
 
   class CheckingAccount < Account
-    @@check_withdrawals = 0
+
+    def initialize(id, balance, opendate = "nodate")
+      super
+      @check_withdrawals = 0
+    end
 
     def withdraw(withdrawal_amount)
 
@@ -20,19 +24,19 @@ module Bank
     end
 
     def withdraw_using_check(withdrawal_amount)
-      raise ArgumentError.new("Withdrawal must be >=0") if withdrawal_amount < 0
+      raise ArgumentError.new("Withdrawal must be >= 0") if withdrawal_amount < 0
 
       if @balance - withdrawal_amount < -10
         puts "You can only go negative up to -$10"
         return @balance
+      end
+
+      @check_withdrawals += 1
+
+      if @check_withdrawals <= 3
+        @balance -= withdrawal_amount
       else
-        #THIS IS FUCKED UP!
-        @@check_withdrawals += 1
-        if @@check_withdrawals > 3
-          return @balance -= 2
-        else
-          return @balance -= withdrawal_amount
-        end
+        @balance = (@balance - withdrawal_amount - 2)
       end
 
     end

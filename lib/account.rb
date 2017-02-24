@@ -71,15 +71,15 @@ module Bank
   end
 
   class Owner
-    attr_reader :last_name, :first_name, :street_address
+    attr_reader :last_name, :first_name, :street_address, :city, :state
 
     def initialize(id = nil, last_name = nil, first_name = nil, street_address = nil, city = nil, state = nil)
       id = id
       @last_name = last_name
       @first_name = first_name
       @street_address = street_address
-      city = city
-      state = state
+      @city = city
+      @state = state
     end
 
     def self.all
@@ -97,7 +97,6 @@ module Bank
           @owner = Bank::Owner.new(owner[0].to_i, owner[1], owner[2], owner[3], owner[4], owner[5])
         end
       end
-
       if @owner == nil
         raise ArgumentError.new "This owner does not exist!"
       else

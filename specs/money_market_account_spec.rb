@@ -19,22 +19,34 @@ describe "MoneyMarketAccount" do
         Bank::MoneyMarketAccount.new(id, starting_balance, open_date)
       }.must_raise ArgumentError
     end
-  end
 
+    it "outputs warning if more than 6 deposits/withdrawls are done" do
+      id = 12345
+      starting_balance = 10000
+      open_date = 20170101
 
-  describe "#withdraw" do
+      proc {
+        6.times do Bank::MoneyMarketAccount.new(id, starting_balance, open_date)
+        }.must_output /.+/
 
-    it "text" do
-
-    end
-
-  end
-
-  describe "#deposit" do
-
-    it do
+      end
 
     end
 
-  end
-end
+
+    describe "#withdraw" do
+
+      it "text" do
+
+      end
+
+    end
+
+    describe "#deposit" do
+
+      it "text" do
+
+      end
+
+    end
+  end 

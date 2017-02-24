@@ -6,17 +6,21 @@ module Bank
   class SavingsAccount < Bank::Account
     attr_reader :balance, :id, :open_date, :interest, :min_balance
 
-    def initialize(id, balance, open_date)
+    def initialize(id, balance, open_date) # user super
       @min_balance = 10
 
       if balance >= @min_balance
-        @balance = balance
+        super(id, balance, open_date)
       else
         raise ArgumentError.new "Initial savings account deposit must be at least $10"
       end
-
-      @id = id
-      @open_date = open_date
+      #   @balance = balance
+      # else
+      #   raise ArgumentError.new "Initial savings account deposit must be at least $10"
+      # end
+      #
+      # @id = id
+      # @open_date = open_date
 
 
     end

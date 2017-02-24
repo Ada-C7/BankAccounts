@@ -12,7 +12,7 @@ module Bank
       if balance >= 0
         @balance = balance
       else
-        raise ArgumentError.new "initial balance must be greater or equal to 0"
+        raise ArgumentError.new "insufficient funds to open account"
       end
 
       @id = id
@@ -20,6 +20,7 @@ module Bank
     end
 
     def withdraw(withdrawl_amount)
+
       raise ArgumentError.new("withdrawl must be greater than 0") if withdrawl_amount < 0
 
       if @balance - withdrawl_amount >= 0

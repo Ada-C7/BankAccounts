@@ -2,7 +2,6 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
-#require_relative '/lib/account'
 require 'csv'
 require 'date'
 
@@ -21,10 +20,6 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
@@ -109,9 +104,7 @@ describe "Wave 1" do
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
-
       account.deposit(deposit_amount)
-
       expected_balance = start_balance + deposit_amount
       account.balance.must_equal expected_balance
     end
@@ -120,9 +113,7 @@ describe "Wave 1" do
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
-
       updated_balance = account.deposit(deposit_amount)
-
       expected_balance = start_balance + deposit_amount
       updated_balance.must_equal expected_balance
     end
@@ -139,7 +130,7 @@ describe "Wave 1" do
   end
 # Added a block to test add_owner method:
   describe "Account#add_owner" do
-    it "Must be created" do
+    it "Must be created, account owner must be type of Bank::Owner" do
       account = Bank::Account.new(2323, 300)
       account.add_owner(12, "Kuleniuk")
       account.owner.must_be_kind_of Bank::Owner

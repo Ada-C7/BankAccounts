@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/checking_account'
-#require_relative '/lib/checking_account'
+
 
 describe "CheckingAccount" do
   describe "#initialize" do
@@ -107,15 +107,21 @@ describe "CheckingAccount" do
       account.reset_checks
       account.check_uses.must_equal 0
     end
+    # Method runs withdraw_using_check number of times
+    # for next two tests:
+    def run_withdraw_using_check(number, account, amount)
+      number.times do
+        account.withdraw_using_check(amount)
+      end
+    end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
         account = Bank::CheckingAccount.new(1337, 100)
         amount = 10
-        account.withdraw_using_check(amount)
-        account.withdraw_using_check(amount)
+        run_withdraw_using_check(2, account, amount)
         account.reset_checks
-        account.withdraw_using_check(amount)
-        account.withdraw_using_check(amount)
+        run_withdraw_using_check(2, account, amount)
+        
         result =account.withdraw_using_check(amount)
         result.must_equal 50
     end
@@ -123,21 +129,15 @@ describe "CheckingAccount" do
     it "Makes the next three checks free if more than 3 checks had been used" do
         account = Bank::CheckingAccount.new(1337, 100)
         amount = 10
-        account.withdraw_using_check(amount)
-        account.withdraw_using_check(amount)
-        account.withdraw_using_check(amount)
-        account.withdraw_using_check(amount)
+        run_withdraw_using_check(4, account, amount)
 
         account.check_uses.must_equal 4
         account.reset_checks
         account.check_uses.must_equal 0
 
-        account.withdraw_using_check(amount)
-        account.withdraw_using_check(amount)
-        account.withdraw_using_check(amount)
+        run_withdraw_using_check(3, account, amount)
 
         account.check_uses.must_equal 3
-
     end
   end
 end

@@ -3,8 +3,6 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/savings_account'
 require_relative '../lib/account'
-# require_relative '/lib/savings_account'
-# require_relative '/lib/account'
 require 'csv'
 
 describe "SavingsAccount" do

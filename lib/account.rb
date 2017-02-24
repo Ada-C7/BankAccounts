@@ -34,7 +34,7 @@ module Bank
                     return account
                 end
             end
-                raise ArgumentError.new("this is not an account in our system")
+            raise ArgumentError.new("this is not an account in our system")
         end
 
 

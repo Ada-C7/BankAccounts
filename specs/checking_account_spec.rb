@@ -21,12 +21,28 @@ describe "CheckingAccount" do
   end
 
   describe "#withdraw" do
+    CH_FEE = 1.00
+
+    before do
+      @balance = 100.0
+      @account = Bank::CheckingAccount.new(12345, @balance)
+      #@withdraw = @account.withdraw(@withdraw_amount)
+    end
+
     it "Applies a $1 fee each time" do
       # TODO: Your test code here!
+      withdraw_amount = 25.0
+      @account.withdraw(withdraw_amount)
+      @account.balance.must_equal 74
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
       # TODO: Your test code here!
+      withdraw_amount = 100.0
+
+      @account.withdraw(withdraw_amount)
+
+      @account.balance.must_equal 100.0
     end
   end
 

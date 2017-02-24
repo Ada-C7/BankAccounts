@@ -86,6 +86,15 @@ describe "CheckingAccount" do
 
     it "Outputs a warning if the account would go below -$10" do
       # TODO: Your test code here!
+
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(1235, start_balance)
+      check_amount = 110.01
+      # updated_balance = account.withdraw_using_check(check_amount)
+
+      proc { account.withdraw_using_check(check_amount)}.must_output /.+/
+
+
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do

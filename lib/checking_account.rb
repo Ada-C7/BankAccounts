@@ -6,6 +6,8 @@ module Bank
     def initialize(id, start_balance)
       super(id, start_balance)
 
+      @uses = 0
+
     end
 
     def withdraw(withdrawal_amount)
@@ -20,12 +22,21 @@ module Bank
     end
 
     def withdraw_using_check(withdrawal_amount)
-      if  @balance - withdrawal_amount < -10.0
+      fee = 2.0
+
+      if withdrawal_amount < 0
+        raise ArgumentError
+      elsif @balance - withdrawal_amount < -10.0
         print "You are withdrawing too much!"
         return @balance
-      else
-        @balance -= withdrawal_amount
+      elsif @uses += 1
+       @balance -= fee if @uses > 3
+       @balance -= withdrawal_amount
       end
+      
+    end
+
+    def reset_checks
     end
 
   end

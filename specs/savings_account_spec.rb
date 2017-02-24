@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-# require 'savings_account'
+require 'savings_account'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
 # require_relative '../lib/savings_account'
@@ -21,9 +21,22 @@ describe "SavingsAccount" do
     end
 
     it "Requires an initial balance of at least $10" do
-      # TODO: Your test code here!
+
+    proc{
+        Bank::SavingsAccount.new(117, 9)
+    }.must_raise ArgumentError
     end
   end
+
+
+
+
+
+
+
+
+
+
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do

@@ -47,17 +47,24 @@ describe "SavingsAccount" do
     end
   end
 
-  xdescribe "#add_interest" do
+  describe "#add_interest" do
     it "Returns the interest calculated" do
       # TODO: Your test code here!
+      Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").add_interest(0.25).must_equal 2500
     end
 
     it "Updates the balance with calculated interest" do
       # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800")
+      account.add_interest(0.25)
+      account.balance.must_equal 12500
     end
 
     it "Requires a positive rate" do
       # TODO: Your test code here!
+      proc {
+        Bank::SavingsAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800").add_interest(-0.32)
+      }.must_raise ArgumentError
     end
   end
 end

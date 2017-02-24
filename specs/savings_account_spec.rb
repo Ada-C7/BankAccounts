@@ -3,7 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
-# require_relative '../lib/savings_account'
+require_relative '../lib/savings_account'
 
 # Because a SavingsAccount is a kind
 # of Account, and we've already tested a bunch of functionality
@@ -11,7 +11,7 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
@@ -20,13 +20,21 @@ xdescribe "SavingsAccount" do
     end
 
     it "Requires an initial balance of at least $10" do
-      # TODO: Your test code here!
+
+      proc {
+        Bank::SavingsAccount.new(12345, 5)
+      }.must_raise ArgumentError
+
     end
   end
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(2323, 100.0)
+      withdrawal_amount = 20
+      balance_before = account.balance
+      account.withdraw(withdrawal_amount)
+      account.balance.must_equal (balance_before - withdrawal_amount - 2)
     end
 
     it "Outputs a warning if the balance would go below $10" do
@@ -42,7 +50,7 @@ xdescribe "SavingsAccount" do
     end
   end
 
-  describe "#add_interest" do
+  xdescribe "#add_interest" do
     it "Returns the interest calculated" do
       # TODO: Your test code here!
     end

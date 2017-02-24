@@ -23,8 +23,13 @@ module Bank
         puts "This withdrawal and fee will take your balance below $10."
         return @balance = original_balance
       else
-        @balance -= 2
+        withdrawal_fee
       end
+
+    end
+
+    def withdrawal_fee
+      @balance -= 2
     end
 
     def add_interest(rate)

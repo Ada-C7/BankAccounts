@@ -21,9 +21,13 @@ module Bank
         puts "This withdrawal and fee will take your balance below 0."
         @balance = original_balance
       else
-        @balance -= 1
+        withdrawal_fee
       end
 
+    end
+
+    def withdrawal_fee
+      @balance -= 1
     end
 
     def withdraw_using_check(withdrawal_amount)
@@ -36,11 +40,18 @@ module Bank
       end
 
       @check_withdrawals += 1
+      @balance -= withdrawal_amount
 
-      if @check_withdrawals <= 3
-        @balance -= withdrawal_amount
+      check_fee
+
+    end
+
+    def check_fee
+
+      if @check_withdrawals > 3
+        @balance -= 2
       else
-        @balance = (@balance - withdrawal_amount - 2)
+        @balance
       end
 
     end

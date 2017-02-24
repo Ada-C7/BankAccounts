@@ -24,11 +24,11 @@ module Bank
       @total_transactions += 1
 
       if @total_transactions > 6
-        raise ArgumentError.new "You cannot make more than six transactions per month."
+        argument("You cannot make more than six transactions per month.")
       end
 
       if @balance < 10000
-        raise ArgumentError.new "You cannot make another withdrawal until you make a deposit"
+        argument("You cannot make another withdrawal until you make a deposit")
       end
 
       super
@@ -46,7 +46,7 @@ module Bank
       end
 
       if @total_transactions > 6
-        raise ArgumentError.new "You cannot make more than six transactions per month."
+        argument("You cannot make more than six transactions per month.")
       end
 
       super
@@ -59,7 +59,7 @@ module Bank
 
     def add_interest(rate)
 
-      raise ArgumentError.new("Interest rate >=0") if rate < 0
+      argument("Interest rate >=0") if rate < 0
 
       interest = @balance * (rate/100)
       @balance += interest

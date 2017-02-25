@@ -16,9 +16,10 @@ module Bank
       end
       return account_array
     end
-
+    
+    #Class method that finds a particular Account with an ID
     def self.find(id)
-        Account.all.each do |account|
+      Account.all.each do |account|
         if account.id == id
           return account
         end
@@ -34,7 +35,7 @@ module Bank
       @id = id
       #if the balance is negative, throw an error
       if balance >= 0
-      @balance = balance
+        @balance = balance
       else
         raise ArgumentError.new "The balance must be 0 or above"
       end
@@ -59,13 +60,13 @@ module Bank
     #Method to deposit money into account
     def deposit(deposit)
       #Make sure the amount is a positive number
-        raise ArgumentError.new "The deposit must be a positive amount" if deposit < 0
-        @balance += deposit
+      raise ArgumentError.new "The deposit must be a positive amount" if deposit < 0
+      @balance += deposit
     end
 
     #Add an owner object to the account. The owner has a name, address and
     #ID
-    def add_owner(owner)  
+    def add_owner(owner)
       @owner = owner
     end
 

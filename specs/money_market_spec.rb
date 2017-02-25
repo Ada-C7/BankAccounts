@@ -61,42 +61,42 @@ describe "MoneyMarketAccount" do
     account.withdraw(500)
     account.deposit(600)
     account.transactions.must_equal 5
-    end
+  end
+end
+
+describe "#add_interest" do
+  it "Returns the interest calculated" do
+    account = Bank::MoneyMarketAccount.new(1337, 10000.0)
+    account.interest(0.25).must_equal 25.0
   end
 
-  describe "#add_interest" do
-    it "Returns the interest calculated" do
-      account = Bank::MoneyMarketAccount.new(1337, 10000.0)
-      account.interest(0.25).must_equal 25.0
-    end
-
-    it "Updates the balance with calculated interest" do
-      account = Bank::MoneyMarketAccount.new(1337, 10000.0)
-      account.interest(0.25)
-      account.balance.must_equal 10025
-    end
-
-    it "Requires a positive rate" do
-      account = Bank::MoneyMarketAccount.new(1337, 10000.0)
-      proc {
-        account.interest(-0.25)
-      }.must_raise ArgumentError
-    end
+  it "Updates the balance with calculated interest" do
+    account = Bank::MoneyMarketAccount.new(1337, 10000.0)
+    account.interest(0.25)
+    account.balance.must_equal 10025
   end
 
-  describe "reset_transactions" do
-    it "Can be called without error" do
-      account = Bank::MoneyMarketAccount.new(1337, 10000.0)
-      account.must_respond_to :reset_transactions
-    end
+  it "Requires a positive rate" do
+    account = Bank::MoneyMarketAccount.new(1337, 10000.0)
+    proc {
+      account.interest(-0.25)
+    }.must_raise ArgumentError
+  end
+end
 
-    it "Resets transaction count" do
-      account = Bank::MoneyMarketAccount.new(1337, 10000.0)
-      account.reset_transactions
-      account.transactions.must_equal 6
+describe "reset_transactions" do
+  it "Can be called without error" do
+    account = Bank::MoneyMarketAccount.new(1337, 10000.0)
+    account.must_respond_to :reset_transactions
+  end
 
-    end
+  it "Resets transaction count" do
+    account = Bank::MoneyMarketAccount.new(1337, 10000.0)
+    account.reset_transactions
+    account.transactions.must_equal 6
 
   end
+
+end
 
 end

@@ -25,7 +25,6 @@ module Bank
 
     attr_reader :name, :address, :phone, :id
 
-
     def initialize(id, name, address)
       @id = id
       @name = name

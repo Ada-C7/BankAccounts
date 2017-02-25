@@ -37,7 +37,7 @@ describe "SavingsAccount" do
       proc {
         account.withdraw(91)
       }.must_output(/.+/)
-      end
+    end
 
     it "Doesn't modify the balance if it would go below $10" do
       account = Bank::SavingsAccount.new(1337, 100.0)

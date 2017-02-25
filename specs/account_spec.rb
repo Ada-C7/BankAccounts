@@ -186,23 +186,23 @@ describe "Wave 2" do
       end
     end
 
-      it "Has the correct amounts of account" do
-        expect(@accounts.length).must_equal CSV.read("support/accounts.csv").length
-      end
+    it "Has the correct amounts of account" do
+      expect(@accounts.length).must_equal CSV.read("support/accounts.csv").length
+    end
 
-      it "The ID + Balance of first and last account match CSV file" do
-        test_array = []
-        CSV.open("support/accounts.csv", 'r').each do |account|
-          test_array << account
-        end
-        balance_one = Integer(test_array[0][1])
-        balance_two = Integer(test_array[-1][1])
-
-        expect(@accounts[0].id).must_equal test_array[0][0]
-        expect(@accounts[0].balance).must_equal balance_one
-        expect(@accounts[-1].id).must_equal test_array[-1][0]
-        expect(@accounts[-1].balance).must_equal balance_two
+    it "The ID + Balance of first and last account match CSV file" do
+      test_array = []
+      CSV.open("support/accounts.csv", 'r').each do |account|
+        test_array << account
       end
+      balance_one = Integer(test_array[0][1])
+      balance_two = Integer(test_array[-1][1])
+
+      expect(@accounts[0].id).must_equal test_array[0][0]
+      expect(@accounts[0].balance).must_equal balance_one
+      expect(@accounts[-1].id).must_equal test_array[-1][0]
+      expect(@accounts[-1].balance).must_equal balance_two
+    end
   end
 
   describe "Account.find" do
@@ -312,5 +312,5 @@ describe "Wave 2" do
     #     end
     #   end
     #   end
-    end
   end
+end

@@ -1,15 +1,15 @@
 require 'csv'
 
 module Bank
-  class Account
 
+  class Account
     attr_accessor :id, :balance, :date
-    def initialize (id, initial_balance, date = nil)
-      if initial_balance < 0
+    def initialize (id, start_balance, date = nil)
+      if start_balance < 0
         raise ArgumentError, 'You cannot use a negative number for your initial balance'
       end
       @id = id
-      @balance = initial_balance
+      @balance = start_balance
       @date =  date
     end
 
@@ -30,20 +30,15 @@ module Bank
         end
       end
       raise ArgumentError.new("Account that doesn't exist")
-      # CSV.open("./support/accounts.csv").each
-      # @accounts.each do |account|
-      #   return account
-      # end
     end
 
     def withdraw(amount)
       raise ArgumentError.new("You do not have sufficient funds, to complete this transaction") if amount < 0
-
       if @balance - amount < 0
-        puts "Your balance will be overdrawn"
+        puts "Your account will be overdrawn"
         return @balance
       end
-      @balance = @balance - amount 
+      @balance = @balance - amount
       return @balance
     end
 
@@ -56,4 +51,5 @@ module Bank
       return @balance
     end
   end
+
 end

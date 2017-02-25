@@ -3,7 +3,7 @@ require 'csv'
 module Bank
   class Account
     attr_reader :id, :balance, :date
-    def initialize(id, balance, date) # date = "Jan 1st 2010"
+    def initialize(id, balance, date)
       raise ArgumentError.new("balance must be >= 0") if balance < 0
       @id = id
       @balance = balance

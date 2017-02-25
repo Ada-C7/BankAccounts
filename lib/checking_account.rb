@@ -35,14 +35,9 @@ module Bank
       end#end of if loop
     end#end of withdraw_using_check method
 
-    # def withdraw_using_check_call_count
-    #   @count = 0
-    #   name = :withdraw_using_check
-    #   TracePoint.trace(:call) do |t|
-    #     @count += 1 if t.method_id == name
-    #   end
-    #    return @count
-    # end #end of count method
-
+    def reset_checks
+      @count = 0
+    end
+    
   end#end of Class
 end#end of Module

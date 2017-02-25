@@ -34,7 +34,7 @@ describe "SavingsAccount" do
   end
 
   describe "#withdraw" do
-    FEE = 2.00
+    SV_FEE = 2.00
 
     before do
       @balance = 100.0
@@ -45,7 +45,7 @@ describe "SavingsAccount" do
     it "Applies a $2 fee each time" do
       # TODO: Your test code here!
       withdraw_amount = 25.0
-      expected_balance = @balance - withdraw_amount - FEE
+      expected_balance = @balance - withdraw_amount - SV_FEE
       @account.withdraw(withdraw_amount)
       @account.balance.must_equal expected_balance
     end
@@ -60,7 +60,7 @@ describe "SavingsAccount" do
       # anything at all is printed out the test will pass.
       proc {
         @account.withdraw(withdraw_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if it would go below $10" do

@@ -53,7 +53,7 @@ module Bank
     end
 
     #.find(id) when you input id, it will return the Account (instance) with that id
-    def self.find(id)
+    def self.find(id) #could use Class variable here instead of loading Accounts array each time
       Account.all.each do |account|
         if account.id == id
           return account

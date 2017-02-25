@@ -1,5 +1,5 @@
 module Bank
-  FEE = 2.00
+  SV_FEE = 2.00
 
   class SavingsAccount < Bank::Account
 
@@ -18,10 +18,10 @@ module Bank
       if @balance - withdraw_amount < 10.0
         print "Balance cannot be less than $10"
         return @balance
-      elsif @balance - withdraw_amount - FEE < 10.0
+      elsif @balance - withdraw_amount - SV_FEE < 10.0
         return @balance
       else
-        @balance -= withdraw_amount + FEE
+        @balance -= withdraw_amount + SV_FEE
       end
     end#end of withdraw def
 

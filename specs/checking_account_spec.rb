@@ -44,61 +44,172 @@ describe "CheckingAccount" do
 
      end
 
-  describe "#withdraw_using_check" do
-    it "Reduces the balance" do
+     describe "#withdraw_with_check" do
 
-         start_balance = 300
-         withdrawal_amount = 100
-         withdrawal_fee = 0
-         account = Bank::CheckingAccount.new(12345, start_balance)
-         account.withdraw_using_check(withdrawal_amount)
+          it "Reduces the balance" do
 
-         account.withdraw(withdrawal_amount).must_equal start_balance - (withdrawal_amount + withdrawal_fee)
+              start_balance = 300
+              withdrawal_amount = 100
+              account = Bank::CheckingAccount.new(12345, start_balance)
+              account.withdraw_with_check(withdrawal_amount)
 
-    end
+              account.balance.must_equal start_balance - withdrawal_amount
 
-    xit "Returns the modified balance" do
+          end
 
-         account.withdraw(withdrawal_amount).must_equal
+          it "Returns the modified balance" do
 
-    end
+               start_balance = 300
+               withdrawal_amount = 100
+               account = Bank::CheckingAccount.new(12345, start_balance)
 
-    xit "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
-    end
+               account.withdraw_with_check(withdrawal_amount).must_equal start_balance - withdrawal_amount
 
-    xit "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
-    end
+          end
 
-    xit "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
-    end
+          it "Allows the balance to go down to -$10" do
 
-    xit "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
-    end
+               start_balance = 300
+               withdrawal_amount = 310
+               deficit_limit = -10
+               account = Bank::CheckingAccount.new(12345, start_balance)
 
-    xit "Allows 3 free uses" do
-      # TODO: Your test code here!
-    end
+               account.withdraw_with_check(withdrawal_amount).must_equal deficit_limit
 
-    xit "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
-    end
+          end
+
+          it "Outputs a warning if the account would go below -$10" do
+
+               start_balance = 300
+               withdrawal_amount = 311
+               account = Bank::CheckingAccount.new(12345, start_balance)
+
+               proc {account.withdraw_with_check(withdrawal_amount)}.must_output /.+/
+
+          end
+
+          it "Doesn't modify the balance if the account would go below -$10" do
+
+               start_balance = 300
+               withdrawal_amount = 311
+               account = Bank::CheckingAccount.new(12345, start_balance)
+
+               account.withdraw_with_check(withdrawal_amount).must_equal start_balance
+
+          end
+
+          it "Requires a positive withdrawal amount" do
+
+              start_balance = 300
+              withdrawal_amount = -1
+              account = Bank::CheckingAccount.new(12345, start_balance)
+
+              proc {account.withdraw_with_check(withdrawal_amount)}.must_raise ArgumentError
+
+          end
+
+          it "Allows 3 free uses" do
+
+             start_balance = 300
+             withdrawal_amount = 1
+             account = Bank::CheckingAccount.new(12345, start_balance)
+
+               3.times do
+
+                  account.withdraw_with_check(withdrawal_amount)
+
+               end
+
+               account.check_withdrawal_fee.must_equal 0
+
+
+          end
+
+          it "Applies a $2 fee after the third use" do
+
+               start_balance = 300
+               withdrawal_amount = 1
+               account = Bank::CheckingAccount.new(12345, start_balance)
+
+               4.times do
+
+                   account.withdraw_with_check(withdrawal_amount)
+
+               end
+
+               account.check_withdrawal_fee.must_equal 2
+
+
+
+          end
   end
 
-  xdescribe "#reset_checks" do
-    it "Can be called without error" do
-      # TODO: Your test code here!
-    end
+     describe "#reset_checks" do
 
-    it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
-    end
+          it "Can be called without error" do
 
-    it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
-    end
-  end
+               start_balance = 300
+               withdrawal_amount = 1
+               account = Bank::CheckingAccount.new(12345, start_balance)
+
+               4.times do
+
+                   account.withdraw_with_check(withdrawal_amount)
+
+               end
+
+               account.reset_checks.must_equal 0
+          end
+
+          it "Makes the next three checks free if less than 3 checks had been used" do
+
+             start_balance = 300
+             withdrawal_amount = 1
+             account = Bank::CheckingAccount.new(12345, start_balance)
+
+             2.times do
+
+                 account.withdraw_with_check(withdrawal_amount)
+
+             end
+
+             account.reset_checks
+
+             3.times do
+
+                 account.withdraw_with_check(withdrawal_amount)
+
+             end
+
+             account.check_withdrawal_fee.must_equal 0
+
+          end
+
+         it "Makes the next three checks free if more than 3 checks had been used" do
+
+
+            start_balance = 300
+            withdrawal_amount = 1
+            account = Bank::CheckingAccount.new(12345, start_balance)
+
+            5.times do
+
+                account.withdraw_with_check(withdrawal_amount)
+
+            end
+
+            account.reset_checks
+
+            3.times do
+
+                account.withdraw_with_check(withdrawal_amount)
+
+            end
+
+            account.check_withdrawal_fee.must_equal 0
+
+         end
+
+     end
+     
 end

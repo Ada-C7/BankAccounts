@@ -17,5 +17,10 @@ module Bank
       super
     end
 
+    def interest(rate, time_in_months)
+      @balance * rate/100 * time_in_months
+    end
+
+
   end#class SavingsAccount
 end#module Bank

@@ -56,7 +56,12 @@ describe "SavingsAccount" do
 
   describe "#add_interest" do
     it "Returns the interest calculated" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      interest_rate = 2.5
+      time_in_months = 1
+      account = Bank::SavingsAccount.new(1337, start_balance)
+      account.interest(2.5, 1).must_equal 2.5
+
     end
 
     it "Updates the balance with calculated interest" do

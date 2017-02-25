@@ -4,7 +4,7 @@ module Bank
   class Account
 
     attr_accessor :id, :balance, :date
-    def initialize (id, initial_balance, date)
+    def initialize (id, initial_balance, date = nil)
       if initial_balance < 0
         raise ArgumentError, 'You cannot use a negative number for your initial balance'
       end
@@ -43,7 +43,7 @@ module Bank
         puts "Your balance will be overdrawn"
         return @balance
       end
-      @balance = @balance - amount
+      @balance = @balance - amount 
       return @balance
     end
 

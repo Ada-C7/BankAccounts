@@ -10,12 +10,12 @@ module Bank
   class Account
     attr_accessor :id, :balance, :timedate
 
-    def initialize(id, balance, timedate = nil, min_bal = 0)
-      raise ArgumentError.new("balance must be greater than zero") if balance < min_bal
+    def initialize(id, balance, timedate = nil)
+      @min_bal = 0
+      raise ArgumentError.new("balance must be greater than zero") if balance < @min_bal
       @id = id
       @balance = balance
       @timedate = timedate
-      @min_bal = min_bal
       @fee = 0
     end
 
@@ -44,8 +44,8 @@ module Bank
 
 
     def withdraw(withdrawal_amount)
-      raise ArgumentError.new "You cannot withdraw a negative amount" if withdrawal_amount < 0
-      if @balance < withdrawal_amount + @min_bal
+      check_for_negative(withdrawal_amount)
+      if withdrawal_amount > (@balance - @min_bal)
         puts "Warning low balance!"
       else
         @balance -= (withdrawal_amount + @fee)
@@ -57,20 +57,23 @@ module Bank
       raise ArgumentError.new "You must deposit an amount" if deposit_amount < 0
       @balance += deposit_amount
     end
+
+
+    def check_for_negative(withdrawal_amount)
+      raise ArgumentError.new "You cannot withdraw a negative amount" if withdrawal_amount < 0
+    end
   end #end class Account
-
-
-    # class Owner
-    #   attr_accessor :lastname, :firstname,
-    #
-    #    def initialize(lastname, firstname, street, city, state)
-    #      @lastname = lastname
-    #      @firstname = firstname
-    #      @street = street
-    #      @city = city
-    #      @state = state
-    #
-    #
-    #    end
-    # end #end owner class
+  # class Owner
+  #   attr_accessor :lastname, :firstname,
+  #
+  #    def initialize(lastname, firstname, street, city, state)
+  #      @lastname = lastname
+  #      @firstname = firstname
+  #      @street = street
+  #      @city = city
+  #      @state = state
+  #
+  #
+  #    end
+  # end #end owner class
 end #end module Bank

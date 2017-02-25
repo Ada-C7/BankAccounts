@@ -5,48 +5,33 @@ module Bank
   class CheckingAccount < Account
 
 
-    def initialize(id, balance, timedate = nil, min_bal = -10)
+    def initialize(id, balance, timedate = nil)
       super
       @number_of_checks = 0
       @fee = 1
       @check_fee = 2
+      @min_bal = -10
     end
-
-    def withdraw(withdrawal_amount)
-      super
-      # if @balance < withdrawal_amount
-      #   @balance
-      # else
-      #   @balance -= 1
-      # end
-    end
-
-
 
     def withdraw_using_check(withdrawal_amount)
-
-      check_for_negative_withdrawal(withdrawal_amount)
-      check_for_overdraft(withdrawal_amount, 10)
+      check_for_negative(withdrawal_amount)
+      check_for_overdraft(withdrawal_amount)
       charge_fee_if_appropriate(3)
-
-
     end
 
-    def check_for_overdraft(withdrawal_amount, odlimit)
+    def check_for_overdraft(withdrawal_amount)
       @withdrawal_amount = withdrawal_amount
       overdraw_amount = @balance - withdrawal_amount
       add_checks
-      if withdrawal_amount <= balance + odlimit
+      if withdrawal_amount <= balance - @min_bal
         @balance -= withdrawal_amount
-      elsif overdraw_amount < -odlimit
+      elsif overdraw_amount < @min_bal
         puts "Balance will be more than $10 negative"
         @balance
       end
     end
 
-    def check_for_negative_withdrawal(withdrawal_amount)
-      raise ArgumentError.new "You cannot withdraw a negative amount" if withdrawal_amount < 0
-    end
+
 
 
     def charge_fee_if_appropriate(check_limit)

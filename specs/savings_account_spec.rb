@@ -35,14 +35,15 @@ describe "SavingsAccount" do
 
     it "Outputs a warning if the balance would go below $10" do
       account = Bank::SavingsAccount.new(12345, 100.0)
-      withdrawal_amount = 91
       proc {
-        account.withdraw(withdrawal_amount)
+        account.withdraw(91)
       }.must_output /.+/
     end
 
     it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
+      account = Bank::SavingsAccount.new(12345, 100.0)
+      updated_balance = account.withdraw(91)
+      updated_balance.must_equal 100
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do

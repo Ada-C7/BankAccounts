@@ -15,6 +15,8 @@ module Bank
       @id = id
       @balance = balance
       @timedate = timedate
+      @min_bal = min_bal
+      @fee = 0
     end
 
     def self.all
@@ -43,10 +45,10 @@ module Bank
 
     def withdraw(withdrawal_amount)
       raise ArgumentError.new "You cannot withdraw a negative amount" if withdrawal_amount < 0
-      if @balance < withdrawal_amount
-        puts "Cannot withdraw more than is in the account"
+      if @balance < withdrawal_amount + @min_bal
+        puts "Warning low balance!"
       else
-        @balance -= withdrawal_amount
+        @balance -= (withdrawal_amount + @fee)
       end
       return @balance
     end

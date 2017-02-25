@@ -8,13 +8,9 @@ module Bank
     end
 
     def withdraw(withdrawal_amount)
+
+      @fee = 2
       super
-      if @balance < withdrawal_amount - 10
-        puts "Warning low balance!"
-        @balance
-      else
-        @balance -= 2
-      end
     end
 
   end#class SavingsAccount

@@ -5,7 +5,6 @@
 require 'csv'
 require 'awesome_print'
 
-
 module Bank
   class Account
     attr_accessor :id, :balance, :timedate
@@ -28,14 +27,9 @@ module Bank
       account_array
     end
 
-    def check_opening_bal
-      raise ArgumentError.new "Opening balance must be greater than #{@min_opening_bal}" if @balance < @min_opening_bal
-      return @balance
-    end
     # self.find(id) - returns an instance of Account
     # where the value of the id field in the CSV matches
     # the passed parameter.
-
     def self.find(id)
       account_array = Bank::Account.all
       account_array.each do |account|
@@ -46,18 +40,14 @@ module Bank
       raise ArgumentError.new "Account #{id} does not exist"
     end
 
-
+    def check_opening_bal
+      raise ArgumentError.new "Opening balance must be greater than #{@min_opening_bal}" if @balance < @min_opening_bal
+    end
 
     def withdraw(withdrawal_amount)
       check_for_negative(withdrawal_amount)
-      if withdrawal_amount > (@balance - @min_bal)
-        puts "Warning low balance!"
-        return @balance
-      else
-        @balance -= (withdrawal_amount + @fee)
-        return @balance
-      end
-      return @balance
+      adjust_if_no_low_balance(withdrawal_amount)
+      @balance
     end
 
     def deposit(deposit_amount)
@@ -65,22 +55,17 @@ module Bank
       @balance += deposit_amount
     end
 
+    def adjust_if_no_low_balance(withdrawal_amount)
+      if withdrawal_amount > (@balance - @min_bal)
+        puts "Warning low balance!"
+      else
+        @balance -= (withdrawal_amount + @fee)
+      end
+        @balance
+    end
 
     def check_for_negative(withdrawal_amount)
       raise ArgumentError.new "You cannot withdraw a negative amount" if withdrawal_amount < 0
     end
-  end #end class Account
-  # class Owner
-  #   attr_accessor :lastname, :firstname,
-  #
-  #    def initialize(lastname, firstname, street, city, state)
-  #      @lastname = lastname
-  #      @firstname = firstname
-  #      @street = street
-  #      @city = city
-  #      @state = state
-  #
-  #
-  #    end
-  # end #end owner class
-end #end module Bank
+  end 
+end # module Bank

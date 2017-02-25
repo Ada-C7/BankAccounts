@@ -13,11 +13,8 @@ module Bank
     def withdraw(withdrawal_amount)
       @min_bal = 10
       @fee = 2
-      # ensure_no_overdraft_for_fee(withdrawal_amount)
       super
     end
-
-
 
     def add_interest(rate, time_in_months)
       raise ArgumentError.new "Please provide a positive rate" if rate <= 0
@@ -25,6 +22,5 @@ module Bank
       @balance += interest
       interest
     end
-
   end#class SavingsAccount
 end#module Bank

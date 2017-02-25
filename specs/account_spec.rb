@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative '../lib/account'
 
 describe "Wave 1" do
@@ -156,7 +157,7 @@ describe "Wave 2" do
       #creating test need must xxx
     end
   end
-  
+
   describe "Account.find" do
     it "Returns an account that exists" do
       # TODO: Your test code here!

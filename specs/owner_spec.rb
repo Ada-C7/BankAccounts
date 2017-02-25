@@ -21,7 +21,7 @@ describe "Owner.all"do
     @owners.must_be_instance_of Array
   end
 
-  it "Every in Array is an Owner"do
+  it "Every line in Array is an Owner"do
     @owners.each do |owner|
       owner.must_be_instance_of Bank::Owner
     end
@@ -57,11 +57,16 @@ describe "Owner.find(id)" do
     id_check = test_array[-1][0].to_i
     find_owner = Bank::Owner.find(25)
     find_owner.id.must_equal id_check
+    test_array.must_be_instance_of Array
+    find_owner.must_be_instance_of Bank::Owner
+
   end
 
-  it "Raises an Error for an account hat doesn't exist" do
+  it "Raises an Error for an account that doesn't exist" do
     proc {
       Bank::Owner.find(77)
     }.must_output /.+/
   end
+
+
 end

@@ -5,7 +5,7 @@ module Bank
   class Account
     attr_reader :id, :balance, :opendate, :owner
 
-    def initialize id, balance, opendate = "1999-03-27 11:30:09 -0800", owner = Bank::Owner.new(1, "Hopper", "Grace", "123 Main St", "Seattle", "WA")
+    def initialize id, balance, opendate = "1999-03-27 11:30:09 -0800"
       @id = id
       if balance >= 0
         @balance = balance
@@ -13,9 +13,27 @@ module Bank
         raise ArgumentError.new "Initial balance must be more than zero."
       end
       @opendate = opendate
-      @owner = owner
+      @owner = find_owner
 
     end
+
+    def find_owner #I know this could be written in a much shorter way but it.would.not.work so i broke it out into smaller pieces
+      owner_index = nil
+      CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/account_owners.csv").each do |line|
+        if line[0].to_i == @id
+          owner_index = line[1].to_i
+          # @owner = Bank::Owner.find(line[1].to_i)
+        end
+      end
+
+      if owner_index != nil
+        return @owner = Bank::Owner.find(owner_index)
+      else
+        puts "Owner info not found; blank owner info created"
+        return @owner = Bank::Owner.new("N/A", "N/A", "N/A", "N/A", "N/A", "N/A")
+      end
+    end
+
 
     def self.all  #reads in csv file and returns collection of Account instances
       accounts = []
@@ -26,7 +44,7 @@ module Bank
     end
 
     def self.find(id) #returns an instance of Account that matches the passed id parameter
-      all_accounts = Bank::Account.all
+      all_accounts = Account.all
       account_found = false
       all_accounts.each do |account|
         if account.id == id
@@ -39,42 +57,27 @@ module Bank
       end
     end
 
-      def withdraw(new_withdrawal)
-        # raise ArgumentError.new("You must withdraw a positive amount") if new_withdrawal < 0 #alternate if statement for one-line conditional
-        if new_withdrawal <=0
-          raise ArgumentError.new "withdrawal must be greater than 0"
-        elsif new_withdrawal > @balance
-          puts "Insufficient funds"  #puts statement returns nil
-          @balance #this is what is returned by this elsif
-        else
-          @balance -= new_withdrawal
-        end
+    def withdraw(new_withdrawal)
+      # raise ArgumentError.new("You must withdraw a positive amount") if new_withdrawal < 0 #alternate if statement for one-line conditional
+      if new_withdrawal <=0
+        raise ArgumentError.new "withdrawal must be greater than 0"
+      elsif new_withdrawal > @balance
+        puts "Insufficient funds"  #puts statement returns nil
+        @balance #this is what is returned by this elsif
+      else
+        @balance -= new_withdrawal
       end
-
-      def deposit(new_deposit)
-        if new_deposit <= 0
-          raise ArgumentError.new "deposit amount must be greater than 0"
-        else
-          @balance += new_deposit
-        end
-      end
-
     end
+
+    def deposit(new_deposit)
+      if new_deposit <= 0
+        raise ArgumentError.new "deposit amount must be greater than 0"
+      else
+        @balance += new_deposit
+      end
+    end
+
+
+
   end
-
-  # owner_hash = {
-  #   :in_first_name => "Grace",
-  #   :in_last_name => "Hopper",
-  #   :in_address => "456 Anytown, USA",
-  #   :in_phone => "206-440-0725"
-  # }
-  #
-  # new_account = Bank::Account.new(1375, 200)
-  # new_account.get_owner_info(owner_hash)
-
-  # test_account = CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv")
-  # puts test_account.length
-  #
-  #
-  # accounts = Bank::Account.all
-  # puts accounts.class
+end

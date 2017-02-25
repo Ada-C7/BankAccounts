@@ -22,15 +22,18 @@ module Bank
     def self.find id
       all_owners = Owner.all
       owner_found = false
+
       all_owners.each do |owner|
         if owner.id == id
           owner_found = true
           return owner
         end
       end
+
       if !owner_found
         puts "ID not found "
       end
+
     end
 
   end

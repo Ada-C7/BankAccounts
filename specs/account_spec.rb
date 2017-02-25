@@ -22,12 +22,12 @@ describe "Wave 1" do
 
 
   describe "Account#initialize" do
-    it "Takes an ID, and an initial balance and an owner of Owner class" do
+    it "Takes an ID, and an initial balance" do
       id = 1337
       balance = 100.0
       opendate = "1999-03-27 11:30:09 -0800"
       owner = Bank::Owner.new(1, "Hopper", "Grace", "123 Main St", "Seattle", "WA")
-      account = Bank::Account.new(id, balance, opendate, owner)
+      account = Bank::Account.new(id, balance, opendate)
 
       account.must_respond_to :id
       account.id.must_equal id
@@ -35,11 +35,6 @@ describe "Wave 1" do
       account.must_respond_to :balance
       account.balance.must_equal balance
 
-      account.must_respond_to :owner
-      account.owner.must_be_instance_of Bank::Owner
-
-      # account.must_respond_to :owner
-      # account.owner.must_equal @owner_hash
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
@@ -174,10 +169,6 @@ describe "Wave 1" do
 end
 
 
-
-
-
-
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
@@ -247,4 +238,21 @@ describe "Wave 2" do
         }.must_output /.+/
       end
   end
+end
+
+
+describe "find_owner" do
+  it "can look up account ID in account_owners.csv" do
+    account = Bank::Account.new(1215, 45)
+    account.owner.must_be_instance_of Bank::Owner
+    account.owner.id.must_equal 14
+  end
+
+  it "Creates a dummy owner if account has no owner" do
+    account = Bank::Account.new(7777, 45)
+    account.owner.must_be_instance_of Bank::Owner
+    account.owner.id.must_equal "N/A"
+    account.owner.first_name.must_equal "N/A"
+  end
+
 end

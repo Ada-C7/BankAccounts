@@ -6,6 +6,7 @@ module Bank
     def initialize(id, balance)
       @id = id
       @balance = balance
+      @checks = 0
     end
 
     def withdraw(amount)

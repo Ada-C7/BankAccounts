@@ -262,4 +262,43 @@ describe "Wave 2" do
       expect(@owners.length).must_equal count
     end
   end
+
+  describe "Owner.find" do
+    before do
+      @owners = Bank::Owner.all
+    end
+
+    it "Returns an account that exists" do
+      id_check = @owners[0].id
+      owner = Bank::Owner.find(id_check)
+      expect(owner.id).must_equal id_check
+    end
+
+    it "Can find the first account from the CSV" do
+      test_array = []
+      CSV.open("support/owners.csv", 'r').each do |owner|
+        test_array << owner
+      end
+      id_check = test_array[0][0]
+      owner = Bank::Owner.find(id_check)
+      expect(owner.id).must_equal id_check
+    end
+
+    it "Can find the last account from the CSV" do
+      test_array = []
+      CSV.open("support/owners.csv", 'r').each do |owner|
+        test_array << owner
+      end
+      id_check = test_array[-1][0]
+      owner = Bank::Owner.find(id_check)
+      expect(owner.id).must_equal id_check
+    end
+
+    it "Raises an error for an account that doesn't exist" do
+      proc {
+        Bank::Owner.find(21345)
+      }.must_raise ArgumentError
+    end
+
+  end
 end

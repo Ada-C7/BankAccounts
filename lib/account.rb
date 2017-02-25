@@ -64,8 +64,8 @@ module Bank
     end
 
     #Add an owner object to the account. The owner has a name, address and
-    #phone number
-    def add_owner(owner)
+    #ID
+    def add_owner(owner)  
       @owner = owner
     end
 

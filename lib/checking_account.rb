@@ -11,6 +11,7 @@ module Bank
       @fee = 1
       @check_fee = 2
       @min_bal = -10
+      check_opening_bal
     end
 
     def withdraw_using_check(withdrawal_amount)

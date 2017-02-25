@@ -48,7 +48,7 @@ describe "SavingsAccount" do
 
     it "Doesn't modify the balance if the fee would put it below $10" do
       start_balance = 100.0
-      withdrawal_amount = 90
+      withdrawal_amount = 91
       account = Bank::SavingsAccount.new(1337, start_balance)
       account.withdraw(withdrawal_amount).must_equal 100
     end

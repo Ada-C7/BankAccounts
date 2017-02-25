@@ -13,9 +13,9 @@ module Bank
     def initialize(id, balance, timedate = nil)
       @min_opening_bal = 0
       @min_bal = 0
-      raise ArgumentError.new("balance must be greater than #{@min_opening_bal}") if balance < @min_opening_bal
-      @id = id
       @balance = balance
+      check_opening_bal
+      @id = id
       @timedate = timedate
       @fee = 0
     end
@@ -28,6 +28,10 @@ module Bank
       account_array
     end
 
+    def check_opening_bal
+      raise ArgumentError.new "Opening balance must be greater than #{@min_opening_bal}" if @balance < @min_opening_bal
+      return @balance
+    end
     # self.find(id) - returns an instance of Account
     # where the value of the id field in the CSV matches
     # the passed parameter.

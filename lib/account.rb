@@ -11,8 +11,9 @@ module Bank
     attr_accessor :id, :balance, :timedate
 
     def initialize(id, balance, timedate = nil)
+      @min_opening_bal = 0
       @min_bal = 0
-      raise ArgumentError.new("balance must be greater than zero") if balance < @min_bal
+      raise ArgumentError.new("balance must be greater than #{@min_opening_bal}") if balance < @min_opening_bal
       @id = id
       @balance = balance
       @timedate = timedate
@@ -47,8 +48,10 @@ module Bank
       check_for_negative(withdrawal_amount)
       if withdrawal_amount > (@balance - @min_bal)
         puts "Warning low balance!"
+        return @balance
       else
         @balance -= (withdrawal_amount + @fee)
+        return @balance
       end
       return @balance
     end

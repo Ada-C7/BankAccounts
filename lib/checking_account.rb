@@ -31,16 +31,14 @@ module Bank
       end
     end
 
-
-
-
     def charge_fee_if_appropriate(check_limit)
-        if @number_of_checks > check_limit
-          return @balance - @check_fee
-        else
-          return @balance
-        end
+      if @number_of_checks > check_limit
+        return @balance - @check_fee
+      else
+        return @balance
+      end
     end
+
     def add_checks
       @number_of_checks += 1
     end

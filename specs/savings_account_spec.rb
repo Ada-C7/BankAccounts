@@ -21,7 +21,7 @@ describe "SavingsAccount" do
     it "Requires an initial balance of at least $10" do
       proc {
         Bank::SavingsAccount.new(1337, 9.0)
-      }.must_output /.+/
+      }.must_raise ArgumentError
     end
   end
 

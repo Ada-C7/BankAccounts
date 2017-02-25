@@ -7,19 +7,12 @@ module Bank
       raise ArgumentError.new("balance must be >= 0") if balance < 0
       @id = id
       @balance = balance
-      # @account_array = []
-      #
-      # @read_file = CSV.read('support/accounts.csv')
-      #
-      # @read_file.each do |line|
-      #   @account_array << line
-      # end
     end
 
     def withdraw(amount)
       raise ArgumentError.new("withdrawal amount must be >= 0") if amount < 0
       if amount > @balance
-        raise ArgumentError.new("withdrawal amount must be > 0") if @balance < 0 #@balance < amount
+        raise ArgumentError.new("withdrawal amount must be > 0") if @balance < 0
         puts "Account would go negative."
       elsif amount <= @balance
         @balance = @balance - amount
@@ -41,7 +34,6 @@ module Bank
       read_file.each do |line|
         id = line[0].to_i
         balance = line[1].to_i
-        # open_date = line[2] #REMOVE
         account = Bank::Account.new(id, balance)
         accounts_array << account
       end
@@ -62,9 +54,3 @@ module Bank
 
   end
 end
-
-# @read_file = CSV.read('support/accounts.csv')
-#
-# @read_file.each do |line|
-#   account_array << line
-# end

@@ -21,10 +21,6 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
@@ -64,10 +60,6 @@ describe "Wave 1" do
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
 
-      # Another proc! This test expects something to be printed
-      # to the terminal, using 'must_output'. /.+/ is a regular
-      # expression matching one or more characters - as long as
-      # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
       }.must_output /.+/
@@ -80,8 +72,6 @@ describe "Wave 1" do
 
       updated_balance = account.withdraw(withdrawal_amount)
 
-      # Both the value returned and the balance in the account
-      # must be un-modified.
       updated_balance.must_equal start_balance
       account.balance.must_equal start_balance
     end
@@ -139,7 +129,6 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
 
@@ -148,24 +137,17 @@ describe "Wave 2" do
     end
 
     it "Returns an array of all accounts" do
-      # skip
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
       @accounts.must_be_instance_of Array
     end
-    #   - Everything in the array is an Account
     it "Everything in the array is an Account" do
       @accounts.each do |account|
         account.must_be_instance_of Bank::Account
       end
     end
-    #   - The number of accounts is correct
     it "Number of accounts is correct" do
       @accounts.length.must_equal 12
     end
 
-    #       accounts match what's in the CSV file
     it "Match elements in file" do
       CSV.read('support/accounts.csv') do |line|
         counter = 0
@@ -187,7 +169,6 @@ describe "Wave 2" do
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      # skip
       account = Bank::Account.find(1216)
 
       account.must_be_instance_of Bank::Account
@@ -196,7 +177,6 @@ describe "Wave 2" do
     end
 
     it "Can find the first account from the CSV" do
-      # skip
       account = Bank::Account.find(1212)
 
        account.must_be_instance_of Bank::Account
@@ -205,7 +185,6 @@ describe "Wave 2" do
     end
 
     it "Can find the last account from the CSV" do
-      # skip
       account = Bank::Account.find(15156)
 
        account.must_be_instance_of Bank::Account
@@ -214,8 +193,6 @@ describe "Wave 2" do
     end
 
     it "Raises an error for an account that doesn't exist" do
-      # skip
-      # account = Bank::Account.find(666, 666)
       proc {
         Bank::Account.find(666)
       }.must_raise ArgumentError

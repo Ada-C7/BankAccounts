@@ -3,7 +3,7 @@ require 'csv'
 module Bank
   class Account
 
-    attr_reader :balance, :id, :open_date
+    attr_reader :balance, :id, :open_date 
 #can self.all be refactored if for no other reason than my understanding
     def self.all
       new_account_info = []

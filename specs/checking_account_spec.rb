@@ -114,17 +114,46 @@ describe "CheckingAccount" do
       @balance = 100.0
       @account = Bank::CheckingAccount.new(12345, @balance)
     end
-    
+
     it "Can be called without error" do
       @account.reset_checks.must_equal 0
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
-    end
+      amount = 10.0
+
+      new_balance = nil
+      2.times do
+        new_balance = (@account.withdraw_using_check(amount))
+      end
+      new_balance.must_equal 80.0
+
+      @account.reset_checks.must_equal 0
+
+      3.times do
+        new_balance = (@account.withdraw_using_check(amount))
+      end
+
+      new_balance.must_equal 50.0
+
+    end# end of test
 
     it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
+      amount = 10.0
+
+      new_balance = nil
+      4.times do
+        new_balance = (@account.withdraw_using_check(amount))
+      end
+      new_balance.must_equal 58.0
+
+      @account.reset_checks.must_equal 0
+
+      3.times do
+        new_balance = (@account.withdraw_using_check(amount))
+      end
+
+      new_balance.must_equal 28.0
     end
   end
 end

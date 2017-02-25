@@ -53,5 +53,9 @@ module Bank
       @balance += interest
       return interest
     end
+
+    def reset_transactions
+      @num_transactions = 0
+    end
   end
 end

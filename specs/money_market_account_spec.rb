@@ -95,4 +95,26 @@ describe "MoneyMarketAccount" do
       proc { @account.add_interest(-5) }.must_raise ArgumentError
     end
   end
+
+  describe "#reset_transactions" do
+    it "Can be called without error" do
+      @account.reset_transactions.must_equal 0
+    end
+
+    it "Allows 6 transactions if less than 6 transactions had occurred" do
+      @account.withdraw(100)
+      @account.reset_transactions
+      5.times { @account.deposit(300) }
+
+      proc { @account.withdraw(50) }.must_be_silent
+    end
+
+    it "Allows 6 transactions if more than 6 transactions had occurred" do
+      8.times { @account.deposit(100) }
+      @account.reset_transactions
+      5.times { @account.withdraw(50) }
+
+      proc { @account.deposit(400) }.must_be_silent
+    end
+  end
 end

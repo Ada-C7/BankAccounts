@@ -21,7 +21,7 @@ module Bank
       max_overdraft = -10
       # $2 check fee per check after 3 checks
       # in ONE month
-      if @checks_processed <= 3
+      if @checks_processed < 3
         check_fee = 0.0
       else
         check_fee = 2.0
@@ -34,6 +34,10 @@ module Bank
         print "Check ($#{amount}) would make your account go below -$10."
       end
       return @balance
+    end
+
+    def reset_checks
+      @checks_processed = 0
     end
 
   end

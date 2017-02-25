@@ -125,7 +125,7 @@ require_relative "../lib/checking_account"
         account.withdraw_using_check(withdrawal_amount)
       end
 
-      account.balance.must_equal (start_balance-total_withdrawal)
+      account.balance.must_equal (start_balance-total_withdrawal-check_fee)
 
     end
 
@@ -143,20 +143,64 @@ require_relative "../lib/checking_account"
         account.withdraw_using_check(withdrawal_amount)
       end
 
-      account.balance.must_equal (start_balance-total_withdrawal)
+      account.balance.must_equal (start_balance-total_withdrawal-check_fee)
     end
   end
 
-  xdescribe "#reset_checks" do
+  describe "#reset_checks" do
     it "Can be called without error" do
-      # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345,100.0)
+
+      account.must_respond_to :reset_checks
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 10.0
+
+      check_uses = 2
+      check_fee = 0.0
+      total_withdrawal = withdrawal_amount * check_uses
+
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      check_uses.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+
+      account.reset_checks
+
+      check_uses = 3
+      check_fee = 0.0
+      total_withdrawal += withdrawal_amount * check_uses
+
+      check_uses.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+
+      account.balance.must_equal (start_balance-total_withdrawal-check_fee)
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 10.0
+
+      check_uses = 3
+      check_fee = 0.0
+      total_withdrawal = withdrawal_amount * check_uses * 2
+
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      check_uses.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+
+      account.reset_checks
+
+      check_uses.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+
+      account.balance.must_equal (start_balance-total_withdrawal-check_fee)
     end
   end

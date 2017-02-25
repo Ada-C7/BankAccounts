@@ -26,63 +26,97 @@ describe "CheckingAccount" do
     before do
       @balance = 100.0
       @account = Bank::CheckingAccount.new(12345, @balance)
-      #@withdraw = @account.withdraw(@withdraw_amount)
     end
 
     it "Applies a $1 fee each time" do
-      # TODO: Your test code here!
       withdraw_amount = 25.0
       @account.withdraw(withdraw_amount)
       @account.balance.must_equal 74
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
-      # TODO: Your test code here!
       withdraw_amount = 100.0
-
       @account.withdraw(withdraw_amount)
-
       @account.balance.must_equal 100.0
     end
   end
 
   describe "#withdraw_using_check" do
+
+    before do
+      @balance = 100.0
+      @account = Bank::CheckingAccount.new(12345, @balance)
+    end
+
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      amount = 10.0
+      @account.withdraw_using_check(amount).must_equal 90.0
+
     end
 
     it "Returns the modified balance" do
-      # TODO: Your test code here!
+      amount = 10.0
+      @account.withdraw_using_check(amount).must_equal 90.0
+      @account.balance.must_equal 90.0
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      amount = 110.0
+      @account.withdraw_using_check(amount).must_equal (-10.0)
+      @account.balance.must_equal (-10.0)
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      amount = 120.0
+      proc {
+        @account.withdraw_using_check(amount)
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      # TODO: Your test code here!
+      amount = 120.0
+      @account.withdraw_using_check(amount).must_equal 100.0
     end
 
     it "Requires a positive withdrawal amount" do
-      # TODO: Your test code here!
+      amount = -10.0
+      proc {
+        @account.withdraw_using_check(amount)
+      }.must_output (/.+/)
     end
 
     it "Allows 3 free uses" do
-      # TODO: Your test code here!
+      amount = 10.0
+      # this is what I tried the first time, now using times loop
+      # new_balance = @account.withdraw_using_check(amount)
+      # new_balance = @account.withdraw_using_check(amount)
+      # new_balance = @account.withdraw_using_check(amount)
+      new_balance = nil
+      3.times do
+        new_balance = (@account.withdraw_using_check(amount))
+      end
+      new_balance.must_equal 70.0
     end
 
     it "Applies a $2 fee after the third use" do
-      # TODO: Your test code here!
+      amount = 10.0
+      new_balance = nil
+      4.times do
+        new_balance = (@account.withdraw_using_check(amount))
+      end
+      new_balance.must_equal 58.0
     end
   end
 
   describe "#reset_checks" do
+
+    before do
+      @balance = 100.0
+      @account = Bank::CheckingAccount.new(12345, @balance)
+    end
+    
     it "Can be called without error" do
-      # TODO: Your test code here!
+      @account.reset_checks.must_equal 0
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do

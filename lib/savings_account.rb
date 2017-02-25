@@ -10,11 +10,6 @@ module Bank
 
     def withdraw(amount)
       amount += 2
-      # @balance = @balance - amount
-      #
-      # raise ArgumentError.new("account must be > 10") if @balance < 10
-      # raise ArgumentError.new("withdrawal amount must be >= 0") if amount < 0
-
 
       if (@balance - amount) < 10
         return @balance

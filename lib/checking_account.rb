@@ -8,8 +8,8 @@ module Bank
           def withdraw(withdrawal_amount)
 
                raise ArgumentError.new "Please enter a withdrawal amount greater than 0." unless withdrawal_amount > 0
-               
-               withdrawal_fee = 1
+
+               withdrawal_fee = 0
 
                if @balance >= withdrawal_amount + withdrawal_fee
                     @balance -= (withdrawal_amount + withdrawal_fee)
@@ -19,6 +19,10 @@ module Bank
                     @balance
 
                end
+
+          end
+
+          def withdraw(withdrawal_amount)
 
           end
 

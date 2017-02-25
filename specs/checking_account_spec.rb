@@ -13,7 +13,7 @@ require_relative '../lib/account'
 # on Account, we effectively get all that testing for free!
 # Here we'll only test things that are different.
 
- # TODO: change 'xdescribe' to 'describe' to run these tests
+# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "CheckingAccount" do
   describe "#initialize" do
     # Check that a CheckingAccount is in fact a kind of account
@@ -97,11 +97,19 @@ describe "CheckingAccount" do
     it "Allows 3 free uses" do
       # skip
       # TODO: Your test code here!
+      checking_account = Bank::CheckingAccount.new(11, 80)
+      3.times do checking_account.withdraw_with_check(20)
+      end
+      checking_account.balance.must_equal 20
     end
 
     it "Applies a $2 fee after the third use" do
       # skip
       # TODO: Your test code here!
+      checking_account = Bank::CheckingAccount.new(11, 100)
+      4.times do checking_account.withdraw_with_check(20)
+      end
+      checking_account.balance.must_equal 18
     end
   end
 
@@ -109,14 +117,30 @@ describe "CheckingAccount" do
     # skip
     it "Can be called without error" do
       # TODO: Your test code here!
+      checking_account = Bank::CheckingAccount.new(11, 200)
+      4.times do checking_account.withdraw_with_check(20)
+      end
+      checking_account.reset_checks
+      checking_account.withdraw_with_check(20)
+      checking_account.balance.must_equal 98
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
       # TODO: Your test code here!
+      checking_account = Bank::CheckingAccount.new(11, 200)
+      3.times do checking_account.withdraw_with_check(20)
+      end
+      checking_account.balance.must_equal 140
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
       # TODO: Your test code here!
+      checking_account = Bank::CheckingAccount.new(11, 200)
+      4.times do checking_account.withdraw_with_check(20)
+      end
+      checking_account.reset_checks
+      checking_account.withdraw_with_check(20)
+      checking_account.balance.must_equal 98
     end
   end
 end

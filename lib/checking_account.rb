@@ -9,7 +9,6 @@ module Bank
       @id = id
       @balance = balance
       @check_num = 3
-      # @withdrawal_fee = 0
 
       def withdraw(withdrawal_amount)
         check_balance = @balance - (withdrawal_amount + 1)
@@ -29,7 +28,8 @@ module Bank
         else
           withdrawal_fee = 0
           @balance -= withdrawal_amount + withdrawal_fee
-          if @check_num < 1
+          @check_num -= 1
+          if @check_num < 0
             withdrawal_fee = 2
             @balance -= withdrawal_fee
           end
@@ -39,8 +39,8 @@ module Bank
 
 
     def reset_checks
-      if @check_num >= 3
-        @check_num = 0
+      if @check_num <= 0
+        @check_num = 3
       end
     end
 

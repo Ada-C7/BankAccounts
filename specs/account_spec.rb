@@ -141,39 +141,6 @@ describe "Wave 1" do
 
 
 
-  #   describe "Account#owner" do
-  #     it "requires name and dob" do
-  #       name = "Kelly Souza"
-  #       dob = "02/05/1978"
-  #       address = {
-  #         street1: "1221 N. Fife",
-  #         street2: "#4",
-  #         city: "Tacoma",
-  #         state: "WA",
-  #         zip: "98406"
-  #       }
-  #       owner = Bank::Owner.new(name, dob, address)
-  #       owner.name.must_equal name
-  #       owner.dob.must_equal dob
-  #       owner.address.must_equal address
-  #     end #end require name and dob
-  # end
-  # it "requires owner address" do
-  # street1 = "1221 N. Fife",
-  # street2 = "#4",
-  # city = "Tacoma",
-  # state = "WA",
-  # zip = "98406"
-  # owner.address.must_equal address
-  #
-  #
-  # # end
-
-  #end
-
-  #end "Account#owner"
-
-
 end
 
 

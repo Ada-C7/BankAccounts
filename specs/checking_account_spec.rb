@@ -60,7 +60,7 @@ describe "CheckingAccount" do
       withdrawal_amount = 50.0
       account = Bank::CheckingAccount.new(1337, start_balance)
       updated_balance = account.withdraw_using_check(withdrawal_amount)
-      updated_balance.must_equal 50
+      updated_balance.wont_equal 100
     end
 
     it "Allows the balance to go down to -$10" do
@@ -109,6 +109,7 @@ describe "CheckingAccount" do
     it "Applies a $2 fee after the third use" do
       start_balance = 100.0
       withdrawal_amount = 10.0
+      updated_balance = 0
       account = Bank::CheckingAccount.new(1337, start_balance)
       updated_balance = account.withdraw_using_check(withdrawal_amount)
       updated_balance = account.withdraw_using_check(withdrawal_amount)

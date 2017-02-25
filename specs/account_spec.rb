@@ -174,9 +174,9 @@ describe "Wave 2" do
     it "The elements match what's in the file" do
       index = 0
       CSV.read("support/accounts.csv") do |line|
-        accounts[index].id.must_equal line[0].to_i
-        accounts[index].balance.must_equal line[1].to_f
-        accounts[index].date.must_equal line[2]
+        @accounts[index].id.must_equal line[0].to_i
+        @accounts[index].balance.must_equal line[1].to_f
+        @accounts[index].date.must_equal line[2]
         index += 1
       end
     end
@@ -185,22 +185,19 @@ describe "Wave 2" do
   describe "Account.find" do
 
     it "Returns an account that exists" do
-      accounts = Bank::Account.all
-      id_check = accounts[4].id
+      id_check = @accounts[4].id
       account = Bank::Account.find(id_check)
       expect(account.id).must_equal id_check
     end
 
     it "Can find the first account from the CSV" do
-      accounts = Bank::Account.all
-      id_check = accounts[0].id
+      id_check = @accounts[0].id
       account = Bank::Account.find(id_check)
       expect(account.id).must_equal id_check
     end
 
     it "Can find the last account from the CSV" do
-      accounts = Bank::Account.all
-      id_check = accounts[-1].id
+      id_check = @accounts[-1].id
       account = Bank::Account.find(id_check)
       expect(account.id).must_equal id_check
     end

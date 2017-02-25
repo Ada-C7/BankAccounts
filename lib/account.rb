@@ -15,16 +15,16 @@ module Bank
     end
 
     def self.all
-      all_accounts = []
+      return @all_accounts if @all_accounts
+      @all_accounts = []
       CSV.open("/Users/brenna/ada/week3/BankAccounts/support/accounts.csv").each do | line |
-        all_accounts << Bank::Account.new(line[0].to_i, line[1].to_f, line[2])
+        @all_accounts << Bank::Account.new(line[0].to_i, line[1].to_f, line[2])
       end
-      all_accounts
+      @all_accounts
     end
 
     def self.find(id)
-     accounts = Bank::Account.all
-      accounts.each do |acct|
+     self.all.each do |acct|
           if acct.id == id
             return acct
           end

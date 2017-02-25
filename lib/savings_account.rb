@@ -17,10 +17,14 @@ module Bank
       super
     end
 
-    def interest(rate, time_in_months)
-      @balance * rate/100 * time_in_months
-    end
 
+
+    def add_interest(rate, time_in_months)
+      raise ArgumentError.new "Please provide a positive rate" if rate <= 0
+      interest = @balance * rate/100 * time_in_months
+      @balance += interest
+      interest
+    end
 
   end#class SavingsAccount
 end#module Bank

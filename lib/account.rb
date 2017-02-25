@@ -18,21 +18,11 @@ module Bank
         print "Withdrawal denied. The balance in your account would go negative."
       end
       return @balance
-      # TODO: implement withdraw
     end
-    #
-
-  #   def self.accounts
-  #   @@all_accounts = []
-  #   CSV.open("../support/accounts.csv").each do |array|
-  #       @@all_accounts << self.new(array[0].to_i, array[1].to_f)
-  #   end
-  #   return @@all_accounts
-  # end
 
     def self.all
       all_accounts = []
-      CSV.open("../support/accounts.csv").each do |array|
+      CSV.open("support/accounts.csv").each do |array|
           all_accounts << self.new(array[0].to_i, array[1].to_f, array[2].to_s)
       end
       return all_accounts
@@ -49,14 +39,12 @@ module Bank
     end
 
 
-
     def deposit(amount)
       raise ArgumentError.new("Deposit amount must be positive.") if amount < 0
       if amount > 0
         @balance += amount
       end
       return @balance
-      # TODO: implement deposit
     end
   end
 end

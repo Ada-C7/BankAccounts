@@ -41,7 +41,58 @@ describe "MoneyMarketAccount" do
 
     it "Doesn't allow withdraws if account goes below 1000000" do
       @account.withdraw(1000001)
+      expected_balance = @account.balance
+
       proc { @account.withdraw(1) }.must_output (/.+/)
+      @account.balance.must_equal expected_balance
+    end
+
+    it "Doesn't allow withdraws if num of transactions is >= 6" do
+      6.times { @account.withdraw(100) }
+      expected_balance = @account.balance
+
+      proc { @account.withdraw(1) }.must_output (/.+/)
+      @account.balance.must_equal expected_balance
+    end
+  end
+
+  describe "#deposit" do
+    it "Doesn't allow deposits if num of transactions is >= 6" do
+      6.times { @account.deposit(100) }
+      expected_balance = @account.balance
+
+      proc { @account.deposit(1) }.must_output (/.+/)
+      @account.balance.must_equal expected_balance
+    end
+
+    it "Doesn't count as a transaction if it causes balance to exceed min" do
+      @account.withdraw(1500000)
+      @account.deposit(1600000)
+      4.times { @account.deposit(100) }
+      proc { @account.deposit(300) }.must_be_silent
+    end
+
+    it "Doesn't count as a transaction if it causes balance to reach min" do
+      @account.withdraw(1500000)
+      @account.deposit(1500000)
+      4.times { @account.deposit(100) }
+      proc { @account.deposit(300) }.must_be_silent
+    end
+  end
+
+  describe "#add_interest" do
+    it "Returns the interest calculated" do
+      @account.add_interest(0.25).must_equal 5000
+    end
+
+    it "Updates the balance with calculated interest" do
+      @account.add_interest(0.35)
+      @account.balance.must_equal 2007000
+    end
+
+    it "Requires a positive rate" do
+      proc { @account.add_interest(0) }.must_raise ArgumentError
+      proc { @account.add_interest(-5) }.must_raise ArgumentError
     end
   end
 end

@@ -43,9 +43,7 @@ describe "Wave 1" do
       start_balance = 100.0
       withdrawal_amount = 25.0
       account = Bank::Account.new(1337, start_balance, "1999-03-27 11:30:09 -0800")
-
       account.withdraw(withdrawal_amount)
-
       expected_balance = start_balance - withdrawal_amount
       account.balance.must_equal expected_balance
     end

@@ -68,7 +68,7 @@ describe "CheckingAccount" do
       withdrawal_amount = 110.0
       account = Bank::CheckingAccount.new(1337, start_balance)
       updated_balance = account.withdraw_using_check(withdrawal_amount)
-      updated_balance.must_equal -10
+      updated_balance.must_equal (-10)
     end
 
     it "Outputs a warning if the account would go below -$10" do
@@ -94,60 +94,60 @@ describe "CheckingAccount" do
       proc {
         account.deposit(deposit_amount)
       }.must_raise ArgumentError
-     end
-      #
-  it "Allows 3 free uses" do
-    start_balance = 100.0
-    withdrawal_amount = 10.0
-    account = Bank::CheckingAccount.new(1337, start_balance)
-    updated_balance = account.withdraw_using_check(withdrawal_amount)
-    updated_balance = account.withdraw_using_check(withdrawal_amount)
-    updated_balance = account.withdraw_using_check(withdrawal_amount)
-    updated_balance.must_equal 70.0
-  end
-
-  it "Applies a $2 fee after the third use" do
-    start_balance = 100.0
-    withdrawal_amount = 10.0
-    account = Bank::CheckingAccount.new(1337, start_balance)
-    updated_balance = account.withdraw_using_check(withdrawal_amount)
-    updated_balance = account.withdraw_using_check(withdrawal_amount)
-    updated_balance = account.withdraw_using_check(withdrawal_amount)
-    updated_balance = account.withdraw_using_check(withdrawal_amount)
-    updated_balance.must_equal 58
-  end
     end
     #
-    describe "#reset_checks" do
-      it "Can be called without error" do
-        start_balance = 100.0
-        account = Bank::CheckingAccount.new(1337, start_balance)
-        account.reset_checks
-      end
+    it "Allows 3 free uses" do
+      start_balance = 100.0
+      withdrawal_amount = 10.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance.must_equal 70.0
+    end
 
-      it "Makes the next three checks free if less than 3 checks had been used" do
-        start_balance = 100.0
-        withdrawal_amount = 10
-        account = Bank::CheckingAccount.new(1337, start_balance)
-        account.reset_checks
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        updated_balance.must_equal 70
-      end
-
-      it "Makes the next three checks free if more than 3 checks had been used" do
-        start_balance = 100.0
-        withdrawal_amount = 10
-        account = Bank::CheckingAccount.new(1337, start_balance)
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        account.reset_checks
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        updated_balance = account.withdraw_using_check(withdrawal_amount)
-        updated_balance.must_equal 40
-      end
+    it "Applies a $2 fee after the third use" do
+      start_balance = 100.0
+      withdrawal_amount = 10.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance.must_equal 58
     end
   end
+  #
+  describe "#reset_checks" do
+    it "Can be called without error" do
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      account.reset_checks
+    end
+
+    it "Makes the next three checks free if less than 3 checks had been used" do
+      start_balance = 100.0
+      withdrawal_amount = 10
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      account.reset_checks
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance.must_equal 70
+    end
+
+    it "Makes the next three checks free if more than 3 checks had been used" do
+      start_balance = 100.0
+      withdrawal_amount = 10
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      account.reset_checks
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance.must_equal 40
+    end
+  end
+end

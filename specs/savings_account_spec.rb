@@ -60,7 +60,7 @@ describe "SavingsAccount" do
       interest_rate = 2.5
       time_in_months = 1
       account = Bank::SavingsAccount.new(1337, start_balance)
-      account.add_interest(2.5, 1).must_equal 2.5
+      account.add_interest(interest_rate, time_in_months).must_equal 2.5
     end
 
     it "Updates the balance with calculated interest" do

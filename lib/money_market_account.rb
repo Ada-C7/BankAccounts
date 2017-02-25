@@ -49,6 +49,7 @@ module Bank
 
     def add_interest(rate)
       raise ArgumentError.new "Rate must be positive" if rate <= 0
+
       interest = @balance * (rate / 100)
       @balance += interest
       return interest

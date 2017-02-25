@@ -4,6 +4,21 @@ module Bank
   class Owner
     attr_reader :id, :last_name, :first_name, :address, :city, :state
 
+    def initialize(owner_hash)
+      @owner_hash = owner_hash
+
+      if validate_owner_info(:id).class != Integer
+        raise ArgumentError.new "ID must be an Integer"
+      end
+
+      @id = validate_owner_info(:id)
+      @last_name = validate_owner_info(:last_name)
+      @first_name = validate_owner_info(:first_name)
+      @address = validate_owner_info(:address)
+      @city = validate_owner_info(:city)
+      @state = validate_owner_info(:state)
+    end
+
     def self.all
       owners = []
       CSV.read("support/owners.csv").each do |line|
@@ -27,18 +42,6 @@ module Bank
       raise ArgumentError.new("Owner does not exist")
     end
 
-    def initialize(owner_hash)
-      @owner_hash = owner_hash
-
-      raise ArgumentError.new "ID must be an Integer" if validate_owner_info(:id).class != Integer
-      @id = validate_owner_info(:id)
-      @last_name = validate_owner_info(:last_name)
-      @first_name = validate_owner_info(:first_name)
-      @address = validate_owner_info(:address)
-      @city = validate_owner_info(:city)
-      @state = validate_owner_info(:state)
-    end
-
     # makes sure required fields are not nil or empty strings
     def validate_owner_info(required_field)
       if !@owner_hash.has_key?(required_field) || @owner_hash[required_field] == ""
@@ -47,15 +50,5 @@ module Bank
         return @owner_hash[required_field]
       end
     end
-
   end
 end
-
-# owners = Bank::Owner.all
-#
-# owners.each do |owner|
-#   puts owner.state
-#
-# end
-#
-# puts Bank::Owner.find(20).first_name

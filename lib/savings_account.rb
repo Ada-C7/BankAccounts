@@ -4,10 +4,11 @@ module Bank
   class SavingsAccount < Bank::Account
 
     def initialize(id, balance, date)
-      super(id, balance, date)
 
       #interpreting 1000 as 10.00 because of how the csv file defined balance
-      raise ArgumentError.new "Balance must be at least 1000" if @balance < 1000
+      raise ArgumentError.new "Balance must be at least 1000" if balance < 1000
+
+      super(id, balance, date)
     end
 
     def withdraw(withdrawal_amount)
@@ -17,7 +18,6 @@ module Bank
       end
 
       super(withdrawal_amount)
-
       return @balance -= 200 #interpreting 200 as $2.00
     end
 

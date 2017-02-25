@@ -35,12 +35,10 @@ module Bank
 
       @monthly_checks_used += 1
       return @balance -= (amount + fee)
-
     end
 
     def reset_checks
       @monthly_checks_used = 0
     end
-
   end
 end

@@ -25,17 +25,12 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100.0, "1999-03-27 11:30:09 -0800")
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
-      # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0, "1999-03-27 11:30:09 -0800")
     end
 
@@ -176,31 +171,33 @@ describe "Wave 2" do
     @csv_info = CSV.read('support/accounts.csv')
   end
 
-  describe "Account.all" do
-    it "Returns an array of all accounts" do
-
-      # Account.all returns an array
+  describe "Account#all" do
+    it "Account.all returns an array" do
       @account_array.must_be_instance_of Array
+    end
 
-      # Everything in the array is an Account
+    it "Everything in the array is an Account" do
       @account_array.each do |account|
         account.must_be_instance_of Bank::Account
       end
+    end
 
-      # The number of accounts is correct
+    it "The number of accounts is correct" do
       @account_array.length.must_equal @csv_info.count
+    end
 
-      # The ID & balance of the first & last accounts are correct
+    it "The ID, balance, and date of the first & last accounts are correct" do
       @account_array[0].id.must_equal @csv_info[0][0].to_i
       @account_array[0].balance.must_equal @csv_info[0][1].to_i
+      @account_array[0].date.must_equal DateTime.parse(@csv_info[0][2])
 
       @account_array[-1].id.must_equal @csv_info[-1][0].to_i
       @account_array[-1].balance.must_equal @csv_info[-1][1].to_i
-
+      @account_array[-1].date.must_equal DateTime.parse(@csv_info[-1][2])
     end
   end
 
-  describe "Account.find" do
+  describe "Account#find" do
     it "Returns an account that exists" do
       Bank::Account.find(15151).must_be_instance_of Bank::Account
       Bank::Account.find(15151).balance.must_equal 9844567
@@ -217,7 +214,7 @@ describe "Wave 2" do
     end
 
     it "Raises an error for an account that doesn't exist" do
-      proc { Bank::Account.find("FAKEID") }.must_raise ArgumentError
+      proc { Bank::Account.find(789078) }.must_raise ArgumentError
     end
   end
 end

@@ -62,22 +62,22 @@ describe "Owner class methods" do
     @csv_info = CSV.read('support/owners.csv')
   end
 
-  describe "Owner.all" do
-
-    it "Returns an array of all owners" do
-
-      # Owner.all returns an array
+  describe "Owner#all" do
+    it "Owner#all returna an array" do
       @owner_array.must_be_instance_of Array
+    end
 
-      # Everything in the array is an Owner
+    it "Everything in the array is an Owner" do
       @owner_array.each do |owner|
         owner.must_be_instance_of Bank::Owner
       end
+    end
 
-      # The number of owners is correct
+    it "The number of owners is correct" do
       @owner_array.length.must_equal @csv_info.count
+    end
 
-      # The information for the first & last owners is correct
+    it "The information for the first & last owners is correct" do
       @owner_array[0].id.must_equal @csv_info[0][0].to_i
       @owner_array[0].last_name.must_equal @csv_info[0][1]
       @owner_array[0].first_name.must_equal @csv_info[0][2]
@@ -91,11 +91,10 @@ describe "Owner class methods" do
       @owner_array[-1].address.must_equal @csv_info[-1][3]
       @owner_array[-1].city.must_equal @csv_info[-1][4]
       @owner_array[-1].state.must_equal @csv_info[-1][5]
-
     end
   end
 
-  describe "Owner.find" do
+  describe "Owner#find" do
     it "Returns an owner that exists" do
       Bank::Owner.find(20).must_be_instance_of Bank::Owner
       Bank::Owner.find(20).first_name.must_equal "Helen"
@@ -112,8 +111,7 @@ describe "Owner class methods" do
     end
 
     it "Raises an error for an owner that doesn't exist" do
-      proc { Bank::Owner.find("FAKEID") }.must_raise ArgumentError
+      proc { Bank::Owner.find(9873) }.must_raise ArgumentError
     end
   end
-
 end

@@ -10,8 +10,6 @@ describe "MoneyMarketAccount" do
 
   describe "#initialize" do
     it "Is a kind of Account" do
-
-      # Check that a MoneyMarketAccount is in fact a kind of account
       @account.must_be_kind_of Bank::Account
     end
 
@@ -29,12 +27,14 @@ describe "MoneyMarketAccount" do
 
     it "Doesn't modify the balance if the $100 fee makes the account go negative" do
       updated_balance = @account.withdraw(1990001)
+      
       updated_balance.must_equal 2000000
       @account.balance.must_equal 2000000
     end
 
     it "Allows the balance to go to zero" do
       updated_balance = @account.withdraw(@account.balance - 10000)
+
       updated_balance.must_equal 0
       @account.balance.must_equal 0
     end
@@ -69,6 +69,7 @@ describe "MoneyMarketAccount" do
       @account.withdraw(1500000)
       @account.deposit(1600000)
       4.times { @account.deposit(100) }
+
       proc { @account.deposit(300) }.must_be_silent
     end
 
@@ -76,6 +77,7 @@ describe "MoneyMarketAccount" do
       @account.withdraw(1500000)
       @account.deposit(1500000)
       4.times { @account.deposit(100) }
+
       proc { @account.deposit(300) }.must_be_silent
     end
   end

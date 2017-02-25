@@ -3,17 +3,12 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/checking_account'
 
-# Because a CheckingAccount is a kind
-# of Account, and we've already tested a bunch of functionality
-# on Account, we effectively get all that testing for free!
-# Here we'll only test things that are different.
-
 describe "CheckingAccount" do
   before do
     @account = Bank::CheckingAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800")
   end
+
   describe "#initialize" do
-    # Check that a CheckingAccount is in fact a kind of account
     it "Is a kind of Account" do
       @account.must_be_kind_of Bank::Account
     end
@@ -21,14 +16,12 @@ describe "CheckingAccount" do
 
   describe "#withdraw" do
 
-    # I am interpreting 100 as $100
+    # I am interpreting 100 as $1.00
     it "Applies a $1 fee each time" do
       start_balance = @account.balance
-      withdrawal_amount = 1000
+      @account.withdraw(1000)
+      expected_balance = start_balance - 1000 - 100
 
-      @account.withdraw(withdrawal_amount)
-
-      expected_balance = start_balance - withdrawal_amount - 100
       @account.balance.must_equal expected_balance
     end
 
@@ -42,21 +35,17 @@ describe "CheckingAccount" do
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
       start_balance = @account.balance
-      withdrawal_amount = 2500
+      @account.withdraw_using_check(2500)
+      expected_balance = start_balance - 2500
 
-      @account.withdraw_using_check(withdrawal_amount)
-
-      expected_balance = start_balance - withdrawal_amount
       @account.balance.must_equal expected_balance
     end
 
     it "Returns the modified balance" do
       start_balance = @account.balance
-      withdrawal_amount = 2300
+      updated_balance = @account.withdraw_using_check(2300)
+      expected_balance = start_balance - 2300
 
-      updated_balance = @account.withdraw_using_check(withdrawal_amount)
-
-      expected_balance = start_balance - withdrawal_amount
       updated_balance.must_equal expected_balance
     end
 
@@ -91,7 +80,7 @@ describe "CheckingAccount" do
 
     it "Applies a $2 fee after the third use" do
       original_balance = @account.balance
-
+      
       @account.withdraw_using_check(100)
       @account.withdraw_using_check(250)
       @account.withdraw_using_check(1000)

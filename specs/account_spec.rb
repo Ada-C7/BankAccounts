@@ -242,6 +242,7 @@ describe "Wave 2" do
   describe "Owner.all" do
     before do
       @owners = Bank::Owner.all
+      @accounts = Bank::Account.all
     end
 
     it "Returns an array" do
@@ -268,13 +269,13 @@ describe "Wave 2" do
       @owners = Bank::Owner.all
     end
 
-    it "Returns an account that exists" do
+    it "Returns an owner that exists" do
       id_check = @owners[0].id
       owner = Bank::Owner.find(id_check)
       expect(owner.id).must_equal id_check
     end
 
-    it "Can find the first account from the CSV" do
+    it "Can find the first owner from the CSV" do
       test_array = []
       CSV.open("support/owners.csv", 'r').each do |owner|
         test_array << owner
@@ -284,7 +285,7 @@ describe "Wave 2" do
       expect(owner.id).must_equal id_check
     end
 
-    it "Can find the last account from the CSV" do
+    it "Can find the last owner from the CSV" do
       test_array = []
       CSV.open("support/owners.csv", 'r').each do |owner|
         test_array << owner
@@ -294,11 +295,22 @@ describe "Wave 2" do
       expect(owner.id).must_equal id_check
     end
 
-    it "Raises an error for an account that doesn't exist" do
+    it "Raises an error for an owner that doesn't exist" do
       proc {
         Bank::Owner.find(21345)
       }.must_raise ArgumentError
     end
 
+    # it "Finds a relationship between an Account and an Owner" do
+    #   CSV.open("support/account_owners.csv", 'r').each do |owner|
+    #     owner_id = owner[1]
+    #     @accounts.each do |account|
+    #       if account.id == owner[0]
+    #         owner = Bank::Owner.find(owner_id)
+    #         expect(owner.id).must_equal owner_id
+    #       end
+    #     end
+    #   end
+    #   end
+    end
   end
-end

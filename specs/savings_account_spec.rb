@@ -43,7 +43,6 @@ describe "SavingsAccount" do
       proc {
         @account.withdraw(95.0)
       }.must_output /.+/
-
     end
 
     it "Doesn't modify the balance if it would go below $10" do
@@ -53,8 +52,6 @@ describe "SavingsAccount" do
 
       updated_balance.must_equal start_balance
       @account.balance.must_equal start_balance
-
-
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
@@ -64,7 +61,6 @@ describe "SavingsAccount" do
 
       updated_balance.must_equal start_balance
       @account.balance.must_equal start_balance
-
     end
   end
 
@@ -83,11 +79,9 @@ describe "SavingsAccount" do
 
     it "Requires a positive rate" do
       # TODO: Your test code here!
-
       proc {
         @account.add_interest(-10)
       }.must_raise ArgumentError
-
     end
   end
 end

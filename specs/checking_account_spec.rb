@@ -72,16 +72,27 @@ describe "CheckingAccount" do
 
     it "Requires a positive withdrawal amount" do
       # TODO: Your test code here!
-      account = Bank::SavingsAccount.new(12345, 100)
-      account.add_interest(-25).must_equal(100)  #???????
+      proc {
+        account = Bank::CheckingAccount.new(12345, 100)
+        account.withdraw_using_check(-25)
+      }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do
       # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100)
+      account.withdraw_using_check(10).must_equal(90)
+      account.withdraw_using_check(10).must_equal(80)
+      account.withdraw_using_check(10).must_equal(70)
     end
 
     it "Applies a $2 fee after the third use" do
       # TODO: Your test code here!
+      account = Bank::CheckingAccount.new(12345, 100)
+      account.withdraw_using_check(10).must_equal(90)
+      account.withdraw_using_check(10).must_equal(80)
+      account.withdraw_using_check(10).must_equal(70)
+      account.withdraw_using_check(10).must_equal(58)
     end
   end
 

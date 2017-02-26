@@ -161,35 +161,65 @@ end
 # end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
+
   describe "Account.all" do
     it "Returns an array of all accounts" do
+      Bank::Account.read_csv
       # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+      Bank::Account.all.must_be_instance_of Array, "Not an array"
+    end
+
+    it "Everything in an array is an account" do
+      Bank::Account.read_csv
+      Bank::Account.all.each do |account|
+        account.must_be_instance_of Bank::Account, "Not an account"
+      end
+    end
+
+    it "Returns the right number of accounts" do
+      Bank::Account.read_csv
+      Bank::Account.all.length.must_equal 12
+    end
+
+    it "first and last accounts have matching ID and balance" do
+      #TW: Sometimes produces errors, why?
+      Bank::Account.all.first.id.must_equal 1212
+      Bank::Account.all.first.balance.must_equal 1235667
+      Bank::Account.all.last.id.must_equal 15156
+      Bank::Account.all.last.balance.must_equal 4356772
     end
   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      if Bank::Account.all[6].id == 15151
+        Bank::Account.find(15151).balance.must_equal 9844567
+      end
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find(1212).balance.must_equal 1235667
+      Bank::Account.find(1212).open_date.must_equal "1999-03-27 11:30:09 -0800"
     end
 
     it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find(15156).balance.must_equal 4356772
+      Bank::Account.find(15156).open_date.must_equal "1994-11-17 14:04:56 -0800"
     end
 
     it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+      proc {
+          Bank::Account.find(001)
+      }.must_raise ArgumentError
     end
   end
 end
+
+# Useful checks might include:
+#   - Account.all returns an array
+#   - Everything in the array is an Account
+#   - The number of accounts is correct
+#   - The ID and balance of the first and last
+#       accounts match what's in the CSV file
+# Feel free to split this into multiple tests if needed

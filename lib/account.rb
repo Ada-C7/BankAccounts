@@ -5,48 +5,42 @@ module Bank
     attr_reader :id
     attr_accessor :balance
 
-    # should get info from csv
-    # create new instances of Account based on the csv info
-    # create an array of Account instances
-    # and return it
     def self.all
-      accounts_array = CSV.read("/Users/alena/Documents/Ada/projects/BankAccounts/support/accounts.csv")
-
+      accounts_array = CSV.read("support/accounts.csv")
       new_accounts = []
 
       accounts_array.each do |line|
         new_accounts << Account.new(line[0].to_i, line[1].to_i)
       end
-      return new_accounts
 
+      return new_accounts
     end
 
     def self.find(id)
+
       Account.all.each do |account|
         if account.id == id
           return account
         end
       end
-      raise ArgumentError.new
+
+      raise ArgumentError.new "Account: #{id} does not exist"
     end
 
-    def initialize id, start_balance
-      # raise ArgumentError.new("amount must be >= 0") is amount < 0
+    def initialize(id, start_balance)
 
       @id = id
 
       if start_balance >= 0
         @balance = start_balance
-      else raise ArgumentError.new
+      else raise ArgumentError.new "New balance must be equal or greater than 0"
       end
     end
 
     def withdraw(withdrawal_amount)
-      # dont need an else beacuse it stops the program
 
-      # raise ArgumentError.new("amount must be >= 0") is amount < 0
       if withdrawal_amount < 0
-        raise ArgumentError.new
+        raise ArgumentError.new "Withdrawal amount must be positive"
       elsif withdrawal_amount > @balance
         print "You are withdrawing too much!"
         return @balance
@@ -57,9 +51,9 @@ module Bank
     end
 
     def deposit(deposit_amount)
-      # raise ArgumentError.new("amount must be >= 0") is amount < 0
+
       if deposit_amount < 0
-        raise ArgumentError.new
+        raise ArgumentError.new "Deposit amount must be positive"
       end
 
       @balance += deposit_amount
@@ -67,6 +61,3 @@ module Bank
 
   end
 end
-
-#puts Bank::Account.all
-puts Bank::Account.find(1212)

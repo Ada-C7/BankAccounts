@@ -1,13 +1,16 @@
+require 'csv'
 
 module Bank
+
   class Account
-    attr_reader :id, :balance
+    attr_reader :id, :balance, :open_date, :withdrawal_fee
 
     ARRAY_OF_ACCOUNTS = []
 
-    def initialize(id, balance) # method to initialize and accept two parameters...ID and starting balance
+    def initialize(id, balance, open_date = nil, withdrawal_fee = 0) # method to initialize and accept two parameters...ID and starting balance
       @id = id
-
+      @withdrawal_fee = withdrawal_fee
+      @open_date = open_date
       if balance >= 0
         @balance = balance
       else
@@ -21,11 +24,11 @@ module Bank
         raise ArgumentError.new "Please enter a positive integer."
       end
 
-      if withdrawal_amount > balance
+      if (withdrawal_amount + @withdrawal_fee) > balance
         print "Tried to withdraw #{ withdrawal_amount } when you only have #{ balance }." # needed to output something instead of raising an error
         return balance
       else
-        bal_after_withdrawal = balance - withdrawal_amount
+        bal_after_withdrawal = balance - withdrawal_amount - @withdrawal_fee
         @balance = bal_after_withdrawal
         return balance
       end
@@ -50,17 +53,18 @@ module Bank
 
       if ARRAY_OF_ACCOUNTS.empty? # This allows us to start with a blank slate so that each time we run .all we aren't just appending to the array
 
-        csv_data = CSV.read("../support/accounts.csv")
+        csv_data = CSV.read("support/accounts.csv")
 
         csv_data.each do |line|
-          ARRAY_OF_ACCOUNTS << Account.new(line[0].to_i, line[1].to_i)
+          ARRAY_OF_ACCOUNTS << Account.new(line[0].to_i, line[1].to_i, line[2])
         end
       end
       return ARRAY_OF_ACCOUNTS
     end
 
     def self.find(id)
-
+      Bank::Account.all
+      
       ARRAY_OF_ACCOUNTS.each do |account|
         if account.id == id
           return account
@@ -68,6 +72,5 @@ module Bank
       end # end of the each loop
       raise ArgumentError.new "Account doesn't exist."
     end
-
   end
 end

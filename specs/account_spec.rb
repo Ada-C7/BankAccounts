@@ -84,7 +84,7 @@ describe "Wave 1" do
       account.balance.must_equal start_balance
     end
 
-    it "Allows the balance to go to 0" do
+    it "Allows the balance to go to 10 because that is the minimum balance." do
       account = Bank::Account.new(1337, 100.0)
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
@@ -140,6 +140,11 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
+
+    before do
+      @accounts = Bank::Account.all
+    end
+
     it "Returns an array of all accounts" do
       # TODO: Your test code here!
       # Useful checks might include:
@@ -150,7 +155,9 @@ describe "Wave 2" do
       #       accounts match what's in the CSV file
       # Feel free to split this into multiple tests if needed
 
-      accounts_array = Bank::Account.all
+
+      accounts_array = @accounts
+      accounts_array.must_be_instance_of Array
 
 
 
@@ -172,28 +179,29 @@ describe "Wave 2" do
   end
 
   describe "Account.find" do
+    
+    before do
+      @accounts = Bank::Account.all
+    end
+
     it "Returns an account that exists" do
       # TODO: Your test code here!
-      Bank::Account.all
       Bank::Account.find(1213).wont_be_nil # non nil
 
     end
 
     it "Can find the first account from the CSV" do
       # TODO: Your test code here!
-      Bank::Account.all
       Bank::Account.find(1212).wont_be_nil
     end
 
     it "Can find the last account from the CSV" do
       # TODO: Your test code here!
-      Bank::Account.all
       Bank::Account.find(15156).wont_be_nil
     end
 
     it "Raises an error for an account that doesn't exist" do
       # TODO: Your test code here!
-      Bank::Account.all
       proc {
         Bank::Account.find(7777)
       }.must_raise ArgumentError

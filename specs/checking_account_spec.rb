@@ -33,46 +33,98 @@ describe "CheckingAccount" do
       account.balance.must_equal expected_balance
     end
 
-    it "Doesn't modify the balance if the fee would put it negative" do
-      skip
-      # TODO: Your test code here!
+    it "Doesn't modify the balance if the fee would put negative" do
+      # skip
+      start_balance = 10.0
+      withdraw_amount = 10.0
+      account = Bank::MoneyMarketAccount.new(666, start_balance)
+
+      account.withdraw(withdraw_amount)
+
+      expected_balance = start_balance - withdraw_amount - 1
+      account.balance.must_equal start_balance
     end
   end
 
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      start_balance = 100.0
+      check_withdraw_amount = 50.0
+      account = Bank::MoneyMarketAccount.new(666, start_balance)
+
+      account.withdraw_using_check(check_withdraw_amount)
+
+      expected_balance = start_balance - check_withdraw_amount
+      account.balance.must_equal expected_balance
     end
 
     it "Returns the modified balance" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      start_balance = 100.0
+      check_withdraw_amount = 50.0
+      account = Bank::MoneyMarketAccount.new(666, start_balance)
+
+      account.withdraw_using_check(check_withdraw_amount)
+
+      expected_balance = start_balance - check_withdraw_amount
+      account.balance.must_equal expected_balance
     end
 
     it "Allows the balance to go down to -$10" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      start_balance = 100.0
+      check_withdraw_amount = 110.0
+      account = Bank::MoneyMarketAccount.new(666, start_balance)
+
+      account.withdraw_using_check(check_withdraw_amount)
+
+      expected_balance = start_balance - check_withdraw_amount
+      account.balance.must_equal expected_balance
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      proc {
+        Bank::MoneyMarketAccount.new(666, -11)
+      }.must_raise ArgumentError
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      start_balance = 100.0
+      check_withdraw_amount = 111.0
+      account = Bank::MoneyMarketAccount.new(666, start_balance)
+
+      account.withdraw_using_check(check_withdraw_amount)
+
+      # expected_balance = start_balance - check_withdraw_amount
+      account.balance.must_equal start_balance
     end
 
     it "Requires a positive withdrawal amount" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      start_balance = 100.0
+      withdrawal_amount = -50.0
+      account = Bank::MoneyMarketAccount.new(666, start_balance)
+
+      proc {
+        account.withdraw_using_check(withdrawal_amount)
+      }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do
       skip
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 2.0
+      account = Bank::MoneyMarketAccount.new(666, start_balance)
+
+      3.times do
+        account.withdraw_using_check(withdrawal_amount)
+        expected_balance = expected_balance - withdrawal_amount
+      end
+
+      # account.balance.must_equal expected_balance
     end
 
     it "Applies a $2 fee after the third use" do

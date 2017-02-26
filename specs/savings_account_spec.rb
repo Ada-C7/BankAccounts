@@ -74,24 +74,43 @@ describe "SavingsAccount" do
   describe "#add_interest" do
     it "Returns the interest calculated" do
       skip
-      start_balance = 100
+      start_balance = 100.0
+      withdraw_amount = 25.0
       interest_rate = 0.25
       account = Bank::SavingsAccount.new(666, start_balance)
 
       account.add_interest(interest_rate)
 
-      expected_interest = start_balance * (interest_rate / 100)
-      account.interest.must_equal expected_interest #ERROR
+      expected_interest = start_balance + (interest_rate / 100)
+      account.interest.must_equal expected_interest
     end
 
     it "Updates the balance with calculated interest" do
-      skip
-      # TODO: Your test code here!
+      # skip
+      start_balance = 100
+      withdraw_amount = 25.0
+      interest_rate = 0.25
+      account = Bank::SavingsAccount.new(666, start_balance)
+
+      account.add_interest(interest_rate)
+
+      expected_balance = start_balance + (start_balance * (interest_rate / 100))
+      account.balance.must_equal expected_balance
     end
 
-    it "Requires a positive rate" do
-      skip
-      # TODO: Your test code here!
+    #This test wasn't mentioned in the requirements so I wasn't
+    #sure what y'all were looking for.
+    it "Requires a positive interest rate" do
+      # skip
+      start_balance = 100
+      withdraw_amount = 25.0
+      interest_rate = -0.25
+      account = Bank::SavingsAccount.new(666, start_balance)
+
+      proc {
+        account.add_interest(interest_rate)
+      }.must_raise ArgumentError
+
     end
   end
 end

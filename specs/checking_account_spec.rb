@@ -13,7 +13,7 @@ require_relative '../lib/checking_account'
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "CheckingAccount" do
   before do
-  @account = Bank::CheckingAccount.new(12345, 100.0)
+    @account = Bank::CheckingAccount.new(12345, 100.0)
   end
 
   describe "#initialize" do

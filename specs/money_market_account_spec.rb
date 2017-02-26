@@ -11,6 +11,15 @@ describe "MoneyMarketAccount" do
       account.must_be_kind_of Bank::Account
     end
 
+    # Checks for instance variables
+    it "Initial value for instance variable are set" do
+      account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
+      account.must_respond_to :num_transaction
+      account.num_transaction.must_equal 0
+      account.must_respond_to :new_month
+      account.new_month.must_equal false
+    end
+
     # Raises an error when attemted to initialize MoneyMarketAccount with initial balance less than $10,000
     it "Invalid initial balance" do
       proc {
@@ -22,7 +31,7 @@ describe "MoneyMarketAccount" do
   describe "#withdraw" do
     # Raises error when an erroneous withdrawal amount is entered
     it "Requires a positive withdrawal amount" do
-      account = Bank::MoneyMarketAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800")
+      account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
       proc {
         account.withdraw(-1000)
       }.must_raise ArgumentError
@@ -31,15 +40,15 @@ describe "MoneyMarketAccount" do
     # Withdraw method will reduce accout balance, if there are no conflicts
     it "Reduces the balance" do
       account =Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
-      account.withdraw(1000)
-      account.balance.must_equal 999000
+      account.withdraw(100000)
+      account.balance.must_equal 890000
     end
 
     # If a withdrawal causes the balance to go below $10,000, a fee of $100 is imposed
     it "Applies a $100 fee when withdrawal causes the balance to go below $10,000" do
       account = Bank::MoneyMarketAccount.new(12345, 2000000, "1999-03-27 11:30:09 -0800")
-      account.withdraw(1100000)
-      account.must_equal 890000
+      account.withdraw(1500000)
+      account.balance.must_equal 490000
     end
 
     # If the balance is below $10,000, balance does not change
@@ -57,15 +66,17 @@ describe "MoneyMarketAccount" do
       account.num_transaction.must_equal 2
     end
 
-    # transaction is not allowed when the num_transaction is greater than equal to 6
+    # Transaction is not allowed when the num_transaction is greater than equal to 6
     it "Doesn't modify the balance if the num_transaction is greater than equal to 6" do
       account = Bank::MoneyMarketAccount.new(12345, 2000000, "1999-03-27 11:30:09 -0800")
-      account.num_transaction = 6
-      account.withdraw(1100000).must_equal 2000000
+      6.times do
+        account.withdraw(0)
+      end
+      account.withdraw(11000).must_equal 2000000
     end
   end
 
-  describe "#deposit" do
+  xdescribe "#deposit" do
     # Raises error when an erroneous deposit amount is entered
     it "Requires a positive deposit amount" do
       account = Bank::MoneyMarketAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800")
@@ -105,7 +116,7 @@ describe "MoneyMarketAccount" do
       account.num_transaction.must_equal 2
     end
 
-    # transaction is not allowed when the num_transaction is greater than equal to 6
+    # Transaction is not allowed when the num_transaction is greater than equal to 6
     it "Doesn't modify the balance if the num_transaction is greater than equal to 6" do
       account = Bank::MoneyMarketAccount.new(12345, 2000000, "1999-03-27 11:30:09 -0800")
       account.num_transaction = 6
@@ -113,7 +124,7 @@ describe "MoneyMarketAccount" do
     end
   end
 
-  describe "#add_interest" do
+  xdescribe "#add_interest" do
     # Only the actual interest amount added is returned
     it "Returns the interest calculated" do
       Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800").add_interest(0.25).must_equal 250000
@@ -135,9 +146,9 @@ describe "MoneyMarketAccount" do
   describe "#reset_transactions" do
     #  Resets the number of transactions to zero
     it "Resets the num_transaction to 0" do
-      account = Bank::CheckingAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
+      account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
       5.times do
-        account.deposit(100000)
+        account.withdraw(1000)
       end
       account.new_month = true
       account.reset_transactions
@@ -146,11 +157,11 @@ describe "MoneyMarketAccount" do
 
     # When the num_transaction is zero, calling this method outputs a message
     it "Outputs a message when the num_transaction is already 0" do
-      account = Bank::CheckingAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
+      account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
       account.new_month = true
       proc {
         account.reset_transactions
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
   end
 end

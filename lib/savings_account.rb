@@ -5,7 +5,7 @@ module  Bank
 
   class SavingsAccount < Account
     def initialize(id, start_balance, date = nil)
-      super(id, start_balance, date = nil)
+      super(id, start_balance)
       if start_balance < 10.0
         raise ArgumentError, 'You need at least $10 to open the account'
       end
@@ -31,5 +31,5 @@ module  Bank
       return interest
     end
   end
-  
+
 end

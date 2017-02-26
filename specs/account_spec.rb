@@ -125,41 +125,40 @@ describe "Wave 2" do
 
     it "Everything in the array is an Account" do
       Bank::Account.all.each do |account|
-        account.must_be_instance_of Bank::Account, "Not instance of Account Class"
+        account.must_be_instance_of Bank::Account
       end
+    end
 
-      it "The number of accounts is correct" do
-        Bank::Account.all.length.must_equal 12
-      end
+    it "The number of accounts is correct" do
+      Bank::Account.all.length.must_equal 12
+    end
 
-      it "Id and Balance of first and last account match" do
-        Bank::Account.all[0].id.must_equal(1212)
-        Bank::Account.all[0].balance.must_equal(1235667)
-        Bank::Account.all[-1].id.must_equal(15156)
-        Bank::Account.all[-1].balance.must_equal(4356772)
-      end
+    it "Id and Balance of first and last account match" do
+      Bank::Account.all[0].id.must_equal(1212)
+      Bank::Account.all[0].balance.must_equal(1235667)
+      Bank::Account.all[-1].id.must_equal(15156)
+      Bank::Account.all[-1].balance.must_equal(4356772)
     end
   end
+end
 
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      Bank::Account.find(1217)
-    end
-
-    it "Can find the first account from the CSV" do
-      Bank::Account.find(1212)
-      # Bank::Account.all.must_match(Bank::Account.find(Array))
-    end
-
-    it "Can find the last account from the CSV" do
-      Bank::Account.find(15156)
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      proc{
-        Bank::Account.find(98387584)
-      }.must_raise ArgumentError
-    end
+describe "Account.find" do
+  it "Returns an account that exists" do
+    Bank::Account.find(1217)
   end
 
+  it "Can find the first account from the CSV" do
+    Bank::Account.find(1212)
+    # Bank::Account.all.must_match(Bank::Account.find(Array))
+  end
+
+  it "Can find the last account from the CSV" do
+    Bank::Account.find(15156)
+  end
+
+  it "Raises an error for an account that doesn't exist" do
+    proc{
+      Bank::Account.find(98387584)
+    }.must_raise ArgumentError
+  end
 end

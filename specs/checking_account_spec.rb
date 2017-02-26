@@ -61,7 +61,7 @@ describe "CheckingAccount" do
     it "Outputs a warning if the account would go below -$10" do
       # TODO: Your test code here!
       account = Bank::CheckingAccount.new(12345, 100)
-      account.withdraw(111).must_equal(100)
+      account.withdraw_using_check(111).must_equal(100)
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
@@ -72,8 +72,8 @@ describe "CheckingAccount" do
 
     it "Requires a positive withdrawal amount" do
       # TODO: Your test code here!
-      # account = Bank::SavingsAccount.new(12345, 100)
-      # account.add_interest(-25).must_equal(100)  #???????
+      account = Bank::SavingsAccount.new(12345, 100)
+      account.add_interest(-25).must_equal(100)  #???????
     end
 
     it "Allows 3 free uses" do

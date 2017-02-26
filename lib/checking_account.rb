@@ -14,7 +14,8 @@ module Bank
 
     def withdraw_using_check(amount)
       if amount > @balance + 10
-        raise ArgumentError.new "Amount too large, please enter a smaller amount."
+        puts "Amount too large, please enter a smaller amount."
+        return @balance
       else
         @balance = @balance - amount
         return @balance

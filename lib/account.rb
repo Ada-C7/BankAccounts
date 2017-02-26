@@ -1,7 +1,6 @@
 require 'csv'
 require 'date'
 
-# Bank module contains Account class and any future bank account logic.
 module Bank
   class Account
     # Allows access to the current balance of an account at any time.

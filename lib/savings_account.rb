@@ -12,7 +12,7 @@ module Bank
     # Method that handles withdraw
     def withdraw(withdraw_amount)
       # Raise error for non integer withdraw value
-      raise ArgumentError.new ("Withdraw amount must be a positive numericla value") if ( !(withdraw_amount.class == Integer || withdraw_amount.class == Float) || withdraw_amount < 0 )
+      raise ArgumentError.new ("Withdraw amount must be a positive numerical value") if ( !(withdraw_amount.class == Integer || withdraw_amount.class == Float) || withdraw_amount < 0 )
       # Raises error for negativd withdraw value
       raise ArgumentError.new("Withdraw amount cannot be a negetive value") if withdraw_amount < 0
 

@@ -185,27 +185,18 @@ describe "Wave 2" do
 
     it "Returns an account that exists" do
       # TODO: Your test code here!
-
       account = Bank::Account.find(1212)
       account.must_be_instance_of Bank::Account
     end
 
     it "Can find the first account from the CSV" do
       # TODO: Your test code here!
-
-      # accounts = Bank::Account.all
-      # id_check = accounts[0].id
-      # account = Bank::Account.find(id_check)
-      # expect(account.id).must_equal id_check
-
-      # accounts = Bank::Account.all
       account = Bank::Account.find(1212)
       account.id.must_equal @accounts[0].id
     end
 
     it "Can find the last account from the CSV" do
       # TODO: Your test code here!
-      # accounts = Bank::Account.all
       account = Bank::Account.find(15156)
       account.id.must_equal @accounts[-1].id
     end

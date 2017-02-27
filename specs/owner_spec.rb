@@ -48,5 +48,50 @@ describe "Wave 1- optionals" do
       janices_account.owner.must_be_instance_of Bank::Owner
     end
   end
+end
 
+describe "Wave 2- optionals" do
+
+  describe "Owner.all" do
+    it "Returns an array" do
+      Bank::Owner.reset_all_owners_for_test
+      Bank::Owner.read_csv
+      expect(Bank::Owner.all).must_be_instance_of Array, "Not an array."
+    end
+
+    it "Returns an array consisting only of owners" do
+      Bank::Owner.reset_all_owners_for_test
+      Bank::Owner.read_csv
+      Bank::Owner.all.each do |owner|
+        owner.must_be_instance_of Bank::Owner, "Not an instance of Account class."
+      end
+    end
+
+    it "Returns an array with the correct number of accounts" do
+      Bank::Owner.reset_all_owners_for_test
+      Bank::Owner.read_csv
+      expect(Bank::Owner.all.length).must_equal 12, "Wrong number of accounts"
+    end
+
+    it "gives correct values for the ID and state of the first and last
+    accounts match what's in the CSV file" do
+    Bank::Owner.reset_all_owners_for_test
+    Bank::Owner.read_csv
+    expect(Bank::Owner.all.first.id).must_equal 14, "ID of first owner is incorrect."
+    Bank::Owner.reset_all_owners_for_test
+    Bank::Owner.read_csv
+    expect(Bank::Owner.all.first.state).must_equal "Hawaii", "State of first owner is incorrect."
+    Bank::Owner.reset_all_owners_for_test
+    Bank::Owner.read_csv
+    expect(Bank::Owner.all.last.id).must_equal 25, "ID of second owner is incorrect."
+    Bank::Owner.reset_all_owners_for_test
+    Bank::Owner.read_csv
+    expect(Bank::Owner.all.last.state).must_equal "New York", "ID of second owner is incorrect."
+  end
+
+end
+
+describe "Account.find" do
+
+end
 end

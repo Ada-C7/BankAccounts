@@ -3,7 +3,7 @@ require 'csv'
 module Bank
   class Account
 
-    attr_reader :balance, :id, :open_date 
+    attr_reader :balance, :id, :open_date
 #can self.all be refactored if for no other reason than my understanding
     def self.all
       new_account_info = []
@@ -35,7 +35,7 @@ module Bank
       @balance = balance
       @open_date = open_date
     end
-#redundant as @min_balance in savings account - i think it is being overridden by min balance
+
     def opening_balance(balance)
       if @opening_balance >= 0
         @opening_balance
@@ -46,13 +46,10 @@ module Bank
 
     def withdraw(amount_to_withdraw)
       if amount_to_withdraw > @balance
-        puts "Insufficient funds. Your balance is #{@balance}"
+        raise ArgumentError.new "Insufficient funds. Your balance is #{@balance}"
       elsif amount_to_withdraw < 0
-        raise ArgumentError.new "amount must be >= 0"
-        # start_balance = @balance
-        # @balance = start_balance
+        raise ArgumentError.new "Withdraw amount must be a positive number."
       else
-        # start_balance = @balance
         @balance -= amount_to_withdraw
       end
       return @balance

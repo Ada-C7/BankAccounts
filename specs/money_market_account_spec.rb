@@ -6,9 +6,9 @@ require_relative '../lib/money_market_account'
 describe "MoneyMarketAccount" do
   describe "#initialize" do
     # Check that a MoneyMarketAccount is in fact a kind of account
-    it "Is a kind of Account" do
+    it "Is a kind of SavingsAccount" do
       account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
-      account.must_be_kind_of Bank::Account
+      account.must_be_kind_of Bank::SavingsAccount
     end
 
     # Checks for instance variables
@@ -76,10 +76,10 @@ describe "MoneyMarketAccount" do
     end
   end
 
-  xdescribe "#deposit" do
+  describe "#deposit" do
     # Raises error when an erroneous deposit amount is entered
     it "Requires a positive deposit amount" do
-      account = Bank::MoneyMarketAccount.new(12345, 10000, "1999-03-27 11:30:09 -0800")
+      account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
       proc {
         account.deposit(-1000)
       }.must_raise ArgumentError
@@ -95,8 +95,8 @@ describe "MoneyMarketAccount" do
     # If a deposit causes the balance to be greater than equal to $10,000, a fee of $100 is removed
     it "Removes $100 fee when deposit causes the balance to be greater than equal to $10,000" do
       account = Bank::MoneyMarketAccount.new(12345, 2000000, "1999-03-27 11:30:09 -0800")
-      account.withdraw(1100000)
-      account.deposit(1100000)
+      account.withdraw(1500000)
+      account.deposit(1510000)
       account.withdraw(1000000).must_equal 1000000
     end
 
@@ -111,27 +111,29 @@ describe "MoneyMarketAccount" do
     # With each deposit, the num_transaction count goes up by 1
     it "Each deposit transaction will be counted against the maximum number of transactions" do
       account = Bank::MoneyMarketAccount.new(12345, 2000000, "1999-03-27 11:30:09 -0800")
-      account.deposit(1100)
-      account.deposit(1100)
+      2.times do
+        account.deposit(1100)
+      end
       account.num_transaction.must_equal 2
     end
 
     # Transaction is not allowed when the num_transaction is greater than equal to 6
     it "Doesn't modify the balance if the num_transaction is greater than equal to 6" do
       account = Bank::MoneyMarketAccount.new(12345, 2000000, "1999-03-27 11:30:09 -0800")
-      account.num_transaction = 6
+      account.num_transaction = 10
       account.deposit(1100000).must_equal 2000000
     end
   end
 
-  xdescribe "#add_interest" do
+  describe "#add_interest" do
     # Only the actual interest amount added is returned
     it "Returns the interest calculated" do
-      Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800").add_interest(0.25).must_equal 250000
+      account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
+      account.add_interest(0.25).must_equal 250000
     end
     # Balance is updated
     it "Updates the balance with calculated interest" do
-      account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800").add_interest(0.25).must_equal 250000
+      account = Bank::MoneyMarketAccount.new(12345, 1000000, "1999-03-27 11:30:09 -0800")
       account.add_interest(0.25)
       account.balance.must_equal 1250000
     end

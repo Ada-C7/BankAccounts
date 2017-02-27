@@ -1,7 +1,7 @@
 require 'csv'
 module Bank
   class Account
-    attr_reader :id, :balance, :open_date
+    attr_accessor :id, :balance, :open_date
 
     def initialize(id, balance, open_date = nil) #the equal to nil is so the other wave one tests pass
       raise ArgumentError.new("balance must be >= 0") if balance < 0

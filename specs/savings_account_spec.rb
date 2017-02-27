@@ -75,7 +75,7 @@ describe "SavingsAccount" do
     end
 
     it "Updates the balance with calculated interest" do skip
-      interest_rate_rate = 0.25
+      interest_rate = 0.25
       start_balance = 10000.0
       account = Bank::SavingsAccount.new(1337, start_balance)
       interest_account = account.interest(interest_rate)

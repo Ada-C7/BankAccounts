@@ -130,7 +130,17 @@ describe "CheckingAccount" do
 
     it "Applies a $2 fee after the third use" do
       skip
-      # TODO: Your test code here!
+      start_balance = 100.0
+      withdrawal_amount = 2.0
+      account = Bank::MoneyMarketAccount.new(666, start_balance)
+
+      4.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+
+      expected_balance = (start_balance - (4 * withdrawal_amount)) - 2
+
+      account.balance.must_equal expected_balance
     end
   end
 

@@ -73,7 +73,7 @@ describe "SavingsAccount" do
 
   describe "#add_interest" do
     it "Returns the interest calculated" do
-      skip
+      # skip
       start_balance = 100.0
       withdraw_amount = 25.0
       interest_rate = 0.25
@@ -81,7 +81,7 @@ describe "SavingsAccount" do
 
       account.add_interest(interest_rate)
 
-      expected_interest = start_balance + (interest_rate / 100)
+      expected_interest = start_balance + (interest_rate / 100.0)
       account.interest.must_equal expected_interest
     end
 
@@ -94,7 +94,7 @@ describe "SavingsAccount" do
 
       account.add_interest(interest_rate)
 
-      expected_balance = start_balance + (start_balance * (interest_rate / 100))
+      expected_balance = start_balance + (start_balance * (interest_rate / 100.0))
       account.balance.must_equal expected_balance
     end
 

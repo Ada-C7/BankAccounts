@@ -30,7 +30,10 @@ module Bank
     def withdraw_using_check(amount)
       start_balance = @balance
       withdrawal_amount = amount
-      if withdrawal_amount < (-10)
+      if withdrawal_amount < -1
+        raise ArgumentError.new 'You cannot withdraw a negative number'
+      end
+      if withdrawal_amount > (start_balance + 10)
         raise ArgumentError.new 'You cannot withdraw more than -$10'
       end
       @balance = start_balance - withdrawal_amount
@@ -40,6 +43,8 @@ module Bank
       if @number_of_checks > 3
         @balance = start_balance - withdrawal_amount - 2
       end
+
+      return @balance
     end
 
     def reset_checks

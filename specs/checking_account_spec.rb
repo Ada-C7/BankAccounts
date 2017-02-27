@@ -46,36 +46,64 @@ describe "CheckingAccount" do
   end
 
   describe "#withdraw_using_check" do
+
+    #Chris's method
+    before do
+      @account = Bank::CheckingAccount.new(12345, 100.0)
+      @starting_balance = @account.balance
+    end
+
     it "Reduces the balance" do
       # TODO: Your test code here!
+      @account.withdraw_using_check(25)
+      @account.balance.must_equal @starting_balance - 25
     end
 
     it "Returns the modified balance" do
       # TODO: Your test code here!
+      @account.withdraw_using_check(25)
+      @account.balance.must_equal @starting_balance - 25
+
     end
 
     it "Allows the balance to go down to -$10" do
       # TODO: Your test code here!
+      @account.withdraw_using_check(@account.balance + 10.0).must_equal (-10)
     end
 
     it "Outputs a warning if the account would go below -$10" do
       # TODO: Your test code here!
+      proc {
+        @account.withdraw_using_check(@starting_balance + 15)
+      }.must_raise ArgumentError
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do
       # TODO: Your test code here!
+      @account.balance.must_equal @starting_balance
     end
 
     it "Requires a positive withdrawal amount" do
       # TODO: Your test code here!
+      proc {
+        @account.withdraw_using_check(-25)
+      }.must_raise ArgumentError
     end
 
     it "Allows 3 free uses" do
       # TODO: Your test code here!
+      3.times do
+        @account.withdraw_using_check(10)
+      end
+      @account.balance.must_equal @starting_balance - 30
     end
 
     it "Applies a $2 fee after the third use" do
       # TODO: Your test code here!
+      4.times do
+        @account.withdraw_using_check(10)
+      end
+      @account.balance.must_equal @starting_balance - 42
     end
   end
 
@@ -105,7 +133,7 @@ describe "CheckingAccount" do
 
     it "Makes the next three checks free if more than 3 checks had been used" do
       # TODO: Your test code here!
-      4.times do 
+      4.times do
         @account.withdraw_using_check(10)
       end
       @account.reset_checks

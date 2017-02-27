@@ -1,5 +1,4 @@
 require 'csv'
-# require 'awesome_print'
 
 module Bank
   class Account
@@ -13,22 +12,19 @@ module Bank
     end
 
     def withdraw(amount)
-      raise ArgumentError.new("withdrawl must be >= 0") if amount < 0
-      @balance -= amount
-      return @balance if @balance >= 0
-      puts "Requested withdrawl amount surpasses account balance."
-      @balance += amount
+      balance_min = 0
+      withdraw_internal(amount, balance_min)
     end
 
     def deposit(amount)
-      raise ArgumentError.new("deposit must be >= 0") if amount < 0
+      raise ArgumentError.new("deposit must be > 0") if amount <= 0
       @balance += amount
     end
 
     def self.all
       accounts = []
       CSV.open("support/accounts.csv").each do |line|
-        accounts << self.new(line[0].to_i, line[1].to_i, line[2])
+        accounts << self.new(line[0].to_f/100, line[1].to_f/100, line[2])
       end
       return accounts
     end
@@ -40,12 +36,20 @@ module Bank
       raise ArgumentError.new("ID does not exist")
     end
 
-    #   CSV.open("support/accounts.csv").each do |line|
-    #     if line.first.to_i == id
-    #       return self.new(line[0].to_i, line[1].to_i, line[2])
-    #     end
-    #   end
-    #   raise ArgumentError.new("ID does not exist")
-    # end
+    private
+    
+    def withdraw_internal(amount, balance_min)
+      raise ArgumentError.new("withdrawl must be > 0") if amount <= 0
+      if update_balance?(amount, balance_min)
+        @balance -= amount
+      end
+      return @balance
+    end
+
+    def update_balance?(amount, balance_min)
+      return true if @balance - amount >= balance_min
+      puts "Requested withdrawl amount surpasses allowable account balance."
+      return false
+    end
   end
 end

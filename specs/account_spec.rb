@@ -19,10 +19,6 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
@@ -147,8 +143,9 @@ describe "Wave 2" do
 
     it "Contains only Account elements in the returned array" do
       accounts = Bank::Account.all
+      # Check that each element within the array is an instance of the Account class
       accounts.each do |account|
-        account.must_be_instance_of Bank::Account # checks that each element within that array is an instance of the Account class
+        account.must_be_instance_of Bank::Account
       end
     end
 
@@ -159,8 +156,8 @@ describe "Wave 2" do
     end
 
     it "Creates a first account with the csv's first listed ID and balance" do
-      first_id = CSV.read("support/accounts.csv").first[0].to_i
-      first_balance = CSV.read("support/accounts.csv").first[1].to_i
+      first_id = CSV.read("support/accounts.csv").first[0].to_f/100
+      first_balance = CSV.read("support/accounts.csv").first[1].to_f/100
       accounts = Bank::Account.all
 
       accounts.first.id.must_equal first_id
@@ -168,8 +165,8 @@ describe "Wave 2" do
     end
 
     it "Creates a last account with the csv's last listed ID and balance" do
-      last_id = CSV.read("support/accounts.csv").last[0].to_i
-      last_balance = CSV.read("support/accounts.csv").last[1].to_i
+      last_id = CSV.read("support/accounts.csv").last[0].to_f/100
+      last_balance = CSV.read("support/accounts.csv").last[1].to_f/100
       accounts = Bank::Account.all
 
       accounts.last.id.must_equal last_id
@@ -185,17 +182,17 @@ describe "Wave 2" do
     end
 
     it "Returns an account that exists" do
-      seventh_id = CSV.read("support/accounts.csv")[6][0].to_i
+      seventh_id = CSV.read("support/accounts.csv")[6][0].to_f/100
       find_and_verify_account(seventh_id)
     end
 
     it "Can find the first account from the CSV" do
-      first_id = CSV.read("support/accounts.csv").first[0].to_i
+      first_id = CSV.read("support/accounts.csv").first[0].to_f/100
       find_and_verify_account(first_id)
     end
 
     it "Can find the last account from the CSV" do
-      last_id = CSV.read("support/accounts.csv").last[0].to_i
+      last_id = CSV.read("support/accounts.csv").last[0].to_f/100
       find_and_verify_account(last_id)
     end
 

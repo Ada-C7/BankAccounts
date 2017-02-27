@@ -32,7 +32,6 @@ describe "Wave 1" do
       Bank::Account.new(1337, 0)
     end
   end
-
   describe "Account#withdraw" do
     it "Reduces the balance" do
       start_balance = 100.0
@@ -44,6 +43,7 @@ describe "Wave 1" do
       expected_balance = start_balance - withdrawal_amount
       account.balance.must_equal expected_balance
     end
+
 
     it "Returns the modified balance" do
       start_balance = 100.0
@@ -69,7 +69,6 @@ describe "Wave 1" do
         account.withdraw(withdrawal_amount)
       }.must_output /.+/
     end
-
     it "Doesn't modify the balance if the account would go negative" do
       start_balance = 100.0
       withdrawal_amount = 200.0
@@ -112,60 +111,130 @@ describe "Wave 1" do
       expected_balance = start_balance + deposit_amount
       account.balance.must_equal expected_balance
     end
+  end
 
-    it "Returns the modified balance" do
-      start_balance = 100.0
-      deposit_amount = 25.0
-      account = Bank::Account.new(1337, start_balance)
+  it "Returns the modified balance" do
+    start_balance = 100.0
+    deposit_amount = 25.0
+    account = Bank::Account.new(1337, start_balance)
 
-      updated_balance = account.deposit(deposit_amount)
+    updated_balance = account.deposit(deposit_amount)
 
-      expected_balance = start_balance + deposit_amount
-      updated_balance.must_equal expected_balance
-    end
+    expected_balance = start_balance + deposit_amount
+    updated_balance.must_equal expected_balance
+  end
 
-    it "Requires a positive deposit amount" do
-      start_balance = 100.0
-      deposit_amount = -25.0
-      account = Bank::Account.new(1337, start_balance)
 
-      proc {
-        account.deposit(deposit_amount)
-      }.must_raise ArgumentError
-    end
+  it "Requires a positive deposit amount" do
+    start_balance = 100.0
+    deposit_amount = -25.0
+    account = Bank::Account.new(1337, start_balance)
+
+    proc {
+      account.deposit(deposit_amount)
+    }.must_raise ArgumentError
+  end
+end
+describe "Account#add_owner" do
+  it "takes an owner and updates it" do
+    account = Bank::Account.new(1337, 100)
+    owner = Bank::Owner.new("26", "Berrie", "Kevin", "8113 Sutherland Center", "Seattle", "WA")
+    account.add_owner(owner)
+    account.owner.must_equal owner
+  end
+end
+describe "Owner#initialize" do
+  it "Takes a name and an address" do
+    first_name = "Kevin"
+    street_address = "8113 Sutherland Center"
+    owner = Bank::Owner.new("26", "Berrie", "Kevin", "8113 Sutherland Center", "Seattle", "WA")
+    owner.must_respond_to :first_name
+    owner.first_name.must_equal first_name
+
+    owner.must_respond_to :street_address
+    owner.street_address.must_equal street_address
   end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
-  describe "Account.all" do
+describe "Wave 2" do
+end
+   describe "Account.all" do
     it "Returns an array of all accounts" do
-      # TODO: Your test code here!
       # Useful checks might include:
       #   - Account.all returns an array
+      Bank::Account.all.must_be_instance_of Array
       #   - Everything in the array is an Account
+      Bank::Account.all.each do |x|
+        x.must_be_instance_of Bank::Account
+      end
       #   - The number of accounts is correct
+      Bank::Account.all.length.must_equal 12
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+      Bank::Account.all[0].id.must_equal "1212"
+      Bank::Account.all[0].balance.must_equal 12356.67
+      Bank::Account.all[11].id.must_equal "15156"
+      Bank::Account.all[11].balance.must_equal 43567.72
+
     end
-  end
+   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      Bank::Account.find("15151").must_be_instance_of Bank::Account
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find("1212").must_be_instance_of Bank::Account
+
     end
 
     it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
+      Bank::Account.find("15156").must_be_instance_of Bank::Account
+
     end
 
     it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+      proc {
+        Bank::Account.find("abcd").must_raise ArgumentError
+      }
     end
   end
-end
+
+  describe "Owner.all" do
+   it "Returns an array of all accounts" do
+     Bank::Owner.all.must_be_instance_of Array
+     Bank::Owner.all.each do |x|
+       x.must_be_instance_of Bank::Owner
+     end
+     Bank::Owner.all.length.must_equal 12
+     Bank::Owner.all[0].id.must_equal "14"
+     Bank::Owner.all[0].last_name.must_equal "Morales"
+     Bank::Owner.all[11].id.must_equal "25"
+     Bank::Owner.all[11].last_name.must_equal "Clark"
+
+   end
+  end
+
+  describe "Owner.find" do
+    it "Returns an owners that exists" do
+      Bank::Owner.find("20").must_be_instance_of Bank::Owner
+    end
+
+    it "Can find the first owner from the CSV" do
+      Bank::Owner.find("14").must_be_instance_of Bank::Owner
+
+    end
+
+    it "Can find the last owner from the CSV" do
+      Bank::Owner.find("25").must_be_instance_of Bank::Owner
+
+    end
+
+    it "Raises an error for an owner that doesn't exist" do
+      proc {
+        Bank::Owner.find("ab").must_raise ArgumentError
+      }
+    end
+  end

@@ -2,10 +2,10 @@ require 'csv'
 require 'date'
 require_relative 'account'
 
-
 module Bank
 
   class MoneyMarketAccount < Account
+
 
     def initialize(id, balance, open_date='2010-12-21 12:21:12 -0800')
       super(id, balance, open_date)
@@ -16,6 +16,10 @@ module Bank
 
     def transaction_count
       @transactions_used
+    end
+
+    def reset_transactions
+      @transactions_used = 0
     end
 
     def withdraw(withdrawal_amount)
@@ -41,16 +45,24 @@ module Bank
     end
 
     def deposit(deposit_amount)
-
-      if @transactions_used < 6
-        @transactions_used += 1
+      if !(@transactions_allowed)
+        @transactions_allowed = true
         super(deposit_amount)
-        if !(@transactions_allowed)
-          @transactions_allowed = true
+      else
+        if @transactions_used < 6
+          @transactions_used += 1
+          super(deposit_amount)
+        else puts "You have already used all your transactions this month."
+          @balance
         end
-      else puts "You have already used all your transactions this month."
-        @balance
       end
+    end
+
+    def add_interest(rate)
+      raise ArgumentError.new("Interest rate must be > 0") if rate <= 0
+      interest = @balance * (rate/100)
+      @balance += interest
+      return interest
     end
 
   end

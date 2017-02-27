@@ -25,7 +25,7 @@ describe "SavingsAccount" do
 
 
   describe "#withdraw" do
-    
+
     #Since withdraw was overridden, must retest the basic functionality
     it "Requires a positive withdrawal amount" do
       start_balance = 100.0

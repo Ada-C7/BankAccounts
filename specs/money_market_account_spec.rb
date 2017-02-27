@@ -58,6 +58,18 @@ describe "MoneyMarketAccount" do
       account.withdraw(withdrawal_amount)
       account.balance.must_equal updated_balance
     end
+
+    it "A deposit performed to reach or exceed the minimum balance of $10,000 is not counted as part of the 6 transactions" do
+      start_balance = 11050
+      withdrawal_amount = 10
+      account = Bank::MoneyMarketAccount.new(1337, start_balance)
+      5.times {account.withdraw(withdrawal_amount)}
+      account.withdraw(2000)
+      updated_balance = account.balance
+      deposit_amount = 5000
+      account.deposit(deposit_amount)
+      account.balance.must_equal (updated_balance + 5000)
+    end
   end
 
   describe "#withdraw" do
@@ -103,6 +115,45 @@ describe "MoneyMarketAccount" do
       account.withdraw(100)
       account.balance.must_equal (updated_balance - 100)
     end
+  end
+
+  describe "#reset_transactions" do
+    it "Can be called without error" do
+      account = Bank::MoneyMarketAccount.new(1337, 50000)
+      account.reset_transactions
+    end
+
+    it "Re-enables transactions after they have been disabled dur to 6 transactions" do
+      withdrawal_amount = 100
+      deposit_amount = 300
+      account = Bank::MoneyMarketAccount.new(1337, 50000)
+      3.times {account.withdraw(withdrawal_amount)}
+      3.times {account.deposit(deposit_amount)}
+      account.reset_transactions
+      updated_balance = account.balance
+      account.withdraw(withdrawal_amount)
+      account.balance.must_equal (updated_balance - withdrawal_amount)
+    end
+  end
+
+    describe "#add_interest" do
+      it "Returns the interest calculated" do
+        account = Bank::MoneyMarketAccount.new(1337, 10000)
+        account.add_interest(0.25).must_equal 25
+      end
+
+      it "Updates the balance with calculated interest" do
+        account = Bank::MoneyMarketAccount.new(1337, 10000)
+        account.add_interest(0.25)
+        account.balance.must_equal 10025
+      end
+
+      it "Requires a positive rate" do
+        account = Bank::MoneyMarketAccount.new(1337, 10000)
+        proc {
+          account.add_interest(-0.25)
+        }.must_raise ArgumentError
+      end
+    end
 
   end
-end

@@ -33,8 +33,5 @@ module Bank
         return interest
       end
     end
-
   end
-
-
 end

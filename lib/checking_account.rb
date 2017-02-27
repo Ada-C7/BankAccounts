@@ -37,7 +37,6 @@ module Bank
       end
     end
 
-
     def reset_checks
       if @check_num <= 0
         @check_num = 3

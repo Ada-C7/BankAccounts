@@ -12,11 +12,8 @@ module Bank
         open_date = file[2]
         new_account = Account.new(id, balance, open_date)
         account << new_account
-        # puts account
       end
       return account
-      # puts account
-
     end
 
     def self.find(id)
@@ -38,8 +35,6 @@ module Bank
       end
     end
 
-
-
     def withdraw(withdrawal_amount)
       if withdrawal_amount > @balance
         puts "Warning, the balance cannot be negative"
@@ -55,27 +50,9 @@ module Bank
       #raise ArgumentError.new("amount must be >= 0") if amount < 0
       if deposit_amount < 0
         raise ArgumentError.new "The deposit must be greater than 0"
-
       else
         @balance += deposit_amount
       end
     end
   end
 end
-# puts Bank::Account.withdraw(10)
-
-# class CheckingAccount < Account
-# end
-#
-# puts CheckingAccount
-# puts Bank::Account.all
-# def withdraw(amount)
-#   raise ArgumentError.new("amount must be >= 0") if amount < 0
-#
-#   if @balance - amount < 0
-#     puts "Oh no! Account will be negative"
-#     return @balance
-#   else
-#     @balance -= amount
-#   end
-# end

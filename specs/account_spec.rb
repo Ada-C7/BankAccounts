@@ -13,23 +13,18 @@ describe "Wave 1" do
 
       account.must_respond_to :id
       account.id.must_equal id
-
+      
       account.must_respond_to :balance
       account.balance.must_equal balance
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
-      # If this raises, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end
   end
@@ -59,10 +54,6 @@ describe "Wave 1" do
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
 
-      # Another proc! This test expects something to be printed
-      # to the terminal, using 'must_output'. /.+/ is a regular
-      # expression matching one or more characters - as long as
-      # anything at all is printed out the test will pass.
       proc { account.withdraw(withdrawal_amount)
       }.must_output(/.+/)
     end
@@ -73,15 +64,13 @@ describe "Wave 1" do
       account = Bank::Account.new(1337, start_balance)
 
       updated_balance = account.withdraw(withdrawal_amount)
-
-      # Both the value returned and the balance in the account
-      # must be un-modified.
       updated_balance.must_equal start_balance
       account.balance.must_equal start_balance
     end
 
     it "Allows the balance to go to 0" do
       account = Bank::Account.new(1337, 100.0)
+
       updated_balance = account.withdraw(account.balance)
       updated_balance.must_equal 0
       account.balance.must_equal 0
@@ -105,7 +94,6 @@ describe "Wave 1" do
       account = Bank::Account.new(1337, start_balance)
 
       account.deposit(deposit_amount)
-
       expected_balance = start_balance + deposit_amount
       account.balance.must_equal expected_balance
     end
@@ -116,7 +104,6 @@ describe "Wave 1" do
       account = Bank::Account.new(1337, start_balance)
 
       updated_balance = account.deposit(deposit_amount)
-
       expected_balance = start_balance + deposit_amount
       updated_balance.must_equal expected_balance
     end
@@ -133,21 +120,13 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
 
-      #before do
-      #   @accounts = Bank::Account.all
-      # end
-
       account = Bank::Account.all
-      #  account.class.must_equal Array
-      #  Account.all returns an array
-      account.must_be_instance_of Array
 
-      #loop through array to retrieve instance of bank account put assertion that account is instance
+      account.must_be_instance_of Array
 
       #   - Everything in the array is an Account
       account.each do |element|
@@ -166,27 +145,23 @@ describe "Wave 2" do
 
     describe "Account.find" do
       it "Returns an account that exists" do
-        # TODO: Your test code here!
         account = Bank::Account.find(1212)
         account.must_be_instance_of Bank::Account
       end
 
       it "Can find the first account from the CSV" do
-        # TODO: Your test code here!
         accounts = Bank::Account.all
         account = Bank::Account.find(1212)
         account.id.must_equal accounts[0].id
       end
 
       it "Can find the last account from the CSV" do
-        # TODO: Your test code here!
         accounts = Bank::Account.all
         account = Bank::Account.find(15156)
         account.id.must_equal accounts[-1].id
       end
 
       it "Raises an error for an account that doesn't exist" do
-        # TODO: Your test code here!
         proc { Bank::Account.find(111111)
         }.must_output(/.+/)
       end

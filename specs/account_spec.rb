@@ -3,6 +3,8 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
 
+Minitest::Reporters.use!
+
 describe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
@@ -137,35 +139,85 @@ describe "Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
-  describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
-    end
-  end
+describe "Wave 2" do
 
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
+     before do
 
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
+          @all_accounts = Bank::Account.all("../support/accounts.csv")
 
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
+     end
 
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
-  end
+     describe "Account.all" do
+
+         it "Returns an array of all accounts" do
+
+              @all_accounts.must_be_kind_of Array
+
+          end
+
+         it "The number of accounts is correct" do
+
+              @all_accounts.length.must_equal 12
+
+          end
+
+
+          it "Everything in the array is an Account" do
+
+              @all_accounts.each do | account |
+
+                  account.must_be_kind_of Bank::Account
+
+               end
+
+          end
+
+
+         it "The ID and balance of the first and last accounts match what's in the CSV file" do
+
+              @all_accounts[0].id.must_equal 1212
+              @all_accounts[-1].id.must_equal 15156
+              @all_accounts[0].balance.must_equal 1235667
+              @all_accounts[-1].balance.must_equal 4356772
+
+          end
+
+     end
+
+     describe "Account.find" do
+
+          it "Returns an account that exists" do
+
+              find_account = Bank::Account.find("../support/accounts.csv", 1213)
+              find_account.must_be_kind_of Bank::Account
+              find_account.id.must_equal 1213
+
+          end
+
+          it "Can find the first account from the CSV" do
+
+             find_account = Bank::Account.find_with_index("../support/accounts.csv", 0)
+             find_account.must_be_kind_of Bank::Account
+             find_account.id.must_equal 1212
+
+          end
+
+          it "Can find the last account from the CSV" do
+
+              find_account = Bank::Account.find_with_index("../support/accounts.csv", -1)
+              find_account.must_be_kind_of Bank::Account
+              find_account.id.must_equal 15156
+
+          end
+
+          it "Raises an error for an account that doesn't exist" do
+
+               proc {find_account = Bank::Account.find("../support/accounts.csv", 3333)}.must_raise ArgumentError
+
+               proc {find_account = Bank::Account.find_with_index("../support/accounts.csv", 13)}.must_raise IndexError
+
+          end
+
+     end
+
 end

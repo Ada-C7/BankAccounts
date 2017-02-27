@@ -44,23 +44,3 @@ module Bank
     end
   end
 end
-
-
-# janice_hash={id:12345, last_name:'Lichtman', first_name:'Janice',  street_address:'16-28 Radburn Rd', city:'Fair Lawn', state:'NJ'}
-#
-# janice = Bank::Owner.new(janice_hash)
-# puts Bank::Owner.read_csv
-# puts janice.id
-# puts janice.last_name
-# puts janice.first_name
-# puts janice.street_address
-# puts janice.city
-# puts janice.state
-#
-# puts Bank::Owner.all
-#
-# #Bank::Owner.reset_all_owners_for_test
-# puts "********"
-# puts Bank::Owner.all
-#
-# Bank::Owner.find(25)

@@ -17,6 +17,21 @@ module Bank
       @@all_accounts << self
     end
 
+
+    def withdraw(withdrawal_amount)
+      raise ArgumentError.new("Withdrawal amount must be >= 0") if withdrawal_amount < 0
+      if withdrawal_amount > @balance
+        puts "You don't have enough in your account to withdraw that amount!"
+      else @balance -= withdrawal_amount
+      end
+      return @balance
+    end
+
+    def deposit(deposit_amount)
+      raise ArgumentError.new("Deposit amount must be >= 0") if deposit_amount < 0
+      @balance += deposit_amount
+    end
+
     def self.reset_all_accounts_for_test
       @@all_accounts = []
     end
@@ -40,20 +55,25 @@ module Bank
       return found_accounts[0]
     end
 
+    def self.add_owners_to_all_accounts
+      #self.reset_all_accounts_for_test
+      #Bank::Owner.reset_all_owners_for_test
+      self.read_csv
+      Bank::Owner.read_csv
 
-    def withdraw(withdrawal_amount)
-      raise ArgumentError.new("Withdrawal amount must be >= 0") if withdrawal_amount < 0
-      if withdrawal_amount > @balance
-        puts "You don't have enough in your account to withdraw that amount!"
-      else @balance -= withdrawal_amount
-      end
-      return @balance
+      account_owners_csv = CSV.open("./support/account_owners.csv")
+      account_owners_csv.each {|pair|
+        account_id = pair[0].to_i
+        owner_id = pair[1].to_i
+        account = self.find(account_id)
+        account.owner = Bank::Owner.find(owner_id)
+      }
     end
-
-    def deposit(deposit_amount)
-      raise ArgumentError.new("Deposit amount must be >= 0") if deposit_amount < 0
-      @balance += deposit_amount
-    end
-
   end
 end
+
+Bank::Account.add_owners_to_all_accounts
+Bank::Account.all.each {|acct|
+  puts acct.owner.state
+
+}

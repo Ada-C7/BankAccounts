@@ -3,7 +3,7 @@ require 'csv'
 module Bank
   class Account
     attr_reader :id, :balance, :date
-    def initialize(id, balance, date)
+    def initialize(id, balance, date = nil )
       raise ArgumentError.new("balance must be >= 0") if balance < 0
 
       @id = id
@@ -11,6 +11,9 @@ module Bank
       @date = date
     end
 
+    # Verifies that withdrawal amount is a positive number
+    # Updates balance if withdrawal amount is <= the balance
+    # Outputs warning and returns original balance if withdrawal amount is greater
     def withdraw(amount)
       raise ArgumentError.new("withdrawal amount must be >= 0") if amount < 0
 
@@ -22,11 +25,17 @@ module Bank
       end
     end
 
+    # Verifies that deposit amount is a positive number
+    # Issues an Argument error, if not
+    # Returns the updated balance, if so
     def deposit(amount)
       raise ArgumentError.new("deposit amount must be >= 0") if amount < 0
       @balance += amount
     end
 
+    # Reads account information from csv file
+    # Creates accounts for all accounts in csv file
+    # Stores all the accounts in an array
     def self.all
       accounts = []
       CSV.open("./support/accounts.csv").each do |line|
@@ -35,6 +44,8 @@ module Bank
       return accounts
     end
 
+    # Finds the account associated with the given ID number
+    # raises ArgumentError, if not 
     def self.find(id)
       all.each do |account|
         if account.id == id

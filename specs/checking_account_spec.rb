@@ -82,11 +82,12 @@ describe "CheckingAccount" do
 
     it "Applies a $2 fee after the third use" do
       # TODO: Your test code here!
-      account = Bank::CheckingAccount.new(12345, 500)
+      account = Bank::CheckingAccount.new(12345, 700)
+      account.withdraw_using_check(100).must_equal 600
+      account.withdraw_using_check(100).must_equal 500
       account.withdraw_using_check(100).must_equal 400
-      account.withdraw_using_check(100).must_equal 300
-      account.withdraw_using_check(100).must_equal 200
-      account.withdraw_using_check(100).must_equal 98
+      account.withdraw_using_check(100).must_equal 298
+      account.withdraw_using_check(100).must_equal 196
     end
   end
 

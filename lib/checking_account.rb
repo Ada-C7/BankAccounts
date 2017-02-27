@@ -22,9 +22,12 @@ module Bank
     end
 
     def withdraw_using_check(check_amount)
-      if @number_of_checks <= 3 && check_amount > 0
-        @balance -= check_amount
-
+      if check_amount > 0
+        if @number_of_checks >= 3
+          @balance -= check_amount + 2
+        else
+          @balance -= check_amount
+        end
         if @balance < -10
           puts "Overdraft is only allowed upto $10"
           @balance += check_amount
@@ -33,11 +36,6 @@ module Bank
         end
       else
         puts "Positive withdrawal amount is needed"
-      end
-
-      if @number_of_checks > 3
-        #@free_chashout = false
-        @balance -= 2
       end
       return @balance
     end

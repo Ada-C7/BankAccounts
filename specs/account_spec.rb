@@ -67,7 +67,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -136,36 +136,70 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+
+describe "Wave 2" do
   describe "Account.all" do
     it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+      Bank::Account.all.must_be_instance_of Array, "This is not an array"
+    end
+
+    it "Everything in the array is an Account" do
+      Bank::Account.all.each do |account|
+        if account.class != Bank::Account
+          puts "These are not accounts"
+        else
+          puts "These are accounts"
+        end
+      end
+    end
+
+    it "The number of accounts is correct" do
+      Bank::Account.all.length.must_equal 12
+    end
+
+    it "The ID and balance of the first and last accounts match what's in the CSV file." do
+      accounts_array = Bank::Account.all
+      accounts_array[0].id.must_equal(1212)
+      accounts_array[0].balance.must_equal(1235667)
+
+      accounts_array[11].id.must_equal(15156)
+      accounts_array[11].balance.must_equal(4356772)
+
+    end
+  end
+end
+
+describe "Account.find" do
+  it "Returns an account that exists" do
+    if Bank::Account.all[6].id == 15151
+      Bank::Account.find(15151).balance.must_equal 9844567
+      puts "Account found"
+    else
+      raise ArgumentError.new('Account not found')
     end
   end
 
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
+  it "Can find the first account from the CSV" do
+    if Bank::Account.all[0].id == 1212
+      Bank::Account.find(1212).open_date.must_equal "1999-03-27 11:30:09 -0800"
+      puts "First Account found"
+    else
+      raise ArgumentError.new('First Account not found')
     end
+  end
 
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+  it "Can find the last account from the CSV" do
+    if Bank::Account.all[-1].id == 15156
+      Bank::Account.find(15156).open_date.must_equal "1994-11-17 14:04:56 -0800"
+      puts "Last Account found"
+    else
+      raise ArgumentError.new('Last Account not found')
     end
+  end
 
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
+  it "Raises an error for an account that doesn't exist" do
+    proc {
+      Bank::Account.find(54321)
+    }.must_raise ArgumentError
   end
 end

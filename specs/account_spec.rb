@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require 'csv'
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -18,10 +19,6 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
@@ -67,7 +64,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -137,35 +134,74 @@ describe "Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+    it "Returns an array" do
+      accounts = Bank::Account.all
+      accounts.must_be_instance_of Array
+    end
+
+    it "Contains only Account elements in the returned array" do
+      accounts = Bank::Account.all
+      # Check that each element within the array is an instance of the Account class
+      accounts.each do |account|
+        account.must_be_instance_of Bank::Account
+      end
+    end
+
+    it "Includes the correct number of accounts in the returned array" do
+      accounts = Bank::Account.all
+      num_of_accounts = CSV.read("support/accounts.csv").size
+      accounts.length.must_equal num_of_accounts
+    end
+
+    it "Creates a first account with the csv's first listed ID and balance" do
+      first_id = CSV.read("support/accounts.csv").first[0].to_f/100
+      first_balance = CSV.read("support/accounts.csv").first[1].to_f/100
+      accounts = Bank::Account.all
+
+      accounts.first.id.must_equal first_id
+      accounts.first.balance.must_equal first_balance
+    end
+
+    it "Creates a last account with the csv's last listed ID and balance" do
+      last_id = CSV.read("support/accounts.csv").last[0].to_f/100
+      last_balance = CSV.read("support/accounts.csv").last[1].to_f/100
+      accounts = Bank::Account.all
+
+      accounts.last.id.must_equal last_id
+      accounts.last.balance.must_equal last_balance
     end
   end
 
   describe "Account.find" do
+    def find_and_verify_account(id)
+      account = Bank::Account.find(id)
+      account.must_be_instance_of Bank::Account
+      account.id.must_equal id
+    end
+
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      seventh_id = CSV.read("support/accounts.csv")[6][0].to_f/100
+      find_and_verify_account(seventh_id)
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      first_id = CSV.read("support/accounts.csv").first[0].to_f/100
+      find_and_verify_account(first_id)
     end
 
     it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
+      last_id = CSV.read("support/accounts.csv").last[0].to_f/100
+      find_and_verify_account(last_id)
     end
 
     it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+      fake_id = 80
+
+      proc {
+        Bank::Account.find(fake_id)
+      }.must_raise ArgumentError
     end
   end
 end

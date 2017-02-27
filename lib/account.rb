@@ -1,5 +1,21 @@
 require 'csv'
 
+#Adding this in after the reading this weekend.
+#b/c both savings and money market have interest
+#but are sisters not mother/daughter classes!
+module Interest
+
+  def add_interest(rate)
+    argument("Interest rate >=0") if rate < 0
+
+    interest = @balance * (rate/100)
+    @balance += interest
+
+    return interest
+  end
+
+end
+
 module Bank
 
   class Account
@@ -11,32 +27,26 @@ module Bank
       @id = id
       @opendate = opendate
       @balance = set_balance(start_balance)
-
     end
 
     def set_balance(start_balance)
-
       if start_balance < 0
         argument("You cannot initialize a new account with a negative balance.")
       else
         start_balance
       end
-
     end
 
     def self.all
-
       accounts = []
 
       CSV.open("support/accounts.csv").each do |account|
         accounts << Bank::Account.new(account[0].to_i, account[1].to_i, account[2])
       end
       return accounts
-
     end
 
     def self.find(id)
-
       @account = nil
 
       CSV.open("support/accounts.csv").each do |line|
@@ -50,21 +60,17 @@ module Bank
       else
         return @account
       end
-
     end
 
     def add_owner(owner)
-
       if owner.class == Owner
         @owner = owner
       else
         argument("You must add a class type of Owner.")
       end
-
     end
 
     def withdraw(withdrawal_amount)
-
       withdraw_positive(withdrawal_amount)
 
       if balance - withdrawal_amount < 0
@@ -73,42 +79,32 @@ module Bank
       else
         @balance -= withdrawal_amount
       end
-
     end
 
     #Should this be private??
     #b/c only used in check_withdrawals?
     def withdraw_positive(withdrawal_amount)
-
-      #makes sure the withdrawal amount is pos.
       argument("Withdrawal must be >= 0") if withdrawal_amount < 0
-
     end
 
     def deposit(deposit_amount)
-
       if deposit_amount > 0
         @balance += deposit_amount
       else
         argument("Your deposit must be greater than zero.")
       end
-
     end
 
     def argument(output)
-
       raise ArgumentError.new "#{ output }"
-
     end
 
   end
 
   class Owner
-
     attr_reader :last_name, :first_name, :street_address, :city, :state
 
     def initialize(
-
       id = nil, last_name = nil,
       first_name = nil, street_address = nil,
       city = nil, state = nil)
@@ -118,11 +114,9 @@ module Bank
       @street_address = street_address
       @city = city
       @state = state
-
     end
 
     def self.all
-
       owners = []
       CSV.open("support/owners.csv").each do |owner|
         owners << Bank::Owner.new(
@@ -132,11 +126,9 @@ module Bank
       end
 
       return owners
-
     end
 
     def self.find(id)
-
       @owner = nil
       CSV.open("support/owners.csv").each do |owner|
         if owner[0].to_i == id
@@ -145,7 +137,6 @@ module Bank
           owner[2], owner[3],
           owner[4], owner[5])
         end
-
       end
 
       if @owner == nil
@@ -153,7 +144,7 @@ module Bank
       else
         return @owner
       end
-      
+
     end
 
   end

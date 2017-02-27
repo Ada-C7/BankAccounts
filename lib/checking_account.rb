@@ -3,14 +3,11 @@ module Bank
   class CheckingAccount < Account
 
     def initialize(id, balance, opendate = nil)
-
       super
       @check_withdrawals = 0
-
     end
 
     def withdraw(withdrawal_amount)
-
       original_balance = balance
 
       super
@@ -23,7 +20,6 @@ module Bank
       else
         withdrawal_fee
       end
-
     end
 
     def withdrawal_fee
@@ -31,7 +27,6 @@ module Bank
     end
 
     def withdraw_using_check(withdrawal_amount)
-
       withdraw_positive(withdrawal_amount)
 
       if @balance - withdrawal_amount < -10
@@ -43,17 +38,14 @@ module Bank
       @balance -= withdrawal_amount
 
       check_fee
-
     end
 
     def check_fee
-
       if @check_withdrawals > 3
         @balance -= 2
       else
         @balance
       end
-
     end
 
     def reset_checks

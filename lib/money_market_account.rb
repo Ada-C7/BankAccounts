@@ -3,6 +3,9 @@ require_relative 'account'
 module Bank
 
   class MoneyMarketAccount < Bank::Account
+
+    include Interest
+
     attr_reader :total_transactions
 
     def initialize(id, balance, opendate = nil)
@@ -11,8 +14,6 @@ module Bank
     end
 
     def set_balance(start_balance)
-      # IF the initial balance is < 10,000
-      #raise an argument error.
       if start_balance < 10000
         argument("You cannot initialize a new Money Market account with less than 10k.")
       else
@@ -36,11 +37,9 @@ module Bank
       if @balance < 10000
         @balance -= 100
       end
-
     end
 
     def deposit(deposit_amount)
-
       if @balance > 10000
         @total_transactions += 1
       end
@@ -50,22 +49,10 @@ module Bank
       end
 
       super
-
     end
 
     def reset_transactions
       @total_transactions = 0
-    end
-
-    def add_interest(rate)
-
-      argument("Interest rate >=0") if rate < 0
-
-      interest = @balance * (rate/100)
-      @balance += interest
-
-      return interest
-
     end
 
   end

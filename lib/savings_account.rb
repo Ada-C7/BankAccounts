@@ -11,7 +11,6 @@ module Bank
       raise ArgumentError.new "Balance must be at least $10" unless balance >= 10
       @id = id
       @balance = balance
-      @interest = interest
     end
 
     def withdraw(withdrawal_amount)

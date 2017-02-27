@@ -8,6 +8,7 @@ module Bank
       super(id, balance)
 
       raise ArgumentError.new("balance must be >= 10") if balance < 10
+
     end
 
     def withdraw(amount)
@@ -20,8 +21,7 @@ module Bank
       end
     end
 
-
-    def interest(rate)
+    def add_interest(rate)
       raise ArgumentError.new("interest rate must be >= 0") if rate < 0
       interest_calculation = (@balance * (rate/100))
       @balance += interest_calculation

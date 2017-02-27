@@ -69,24 +69,24 @@ describe "SavingsAccount" do
       interest_rate = 0.25
       start_balance = 10000.0
       account = Bank::SavingsAccount.new(1337, start_balance)
-      interest_account = account.interest(interest_rate)
+      interest_account = account.add_interest(interest_rate)
       interest_account.must_equal start_balance * (interest_rate/100), "Calculated interest was not returned."
 
     end
 
-    it "Updates the balance with calculated interest" do skip
+    it "Updates the balance with calculated interest" do
       interest_rate = 0.25
       start_balance = 10000.0
       account = Bank::SavingsAccount.new(1337, start_balance)
-      interest_account = account.interest(interest_rate)
-      interest_account.must_equal (start_balance + (start_balance * (interest_rate/100)))
+      account.add_interest(interest_rate)
+      account.balance.must_equal (start_balance + (start_balance * (interest_rate/100)))
     end
 
     it "Requires a positive rate" do
       account = Bank::SavingsAccount.new(1337, 100.0)
 
       proc {
-        account.interest(-0.25)
+        account.add_interest(-0.25)
       }.must_raise ArgumentError
     end
   end

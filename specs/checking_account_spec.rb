@@ -10,7 +10,6 @@ require_relative '../lib/checking_account'
 # on Account, we effectively get all that testing for free!
 # Here we'll only test things that are different.
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "CheckingAccount" do
   describe "#initialize" do
     # Check that a CheckingAccount is in fact a kind of account
@@ -122,8 +121,16 @@ describe "CheckingAccount" do
   describe "#reset_checks" do
     it "Can be called without error" do
       start_balance = 100.0
+      withdrawal_amount = 10
       account = Bank::CheckingAccount.new(1337, start_balance)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
       account.reset_checks
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      updated_balance.must_equal 36
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do

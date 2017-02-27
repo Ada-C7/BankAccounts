@@ -3,11 +3,10 @@
 # Learn how Ruby does error handling
 # Verify code correctness by testing
 require 'csv'
-require 'awesome_print'
 
 module Bank
   class Account
-    attr_accessor :id, :balance, :timedate
+    attr_reader :id, :balance, :timedate
 
     def initialize(id, balance, timedate = nil)
       @min_opening_bal = 0
@@ -61,11 +60,12 @@ module Bank
       else
         @balance -= (withdrawal_amount + @fee)
       end
-        @balance
+      @balance
     end
 
     def check_for_negative(withdrawal_amount)
       raise ArgumentError.new "You cannot withdraw a negative amount" if withdrawal_amount < 0
     end
-  end 
+
+  end #class account
 end # module Bank

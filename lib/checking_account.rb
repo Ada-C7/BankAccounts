@@ -16,18 +16,19 @@ module Bank
       @fee = 0
       check_for_negative(withdrawal_amount)
       adjust_if_no_low_balance(withdrawal_amount)
-      add_checks
-      charge_fee_if_appropriate(3)
+      count_check
+      charge_fee_if_appropriate(3, withdrawal_amount)
     end
 
-    def charge_fee_if_appropriate(check_limit)
-      if @number_of_checks > check_limit
+    def charge_fee_if_appropriate(check_limit, withdrawal_amount)
+      if @number_of_checks > check_limit && withdrawal_amount < (@balance - @min_bal)
         @check_fee = 2
+        @balance -= @check_fee
       end
-      return @balance - @check_fee
+      return @balance
     end
 
-    def add_checks
+    def count_check
       @number_of_checks += 1
     end
 

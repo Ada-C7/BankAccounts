@@ -20,6 +20,7 @@ describe "Wave 1" do
       account.must_respond_to :timedate
       account.timedate.must_equal timedate
 
+
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
@@ -137,10 +138,6 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
-
-
-
-
 end
 
 
@@ -155,7 +152,7 @@ describe "Wave 2" do
 
 
     it "Returns an array of all accounts" do
-
+      @account_array.must_be_instance_of Array
 
     end
     # Useful checks might include:
@@ -220,7 +217,11 @@ describe "Wave 2" do
       proc {
         Bank::Account.find("0000")
       }.must_raise ArgumentError
-
     end
   end
+  describe "Account.find" do
+    before do @test_array = Bank::Account.all
+    end
+  end
+
 end

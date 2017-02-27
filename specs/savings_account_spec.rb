@@ -44,20 +44,28 @@ describe "SavingsAccount" do
   end
 
   describe "#add_interest" do
+
+    #Chris method
+    before do
+      @account = Bank::SavingsAccount.new(12345, 10000)
+    end
+
     it "Returns the interest calculated" do
       # TODO: Your test code here!
+      @account.add_interest(0.25).must_equal 25
     end
 
     it "Updates the balance with calculated interest" do
       # TODO: Your test code here!
+      @account.add_interest(0.25)
+      @account.balance.must_equal 10025
     end
 
     it "Requires a positive rate" do
       # TODO: Your test code here!
       rate = -25
-      account = Bank::SavingsAccount.new(12345, 100.0)
       proc {
-        account.add_interest(rate)
+        @account.add_interest(rate)
       }.must_raise ArgumentError
     end
   end

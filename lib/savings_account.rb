@@ -14,18 +14,20 @@ module Bank
       if withdrawal_amount < 0
         raise ArgumentError.new 'You cannot withdraw a negative number'
       end
-      if withdrawal_amount > 1000
+      if withdrawal_amount > 10
         puts 'Warning, account would go below $10. Cannot withdraw.'
         withdrawal_amount = 0
       end
-      @balance = start_balance - withdrawal_amount - 200
+      @balance = start_balance - withdrawal_amount - 2
     end
 
     def add_interest(rate)
       if rate < 0
         raise ArgumentError.new 'Interest rate cannot be a negative number'
       end
-      @balance = @balance * (rate/100)
+      interest = @balance * rate / 100
+      @balance += interest
+      return interest
     end
   end
 end

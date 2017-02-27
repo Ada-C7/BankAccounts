@@ -3,6 +3,8 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
 
+#Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 describe "Wave 1" do
   describe "Account#initialize" do
     it "Takes an ID and an initial balance" do
@@ -28,7 +30,7 @@ describe "Wave 1" do
     end
 
     it "Can be created with a balance of 0" do
-      # If this raises, the test will fail. No 'must's needed!
+      #If this raises an error, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end
   end
@@ -41,7 +43,7 @@ describe "Wave 1" do
 
       account.withdraw(withdrawal_amount)
 
-      expected_balance = start_balance - withdrawal_amount
+      expected_balance = start_balance  - withdrawal_amount
       account.balance.must_equal expected_balance
     end
 
@@ -67,7 +69,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -136,36 +138,90 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+
+describe "Wave 2" do
+
   describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+    it "Returns an array" do
+      Bank::Account.reset_all_accounts_for_test
+      Bank::Account.read_csv
+      expect(Bank::Account.all).must_be_instance_of Array, "Not an array."
+    end
+
+    it "Returns an array consisting only of accounts" do
+      Bank::Account.reset_all_accounts_for_test
+      Bank::Account.read_csv
+      Bank::Account.all.each do |account|
+        account.must_be_instance_of Bank::Account, "Not an instance of Account class."
+      end
+    end
+
+    it "Returns an array with the correct number of accounts" do
+      Bank::Account.reset_all_accounts_for_test
+      Bank::Account.read_csv
+      expect(Bank::Account.all.length).must_equal 12, "Wrong number of accounts"
+    end
+
+
+    it "gives correct values for the ID and balance of the first and last
+    accounts match what's in the CSV file" do
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
+    expect(Bank::Account.all.first.id).must_equal 1212, "ID of first account is incorrect."
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
+    expect(Bank::Account.all.first.balance).must_equal 12356.67, "Balance of first account is incorrect."
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
+    expect(Bank::Account.all.last.id).must_equal 15156, "ID of second account is incorrect."
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
+    expect(Bank::Account.all.last.balance).must_equal 43567.72, "Balance of second account is incorrect."
+  end
+end
+
+
+describe "Account.find" do
+  it "Returns an Account that exists" do
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
+    expect(Bank::Account.find(15151)).must_be_instance_of Bank::Account, "Does not return account"
+  end
+
+  it "Can find the first account from the CSV" do
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
+    expect(Bank::Account.find(1212)).must_equal Bank::Account.all.first, "Cannot find first account"
+  end
+
+  it "Can find the last account from the CSV" do
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
+    expect(Bank::Account.find(15156)).must_equal Bank::Account.all.last, "Cannot find last account"
+  end
+
+  it "Raises an error for an account that doesn't exist" do
+    Bank::Account.reset_all_accounts_for_test
+    Bank::Account.read_csv
+    proc {
+      Bank::Account.find(9999999)
+    }.must_raise ArgumentError
+  end
+end
+end
+
+describe "Wave 2 optionals - linkage between acounts and owners" do
+
+  describe "add_owners_to_all_accounts" do
+    it "adds an owner of type owner to each account" do
+      Bank::Account.add_owners_to_all_accounts
+      Bank::Account.find(15151).owner.must_be_instance_of Bank::Owner, "Does not associate an owner with an account"
+    end
+
+    it "associates the correct owner with each account" do
+      Bank::Account.add_owners_to_all_accounts
+      Bank::Account.find(15151).owner.must_equal Bank::Owner.find(17), "Does not associate the correct owner with the tested account"
     end
   end
 
-  describe "Account.find" do
-    it "Returns an account that exists" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
-    end
-  end
 end

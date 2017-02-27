@@ -1,9 +1,6 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
-require 'rake/testtask'
-require_relative '../lib/checking_account'
-require_relative '../lib/account'
+
+# require_relative '../lib/checking_account'
+# require_relative '../lib/account'
 
 
 

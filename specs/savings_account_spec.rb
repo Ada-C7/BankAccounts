@@ -1,9 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+# require 'savings_account'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
-# require_relative '../lib/savings_account'
+require_relative '../lib/savings_account'
 
 # Because a SavingsAccount is a kind
 # of Account, and we've already tested a bunch of functionality
@@ -11,7 +12,7 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
@@ -20,39 +21,107 @@ xdescribe "SavingsAccount" do
     end
 
     it "Requires an initial balance of at least $10" do
-      # TODO: Your test code here!
+
+    proc{
+        Bank::SavingsAccount.new(117, 9)
+    }.must_raise ArgumentError
     end
   end
+
+
 
   describe "#withdraw" do
     it "Applies a $2 fee each time" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 20
+        fee = 2
+        amount = 2
+        account = Bank::SavingsAccount.new(id,balance)
+        account.withdraw(amount)
+        account.balance.must_equal balance - (amount + fee)
     end
+
+
 
     it "Outputs a warning if the balance would go below $10" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 20
+        amount = 11
+        account = Bank::SavingsAccount.new(id, balance)
+
+
+        proc{
+            account.withdraw(amount)
+        }.must_output( /.+/)
+
     end
+
+
+
 
     it "Doesn't modify the balance if it would go below $10" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 20
+        amount = 11
+        account = Bank::SavingsAccount.new(id, balance)
+        account.withdraw(amount)
+
+        account.balance.must_equal balance
     end
 
+
+
     it "Doesn't modify the balance if the fee would put it below $10" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 20
+        account = Bank::SavingsAccount.new(id, balance)
+
+        account.balance.must_equal balance
     end
   end
 
+
+#this does not work and i don't understand for the life of me!
   describe "#add_interest" do
     it "Returns the interest calculated" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10000
+        rate = 0.25
+        interest = balance * rate/100
+
+        account = Bank::SavingsAccount.new(id,balance)
+        account.add_interest(rate).must_equal interest
     end
+
+
+
 
     it "Updates the balance with calculated interest" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10000
+        rate = 0.25
+        interest = balance * rate/100
+        new_balance = interest + balance
+
+
+        account = Bank::SavingsAccount.new(id,balance)
+        account.add_interest(rate)
+        account.balance.must_equal new_balance
     end
 
+
     it "Requires a positive rate" do
-      # TODO: Your test code here!
+        id = 116
+        balance = 10000
+        rate = -0.25
+
+
+        account = Bank::SavingsAccount.new(id,balance)
+
+        proc{
+            account.add_interest(rate)
+        }.must_output( /.+/)
+
     end
   end
 end

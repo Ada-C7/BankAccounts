@@ -9,24 +9,63 @@ describe "MoneyMarketAccount" do
   describe "#initialize" do
 
     it "Is a kind of Account" do
-      account = Bank::SavingsAccount.new(12345, 100.0)
+      account = Bank::MoneyMarketAccount.new(12345, 100.0)
       account.must_be_kind_of Bank::Account
     end
 
     it "Raises an error if initial balance is less than $10,000" do
-      proc {Bank::SavingsAccount.new(12345, 100)}.must_raise ArgumentError
+      proc {Bank::MoneyMarketAccount.new(12345, 100)}.must_raise ArgumentError
     end
 
   end
 
 
+  xdescribe "#withdraw" do
 
-# A maximum of 6 transactions (deposits or withdrawals) are allowed per month on this account type
+    before do
+      @account = Bank::MoneyMarketAccount.new(12345, 15000.0)
+    end
 
-# Updated withdrawal logic:
-# If a withdrawal causes the balance to go below $10,000, a fee of $100 is
-# imposed and no more transactions are allowed until the balance is increased using a
-# deposit transaction.
+    it "Charges a fee of $100 if the balance goes below $10,000." do
+      @account.withdraw(6000)
+      @account.balance.must_equal 8900
+      proc {@account.withdraw(10)}.must_raise ArgumentError
+      @account.deposit(10000)
+      @account.withdraw(500)
+      @account.balance.must_equal 18400
+    end
+
+  end
+
+  describe "#track_transactions" do
+
+  end
+
+
+  describe "#add_interest" do
+
+      before do
+        @account = Bank::MoneyMarketAccount.new(12345, 100.0)
+      end
+
+      it "Returns the interest calculated" do
+        @account.add_interest(0.25)
+        @account.interest.must_equal(0.25)
+      end
+
+      it "Updates the balance with calculated interest" do
+        @account.add_interest(0.25)
+        @account.balance.must_equal(100.25)
+      end
+
+      it "Requires a positive rate" do
+        proc {@account.add_interest(-0.25)}.must_raise ArgumentError
+      end
+
+  end
+
+end
+
 
 # Each transaction will be counted against the maximum number of transactions
 

@@ -37,13 +37,14 @@ module Bank
       @@all_owners
     end
 
-    # self.find(id) - returns an instance of Owner where the value of the id field in the CSV matches the passed parameter
-
-
-
-
+    def self.find(id)
+      found_accounts = @@all_owners.select {|owner| owner.id.to_i == id.to_i}
+      raise ArgumentError.new("That account doesn't exist!")  if found_accounts[0]==nil
+      return found_accounts[0]
+    end
   end
 end
+
 
 # janice_hash={id:12345, last_name:'Lichtman', first_name:'Janice',  street_address:'16-28 Radburn Rd', city:'Fair Lawn', state:'NJ'}
 #
@@ -58,6 +59,8 @@ end
 #
 # puts Bank::Owner.all
 #
-# Bank::Owner.reset_all_owners_for_test
+# #Bank::Owner.reset_all_owners_for_test
 # puts "********"
 # puts Bank::Owner.all
+#
+# Bank::Owner.find(25)

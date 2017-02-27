@@ -88,10 +88,33 @@ describe "Wave 2- optionals" do
     Bank::Owner.read_csv
     expect(Bank::Owner.all.last.state).must_equal "New York", "ID of second owner is incorrect."
   end
-
 end
 
-describe "Account.find" do
+describe "Owner.find" do
+  it "Returns an Owner that exists" do
+    Bank::Owner.reset_all_owners_for_test
+    Bank::Owner.read_csv
+    expect(Bank::Owner.find(20)).must_be_instance_of Bank::Owner, "Does not return account"
+  end
 
+  it "Can find the first account from the CSV" do
+    Bank::Owner.reset_all_owners_for_test
+    Bank::Owner.read_csv
+    expect(Bank::Owner.find(14)).must_equal Bank::Owner.all.first, "Cannot find first account"
+  end
+
+  it "Can find the last account from the CSV" do
+    Bank::Owner.reset_all_owners_for_test
+    Bank::Owner.read_csv
+    expect(Bank::Owner.find(25)).must_equal Bank::Owner.all.last, "Cannot find last account"
+  end
+
+  it "Raises an error for an account that doesn't exist" do
+    Bank::Owner.reset_all_owners_for_test
+    Bank::Owner.read_csv
+    proc {
+      Bank::Owner.find(9999999)
+    }.must_raise ArgumentError
+  end
 end
 end

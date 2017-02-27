@@ -29,9 +29,7 @@ module Bank
         @count_checks_cashed += 1
         @balance -= amount
       end
-
     end
-
 
   end
 end

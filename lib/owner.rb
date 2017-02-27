@@ -13,9 +13,11 @@ module Bank
 
     def self.all
       owners = []
+
       CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/owners.csv").each do |line|
         owners << Owner.new(line[0].to_i, line[1], line[2], line[3], line[4], line[5])
       end
+      
       return owners
     end
 

@@ -7,18 +7,20 @@ module Bank
 
     def initialize id, balance, opendate = "1999-03-27 11:30:09 -0800"
       @id = id
+
       if balance >= 0
         @balance = balance
       else
         raise ArgumentError.new "Initial balance must be more than zero."
       end
+
       @opendate = opendate
       @owner = find_owner
-
     end
 
     def find_owner #I know this could be written in a much shorter way but it.would.not.work so i broke it out into smaller pieces
       owner_index = nil
+
       CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/account_owners.csv").each do |line|
         if line[0].to_i == @id
           owner_index = line[1].to_i
@@ -37,21 +39,25 @@ module Bank
 
     def self.all  #reads in csv file and returns collection of Account instances
       accounts = []
+
       CSV.read("/Users/sai/Documents/ada/projects/BankAccounts/support/accounts.csv").each do |line|
         accounts << Account.new(line[0].to_i, line[1].to_i, line[2])
       end
+
       return accounts
     end
 
     def self.find(id) #returns an instance of Account that matches the passed id parameter
       all_accounts = Account.all
       account_found = false
+
       all_accounts.each do |account|
         if account.id == id
           account_found = true
           return account
         end
       end
+
       if !account_found
         puts "ID not found"
       end
@@ -76,8 +82,6 @@ module Bank
         @balance += new_deposit
       end
     end
-
-
-
+        
   end
 end

@@ -1,6 +1,5 @@
 require_relative 'account.rb'
 
-
 module Bank
   class SavingsAccount < Account
     def initialize id, balance, opendate = "1999-03-27 11:30:09 -0800"
@@ -8,6 +7,7 @@ module Bank
       if balance <= 10
         raise ArgumentError.new "Initial balance must be at least $10."
       end
+
       #initial balance meets threshold, follow account rules to initialize
       super
     end
@@ -21,7 +21,6 @@ module Bank
         amount += 2
         super
       end
-
     end
 
     def add_interest rate
@@ -32,7 +31,6 @@ module Bank
       @balance += interest
       return interest
     end
-
-
+    
   end
 end

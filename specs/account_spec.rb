@@ -1,8 +1,9 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require_relative '../lib/account'
 require 'time'
+require_relative '../lib/account'
+
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -138,7 +139,7 @@ describe "Wave 1" do
   end
 end
 
-# TESTS FOR WAVE2
+# TESTS FOR WAVE2 BY TAMIKO TERADA
 describe "Wave 2" do
   describe "Account.all" do
     it "Account.all returns an array" do
@@ -148,13 +149,13 @@ describe "Wave 2" do
 
     it "Everything in the array is an Account" do
       all_accounts = Bank::Account.all
-      all_accounts.each do |instance|
+      all_accounts.each do |instance| # each loop to check all items
         instance.must_be_kind_of Bank::Account
       end
     end
 
     it "The number of accounts is correct" do
-      expected_rows = 12
+      expected_rows = 12 # must be changed with different CSV
       all_accounts = Bank::Account.all
       all_accounts.length.must_equal expected_rows
     end

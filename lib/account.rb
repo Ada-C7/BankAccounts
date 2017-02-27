@@ -4,7 +4,7 @@ module Bank
 
   class Account
     attr_accessor :balance
-    attr_reader :id , :datetime
+    attr_reader :id , :datetime, :owner
 
     def initialize(id, balance, datetime=nil)
       @id = id
@@ -20,7 +20,7 @@ module Bank
     def self.all
 
       accounts_array = []
-      CSV.read("/Users/theresamanney/ada/week_three/BankAccounts/support/accounts.csv").each do |account_info|
+      CSV.read("../support/accounts.csv").each do |account_info|
         create_new_accounts = Bank::Account.new(account_info[0].to_f, account_info[1].to_f, account_info[2])
         accounts_array.push(create_new_accounts)
       end
@@ -37,7 +37,6 @@ module Bank
 
       find_accounts = Bank::Account.all
       find_accounts.each do |account|
-        #counter_id = account.id
         if account.id == id
           answer = account
         end

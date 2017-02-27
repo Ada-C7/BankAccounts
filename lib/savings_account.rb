@@ -35,7 +35,6 @@ module Bank
 
     def add_interest(rate)
 
-
       if rate >= 0
 
         interest_amount = @balance * rate / 100

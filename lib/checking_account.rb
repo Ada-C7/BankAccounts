@@ -38,21 +38,19 @@ def check_withdraw
   elsif
     amount_to_withdraw > @balance && >= @balance + -10
     puts "This check with overdraft your account. Are you sure you want to write it?"
-end
+  end
 
 
-def self.withdraw_using_check(number)
-  checks_written = []
-
-  while checks_written is =< 3
-    @balance
-  elsif
-    checks_written >= 3
-    checks == @balance - 200
-    #for each loop here
-    checks_written.each do |fee|
-      #i += 1
-      @balance -= 2.00
+  def self.withdraw_using_check(number)
+    checks_written = []
+    while checks_written is =< 3
+    elsif
+      checks_written >= 3
+      checks == @balance - 200
+      #for each loop here
+      #checks_written.each do |fee|
+        #i += 1
+        @balance -= 2.00
+      end
+      reset_checks = checks_written(0)
     end
-  reset_checks
-end

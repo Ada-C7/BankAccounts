@@ -30,7 +30,7 @@ describe "Wave 1" do
     end
 
     it "Can be created with a balance of 0" do
-      # If this raises, the test will fail. No 'must's needed!
+      #If this raises an error, the test will fail. No 'must's needed!
       Bank::Account.new(1337, 0)
     end
   end
@@ -143,7 +143,6 @@ describe "Wave 2" do
 
   describe "Account.all" do
     it "Returns an array" do
-      Bank::Account.reset_all_accounts_for_test
       Bank::Account.reset_all_accounts_for_test
       Bank::Account.read_csv
       expect(Bank::Account.all).must_be_instance_of Array, "Not an array."

@@ -17,14 +17,11 @@ module Bank
       @@all_accounts << self
     end
 
-
     def self.reset_all_accounts_for_test
       @@all_accounts = []
     end
 
-
     def self.read_csv
-      @@all_accounts = []
       CSV.open("./support/accounts.csv").each do |acct|
         acct_id = acct[0].to_i
         acct_balance_dollars = acct[1].to_i / 100.0

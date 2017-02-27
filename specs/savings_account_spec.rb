@@ -29,20 +29,40 @@ describe "SavingsAccount" do
   end
 
   describe "#withdraw" do
+
+    #Chris's method
+    before do
+      @account = Bank::SavingsAccount.new(12345, 100.0)
+    end
+
     it "Applies a $2 fee each time" do
       # TODO: Your test code here!
+      @account.withdraw(12)
+      @account.balance.must_equal 86
     end
 
     it "Outputs a warning if the balance would go below $10" do
       # TODO: Your test code here!
+      withdrawal_amount = 91
+      proc {
+        @account.withdraw(withdrawal_amount)
+      }.must_output(/.+/)
     end
 
     it "Doesn't modify the balance if it would go below $10" do
       # TODO: Your test code here!
+      withdrawal_amount = 91
+      updated_balance = @account.withdraw(withdrawal_amount)
+      updated_balance.must_equal 100
+      @account.balance.must_equal 100
     end
 
     it "Doesn't modify the balance if the fee would put it below $10" do
       # TODO: Your test code here!
+      withdrawal_amount = 89
+      updated_balance = @account.withdraw(withdrawal_amount)
+      updated_balance.must_equal 100
+      @account.balance.must_equal 100
     end
   end
 

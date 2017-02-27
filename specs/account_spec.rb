@@ -173,9 +173,9 @@ end
       #   - The ID and balance of the first and last
       #       accounts match what's in the CSV file
       Bank::Account.all[0].id.must_equal "1212"
-      Bank::Account.all[0].balance.must_equal 1235667
+      Bank::Account.all[0].balance.must_equal 12356.67
       Bank::Account.all[11].id.must_equal "15156"
-      Bank::Account.all[11].balance.must_equal 4356772
+      Bank::Account.all[11].balance.must_equal 43567.72
 
     end
    end

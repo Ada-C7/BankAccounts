@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
+# require_relative '../lib/checking_account'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/checking_account.rb
 # require_relative '../lib/checking_account'
@@ -22,17 +24,19 @@ xdescribe "CheckingAccount" do
 
   describe "#withdraw" do
     it "Applies a $1 fee each time" do
-      # TODO: Your test code here!
+      @balane.must_equal (@balance - amount) - 1
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
-      # TODO: Your test code here!
+      if (@balance - amount) - 1 < 0
+        @balace.must_equal @balance
+      end
     end
   end
 
   describe "#withdraw_using_check" do
     it "Reduces the balance" do
-      # TODO: Your test code here!
+      @balance.must_equal @balance - amount
     end
 
     it "Returns the modified balance" do
@@ -40,11 +44,11 @@ xdescribe "CheckingAccount" do
     end
 
     it "Allows the balance to go down to -$10" do
-      # TODO: Your test code here!
+      @balance.must_be :>=, -10
     end
 
     it "Outputs a warning if the account would go below -$10" do
-      # TODO: Your test code here!
+      
     end
 
     it "Doesn't modify the balance if the account would go below -$10" do

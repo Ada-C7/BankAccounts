@@ -155,7 +155,7 @@ describe "Wave 2" do
       # Useful checks might include:
       #   - Account.all returns an array
 
-      @accounts.must_be_instance_of array
+      @accounts.must_be_instance_of Array
     end
 
       #   - Everything in the array is an Account

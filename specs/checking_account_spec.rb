@@ -12,7 +12,7 @@ require_relative '../lib/checking_account'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "CheckingAccount" do
+describe "CheckingAccount" do
   describe "#initialize" do
     # Check that a CheckingAccount is in fact a kind of account
     it "Is a kind of Account" do
@@ -22,12 +22,26 @@ xdescribe "CheckingAccount" do
   end
 
   describe "#withdraw" do
+
+    #Chris's method
+    before do
+      @account = Bank::CheckingAccount.new(12345, 100.0)
+      @starting_balance = @account.balance
+    end
+
     it "Applies a $1 fee each time" do
       # TODO: Your test code here!
+      @account.withdraw(5).must_equal @starting_balance - 6
     end
 
     it "Doesn't modify the balance if the fee would put it negative" do
       # TODO: Your test code here!
+      withdrawal_amount = 100
+      proc {
+        @account.withdraw(withdrawal_amount)
+      }.must_output(/.+/)
+
+      @account.balance.must_equal @starting_balance
     end
   end
 

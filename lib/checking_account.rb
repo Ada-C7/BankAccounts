@@ -19,9 +19,10 @@ module Bank
         puts 'Warning, account would go negative. Cannot withdraw.'
         withdrawal_amount = 0
       end
-      if withdrawal_amount - fee > start_balance
+      if withdrawal_amount + fee > start_balance
         puts 'Warning, account would go negative. Cannot withdraw.'
         withdrawal_amount = 0
+        fee = 0
       end
       @balance = start_balance - withdrawal_amount - fee
     end

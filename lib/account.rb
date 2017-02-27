@@ -14,7 +14,7 @@ module Bank
         date = account_array[2]
         new_account_info << Account.new(id, balance, date)
         #  end_with_object(self).to_a
-        opening_balance = 0
+        @opening_balance 
       end
       return new_account_info
     end

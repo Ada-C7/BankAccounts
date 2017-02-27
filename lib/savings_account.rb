@@ -3,7 +3,7 @@ require_relative 'account'
 module Bank
   class SavingsAccount < Account
     def initialize(id, balance)
-      # Account must have a minimum balance of $10
+      #ignoring the early mention that balance was in cents
       raise ArgumentError.new("Balance must be atleast $10") if balance < 10
       super(id, balance)
     end

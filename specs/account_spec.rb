@@ -209,3 +209,19 @@ describe "Account.find" do
   end
 end
 end
+
+describe "Wave 2 optionals - linkage between acounts and owners" do
+
+  describe "add_owners_to_all_accounts" do
+    it "adds an owner of type owner to each account" do
+      Bank::Account.add_owners_to_all_accounts
+      Bank::Account.find(15151).owner.must_be_instance_of Bank::Owner, "Does not associate an owner with an account"
+    end
+
+    it "associates the correct owner with each account" do
+      Bank::Account.add_owners_to_all_accounts
+      Bank::Account.find(15151).owner.must_equal Bank::Owner.find(17), "Does not associate the correct owner with the tested account"
+    end
+  end
+
+end

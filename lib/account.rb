@@ -56,8 +56,6 @@ module Bank
     end
 
     def self.add_owners_to_all_accounts
-      #self.reset_all_accounts_for_test
-      #Bank::Owner.reset_all_owners_for_test
       self.read_csv
       Bank::Owner.read_csv
 
@@ -65,15 +63,8 @@ module Bank
       account_owners_csv.each {|pair|
         account_id = pair[0].to_i
         owner_id = pair[1].to_i
-        account = self.find(account_id)
-        account.owner = Bank::Owner.find(owner_id)
+        self.find(account_id).owner = Bank::Owner.find(owner_id)
       }
     end
   end
 end
-
-Bank::Account.add_owners_to_all_accounts
-Bank::Account.all.each {|acct|
-  puts acct.owner.state
-
-}

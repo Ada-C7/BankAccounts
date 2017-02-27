@@ -33,56 +33,139 @@ describe "CheckingAccount" do
       account.balance.must_equal expected_balance
     end
 
-    it "Doesn't modify the balance if the fee would put it negative" do skip
-      # TODO: Your test code here!
+    it "Doesn't modify the balance if the fee would put it negative" do
+      start_balance = 100.0
+      withdrawal_amount = 130.0
+      account = Bank::SavingsAccount.new(1337, start_balance)
+
+      account.withdraw(withdrawal_amount)
+      account.balance.must_equal start_balance
     end
   end
 
   describe "#withdraw_using_check" do
-    it "Reduces the balance" do skip
-      # TODO: Your test code here!
+    it "Reduces the balance" do
+      start_balance = 100.0
+      withdrawal_amount = 30.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      account.withdraw_using_check(withdrawal_amount)
+      account.balance.must_be :<, start_balance
     end
 
-    it "Returns the modified balance" do skip
-      # TODO: Your test code here!
+    it "Returns the modified balance" do
+      start_balance = 200.0
+      withdrawal_amount = 40.0
+
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+
+      expected_balance = start_balance - withdrawal_amount
+      updated_balance.must_equal expected_balance, "Balance was not modified"
     end
 
-    it "Allows the balance to go down to -$10" do skip
-      # TODO: Your test code here!
+    it "Allows the balance to go down to -$10" do
+      start_balance = 100.0
+      withdrawal_amount = 109.0
+
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      updated_balance = account.withdraw_using_check(withdrawal_amount)
+      expected_balance = start_balance - withdrawal_amount
+
+      updated_balance.must_equal expected_balance
     end
 
-    it "Outputs a warning if the account would go below -$10" do skip
-      # TODO: Your test code here!
+    it "Outputs a warning if the account would go below -$10" do
+      start_balance = 100.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+
+      account.balance.must_equal start_balance, "Outputs a warning if the balance would go below -$10"
+
     end
 
-    it "Doesn't modify the balance if the account would go below -$10" do skip
-      # TODO: Your test code here!
+    it "Doesn't modify the balance if the account would go below -$10" do
+      start_balance = 100.0
+      withdrawal_amount = 120.0
+      account = Bank::SavingsAccount.new(1337, start_balance)
+
+      account.withdraw(withdrawal_amount)
+      account.balance.must_equal start_balance
     end
 
-    it "Requires a positive withdrawal amount" do skip
-      # TODO: Your test code here!
+    it "Requires a positive withdrawal amount" do
+      account = Bank::CheckingAccount.new(1337, 100.0)
+
+      proc {
+        account.withdraw_using_check(-10)
+      }.must_raise ArgumentError
     end
 
-    it "Allows 3 free uses" do skip
-      # TODO: Your test code here!
+    it "Allows 3 free uses" do
+      start_balance = 100.0
+      withdrawal_amount = 10.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      new_balance = start_balance - (withdrawal_amount * 3)
+
+      3.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+      account.balance.must_equal new_balance
     end
 
-    it "Applies a $2 fee after the third use" do skip
-      # TODO: Your test code here!
+    it "Applies a $2 fee after the third use" do
+      start_balance = 100.0
+      withdrawal_amount = 10.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      new_balance = start_balance - ((withdrawal_amount * 4) + 2)
+
+      4.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+      account.balance.must_equal new_balance
     end
-  end
+end
 
   describe "#reset_checks" do
-    it "Can be called without error" do skip
-      # TODO: Your test code here!
+    it "Can be called without error" do
+      start_balance = 100.0
+      check_count = 0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      account.reset_checks.must_equal check_count
     end
 
-    it "Makes the next three checks free if less than 3 checks had been used" do skip
-      # TODO: Your test code here!
+    it "Makes the next three checks free if less than 3 checks had been used" do
+      start_balance = 100.0
+      withdrawal_amount = 10.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      new_balance = start_balance - ((withdrawal_amount * 4))
+
+      1.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+      account.reset_checks
+      3.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+      account.balance.must_equal new_balance
     end
 
-    it "Makes the next three checks free if more than 3 checks had been used" do skip
-      # TODO: Your test code here!
+    it "Makes the next three checks free if more than 3 checks had been used" do
+      start_balance = 100.0
+      withdrawal_amount = 10.0
+      account = Bank::CheckingAccount.new(1337, start_balance)
+      new_balance = start_balance - ((withdrawal_amount * 7) + 4)
+
+      5.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+      account.reset_checks
+
+      2.times do
+        account.withdraw_using_check(withdrawal_amount)
+      end
+      account.balance.must_equal new_balance
     end
   end
 end

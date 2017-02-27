@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 require_relative '../lib/account'
 
 describe "Wave 1" do
@@ -119,6 +120,7 @@ end
 describe "Wave 2" do
 
   describe "Account.all" do
+
     it "Returns an array of all accounts" do
       Bank::Account.all.must_be_instance_of Array, "Not an array"
     end
@@ -139,26 +141,42 @@ describe "Wave 2" do
       Bank::Account.all[-1].id.must_equal(15156)
       Bank::Account.all[-1].balance.must_equal(4356772)
     end
-  end
-end
 
-describe "Account.find" do
-  it "Returns an account that exists" do
-    Bank::Account.find(1217)
-  end
-
-  it "Can find the first account from the CSV" do
-    Bank::Account.find(1212)
-    # Bank::Account.all.must_match(Bank::Account.find(Array))
-  end
-
-  it "Can find the last account from the CSV" do
-    Bank::Account.find(15156)
+    # it "The elements match what's in the file" do
+    #
+    #   index = 0
+    #   CSV.read("../support/accounts.csv") do |line|
+    #
+    #     Bank::Account.all[index].id.must_equal line[0].to_i
+    #     accounts[index].balance.must_equal line[1].to_i
+    #     accounts[index].open_date.must_equal line[2]
+    #     index += 1
+    #   end
+    # end
   end
 
-  it "Raises an error for an account that doesn't exist" do
-    proc{
-      Bank::Account.find(98387584)
-    }.must_raise ArgumentError
+  describe "Account.find" do
+    it "Returns an account that exists" do
+      result = Bank::Account.find(1217)
+      result.must_be_kind_of Bank::Account
+    end
+
+    it "Can find the first account from the CSV" do
+      first_account = Bank::Account.find(1212)
+      first_account.must_be_instance_of Bank::Account
+      first_account.id.must_equal 1212
+    end
+
+    it "Can find the last account from the CSV" do
+      last_account = Bank::Account.find(15156)
+      last_account.must_be_instance_of Bank::Account
+      last_account.id.must_equal 15156
+    end
+
+    it "Raises an error for an account that doesn't exist" do
+      proc{
+        Bank::Account.find(98387584)
+      }.must_raise ArgumentError
+    end
   end
 end

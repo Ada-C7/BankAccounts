@@ -4,8 +4,8 @@ require_relative '../lib/account'
 module  Bank
 
   class SavingsAccount < Account
-    def initialize(id, start_balance, date = nil)
-      super(id, start_balance)
+    def initialize(id, start_balance)
+      super(id, start_balance, nil)
       if start_balance < 10.0
         raise ArgumentError, 'You need at least $10 to open the account'
       end
@@ -13,11 +13,11 @@ module  Bank
 
     def withdraw(amount)
       fee = 2.0
-      if @balance - amount < 10.0 || @balance - fee < 10.0 || @balance - amount - fee < 10.0
+      if @balance - fee < 10.0
         puts "Your savings account will be overdrawn!"
         return @balance
       end
-      @balance = @balance - amount - fee
+      @balance = @balance - fee
       return @balance
     end
 

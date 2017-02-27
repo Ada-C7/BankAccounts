@@ -57,7 +57,6 @@ Make sure to write tests for any optionals you implement!
   - The `Account` can be created with an `owner`, OR you can create a method that will add the `owner` after the `Account` has already been created.
 
 
-
 ## Wave 2
 
 ### Learning Goals

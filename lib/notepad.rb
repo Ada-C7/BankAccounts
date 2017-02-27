@@ -5,10 +5,11 @@ module Bank
   class Account
     # attr_accessor :withdraw, :deposit, :all_accounts
     attr_reader :id, :balance, :opendate, :show_id, :account_count, :find_account
-    @@count = 0
+    @@account_count = 0
+    @@all_accounts = []
 
     def initialize(id, balance, opendate)
-      @@count += 1
+      @@account_count += 1
       @id = id.to_i
       @balance = monify(balance)
       unless @balance >= 0
@@ -43,10 +44,11 @@ module Bank
 
       if @balance - (amount + @withdraw_fee) < @minimum_balance
         puts "Can't withdraw more than you have!"
+        return @balance
       else
         @balance -= (amount + @withdraw_fee)
+        return @balance
       end
-      return @balance
     end
 
     def deposit(amount)
@@ -57,12 +59,15 @@ module Bank
       return @balance
     end
 
+    # def add_owner(owner) #optional to add an owner id later on
+    #   @owner = owner
+    # end
+
     def self.all
-      @all_accounts = []
       CSV.foreach("../support/accounts.csv") do |row|
-         @all_accounts << Account.new(row[0], row[1], row[2])
+         @@all_accounts << Account.new(row[0], row[1], row[2])
       end
-      return @all_accounts
+      return @@all_accounts
     end
 
     def self.find(id)
@@ -81,3 +86,6 @@ module Bank
     end
   end
 end
+
+# print Bank::Account.all
+s

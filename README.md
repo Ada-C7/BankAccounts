@@ -64,6 +64,11 @@ Make sure to write tests for any optionals you implement!
 - Use a CSV file for loading data
 
 ### Requirements
+- Read through the "Wave 2" `xdescribe` block in `specs/account_spec.rb`
+  - Change `xdescribe` to `describe` so that the block will run
+  - Notice that there are a bunch of tests with descriptions, but none of them have any code
+  - These tests are your responsibility! Fill them in as you work on the wave.
+  - Follow good TDD practices. Remember the testing cycle: red-green-refactor.
 - Update the `Account` class to be able to handle all of these fields from the CSV file used as input.
   - For example, manually choose the data from the first line of the CSV file and ensure you can create a new instance of your Account using that data
 - Add the following **class** methods to your existing `Account` class
@@ -109,7 +114,6 @@ To create the relationship between the accounts and the owners use the `account_
 
 This type of table, where records from other tables are associated with each other, is often called a _join table_. We'll talk about them as a class in a few weeks.
 
-
 ## Wave 3
 ### Learning Goals
 - Use inheritance to share some behavior across classes
@@ -117,7 +121,7 @@ This type of table, where records from other tables are associated with each oth
 
 ### Requirements
 
-For wave 3, you will create two new classes: `SavingsAccount` and `CheckingAccount`. Both should inherit behavior from the `Account` class. Each class should get its own file under the `lib/` directory, and each already has a spec file with stub tests.
+For wave 3, you will create two new classes: `SavingsAccount` and `CheckingAccount`. Both should inherit behavior from the `Account` class. Each class should get its own file under the `lib/` directory, and each already has a spec file with stub tests. The testing requirements are the same as in wave 2: fill in the tests as you go, and follow the red-green-refactor cycle.
 
 #### SavingsAccount
 Create a `SavingsAccount` class which should inherit behavior from the `Account` class. It should include the following updated functionality:
@@ -157,5 +161,3 @@ Create a `MoneyMarketAccount` class which should inherit behavior from the `Acco
 - `#add_interest(rate)`: Calculate the interest on the balance and add the interest to the balance. Return the interest that was calculated and added to the balance (not the updated balance).
     - Note** This is the same as the `SavingsAccount` interest.
 - `#reset_transactions`: Resets the number of transactions to zero
-
--->

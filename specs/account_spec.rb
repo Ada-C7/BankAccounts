@@ -5,30 +5,29 @@ require_relative '../lib/account'
 
 describe "Wave 1" do
   describe "Account#initialize" do
-    it "Takes an ID and an initial balance" do
+    it "Takes an ID, an initial balance, and date created" do
       id = 1337
       balance = 100.0
+
       account = Bank::Account.new(id, balance)
-#Bank = Module Account = Class; name needs to match exactly -m
+
       account.must_respond_to :id
       account.id.must_equal id
 
       account.must_respond_to :balance
       account.balance.must_equal balance
+
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
+
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
     end
 
     it "Can be created with a balance of 0" do
-      # If this raises, the test will fail. No 'must's needed!
+
       Bank::Account.new(1337, 0)
     end
   end
@@ -61,10 +60,7 @@ describe "Wave 1" do
       withdrawal_amount = 200.0
       account = Bank::Account.new(1337, start_balance)
 
-      # Another proc! This test expects something to be printed
-      # to the terminal, using 'must_output'. /.+/ is a regular
-      # expression matching one or more characters - as long as
-      # anything at all is printed out the test will pass.
+
       proc {
         account.withdraw(withdrawal_amount)
       }.must_output(/.+/)
@@ -77,8 +73,6 @@ describe "Wave 1" do
 
       updated_balance = account.withdraw(withdrawal_amount)
 
-      # Both the value returned and the balance in the account
-      # must be un-modified.
       updated_balance.must_equal start_balance
       account.balance.must_equal start_balance
     end
@@ -124,7 +118,7 @@ describe "Wave 1" do
       updated_balance.must_equal expected_balance
     end
 
-    it "Requires a positive deposit amount" do
+    it "Requires a positive deposit amount" do 
       start_balance = 100.0
       deposit_amount = -25.0
       account = Bank::Account.new(1337, start_balance)
@@ -136,36 +130,57 @@ describe "Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do skip
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+    before do
+      @spec_accounts = Bank::Account.all
+    end
+    it "Accounts.all returns an array" do
+      @spec_accounts.class.must_equal Array, "This is not an array"
+    end
+
+    it "Everything in the array is an Account" do
+      @spec_accounts.each do |account|
+      account.must_be_instance_of Bank::Account
+        end
+      end
+
+      it "The number of accounts is correct" do
+        @spec_accounts.length.must_equal 12
+      end
+
+      it "The ID and balance of the first and last accounts match" do
+        @spec_accounts[0].id.must_equal 1212, "Oops this should match the id, but it doesn't"
+        @spec_accounts[0].balance.must_equal 1235667, "Rurow, this should match the balance, but it doesn't"
+
+        @spec_accounts[11].id.must_equal 15156, "Oops this should match the id, but it doesn't"
+        @spec_accounts[11].balance.must_equal 4356772, "Rurow, this should match the balance, but it doesn't"
+      end
     end
   end
 
   describe "Account.find" do
-    it "Returns an account that exists" do skip
-      # TODO: Your test code here!
+    it "Returns an account that exists" do
+      sample_account = Bank::Account.find(1212)
+      sample_account.must_be_instance_of Bank::Account
+      sample_account.id.must_equal 1212
     end
 
-    it "Can find the first account from the CSV" do skip
-      # TODO: Your test code here!
+    it "Can find the first account from the CSV" do
+      first_account = Bank::Account.find(1212)
+      first_account.must_be_instance_of Bank::Account
+      first_account.id.must_equal 1212
     end
 
-    it "Can find the last account from the CSV" do skip
-      # TODO: Your test code here!
+    it "Can find the last account from the CSV" do
+      last_account = Bank::Account.find(15156)
+      last_account.must_be_instance_of    Bank::Account
+      last_account.id.must_equal 15156
     end
 
-    it "Raises an error for an account that doesn't exist" do skip
-      # TODO: Your test code here!
+    it "Raises an error for an account that doesn't exist" do
+      proc {
+        Bank::Account.find(12345678)
+      }.must_raise ArgumentError
     end
   end
-end

@@ -80,16 +80,40 @@ describe "CheckingAccount" do
   end
 
   describe "#reset_checks" do
+
+    #Chris's method
+    before do
+      @account = Bank::CheckingAccount.new(12345, 100.0)
+      @starting_balance = @account.balance
+    end
+
     it "Can be called without error" do
       # TODO: Your test code here!
+      @account.reset_checks
     end
 
     it "Makes the next three checks free if less than 3 checks had been used" do
       # TODO: Your test code here!
+      @account.withdraw_using_check(10)
+      @account.reset_checks
+      3.times do
+        @account.withdraw_using_check(10)
+      end
+
+      @account.balance.must_equal @starting_balance - 40
     end
 
     it "Makes the next three checks free if more than 3 checks had been used" do
       # TODO: Your test code here!
+      4.times do 
+        @account.withdraw_using_check(10)
+      end
+      @account.reset_checks
+      3.times do
+        @account.withdraw_using_check(10)
+      end
+      @account.balance.must_equal @starting_balance - 72
+
     end
   end
 end

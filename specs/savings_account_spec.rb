@@ -1,9 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
-# require_relative '../lib/savings_account'
+require_relative '../lib/savings_account'
 
 # Because a SavingsAccount is a kind
 # of Account, and we've already tested a bunch of functionality
@@ -11,7 +12,7 @@ require 'minitest/skip_dsl'
 # Here we'll only test things that are different.
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "SavingsAccount" do
+describe "SavingsAccount" do
   describe "#initialize" do
     it "Is a kind of Account" do
       # Check that a SavingsAccount is in fact a kind of account
@@ -53,6 +54,11 @@ xdescribe "SavingsAccount" do
 
     it "Requires a positive rate" do
       # TODO: Your test code here!
+      rate = -25
+      account = Bank::SavingsAccount.new(12345, 100.0)
+      proc {
+        account.add_interest(rate)
+      }.must_raise ArgumentError
     end
   end
 end

@@ -2,6 +2,10 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/account'
+require 'csv'
+require 'date'
+
+Minitest::Reporters.use!
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -18,10 +22,6 @@ describe "Wave 1" do
     end
 
     it "Raises an ArgumentError when created with a negative balance" do
-      # Note: we haven't talked about procs yet. You can think
-      # of them like blocks that sit by themselves.
-      # This code checks that, when the proc is executed, it
-      # raises an ArgumentError.
       proc {
         Bank::Account.new(1337, -100.0)
       }.must_raise ArgumentError
@@ -67,7 +67,7 @@ describe "Wave 1" do
       # anything at all is printed out the test will pass.
       proc {
         account.withdraw(withdrawal_amount)
-      }.must_output /.+/
+      }.must_output (/.+/)
     end
 
     it "Doesn't modify the balance if the account would go negative" do
@@ -106,9 +106,7 @@ describe "Wave 1" do
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
-
       account.deposit(deposit_amount)
-
       expected_balance = start_balance + deposit_amount
       account.balance.must_equal expected_balance
     end
@@ -117,9 +115,7 @@ describe "Wave 1" do
       start_balance = 100.0
       deposit_amount = 25.0
       account = Bank::Account.new(1337, start_balance)
-
       updated_balance = account.deposit(deposit_amount)
-
       expected_balance = start_balance + deposit_amount
       updated_balance.must_equal expected_balance
     end
@@ -134,38 +130,80 @@ describe "Wave 1" do
       }.must_raise ArgumentError
     end
   end
+# Added a block to test add_owner method:
+  describe "Account#add_owner" do
+    it "Must be created, account owner must be type of Bank::Owner" do
+      account = Bank::Account.new(2323, 300)
+      account.add_owner(12, "Kuleniuk")
+      account.owner.must_be_kind_of Bank::Owner
+      account.owner.wont_be_nil
+    end
+  end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Wave 2" do
+describe "Wave 2" do
   describe "Account.all" do
-    it "Returns an array of all accounts" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Account.all returns an array
-      #   - Everything in the array is an Account
-      #   - The number of accounts is correct
-      #   - The ID and balance of the first and last
-      #       accounts match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+    it "Account.all returns an array" do
+      Bank::Account.all.must_be_kind_of Array
+    end
+    it "Everything in the array is an Account" do
+      all_accounts = Bank::Account.all
+      all_accounts.each do |account|
+        account.must_be_kind_of Bank::Account
+      end
+    end
+    it " The number of accounts is correct" do
+      all_accounts = Bank::Account.all
+      all_accounts.length.must_be :==, 12
+    end
+    it " - The ID and balance of the first and last
+          accounts match what's in the CSV file" do
+      csv = CSV.read("support/accounts.csv", 'r')
+      expected_id_first = csv[0][0].to_i
+      expected_balance_first = csv[0][1].to_i/100.0
+      expected_id_last = csv[11][0].to_i
+      expected_balance_last = csv[11][1].to_i/100.0
+      all_accounts = Bank::Account.all
+      all_accounts[0].id.must_equal expected_id_first
+      all_accounts[0].balance.must_equal expected_balance_first
+      all_accounts[11].id.must_equal expected_id_last
+      all_accounts[11].balance.must_equal expected_balance_last
     end
   end
 
   describe "Account.find" do
     it "Returns an account that exists" do
-      # TODO: Your test code here!
+      result = Bank::Account.find(1213)
+      result.must_be_kind_of Bank::Account
+      # Can't figure out why next line does not work:
+      # I assume it is connected with the fact that
+      # object references are different in result and
+      # in all_accounts
+      # all_accounts = Bank::Account.all
+      # all_accounts.must_include result
     end
 
     it "Can find the first account from the CSV" do
-      # TODO: Your test code here!
+      csv = CSV.read("support/accounts.csv", 'r')
+      result = Bank::Account.find(csv[0][0].to_i)
+      result.id.must_be :==, Bank::Account.all[0].id
+      result.balance.must_be :==, Bank::Account.all[0].balance
+      result.date_created.must_be :==, Bank::Account.all[0].date_created
     end
 
     it "Can find the last account from the CSV" do
-      # TODO: Your test code here!
+      csv = CSV.read("support/accounts.csv", 'r')
+      result = Bank::Account.find(csv[11][0].to_i)
+      result.id.must_be :==, Bank::Account.all[11].id
+      result.balance.must_be :==, Bank::Account.all[11].balance
+      result.date_created.must_be :==, Bank::Account.all[11].date_created
     end
 
     it "Raises an error for an account that doesn't exist" do
-      # TODO: Your test code here!
+      proc {
+        Bank::Account.find(100000)
+      }.must_raise ArgumentError
     end
   end
-end
+
+ end

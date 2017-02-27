@@ -27,7 +27,7 @@ class SavingsAccount < Account
 
   #add interst to savings
   def add_interest(rate = @interest_rate)
-
+  raise ArgumentError.new "Rate must be greater than 0" unless rate > 0
     total_interst = @balance * rate/100
     @balance += total_interst
     return total_interst

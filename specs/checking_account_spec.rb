@@ -1,13 +1,15 @@
-
-# require_relative '../lib/checking_account'
-# require_relative '../lib/account'
+require 'minitest/autorun'
+require 'minitest/reporters'
+require 'minitest/skip_dsl'
+require_relative '../lib/checking_account'
+require_relative '../lib/account'
 
 
 
 describe "CheckingAccount" do
 
   describe "#initialize" do
-    # Check that a CheckingAccount is in fact a kind of account
+
     it "Is a kind of Account" do
       account = Bank::CheckingAccount.new(12345, 10000)
       account.must_be_kind_of Bank::Account

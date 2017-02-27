@@ -5,15 +5,11 @@ require_relative '../lib/checking_account'
 
 
 
-# TODO: uncomment the next line once you start wave 3 and add lib/checking_account.rb
-# require_relative '../lib/checking_account'
-
 # Because a CheckingAccount is a kind
 # of Account, and we've already tested a bunch of functionality
 # on Account, we effectively get all that testing for free!
 # Here we'll only test things that are different.
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "CheckingAccount" do
   describe "#initialize" do
     # Check that a CheckingAccount is in fact a kind of account

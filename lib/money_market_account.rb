@@ -21,8 +21,8 @@ module Bank
         raise ArgumentError.new("Account balance is below $10,000 minimum.")
       end
 
-      @balance -= 100 if amount > @balance - 10000
-      
+      @balance -= 100 if amount > @balance - MINIMUM_BALANCE
+
       super
       @transaction_count += 1
     end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper.rb'
 
 # Create a MoneyMarketAccount class which should inherit behavior from the Account class.
 xdescribe "MoneyMarketAccount" do

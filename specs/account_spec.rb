@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper.rb'
 
 # wave 1 tests
 describe "Wave 1" do

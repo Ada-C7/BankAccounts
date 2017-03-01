@@ -1,10 +1,7 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
-require_relative '../lib/money_market_account.rb'
+require 'spec_helper'
 
 # Create a MoneyMarketAccount class which should inherit behavior from the Account class.
-describe "MoneyMarketAccount" do
+xdescribe "MoneyMarketAccount" do
 
   describe "#initialize" do
 
@@ -37,12 +34,12 @@ describe "MoneyMarketAccount" do
 
   end
 
-  describe "#track_transactions" do
+  xdescribe "#track_transactions" do
 
   end
 
 
-  describe "#add_interest" do
+  xdescribe "#add_interest" do
 
       before do
         @account = Bank::MoneyMarketAccount.new(12345, 100.0)

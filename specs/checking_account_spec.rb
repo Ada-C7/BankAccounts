@@ -1,7 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
-require_relative '../lib/checking_account'
+require 'spec_helper'
 
 describe "CheckingAccount" do
 

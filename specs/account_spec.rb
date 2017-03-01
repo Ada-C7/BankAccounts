@@ -1,8 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
-require 'CSV'
-require_relative '../lib/account'
+require 'spec_helper'
 
 # wave 1 tests
 describe "Wave 1" do

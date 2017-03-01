@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
+require_relative 'spec_helper.rb'
 require_relative '../lib/checking_account'
 
 describe "CheckingAccount" do
@@ -80,7 +78,7 @@ describe "CheckingAccount" do
 
     it "Applies a $2 fee after the third use" do
       original_balance = @account.balance
-      
+
       @account.withdraw_using_check(100)
       @account.withdraw_using_check(250)
       @account.withdraw_using_check(1000)

@@ -1,9 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
+require_relative 'spec_helper.rb'
 require_relative '../lib/account'
-
-Minitest::Reporters.use!
 
 describe "Wave 1" do
 

@@ -1,9 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
+require_relative 'spec_helper.rb'
 require_relative '../lib/owner'
-
-Minitest::Reporters.use!
 
 describe "Owner#initialize" do
   it "Takes all required info from a hash" do

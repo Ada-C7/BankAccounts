@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
+require_relative 'spec_helper.rb'
 require_relative '../lib/money_market_account'
 
 describe "MoneyMarketAccount" do
@@ -27,7 +25,7 @@ describe "MoneyMarketAccount" do
 
     it "Doesn't modify the balance if the $100 fee makes the account go negative" do
       updated_balance = @account.withdraw(1990001)
-      
+
       updated_balance.must_equal 2000000
       @account.balance.must_equal 2000000
     end

@@ -47,6 +47,12 @@ describe "MoneyMarketAccount" do
 
       @account.balance.must_equal target_balance
     end
+
+    it "Does not allow over 6 transactions in a month" do
+      proc {
+        7.times { @account.withdraw(10) }
+      }.must_raise ArgumentError
+    end
   end
 
   describe "#withdraw" do

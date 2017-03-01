@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
+require_relative 'spec_helper'
 
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
 require_relative '../lib/MoneyMarketAccount'

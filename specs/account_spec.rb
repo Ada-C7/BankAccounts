@@ -1,7 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
-require_relative '../lib/account'
+require_relative 'spec_helper'
+require_relative '../lib/savings_account'
 
 describe "Wave 1" do
   describe "Account#initialize" do

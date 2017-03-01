@@ -1,10 +1,7 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
+require_relative 'spec_helper.rb'
+
 require_relative '/Users/sai/Documents/ada/projects/BankAccounts/lib/account.rb'
 require_relative '/Users/sai/Documents/ada/projects/BankAccounts/lib/checking_account.rb'
-
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 # TODO: uncomment the next line once you start wave 3 and add lib/checking_account.rb
 # require_relative '../lib/checking_account'

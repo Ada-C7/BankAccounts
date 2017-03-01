@@ -1,10 +1,9 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
+require_relative 'spec_helper.rb'
+
 require_relative '/Users/sai/Documents/ada/projects/BankAccounts/lib/account.rb'
 require_relative '/Users/sai/Documents/ada/projects/BankAccounts/lib/savings_account.rb'
 
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 # TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
 # require_relative '../lib/savings_account'
 
@@ -34,6 +33,7 @@ describe "SavingsAccount" do
       account.balance.must_equal 100.0
 
     end
+
 
   end
 

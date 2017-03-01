@@ -1,13 +1,6 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
-require 'csv'
+require_relative 'spec_helper.rb'
 require_relative '../lib/account'
 require_relative '../lib/owner'
-
-
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-
 
 describe "Wave 1" do
   # before do
@@ -18,8 +11,6 @@ describe "Wave 1" do
   #     :in_phone => "206-440-0725"
   #   }
   # end
-
-
 
   describe "Account#initialize" do
     it "Takes an ID, and an initial balance" do

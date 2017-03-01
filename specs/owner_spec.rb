@@ -1,16 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
+require_relative 'spec_helper.rb'
 require_relative '../lib/owner'
-require 'csv'
-
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-
-xdescribe "Owner#initialize" do
-
-
-
-end
 
 describe "Owner.all"do
   before do

@@ -1,8 +1,9 @@
+require_relative 'spec_helper'
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require 'csv'
-require_relative '../lib/account.rb'
+require_relative '../lib/account'
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -200,7 +201,7 @@ describe "Wave 2" do
     #       accounts match what's in the CSV file
     it "accounts match what's in the CSV file" do
       index = 0
-      CSV.read("../support/accounts.csv") do
+      CSV.read("support/accounts.csv") do
         accounts[index].id.must_equal line[0].to_i
         accounts[index].balance.must_equal line[1].to_i
         accounts[index].datetime.must_equal line[2]

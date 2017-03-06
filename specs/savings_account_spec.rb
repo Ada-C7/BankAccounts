@@ -1,9 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
-
-# TODO: uncomment the next line once you start wave 3 and add lib/savings_account.rb
- require_relative '../lib/savings'
+require_relative "spec_helper"
+require_relative '../lib/savings'
 
 # Because a SavingsAccount is a kind
 # of Account, and we've already tested a bunch of functionality

@@ -1,6 +1,8 @@
-require 'minitest/autorun'
-require 'minitest/reporters'
+require_relative "spec_helper"
 require 'minitest/skip_dsl'
+
+
+
 
 # TODO: uncomment the next line once you start wave 3 and add lib/checking_account.rb
 require_relative '../lib/checking'

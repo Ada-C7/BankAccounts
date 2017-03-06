@@ -1,4 +1,3 @@
-
 require 'csv'
 require 'pry'
 
@@ -45,9 +44,9 @@ module Bank
     end #end self.all
 
 
-    def self.accounts
-      @@accounts = @@accounts
-    end
+    # def self.accounts
+    #   @@accounts #= @@accounts
+    # end
 
 
     def self.find(id)

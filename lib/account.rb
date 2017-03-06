@@ -50,8 +50,7 @@ module Bank
       raise ArgumentError.new("The withdrawal amount must be positive.") if amount < 0
 
       if amount > @balance
-        puts "Insufficient Funds"
-        @balance
+        raise InsufficientFundsError.new("Insufficient Funds")
       else
         @balance -= amount
       end

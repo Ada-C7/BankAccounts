@@ -1,6 +1,7 @@
 require_relative 'spec_helper'
 require_relative '../lib/account'
 require_relative '../lib/owner'
+require_relative '../lib/insufficient_funds_error'
 
 describe "Wave 1" do
   describe "Account#initialize" do
@@ -84,7 +85,7 @@ describe "Wave 1" do
       # Must print out error to the terminal
       proc {
         @account.withdraw(withdrawal_amount)
-      }.must_output(/.+/)
+      }.must_raise InsufficientFundsError
 
       # Must not update balance
       @account.balance.must_equal @start_balance
